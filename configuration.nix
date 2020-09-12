@@ -16,6 +16,10 @@
   boot.loader.grub.device = "/dev/sda";
   boot.initrd.luks.devices.root.allowDiscards = true;
   boot.kernelPackages = pkgs.linuxPackages_hardened;
+  boot.extraModulePackages = with config.boot.kernelPackages; [
+    acpi_call
+    v4l2loopback
+  ];
   boot.kernelParams = [
     "zswap.enabled=1"
   ];
@@ -40,71 +44,183 @@
   time.timeZone = "Europe/Minsk";
 
   environment.systemPackages = with pkgs; [
+    (agda.withPackages (pkgs: with pkgs; [ standard-library ]))
+    (pass.withExtensions (ext: with ext; [ pass-otp ]))
+    R
+    aircrack-ng
     alacritty
+    anki
+    ansible
+    ansible-lint
+    aspell
+    aspellDicts.en
+    aspellDicts.ru
+    astyle
+    barcode
     bat
+    binutils
+    btrfs-progs
     bubblewrap
+    cabal-install
+    calibre
+    cargo
+    cataclysm-dda
     chromium
+    clinfo
+    coursier
+    davfs2
     deadbeef-with-plugins
+    docker-compose
+    dosbox
+    dosfstools
     dunst
+    e2fsprogs
+    editorconfig-core-c
+    eiskaltdcpp
     element-desktop
     emacs
     exa
+    exfat-utils
+    extundelete
+    fbreader
     fd
+    fdupes
     feh
     ffmpeg
     firefox
+    fuseiso
+    gdb
+    ghc
+    gimp-with-plugins
     git
     gitAndTools.delta
     gnome-themes-extra
     gnome3.adwaita-icon-theme
+    gparted
+    graphicsmagick
+    graphicsmagick-imagemagick-compat
     hans
+    hdparm
     hicolor-icon-theme # contains deadbeef icon
+    hlint
+    hunspell
+    hunspellDicts.en_US
+    hunspellDicts.ru_RU
+    i2p # TODO: use service?
+    i2pd # TODO: use service?
     imv
+    inkscape
+    innoextract
     iodine
+    iotop
+    isync
+    jetbrains.idea-community
     jq
+    languagetool
     libreoffice-fresh
     lsd
+    lshw
     maim
+    maxima
     mc
+    mercurial
     mesa-demos
+    metals
+    metasploit
+    monero # TODO: use service?
+    mono
     motion
+    mpd
     mpv
     mu
+    nettools
     networkmanagerapplet
+    newsboat
+    nix-diff
+    nmap
+    nodePackages.bash-language-server
+    nodePackages.prettier
+    ntfs3g
     numlockx
+    octave
+    openconnect
+    openjdk
+    openmw
     p7zip
+    pandoc # TODO: it should depend on texlive
+    parallel
     parcellite
+    passff-host
     pavucontrol
+    perl
     picom
-    pidgin
+    pidgin-with-plugins
     psmisc # for killall
     qbittorrent
+    qemu
+    qrencode
     qt5ct
     qtox
+    radare2
+    rclone
     ripgrep
     ripgrep-all
+    rsync
+    rust-analyzer
+    rustc
+    sbt
+    scala
+    shellcheck
     skim
+    smartmontools
     sourceHighlight
     starship
+    subversion
     tdesktop
     telegram-purple
+    tesseract
+    texlive.combined.scheme-basic
     tigervnc
+    tinc
+    tldr
     tmux
-    tor
+    tor # TODO: use service?
     tor-browser-bundle-bin
+    torsocks
+    toxic
     trayer
+    unzipNatspec
     vlc
     volumeicon
+    vscodium
     wget
+    wireguard-tools
     wmctrl
+    wxmaxima
     xcalib
+    xdotool
+    xmlstarlet
     xmobar
     xorg.xbacklight
     xscreensaver
     xterm
+    you-get
+    youtube-dl
     zathura
+    # tuntox
     # uutils-coreutils
-    # shadowsocks-v2ray-plugin
+    # vagrant
+    # vdpauinfo
+    # veloren
+    # virtualbox
+    # vlc
+    # websocat
+    # kafkacat
+    # wesnoth
+    # wine
+    # winetricks
+    # tensorflow
+    # sane xsane
   ];
 
   fonts.fonts = with pkgs; [
@@ -125,21 +241,40 @@
     syntaxHighlighting.enable = true;
   };
 
+  programs.adb.enable = true;
+
   services.openssh = {
     enable = true;
     forwardX11 = true;
   };
   services.timesyncd.enable = true;
   services.resolved.enable = true;
+  services.haveged.enable = true;
 
-  networking.firewall.enable = true;
-  networking.firewall.allowedTCPPorts = [ 22 ];
-  networking.firewall.allowedUDPPorts = [ 33445 ];
+  networking.firewall = {
+    enable = true;
+    allowedTCPPorts = [ 22 ];
+    allowedUDPPorts = [ 33445 ];
+  };
 
-  # Enable CUPS to print documents.
-  # services.printing.enable = true;
+  virtualisation.docker = {
+    enable = true;
+    enableOnBoot = false;
+  };
 
-  hardware.pulseaudio.enable = true;
+  services.printing.enable = true;
+
+  hardware.bluetooth = {
+    enable = true;
+    package = pkgs.bluezFull;
+  };
+
+  hardware.usbWwan.enable = true;
+
+  hardware.pulseaudio = {
+    enable = true;
+    package = pkgs.pulseaudioFull;
+  };
 
   hardware.opengl = {
     enable = true;
@@ -149,6 +284,8 @@
       libvdpau-va-gl
     ];
   };
+
+  services.tlp.enable = true;
 
   services.xserver.enable = true;
   services.xserver.layout = "us,ru";
@@ -175,7 +312,10 @@
 
   users.users.kurnevsky = {
     isNormalUser = true;
-    extraGroups = [ "wheel" ];
+    extraGroups = [
+      "wheel"
+      "adbusers"
+    ];
     shell = pkgs.zsh;
   };
 
@@ -183,6 +323,26 @@
     ( self: super: {
       uutils-coreutils = super.uutils-coreutils.override {
         prefix = null;
+      };
+    })
+    ( self: super: rec {
+      zipNatspec = super.zip.override {
+        enableNLS = true;
+      };
+      unzipNatspec = super.unzip.override {
+        enableNLS = true;
+      };
+      mc = super.mc.override {
+        zip = zipNatspec;
+        unzip = unzipNatspec;
+      };
+    })
+    ( self: super: {
+      tesseract = super.tesseract.override {
+        enableLanguages = [
+          "eng"
+          "rus"
+        ];
       };
     })
     ( self: super: {

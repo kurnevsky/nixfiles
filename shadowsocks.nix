@@ -14,7 +14,6 @@ let
     plugin_opts = "tls;host=kurnevsky.net;path=/ss";
   };
   shadowsocksConfigFile = pkgs.writeText "shadowsocks.json" (builtins.toJSON shadowsocksConfig);
-  v2ray = pkgs.callPackage ./v2ray.nix {};
 in
 {
   systemd.services.shadowsocks-client = {
@@ -22,7 +21,7 @@ in
     after = [ "network-online.target" ];
     wants = [ "network-online.target" ];
     wantedBy = [ "multi-user.target" ];
-    path = [ pkgs.shadowsocks-rust pkgs.jq v2ray ];
+    path = [ pkgs.shadowsocks-rust pkgs.jq pkgs.shadowsocks-v2ray-plugin ];
     serviceConfig = {
       User = "nobody";
       PrivateTmp = true;
