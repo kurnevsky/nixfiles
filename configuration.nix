@@ -174,6 +174,7 @@
     sourceHighlight
     starship
     subversion
+    taffybar
     tdesktop
     telegram-purple
     tesseract
@@ -300,6 +301,7 @@
     extraPackages = pkgs: with pkgs; [
       dbus
       regex-compat
+      taffybar
     ];
     # config = pkgs.builtins.readFile "/etc/xmonad.hs";
   };
