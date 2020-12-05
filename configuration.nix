@@ -312,6 +312,7 @@
 
   # Enable pam_systemd module to set dbus environment variable.
   security.pam.services.login.startSession = true;
+  security.unprivilegedUsernsClone = true;
 
   users.users.kurnevsky = {
     isNormalUser = true;
