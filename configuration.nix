@@ -114,6 +114,7 @@
     isync
     jetbrains.idea-community
     jq
+    kafkacat
     languagetool
     libreoffice-fresh
     lsd
@@ -192,6 +193,7 @@
     vlc
     volumeicon
     vscodium
+    websocat
     wget
     wireguard-tools
     wmctrl
@@ -206,15 +208,14 @@
     you-get
     youtube-dl
     zathura
+    zbar
+    # findimagedupes
     # tuntox
     # uutils-coreutils
     # vagrant
     # vdpauinfo
     # veloren
     # virtualbox
-    # vlc
-    # websocat
-    # kafkacat
     # wesnoth
     # wine
     # winetricks
