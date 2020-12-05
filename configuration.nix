@@ -106,8 +106,6 @@
     hunspell
     hunspellDicts.en_US
     hunspellDicts.ru_RU
-    i2p # TODO: use service?
-    i2pd # TODO: use service?
     imv
     inkscape
     innoextract
@@ -250,6 +248,7 @@
   services.timesyncd.enable = true;
   services.resolved.enable = true;
   services.haveged.enable = true;
+  services.i2p.enable = true;
 
   networking.firewall = {
     enable = true;
@@ -306,6 +305,7 @@
   };
 
   systemd.user.services.dbus.wantedBy = [ "default.target" ];
+  systemd.services.i2p.wantedBy = pkgs.lib.mkForce [ ];
 
   # Enable pam_systemd module to set dbus environment variable.
   security.pam.services.login.startSession = true;
