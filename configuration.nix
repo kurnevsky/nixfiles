@@ -30,6 +30,8 @@
     "compress=zstd:3"
   ];
 
+  nix.autoOptimiseStore = true;
+
   # networking.hostName = "nixos";
   # networking.wireless.enable = true;
 
