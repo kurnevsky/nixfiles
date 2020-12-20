@@ -183,7 +183,6 @@
     tinc
     tldr
     tmux
-    tor # TODO: use service?
     tor-browser-bundle-bin
     torsocks
     toxic
@@ -251,6 +250,7 @@
   services.haveged.enable = true;
   services.i2p.enable = true;
   services.monero.enable = true;
+  services.tor.enable = true;
 
   networking.firewall = {
     enable = true;
@@ -310,6 +310,7 @@
   systemd.user.services.dbus.wantedBy = [ "default.target" ];
   systemd.services.i2p.wantedBy = pkgs.lib.mkForce [ ];
   systemd.services.monero.wantedBy = pkgs.lib.mkForce [ ];
+  systemd.services.tor.wantedBy = pkgs.lib.mkForce [ ];
 
   # Enable pam_systemd module to set dbus environment variable.
   security.pam.services.login.startSession = true;
