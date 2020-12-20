@@ -126,7 +126,6 @@
     mesa-demos
     metals
     metasploit
-    monero # TODO: use service?
     mono
     motion
     mpd
@@ -251,6 +250,7 @@
   services.resolved.enable = true;
   services.haveged.enable = true;
   services.i2p.enable = true;
+  services.monero.enable = true;
 
   networking.firewall = {
     enable = true;
@@ -309,6 +309,7 @@
 
   systemd.user.services.dbus.wantedBy = [ "default.target" ];
   systemd.services.i2p.wantedBy = pkgs.lib.mkForce [ ];
+  systemd.services.monero.wantedBy = pkgs.lib.mkForce [ ];
 
   # Enable pam_systemd module to set dbus environment variable.
   security.pam.services.login.startSession = true;
