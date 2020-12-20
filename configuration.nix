@@ -241,16 +241,38 @@
 
   programs.adb.enable = true;
 
-  services.openssh = {
-    enable = true;
-    forwardX11 = true;
+  services = {
+    haveged.enable = true;
+    i2p.enable = true;
+    monero.enable = true;
+    openssh = {
+      enable = true;
+      forwardX11 = true;
+    };
+    printing.enable = true;
+    resolved.enable = true;
+    tlp.enable = true;
+    tor.enable = true;
+    timesyncd.enable = true;
+    xserver = {
+      enable = true;
+      # Enable touchpad support.
+      # libinput.enable = true;
+      layout = "us,ru";
+      xkbOptions = "grp:caps_toggle,grp_led:caps,terminate:ctrl_alt_bksp";
+      displayManager.startx.enable = true;
+      windowManager.xmonad = {
+        enable = true;
+        enableContribAndExtras = true;
+        extraPackages = pkgs: with pkgs; [
+          dbus
+          regex-compat
+          taffybar
+        ];
+        # config = pkgs.builtins.readFile "/etc/xmonad.hs";
+      };
+    };
   };
-  services.timesyncd.enable = true;
-  services.resolved.enable = true;
-  services.haveged.enable = true;
-  services.i2p.enable = true;
-  services.monero.enable = true;
-  services.tor.enable = true;
 
   networking.firewall = {
     enable = true;
@@ -262,8 +284,6 @@
     enable = true;
     enableOnBoot = false;
   };
-
-  services.printing.enable = true;
 
   hardware.bluetooth = {
     enable = true;
@@ -284,27 +304,6 @@
       vaapiVdpau
       libvdpau-va-gl
     ];
-  };
-
-  services.tlp.enable = true;
-
-  services.xserver.enable = true;
-  services.xserver.layout = "us,ru";
-  # services.xserver.xkbOptions = "eurosign:e";
-
-  # Enable touchpad support.
-  # services.xserver.libinput.enable = true;
-
-  services.xserver.displayManager.startx.enable = true;
-  services.xserver.windowManager.xmonad = {
-    enable = true;
-    enableContribAndExtras = true;
-    extraPackages = pkgs: with pkgs; [
-      dbus
-      regex-compat
-      taffybar
-    ];
-    # config = pkgs.builtins.readFile "/etc/xmonad.hs";
   };
 
   systemd.user.services.dbus.wantedBy = [ "default.target" ];
