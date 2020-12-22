@@ -30,7 +30,11 @@
     "compress=zstd:3"
   ];
 
-  nix.autoOptimiseStore = true;
+  nix = {
+    package = pkgs.nixFlakes;
+    autoOptimiseStore = true;
+    extraOptions = "experimental-features = nix-command flakes";
+  };
 
   # networking.hostName = "nixos";
   # networking.wireless.enable = true;
