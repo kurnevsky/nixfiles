@@ -194,6 +194,7 @@
     toxic
     trayer
     unzipNatspec
+    viu
     vlc
     volumeicon
     vscodium
