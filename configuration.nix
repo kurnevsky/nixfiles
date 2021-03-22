@@ -199,6 +199,7 @@
     volumeicon
     vscodium
     websocat
+    wesnoth
     wget
     wireguard-tools
     wmctrl
@@ -221,7 +222,6 @@
     # vdpauinfo
     # veloren
     # virtualbox
-    # wesnoth
     # wine
     # winetricks
     # tensorflow
