@@ -1,11 +1,10 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ./shadowsocks.nix
-    ];
+  imports = [ # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    ./shadowsocks.nix
+  ];
 
   boot.loader.grub.enable = true;
   boot.loader.grub.version = 2;
@@ -20,15 +19,9 @@
     acpi_call
     v4l2loopback
   ];
-  boot.kernelParams = [
-    "zswap.enabled=1"
-  ];
+  boot.kernelParams = [ "zswap.enabled=1" ];
 
-  fileSystems."/".options = [
-    "noatime"
-    "nodiratime"
-    "compress=zstd:3"
-  ];
+  fileSystems."/".options = [ "noatime" "nodiratime" "compress=zstd:3" ];
 
   nix = {
     package = pkgs.nixFlakes;
@@ -141,6 +134,7 @@
     networkmanagerapplet
     newsboat
     nix-diff
+    nixfmt
     nmap
     nodePackages.bash-language-server
     nodePackages.prettier
@@ -229,9 +223,7 @@
   ];
 
   fonts.fonts = with pkgs; [
-    (nerdfonts.override {
-      fonts = [ "Hack" ];
-    })
+    (nerdfonts.override { fonts = [ "Hack" ]; })
     noto-fonts
     noto-fonts-extra
     noto-fonts-emoji
@@ -271,11 +263,7 @@
       windowManager.xmonad = {
         enable = true;
         enableContribAndExtras = true;
-        extraPackages = pkgs: with pkgs; [
-          dbus
-          regex-compat
-          taffybar
-        ];
+        extraPackages = pkgs: with pkgs; [ dbus regex-compat taffybar ];
         # config = pkgs.builtins.readFile "/etc/xmonad.hs";
       };
     };
@@ -306,11 +294,7 @@
 
   hardware.opengl = {
     enable = true;
-    extraPackages = with pkgs; [
-      intel-media-driver
-      vaapiVdpau
-      libvdpau-va-gl
-    ];
+    extraPackages = with pkgs; [ intel-media-driver vaapiVdpau libvdpau-va-gl ];
   };
 
   systemd.user.services.dbus.wantedBy = [ "default.target" ];
@@ -324,38 +308,25 @@
 
   users.users.kurnevsky = {
     isNormalUser = true;
-    extraGroups = [
-      "wheel"
-      "adbusers"
-    ];
+    extraGroups = [ "wheel" "adbusers" ];
     shell = pkgs.zsh;
   };
 
   nixpkgs.overlays = [
-    ( self: super: {
-      uutils-coreutils = super.uutils-coreutils.override {
-        prefix = null;
-      };
+    (self: super: {
+      uutils-coreutils = super.uutils-coreutils.override { prefix = null; };
     })
-    ( self: super: rec {
-      zipNatspec = super.zip.override {
-        enableNLS = true;
-      };
-      unzipNatspec = super.unzip.override {
-        enableNLS = true;
-      };
+    (self: super: rec {
+      zipNatspec = super.zip.override { enableNLS = true; };
+      unzipNatspec = super.unzip.override { enableNLS = true; };
       mc = super.mc.override {
         zip = zipNatspec;
         unzip = unzipNatspec;
       };
     })
-    ( self: super: {
-      tesseract = super.tesseract.override {
-        enableLanguages = [
-          "eng"
-          "rus"
-        ];
-      };
+    (self: super: {
+      tesseract =
+        super.tesseract.override { enableLanguages = [ "eng" "rus" ]; };
     })
   ];
 
