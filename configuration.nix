@@ -119,6 +119,7 @@
     kafkacat
     languagetool
     libreoffice-fresh
+    libva-utils
     lsd
     lshw
     maim
@@ -191,6 +192,7 @@
     toxic
     trayer
     unzipNatspec
+    vdpauinfo
     viu
     vlc
     volumeicon
@@ -216,7 +218,6 @@
     # tuntox
     # uutils-coreutils
     # vagrant
-    # vdpauinfo
     # veloren
     # virtualbox
     # wine
