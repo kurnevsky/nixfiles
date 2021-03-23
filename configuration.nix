@@ -200,6 +200,8 @@
     websocat
     wesnoth
     wget
+    wineWowPackages.staging
+    winetricks
     wireguard-tools
     wmctrl
     wxmaxima
@@ -220,8 +222,6 @@
     # vagrant
     # veloren
     # virtualbox
-    # wine
-    # winetricks
     # tensorflow
     # sane xsane
   ];
