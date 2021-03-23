@@ -1,10 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  imports = [
-    ./hardware-configuration.nix
-    ./shadowsocks.nix
-  ];
+  imports = [ ./hardware-configuration.nix ./shadowsocks.nix ];
 
   boot.loader.grub.enable = true;
   boot.loader.grub.version = 2;
@@ -331,6 +328,10 @@
     (self: super: {
       tesseract =
         super.tesseract.override { enableLanguages = [ "eng" "rus" ]; };
+    })
+    (self: super: {
+      wineStagingFull =
+        super.wineWowPackages.full.override { wineRelease = "staging"; };
     })
   ];
 
