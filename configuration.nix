@@ -24,9 +24,12 @@
     package = pkgs.nixFlakes;
     autoOptimiseStore = true;
     extraOptions = "experimental-features = nix-command flakes";
-    binaryCaches = [ "https://cachix.cachix.org" ];
-    binaryCachePublicKeys =
-      [ "cachix.cachix.org-1:eWNHQldwUO7G2VkjpnjDbWwy4KQ/HNxht7H4SSoMckM=" ];
+    binaryCaches =
+      [ "https://cachix.cachix.org" "https://nix-community.cachix.org" ];
+    binaryCachePublicKeys = [
+      "cachix.cachix.org-1:eWNHQldwUO7G2VkjpnjDbWwy4KQ/HNxht7H4SSoMckM="
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+    ];
   };
 
   # networking.hostName = "nixos";
@@ -77,7 +80,7 @@
     editorconfig-core-c
     eiskaltdcpp
     element-desktop
-    emacs
+    emacsGcc
     exa
     exfat-utils
     extundelete
