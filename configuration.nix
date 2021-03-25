@@ -11,7 +11,7 @@
   # Define on which hard drive to install Grub.
   boot.loader.grub.device = "/dev/sda";
   boot.initrd.luks.devices.root.allowDiscards = true;
-  boot.kernelPackages = pkgs.linuxPackages_hardened;
+  boot.kernelPackages = pkgs.linuxPackages_zen;
   boot.extraModulePackages = with config.boot.kernelPackages; [
     acpi_call
     v4l2loopback
