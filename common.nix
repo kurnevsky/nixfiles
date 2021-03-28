@@ -61,7 +61,6 @@
     editorconfig-core-c
     eiskaltdcpp
     element-desktop
-    emacsGcc
     exa
     exfat-utils
     extundelete
@@ -251,6 +250,11 @@
         extraPackages = pkgs: with pkgs; [ dbus regex-compat taffybar ];
         # config = pkgs.builtins.readFile "/etc/xmonad.hs";
       };
+    };
+    emacs = {
+      enable = true;
+      package = pkgs.emacsGcc;
+      defaultEditor = true;
     };
   };
 
