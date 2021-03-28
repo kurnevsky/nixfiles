@@ -298,6 +298,7 @@
   };
 
   users.users.kurnevsky = {
+    uid = 1000;
     isNormalUser = true;
     extraGroups = [ "wheel" "adbusers" ];
     shell = pkgs.zsh;
