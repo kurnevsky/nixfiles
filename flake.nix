@@ -19,9 +19,10 @@
       system = "x86_64-linux";
       modules = [
         (args: { nixpkgs.overlays = [ inputs.emacs-overlay.overlay ]; })
-        ./common.nix
-        ./shadowsocks.nix
+        ./modules/common.nix
+        ./modules/shadowsocks.nix
         ./configuration.nix
+        ./hardware-configuration.nix
       ];
     };
   };
