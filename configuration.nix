@@ -17,7 +17,7 @@
     v4l2loopback
   ];
   boot.kernelParams = [ "zswap.enabled=1" ];
-  boot.initrd.kernelModules = [ "lz4" "z3fold" ];
+  boot.kernelModules = [ "lz4" "z3fold" ];
   systemd.services.zswap-configure = {
     description = "Configure zswap";
     wantedBy = [ "multi-user.target" ];
