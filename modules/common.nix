@@ -41,6 +41,7 @@
     astyle
     barcode
     bat
+    bind
     binutils
     btrfs-progs
     bubblewrap
