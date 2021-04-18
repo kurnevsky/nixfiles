@@ -184,8 +184,8 @@
     websocat
     wesnoth
     wget
-    wineWowPackages.staging
-    winetricks # TODO: override wine package
+    wine
+    winetricks
     wireguard-tools
     wmctrl
     wxmaxima
@@ -326,6 +326,7 @@
         super.tesseract.override { enableLanguages = [ "eng" "rus" ]; };
     })
     (self: super: {
+      wine = super.wineWowPackages.staging;
       wineStagingFull =
         super.wineWowPackages.full.override { wineRelease = "staging"; };
     })
