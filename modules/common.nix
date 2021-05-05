@@ -258,7 +258,6 @@
     };
     emacs = {
       enable = true;
-      package = pkgs.emacsGcc;
       defaultEditor = true;
     };
   };
@@ -329,6 +328,15 @@
       wine = super.wineWowPackages.staging;
       wineStagingFull =
         super.wineWowPackages.full.override { wineRelease = "staging"; };
+    })
+    ( self: super: {
+      emacs = super.emacs.overrideAttrs (oldAttrs: {
+        patches = (oldAttrs.patches or []) ++ [ (pkgs.fetchpatch {
+          name = "antifreeze.patch";
+          url = "https://github.com/emacs-mirror/emacs/commit/c36df52ff5c05826382d88ddbe3fffaa99d12597.patch";
+          sha256 = "sha256-adPgvhiHB2MyRE/8WYD5misXtuMSPElDsyrX5WOqxbQ=";
+        }) ];
+      });
     })
   ];
 }
