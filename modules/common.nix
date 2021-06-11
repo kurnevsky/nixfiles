@@ -308,6 +308,7 @@
     shell = pkgs.zsh;
   };
 
+  # system.replaceRuntimeDependencies can be used to make fast fixes
   nixpkgs.overlays = [
     (self: super: {
       uutils-coreutils = super.uutils-coreutils.override { prefix = null; };
