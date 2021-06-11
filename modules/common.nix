@@ -248,7 +248,10 @@
       # libinput.enable = true;
       layout = "us,ru";
       xkbOptions = "grp:caps_toggle,grp_led:caps,terminate:ctrl_alt_bksp";
-      displayManager.startx.enable = true;
+      displayManager = {
+        xserverArgs = ["-nolisten local"];
+        startx.enable = true;
+      };
       windowManager.xmonad = {
         enable = true;
         enableContribAndExtras = true;
