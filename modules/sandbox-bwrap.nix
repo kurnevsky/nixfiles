@@ -1,4 +1,4 @@
-{ bubblewrap, lib, writeShellScriptBin }:
+{ bubblewrap, lib, sandbox-seccomp, writeShellScriptBin }:
 
 drv:
 
@@ -76,7 +76,7 @@ writeShellScriptBin target-name ''
        --cap-drop ALL \
        \
        --seccomp 3 \
-       3< ~/.seccomp/seccomp.bpf \
+       3< ${sandbox-seccomp}/seccomp.bpf \
        \
        ${drv}/bin/${name} "$@"
 ''

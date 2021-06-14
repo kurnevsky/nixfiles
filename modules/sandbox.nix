@@ -59,6 +59,9 @@ let
   };
 in {
   nixpkgs.overlays = [
+    (self: super: {
+      sandbox-seccomp = pkgs.callPackage ./sandbox-seccomp.nix { };
+    })
     (self: super: rec {
       deadbeef-sandboxed = sandbox super.deadbeef-with-plugins deadbeef;
       deadbeef-sandboxed-net =
