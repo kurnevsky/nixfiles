@@ -14,7 +14,11 @@
   };
 
   nixpkgs.config.allowUnfreePredicate = pkg:
-    builtins.elem (lib.getName pkg) [ "symbola" "font-bh-lucidatypewriter" ];
+    builtins.elem (lib.getName pkg) [
+      "symbola"
+      "font-bh-lucidatypewriter"
+      "unrar"
+    ];
 
   # networking.hostName = "nixos";
   # networking.wireless.enable = true;
@@ -56,7 +60,8 @@
     clinfo
     coursier
     davfs2
-    deadbeef-with-plugins
+    deadbeef-sandboxed
+    deadbeef-sandboxed-net
     docker-compose
     dosbox
     dosfstools
@@ -116,7 +121,7 @@
     mono
     motion
     mpd
-    mpv
+    mpv-sandboxed
     mu
     nettools
     networkmanagerapplet
@@ -132,7 +137,7 @@
     openconnect
     openjdk
     openmw
-    p7zip
+    p7zip-sandboxed
     pandoc # TODO: it should depend on texlive
     parallel
     parcellite
@@ -175,7 +180,8 @@
     torsocks
     toxic
     trayer
-    unzipNatspec
+    unrar-sandboxed
+    unzip-natspec-sandboxed
     vdpauinfo
     viu
     vlc
@@ -249,7 +255,7 @@
       layout = "us,ru";
       xkbOptions = "grp:caps_toggle,grp_led:caps,terminate:ctrl_alt_bksp";
       displayManager = {
-        xserverArgs = ["-nolisten local"];
+        xserverArgs = [ "-nolisten local" ];
         startx.enable = true;
       };
       windowManager.xmonad = {
@@ -317,11 +323,9 @@
       uutils-coreutils = super.uutils-coreutils.override { prefix = null; };
     })
     (self: super: rec {
-      zipNatspec = super.zip.override { enableNLS = true; };
-      unzipNatspec = super.unzip.override { enableNLS = true; };
       mc = super.mc.override {
-        zip = zipNatspec;
-        unzip = unzipNatspec;
+        zip = super.zip-natspec-sandboxed;
+        unzip = super.unzip-natspec-sandboxed;
       };
     })
     (self: super: {

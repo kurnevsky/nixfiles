@@ -20,6 +20,7 @@
       modules = [
         (args: { nixpkgs.overlays = [ inputs.emacs-overlay.overlay ]; })
         ./modules/common.nix
+        ./modules/sandbox.nix
         ./modules/zswap.nix
         ./modules/shadowsocks.nix
         ./configuration.nix
