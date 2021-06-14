@@ -62,16 +62,18 @@ in {
     (self: super: {
       sandbox-seccomp = pkgs.callPackage ./sandbox-seccomp.nix { };
     })
-    (self: super: rec {
+    (self: super: {
+      zip-natspec = super.zip.override { enableNLS = true; };
+      unzip-natspec = super.unzip.override { enableNLS = true; };
+    })
+    (self: super: {
       deadbeef-sandboxed = sandbox super.deadbeef-with-plugins deadbeef;
       deadbeef-sandboxed-net =
         sandbox super.deadbeef-with-plugins (withNet deadbeef);
       p7zip-sandboxed = sandbox super.p7zip (archiver "7z");
       unrar-sandboxed = sandbox super.unrar (archiver "unrar");
-      zip-natspec = super.zip.override { enableNLS = true; };
-      unzip-natspec = super.unzip.override { enableNLS = true; };
-      zip-natspec-sandboxed = sandbox zip-natspec (archiver "zip");
-      unzip-natspec-sandboxed = sandbox unzip-natspec (archiver "unzip");
+      zip-natspec-sandboxed = sandbox super.zip-natspec (archiver "zip");
+      unzip-natspec-sandboxed = sandbox super.unzip-natspec (archiver "unzip");
       mpv-sandboxed = sandbox super.mpv mpv;
       mpv-sandboxed-net = sandbox super.mpv (withNet mpv);
     })
