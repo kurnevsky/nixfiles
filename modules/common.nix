@@ -318,15 +318,24 @@
   };
 
   # system.replaceRuntimeDependencies can be used to make fast fixes
-  nixpkgs.overlays = [
+  nixpkgs.overlays = let
+    optimizeWithFlag = pkg: flag:
+      pkg.overrideAttrs (attrs: {
+        NIX_CFLAGS_COMPILE = (attrs.NIX_CFLAGS_COMPILE or "") + " ${flag}";
+      });
+    optimizeWithFlags = pkg: flags:
+      pkgs.lib.foldl' (pkg: flag: optimizeWithFlag pkg flag) pkg flags;
+    optimizeForThisHost = pkg:
+      optimizeWithFlags pkg [ "-O3" "-march=native" "-mtune=native" ];
+  in [
     (self: super: {
       uutils-coreutils = super.uutils-coreutils.override { prefix = null; };
     })
     (self: super: rec {
-      mc = super.mc.override {
+      mc = optimizeForThisHost (super.mc.override {
         zip = super.zip-natspec-sandboxed;
         unzip = super.unzip-natspec-sandboxed;
-      };
+      });
     })
     (self: super: {
       tesseract =
