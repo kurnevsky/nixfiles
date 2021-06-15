@@ -61,6 +61,16 @@ let
       "~/.gnupg"
     ];
   };
+  pidgin = {
+    name = "pidgin";
+    x11 = true;
+    etcs = [ "fonts" "pulse" "resolv.conf" "localtime" "ssl" ];
+    pams = [ "bus" "pulse" ];
+    unshare-net = false;
+    unsetenvs = [ "MAIL" "SHELL" ];
+    ro-whitelist = [ "~/.Xauthority" "~/.gtkrc-2.0" ];
+    whitelist = [ "~/.purple" "~/.config/pulse" ];
+  };
   mpv = {
     name = "mpv";
     # unshare-pid breaks xdg-screensaver in a way that it can't detect
@@ -106,6 +116,7 @@ in {
       mpv-sandboxed = sandbox super.mpv mpv;
       mpv-sandboxed-net = sandbox super.mpv (withNet mpv);
       firefox-sandboxed = sandbox super.firefox firefox;
+      pidgin-sandboxed = sandbox super.pidgin-with-plugins pidgin;
     })
   ];
 }

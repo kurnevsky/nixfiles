@@ -145,7 +145,7 @@
     pavucontrol
     perl
     picom
-    pidgin-with-plugins
+    pidgin-sandboxed
     psmisc # for killall
     qbittorrent
     qemu

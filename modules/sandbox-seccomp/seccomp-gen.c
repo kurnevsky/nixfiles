@@ -55,7 +55,6 @@ int main(int argc, char *argv[])
   DENY_RULE(kexec_load);
   DENY_RULE(keyctl);
   DENY_RULE(lookup_dcookie);
-  DENY_RULE(mbind);
   DENY_RULE(nfsservctl);
   DENY_RULE(migrate_pages);
   DENY_RULE(modify_ldt);
