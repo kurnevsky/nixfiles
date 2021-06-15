@@ -182,6 +182,7 @@
     trayer
     unrar-sandboxed
     unzip-natspec-sandboxed
+    uutils-coreutils
     vdpauinfo
     viu
     vlc
