@@ -78,7 +78,7 @@
     fdupes
     feh
     ffmpeg
-    firefox
+    firefox-sandboxed
     fuseiso
     gdb
     ghc

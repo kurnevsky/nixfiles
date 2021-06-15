@@ -33,6 +33,34 @@ let
     whitelist = [ "~/.config/pulse" "~/.config/deadbeef" ];
     blacklist = [ "~/.gnupg" "~/.ssh" ];
   };
+  firefox = {
+    name = "firefox";
+    devs = [ "dri" ];
+    camera = true;
+    syses = [
+      # Necessary for hardware acceleration
+      "dev"
+      "devices"
+    ];
+    x11 = true;
+    pams = [ "bus" "gnupg" "pulse" ];
+    etcs = [ "fonts" "pulse" "resolv.conf" "localtime" ];
+    unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" ];
+    setenvs = [{
+      name = "SHELL";
+      value = "/run/current-system/sw/bin/bash";
+    }];
+    unshare-net = false;
+    ro-whitelist = [ "~/.password-store" "~/.config/gtk-3.0" "~/.Xauthority" ];
+    whitelist = [
+      "~/.mozilla"
+      "~/.cache/mozilla/firefox"
+      "~/Downloads"
+      "~/.cache/fontconfig"
+      "~/.config/pulse"
+      "~/.gnupg"
+    ];
+  };
   mpv = {
     name = "mpv";
     # unshare-pid breaks xdg-screensaver in a way that it can't detect
@@ -44,6 +72,7 @@ let
       "dev"
       "devices"
     ];
+    x11 = true;
     pams = [ "pulse" ];
     etcs = [ "fonts" "pulse" ];
     # xdg-screensaver creates a lockfile in /tmp
@@ -76,6 +105,7 @@ in {
       unzip-natspec-sandboxed = sandbox super.unzip-natspec (archiver "unzip");
       mpv-sandboxed = sandbox super.mpv mpv;
       mpv-sandboxed-net = sandbox super.mpv (withNet mpv);
+      firefox-sandboxed = sandbox super.firefox firefox;
     })
   ];
 }

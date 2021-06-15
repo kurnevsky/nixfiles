@@ -6,7 +6,7 @@ drv:
 , unshare-pid ? true, unshare-net ? true, unshare-uts ? true
 , unshare-cgroup ? true, etcs ? [ ], pams ? [ ], whitelist ? [ ]
 , ro-whitelist ? [ ], blacklist ? [ ], unsetenvs ? [ ], setenvs ? [ ]
-, devs ? [ ], syses ? [ ], shared-tmp ? false }:
+, devs ? [ ], syses ? [ ], shared-tmp ? false, camera ? false }:
 
 # TODO: use buildInputs to determine paths to bind
 # TODO: find out what from /run/current-system is actually needed
@@ -21,6 +21,13 @@ writeShellScriptBin target-name ''
     exec ${drv}/bin/${name} "$@"
   fi
 
+  ${lib.concatMapStringsSep "\n" (x: "test ! -e ${x} && mkdir -p ${x}")
+  (ro-whitelist ++ whitelist)}
+
+  ${lib.optionalString camera ''
+    mapfile -t video < <(find /dev -maxdepth 1 -type c -regex '/dev/video[0-9]+' | sed 's/.*/--dev-bind\n&\n&/')
+  ''}
+
   exec ${bubblewrap}/bin/bwrap \
        --ro-bind /nix /nix \
        \
@@ -30,6 +37,7 @@ writeShellScriptBin target-name ''
        ${
          lib.concatMapStringsSep " " (x: "--dev-bind /dev/${x} /dev/${x}") devs
        } \
+       ${lib.optionalString camera "\${video[@]}"} \
        \
        ${
          lib.concatMapStringsSep " " (x: "--ro-bind /sys/${x} /sys/${x}") syses
