@@ -168,7 +168,7 @@
     starship
     subversion
     taffybar
-    tdesktop
+    tdesktop-sandboxed
     telegram-purple
     tesseract
     texlive.combined.scheme-basic

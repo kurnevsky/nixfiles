@@ -159,6 +159,23 @@ let
     ro-whitelist = [ "~/.config/qt5ct" "~/.Xauthority" ];
     whitelist = [ "~/.config/tox" "~/.cache/Tox" "~/.config/pulse" ];
   };
+  tdesktop = {
+    name = "telegram-desktop";
+    devs = [ "dri" ];
+    camera = true;
+    syses = [
+      # Necessary for hardware acceleration
+      "dev"
+      "devices"
+    ];
+    x11 = true;
+    pams = [ "pulse" ];
+    etcs = [ "fonts" "pulse" "localtime" "resolv.conf" ];
+    unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" "SHELL" ];
+    unshare-net = false;
+    ro-whitelist = [ "~/.config/qt5ct" "~/.Xauthority" ];
+    whitelist = [ "~/.local/share/TelegramDesktop" "~/.config/pulse" ];
+  };
 in {
   nixpkgs.overlays = [
     (self: super: {
@@ -184,6 +201,7 @@ in {
       chromium-sandboxed = sandbox super.chromium chromium;
       pidgin-sandboxed = sandbox super.pidgin-with-plugins pidgin;
       qtox-sandboxed = sandbox super.qtox qtox;
+      tdesktop-sandboxed = sandbox super.tdesktop tdesktop;
     })
   ];
 }
