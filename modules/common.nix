@@ -185,7 +185,8 @@
     uutils-coreutils
     vdpauinfo
     viu
-    vlc
+    vlc-sandboxed
+    vlc-sandboxed-net
     volumeicon
     vscodium
     websocat

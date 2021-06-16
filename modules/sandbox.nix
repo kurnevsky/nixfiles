@@ -121,6 +121,27 @@ let
     whitelist = [ "~/.cache/fontconfig" "~/.config/pulse" ];
     blacklist = [ "~/.gnupg" "~/.ssh" ];
   };
+  vlc = {
+    name = "vlc";
+    devs = [ "dri" ];
+    syses = [
+      # Necessary for hardware acceleration
+      "dev"
+      "devices"
+    ];
+    x11 = true;
+    pams = [ "bus" "pulse" ];
+    etcs = [ "fonts" "pulse" ];
+    unsetenvs = [ "MAIL" ];
+    setenvs = [{
+      name = "SHELL";
+      value = "/run/current-system/sw/bin/bash";
+    }];
+    ro-whitelist = [ "~" ];
+    whitelist =
+      [ "~/.local/share/vlc" "~/.cache/fontconfig" "~/.config/pulse" ];
+    blacklist = [ "~/.gnupg" "~/.ssh" ];
+  };
 in {
   nixpkgs.overlays = [
     (self: super: {
@@ -140,6 +161,8 @@ in {
       unzip-natspec-sandboxed = sandbox super.unzip-natspec (archiver "unzip");
       mpv-sandboxed = sandbox super.mpv mpv;
       mpv-sandboxed-net = sandbox super.mpv (withNet mpv);
+      vlc-sandboxed = sandbox super.vlc vlc;
+      vlc-sandboxed-net = sandbox super.vlc (withNet vlc);
       firefox-sandboxed = sandbox super.firefox firefox;
       chromium-sandboxed = sandbox super.chromium chromium;
       pidgin-sandboxed = sandbox super.pidgin-with-plugins pidgin;
