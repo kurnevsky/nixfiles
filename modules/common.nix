@@ -69,7 +69,7 @@
     e2fsprogs
     editorconfig-core-c
     eiskaltdcpp
-    element-desktop
+    element-desktop-sandboxed
     exa
     exfat-utils
     extundelete

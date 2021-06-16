@@ -176,6 +176,27 @@ let
     ro-whitelist = [ "~/.config/qt5ct" "~/.Xauthority" ];
     whitelist = [ "~/.local/share/TelegramDesktop" "~/.config/pulse" ];
   };
+  element-desktop = {
+    name = "element-desktop";
+    devs = [
+      "dri"
+      # Necessary for audio
+      "snd"
+    ];
+    camera = true;
+    syses = [
+      # Necessary for hardware acceleration
+      "dev"
+      "devices"
+    ];
+    x11 = true;
+    pams = [ "pulse" ];
+    etcs = [ "fonts" "pulse" "localtime" "resolv.conf" ];
+    unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" "SHELL" ];
+    unshare-net = false;
+    ro-whitelist = [ "~/.config/gtk-3.0" "~/.Xauthority" ];
+    whitelist = [ "~/.config/Element" "~/.config/pulse" ];
+  };
 in {
   nixpkgs.overlays = [
     (self: super: {
@@ -202,6 +223,7 @@ in {
       pidgin-sandboxed = sandbox super.pidgin-with-plugins pidgin;
       qtox-sandboxed = sandbox super.qtox qtox;
       tdesktop-sandboxed = sandbox super.tdesktop tdesktop;
+      element-desktop-sandboxed = sandbox super.element-desktop element-desktop;
     })
   ];
 }
