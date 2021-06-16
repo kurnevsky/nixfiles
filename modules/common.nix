@@ -151,7 +151,7 @@
     qemu
     qrencode
     qt5ct
-    qtox
+    qtox-sandboxed
     radare2
     rclone
     ripgrep

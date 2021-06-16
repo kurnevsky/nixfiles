@@ -142,6 +142,23 @@ let
       [ "~/.local/share/vlc" "~/.cache/fontconfig" "~/.config/pulse" ];
     blacklist = [ "~/.gnupg" "~/.ssh" ];
   };
+  qtox = {
+    name = "qtox";
+    devs = [ "dri" ];
+    camera = true;
+    syses = [
+      # Necessary for hardware acceleration
+      "dev"
+      "devices"
+    ];
+    x11 = true;
+    pams = [ "pulse" ];
+    etcs = [ "fonts" "pulse" "localtime" "resolv.conf" ];
+    unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" "SHELL" ];
+    unshare-net = false;
+    ro-whitelist = [ "~/.config/qt5ct" "~/.Xauthority" ];
+    whitelist = [ "~/.config/tox" "~/.cache/Tox" "~/.config/pulse" ];
+  };
 in {
   nixpkgs.overlays = [
     (self: super: {
@@ -166,6 +183,7 @@ in {
       firefox-sandboxed = sandbox super.firefox firefox;
       chromium-sandboxed = sandbox super.chromium chromium;
       pidgin-sandboxed = sandbox super.pidgin-with-plugins pidgin;
+      qtox-sandboxed = sandbox super.qtox qtox;
     })
   ];
 }
