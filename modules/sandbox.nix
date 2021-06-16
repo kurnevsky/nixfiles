@@ -61,10 +61,35 @@ let
       "~/.gnupg"
     ];
   };
+  chromium = {
+    name = "chromium";
+    devs = [ "dri" ];
+    camera = true;
+    syses = [
+      # Necessary for hardware acceleration
+      "dev"
+      "devices"
+    ];
+    x11 = true;
+    system-bus-socket = true;
+    pams = [ "bus" "gnupg" "pulse" ];
+    etcs = [ "fonts" "pulse" "resolv.conf" "localtime" "ssl" "static/ssl" ];
+    unsetenvs = [ "MAIL" "SHELL" ];
+    unshare-net = false;
+    ro-whitelist = [ "~/.Xauthority" ];
+    whitelist = [
+      "~/.config/chromium"
+      "~/.cache/chromium"
+      "~/Downloads"
+      "~/.cache/fontconfig"
+      "~/.config/pulse"
+    ];
+    args = [ "--no-sandbox" ];
+  };
   pidgin = {
     name = "pidgin";
     x11 = true;
-    etcs = [ "fonts" "pulse" "resolv.conf" "localtime" "ssl" ];
+    etcs = [ "fonts" "pulse" "resolv.conf" "localtime" "ssl" "static/ssl" ];
     pams = [ "bus" "pulse" ];
     unshare-net = false;
     unsetenvs = [ "MAIL" "SHELL" ];
@@ -116,6 +141,7 @@ in {
       mpv-sandboxed = sandbox super.mpv mpv;
       mpv-sandboxed-net = sandbox super.mpv (withNet mpv);
       firefox-sandboxed = sandbox super.firefox firefox;
+      chromium-sandboxed = sandbox super.chromium chromium;
       pidgin-sandboxed = sandbox super.pidgin-with-plugins pidgin;
     })
   ];

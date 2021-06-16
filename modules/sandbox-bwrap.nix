@@ -6,7 +6,8 @@ drv:
 , unshare-pid ? true, unshare-net ? true, unshare-uts ? true
 , unshare-cgroup ? true, etcs ? [ ], pams ? [ ], whitelist ? [ ]
 , ro-whitelist ? [ ], blacklist ? [ ], unsetenvs ? [ ], setenvs ? [ ]
-, devs ? [ ], syses ? [ ], shared-tmp ? false, camera ? false }:
+, devs ? [ ], syses ? [ ], shared-tmp ? false, camera ? false, args ? [ ]
+, system-bus-socket ? false }:
 
 # TODO: use buildInputs to determine paths to bind
 # TODO: find out what from /run/current-system is actually needed
@@ -47,6 +48,10 @@ writeShellScriptBin target-name ''
        --ro-bind /run/current-system /run/current-system \
        \
        ${
+         lib.optionalString system-bus-socket
+         "--bind /run/dbus/system_bus_socket /run/dbus/system_bus_socket"
+       } \
+       ${
          lib.concatMapStringsSep " "
          (x: "--bind /run/user/$UID/${x} /run/user/$UID/${x}") pams
        } \
@@ -86,5 +91,5 @@ writeShellScriptBin target-name ''
        --seccomp 3 \
        3< ${sandbox-seccomp}/seccomp.bpf \
        \
-       ${drv}/bin/${name} "$@"
+       ${drv}/bin/${name} ${lib.concatStringsSep " " args} "$@"
 ''

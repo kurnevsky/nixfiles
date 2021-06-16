@@ -56,7 +56,7 @@
     calibre
     cargo
     cataclysm-dda
-    chromium
+    chromium-sandboxed
     clinfo
     coursier
     davfs2
