@@ -73,7 +73,7 @@ let
     x11 = true;
     system-bus-socket = true;
     pams = [ "bus" "gnupg" "pulse" ];
-    etcs = [ "fonts" "pulse" "resolv.conf" "localtime" "ssl" "static/ssl" ];
+    etcs = [ "fonts" "pulse" "resolv.conf" "localtime" "ssl" ];
     unsetenvs = [ "MAIL" "SHELL" ];
     unshare-net = false;
     ro-whitelist = [ "~/.Xauthority" ];
@@ -89,7 +89,7 @@ let
   pidgin = {
     name = "pidgin";
     x11 = true;
-    etcs = [ "fonts" "pulse" "resolv.conf" "localtime" "ssl" "static/ssl" ];
+    etcs = [ "fonts" "pulse" "resolv.conf" "localtime" "ssl" ];
     pams = [ "bus" "pulse" ];
     unshare-net = false;
     unsetenvs = [ "MAIL" "SHELL" ];

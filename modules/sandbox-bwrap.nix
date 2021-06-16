@@ -57,7 +57,9 @@ writeShellScriptBin target-name ''
        } \
        \
        ${
-         lib.concatMapStringsSep " " (x: "--ro-bind /etc/${x} /etc/${x}") etcs
+         lib.concatMapStringsSep " " (x:
+           "--ro-bind /etc/${x} /etc/${x} --ro-bind /etc/static/${x} /etc/static/${x}")
+         etcs
        } \
        \
        ${lib.optionalString shared-tmp "--bind /tmp /tmp"} \
