@@ -76,7 +76,7 @@
     fbreader
     fd
     fdupes
-    feh
+    feh-sandboxed
     ffmpeg
     firefox-sandboxed
     fuseiso
@@ -97,7 +97,7 @@
     hunspell
     hunspellDicts.en_US
     hunspellDicts.ru_RU
-    imv
+    imv-sandboxed
     inkscape
     innoextract
     iodine
@@ -147,7 +147,7 @@
     picom
     pidgin-sandboxed
     psmisc # for killall
-    qbittorrent
+    qbittorrent-sandboxed
     qemu
     qrencode
     qt5ct
@@ -206,7 +206,7 @@
     xterm
     you-get
     youtube-dl
-    zathura
+    zathura-sandboxed
     zbar
     # findimagedupes
     # tuntox

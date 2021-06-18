@@ -19,6 +19,14 @@ let
     whitelist = [ "~" ];
     blacklist = [ "~/.gnupg" "~/.ssh" ];
   };
+  viewer = name: {
+    inherit name;
+    x11 = true;
+    etcs = [ "fonts" ];
+    unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "XDG_RUNTIME_DIR" "MAIL" "SHELL" ];
+    ro-whitelist = [ "~" ];
+    blacklist = [ "~/.gnupg" "~/.ssh" ];
+  };
   deadbeef = {
     name = "deadbeef";
     extra-deps = with pkgs; [
@@ -276,6 +284,14 @@ in {
       tdesktop-sandboxed = sandbox super.tdesktop tdesktop;
       element-desktop-sandboxed = sandbox super.element-desktop element-desktop;
       qbittorrent-sandboxed = sandbox super.qbittorrent qbittorrent;
+      feh-sandboxed = sandbox super.feh (viewer "feh");
+      imv-sandboxed = sandbox super.imv ((viewer "imv") // {
+        opengl = true;
+        extra-deps = with pkgs; [ mesa_drivers ];
+      });
+      zathura-sandboxed = sandbox super.zathura ((viewer "zathura") // {
+        whitelist = [ "~/.local/share/zathura" "~/Print" ];
+      });
     })
   ];
 }
