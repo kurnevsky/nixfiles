@@ -1,4 +1,4 @@
-{ bubblewrap, lib, sandbox-seccomp, writeShellScriptBin }:
+{ bubblewrap, lib, sandbox-seccomp, writeShellScriptBin, closureInfo }:
 
 drv:
 
@@ -7,12 +7,10 @@ drv:
 , unshare-cgroup ? true, etcs ? [ ], pams ? [ ], whitelist ? [ ]
 , ro-whitelist ? [ ], blacklist ? [ ], unsetenvs ? [ ], setenvs ? [ ]
 , devs ? [ ], syses ? [ ], shared-tmp ? false, camera ? false, args ? [ ]
-, system-bus-socket ? false }:
+, system-bus-socket ? false, extra-deps ? [ ] }:
 
-# TODO: use buildInputs to determine paths to bind
-# TODO: find out what from /run/current-system is actually needed
-
-writeShellScriptBin target-name ''
+let cinfo = closureInfo { rootPaths = [ drv ] ++ extra-deps; };
+in writeShellScriptBin target-name ''
   set -euETo pipefail
   shopt -s inherit_errexit
 
@@ -29,8 +27,10 @@ writeShellScriptBin target-name ''
     mapfile -t video < <(find /dev -maxdepth 1 -type c -regex '/dev/video[0-9]+' | sed 's/.*/--dev-bind\n&\n&/')
   ''}
 
+  mapfile -t deps < <(cat ${cinfo}/store-paths | sed 's/.*/--ro-bind\n&\n&/')
+
   exec ${bubblewrap}/bin/bwrap \
-       --ro-bind /nix /nix \
+       ''${deps[@]} \
        \
        --proc /proc \
        \
@@ -45,7 +45,7 @@ writeShellScriptBin target-name ''
        } \
        \
        --tmpfs /run \
-       --ro-bind /run/current-system /run/current-system \
+       --ro-bind /run/current-system/sw /run/current-system/sw \
        \
        ${
          lib.optionalString system-bus-socket
@@ -57,9 +57,7 @@ writeShellScriptBin target-name ''
        } \
        \
        ${
-         lib.concatMapStringsSep " " (x:
-           "--ro-bind /etc/${x} /etc/${x} --ro-bind /etc/static/${x} /etc/static/${x}")
-         etcs
+         lib.concatMapStringsSep " " (x: "--ro-bind /etc/${x} /etc/${x}") etcs
        } \
        \
        ${lib.optionalString shared-tmp "--bind /tmp /tmp"} \

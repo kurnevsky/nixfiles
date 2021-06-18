@@ -21,6 +21,11 @@ let
   };
   deadbeef = {
     name = "deadbeef";
+    extra-deps = with pkgs; [
+      gnome-themes-extra
+      gnome3.adwaita-icon-theme
+      hicolor-icon-theme
+    ];
     pams = [
       # Necessary for MPRIS2
       "bus"
@@ -44,7 +49,13 @@ let
     ];
     x11 = true;
     pams = [ "bus" "gnupg" "pulse" ];
-    etcs = [ "fonts" "pulse" "resolv.conf" "localtime" ];
+    etcs = [
+      "fonts"
+      "pulse"
+      "resolv.conf"
+      "localtime"
+      "ssl/certs/ca-certificates.crt"
+    ];
     unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" ];
     setenvs = [{
       name = "SHELL";
@@ -73,7 +84,13 @@ let
     x11 = true;
     system-bus-socket = true;
     pams = [ "bus" "gnupg" "pulse" ];
-    etcs = [ "fonts" "pulse" "resolv.conf" "localtime" "ssl" ];
+    etcs = [
+      "fonts"
+      "pulse"
+      "resolv.conf"
+      "localtime"
+      "ssl/certs/ca-certificates.crt"
+    ];
     unsetenvs = [ "MAIL" "SHELL" ];
     unshare-net = false;
     ro-whitelist = [ "~/.Xauthority" ];
@@ -88,8 +105,19 @@ let
   };
   pidgin = {
     name = "pidgin";
+    extra-deps = with pkgs; [
+      gnome-themes-extra
+      gnome3.adwaita-icon-theme
+      hicolor-icon-theme
+    ];
     x11 = true;
-    etcs = [ "fonts" "pulse" "resolv.conf" "localtime" "ssl" ];
+    etcs = [
+      "fonts"
+      "pulse"
+      "resolv.conf"
+      "localtime"
+      "ssl/certs/ca-certificates.crt"
+    ];
     pams = [ "bus" "pulse" ];
     unshare-net = false;
     unsetenvs = [ "MAIL" "SHELL" ];
