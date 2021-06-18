@@ -225,6 +225,29 @@ let
     ro-whitelist = [ "~/.config/gtk-3.0" "~/.Xauthority" ];
     whitelist = [ "~/.config/Element" "~/.config/pulse" ];
   };
+  qbittorrent = {
+    name = "qbittorrent";
+    extra-deps = with pkgs; [ qt5ct ];
+    devs = [ "dri" ];
+    syses = [
+      # Necessary for hardware acceleration
+      "dev"
+      "devices"
+    ];
+    x11 = true;
+    pams = [ "bus" ];
+    etcs = [ "fonts" "localtime" "resolv.conf" ];
+    unsetenvs = [ "MAIL" "SHELL" ];
+    unshare-net = false;
+    ro-whitelist = [ "~/.config/qt5ct" "~/.Xauthority" ];
+    whitelist = [
+      "~/.local/share/data/qBittorrent"
+      "~/.config/qBittorrent"
+      "~/.cache/qBittorrent"
+      "~/Torrents"
+      "~/movies"
+    ];
+  };
 in {
   nixpkgs.overlays = [
     (self: super: {
@@ -252,6 +275,7 @@ in {
       qtox-sandboxed = sandbox super.qtox qtox;
       tdesktop-sandboxed = sandbox super.tdesktop tdesktop;
       element-desktop-sandboxed = sandbox super.element-desktop element-desktop;
+      qbittorrent-sandboxed = sandbox super.qbittorrent qbittorrent;
     })
   ];
 }
