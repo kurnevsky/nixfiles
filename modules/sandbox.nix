@@ -269,7 +269,14 @@ in {
       deadbeef-sandboxed = sandbox super.deadbeef-with-plugins deadbeef;
       deadbeef-sandboxed-net =
         sandbox super.deadbeef-with-plugins (withNet deadbeef);
-      p7zip-sandboxed = sandbox super.p7zip (archiver "7z");
+      p7zip-sandboxed = pkgs.symlinkJoin {
+        name = "p7zip";
+        paths = [
+          (sandbox super.p7zip (archiver "7z"))
+          (sandbox super.p7zip (archiver "7za"))
+          (sandbox super.p7zip (archiver "7zr"))
+        ];
+      };
       unrar-sandboxed = sandbox super.unrar (archiver "unrar");
       zip-natspec-sandboxed = sandbox super.zip-natspec (archiver "zip");
       unzip-natspec-sandboxed = sandbox super.unzip-natspec (archiver "unzip");
