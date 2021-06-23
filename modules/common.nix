@@ -192,7 +192,7 @@
     websocat
     wesnoth
     wget
-    wine
+    wine-staging-sandboxed
     winetricks
     wireguard-tools
     wmctrl
@@ -343,11 +343,7 @@
       tesseract =
         super.tesseract.override { enableLanguages = [ "eng" "rus" ]; };
     })
-    (self: super: {
-      wine = super.wineWowPackages.staging;
-      wineStagingFull =
-        super.wineWowPackages.full.override { wineRelease = "staging"; };
-    })
+    (self: super: { wine = super.wineWowPackages.staging; })
     (self: super: {
       emacs = super.emacs.overrideAttrs (oldAttrs: {
         patches = (oldAttrs.patches or [ ]) ++ [

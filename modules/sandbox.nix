@@ -256,6 +256,37 @@ let
       "~/movies"
     ];
   };
+  wine = name: {
+    inherit name;
+    # coreutils-full is needed because it's system default stdenv
+    # and wine has scripts that rely on stdenv being in PATH
+    extra-deps = with pkgs; [ coreutils-full mesa_drivers ];
+    devs = [ "dri" ];
+    syses = [
+      # Necessary for hardware acceleration
+      "dev"
+      "devices"
+    ];
+    x11 = true;
+    pams = [ "bus" "pulse" ];
+    etcs = [ "fonts" "localtime" "resolv.conf" ];
+    opengl = true;
+    unsetenvs = [ "MAIL" ];
+    setenvs = [{
+      name = "SHELL";
+      value = "/run/current-system/sw/bin/bash";
+    }];
+    unshare-net = false;
+    unshare-cgroup = false;
+    seccomp = false;
+    ro-whitelist = [ "~/.Xauthority" ];
+    whitelist = [
+      "\${WINEPREFIX:-~/.wine}"
+      "~/.cache/wine"
+      "~/.cache/winetricks"
+      "~/.config/pulse"
+    ];
+  };
 in {
   nixpkgs.overlays = [
     (self: super: {
@@ -264,6 +295,8 @@ in {
     (self: super: {
       zip-natspec = super.zip.override { enableNLS = true; };
       unzip-natspec = super.unzip.override { enableNLS = true; };
+      wine-staging-full =
+        super.wineWowPackages.full.override { wineRelease = "staging"; };
     })
     (self: super: {
       deadbeef-sandboxed = sandbox super.deadbeef-with-plugins deadbeef;
@@ -299,6 +332,20 @@ in {
       zathura-sandboxed = sandbox super.zathura ((viewer "zathura") // {
         whitelist = [ "~/.local/share/zathura" "~/Print" ];
       });
+      wine-staging-sandboxed = pkgs.symlinkJoin {
+        name = "wine";
+        paths = [
+          (sandbox super.wineWowPackages.staging (wine "wine"))
+          (sandbox super.wineWowPackages.staging (wine "winecfg"))
+        ];
+      };
+      wine-staging-full-sandboxed = pkgs.symlinkJoin {
+        name = "wine";
+        paths = [
+          (sandbox super.wine-staging-full (wine "wine"))
+          (sandbox super.wine-staging-full (wine "winecfg"))
+        ];
+      };
     })
   ];
 }

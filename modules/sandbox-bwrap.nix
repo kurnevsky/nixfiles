@@ -7,7 +7,7 @@ drv:
 , unshare-cgroup ? true, etcs ? [ ], pams ? [ ], whitelist ? [ ]
 , ro-whitelist ? [ ], blacklist ? [ ], unsetenvs ? [ ], setenvs ? [ ]
 , devs ? [ ], syses ? [ ], shared-tmp ? false, camera ? false, args ? [ ]
-, system-bus-socket ? false, extra-deps ? [ ], opengl ? false }:
+, system-bus-socket ? false, extra-deps ? [ ], opengl ? false, seccomp ? true }:
 
 let cinfo = closureInfo { rootPaths = [ drv ] ++ extra-deps; };
 in writeShellScriptBin target-name ''
@@ -92,8 +92,10 @@ in writeShellScriptBin target-name ''
        \
        --cap-drop ALL \
        \
-       --seccomp 3 \
-       3< ${sandbox-seccomp}/seccomp.bpf \
+       ${
+         lib.optionalString seccomp
+         "--seccomp 3 3< ${sandbox-seccomp}/seccomp.bpf"
+       } \
        \
        ${drv}/bin/${name} ${lib.concatStringsSep " " args} "$@"
 ''
