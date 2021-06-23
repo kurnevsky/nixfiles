@@ -106,7 +106,7 @@
     jq
     kafkacat
     languagetool
-    libreoffice-fresh
+    libreoffice-fresh-sandboxed
     libva-utils
     lsd
     lshw

@@ -324,6 +324,19 @@ let
       "~/.config/pulse"
     ];
   };
+  libreoffice = name: {
+    inherit name;
+    # coreutils-full, gnugrep, gnused are needed because it's
+    # system default stdenv and wine has scripts that rely on
+    # stdenv being in PATH
+    extra-deps = with pkgs; [ coreutils-full gnugrep gnused ];
+    x11 = true;
+    etcs = [ "fonts" "localtime" "pulse" "passwd" ];
+    pams = [ "bus" "pulse" ];
+    unsetenvs = [ "MAIL" "SHELL" ];
+    whitelist = [ "~" ];
+    blacklist = [ "~/.gnupg" "~/.ssh" ];
+  };
 in {
   nixpkgs.overlays = [
     (self: super: {
@@ -399,6 +412,13 @@ in {
           (sandbox super.wine-staging-full (wine "wine"))
           (sandbox super.wine-staging-full (withNet (wine "wine")))
           (sandbox super.wine-staging-full (wine "winecfg"))
+        ];
+      };
+      libreoffice-fresh-sandboxed = pkgs.symlinkJoin {
+        name = "libreoffice";
+        paths = [
+          (sandbox super.libreoffice-fresh (libreoffice "soffice"))
+          (sandbox super.libreoffice-fresh (libreoffice "libreoffice"))
         ];
       };
     })
