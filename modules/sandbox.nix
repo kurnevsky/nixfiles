@@ -4,6 +4,7 @@ let
   sandbox = pkgs.callPackage ./sandbox-bwrap.nix { };
   withNet = attrs:
     attrs // {
+      target-name = attrs.name + "-net";
       unshare-net = false;
       etcs = attrs.etcs ++ [ "resolv.conf" ];
     };
@@ -269,14 +270,13 @@ let
     ];
     x11 = true;
     pams = [ "bus" "pulse" ];
-    etcs = [ "fonts" "localtime" "resolv.conf" ];
+    etcs = [ "fonts" "localtime" ];
     opengl = true;
     unsetenvs = [ "MAIL" ];
     setenvs = [{
       name = "SHELL";
       value = "/run/current-system/sw/bin/bash";
     }];
-    unshare-net = false;
     unshare-cgroup = false;
     seccomp = false;
     ro-whitelist = [ "~/.Xauthority" ];
@@ -299,9 +299,13 @@ in {
         super.wineWowPackages.full.override { wineRelease = "staging"; };
     })
     (self: super: {
-      deadbeef-sandboxed = sandbox super.deadbeef-with-plugins deadbeef;
-      deadbeef-sandboxed-net =
-        sandbox super.deadbeef-with-plugins (withNet deadbeef);
+      deadbeef-sandboxed = pkgs.symlinkJoin {
+        name = "deadbeef";
+        paths = [
+          (sandbox super.deadbeef-with-plugins deadbeef)
+          (sandbox super.deadbeef-with-plugins (withNet deadbeef))
+        ];
+      };
       p7zip-sandboxed = pkgs.symlinkJoin {
         name = "p7zip";
         paths = [
@@ -313,10 +317,14 @@ in {
       unrar-sandboxed = sandbox super.unrar (archiver "unrar");
       zip-natspec-sandboxed = sandbox super.zip-natspec (archiver "zip");
       unzip-natspec-sandboxed = sandbox super.unzip-natspec (archiver "unzip");
-      mpv-sandboxed = sandbox super.mpv mpv;
-      mpv-sandboxed-net = sandbox super.mpv (withNet mpv);
-      vlc-sandboxed = sandbox super.vlc vlc;
-      vlc-sandboxed-net = sandbox super.vlc (withNet vlc);
+      mpv-sandboxed = pkgs.symlinkJoin {
+        name = "mpv";
+        paths = [ (sandbox super.mpv mpv) (sandbox super.mpv (withNet mpv)) ];
+      };
+      vlc-sandboxed = pkgs.symlinkJoin {
+        name = "vlc";
+        paths = [ (sandbox super.vlc vlc) (sandbox super.vlc (withNet vlc)) ];
+      };
       firefox-sandboxed = sandbox super.firefox firefox;
       chromium-sandboxed = sandbox super.chromium chromium;
       pidgin-sandboxed = sandbox super.pidgin-with-plugins pidgin;
@@ -336,6 +344,7 @@ in {
         name = "wine";
         paths = [
           (sandbox super.wineWowPackages.staging (wine "wine"))
+          (sandbox super.wineWowPackages.staging (withNet (wine "wine")))
           (sandbox super.wineWowPackages.staging (wine "winecfg"))
         ];
       };
@@ -343,6 +352,7 @@ in {
         name = "wine";
         paths = [
           (sandbox super.wine-staging-full (wine "wine"))
+          (sandbox super.wine-staging-full (withNet (wine "wine")))
           (sandbox super.wine-staging-full (wine "winecfg"))
         ];
       };

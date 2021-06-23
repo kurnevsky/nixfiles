@@ -61,7 +61,6 @@
     coursier
     davfs2
     deadbeef-sandboxed
-    deadbeef-sandboxed-net
     docker-compose
     dosbox
     dosfstools
@@ -186,7 +185,6 @@
     vdpauinfo
     viu
     vlc-sandboxed
-    vlc-sandboxed-net
     volumeicon
     vscodium
     websocat
