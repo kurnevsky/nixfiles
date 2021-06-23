@@ -76,7 +76,7 @@
     fd
     fdupes
     feh-sandboxed
-    ffmpeg
+    ffmpeg-full-sandboxed
     firefox-sandboxed
     fuseiso
     gdb

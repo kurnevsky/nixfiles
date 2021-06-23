@@ -257,6 +257,43 @@ let
       "~/movies"
     ];
   };
+  ffmpeg = {
+    name = "ffmpeg";
+    devs = [ "dri" ];
+    camera = true;
+    syses = [
+      # Necessary for hardware acceleration
+      "dev"
+      "devices"
+    ];
+    whitelist = [ "~" ];
+    blacklist = [ "~/.gnupg" "~/.ssh" ];
+    unsetenvs = [
+      "DBUS_SESSION_BUS_ADDRESS"
+      "XDG_RUNTIME_DIR"
+      "XAUTHORITY"
+      "MAIL"
+      "SHELL"
+    ];
+  };
+  ffprobe = {
+    name = "ffprobe";
+    devs = [ "dri" ];
+    syses = [
+      # Necessary for hardware acceleration
+      "dev"
+      "devices"
+    ];
+    ro-whitelist = [ "~" ];
+    blacklist = [ "~/.gnupg" "~/.ssh" ];
+    unsetenvs = [
+      "DBUS_SESSION_BUS_ADDRESS"
+      "XDG_RUNTIME_DIR"
+      "XAUTHORITY"
+      "MAIL"
+      "SHELL"
+    ];
+  };
   wine = name: {
     inherit name;
     # coreutils-full is needed because it's system default stdenv
@@ -340,6 +377,14 @@ in {
       zathura-sandboxed = sandbox super.zathura ((viewer "zathura") // {
         whitelist = [ "~/.local/share/zathura" "~/Print" ];
       });
+      ffmpeg-full-sandboxed = pkgs.symlinkJoin {
+        name = "ffmpeg";
+        paths = [
+          (sandbox super.ffmpeg-full ffmpeg)
+          (sandbox super.ffmpeg-full ffprobe)
+          super.ffmpeg-full
+        ];
+      };
       wine-staging-sandboxed = pkgs.symlinkJoin {
         name = "wine";
         paths = [
