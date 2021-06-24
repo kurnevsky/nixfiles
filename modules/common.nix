@@ -36,6 +36,7 @@
   environment.systemPackages = with pkgs; [
     (agda.withPackages (pkgs: with pkgs; [ standard-library ]))
     (pass.withExtensions (ext: with ext; [ pass-otp ]))
+    (pkgs.callPackage ./xcb-client-id.nix { })
     R
     aircrack-ng
     alacritty
