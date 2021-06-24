@@ -242,7 +242,13 @@ let
     ];
     x11 = true;
     pams = [ "pulse" ];
-    etcs = [ "fonts" "pulse" "localtime" "resolv.conf" ];
+    etcs = [
+      "fonts"
+      "pulse"
+      "localtime"
+      "resolv.conf"
+      "ssl/certs/ca-certificates.crt"
+    ];
     unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" "SHELL" ];
     unshare-net = false;
     ro-whitelist = [ "~/.config/gtk-3.0/" "~/.Xauthority" ];
@@ -388,6 +394,33 @@ let
       "~/.config/pulse/"
     ];
   };
+  skypeforlinux = {
+    name = "skypeforlinux";
+    devs = [
+      "dri"
+      # Necessary for audio
+      "snd"
+    ];
+    camera = true;
+    syses = [
+      # Necessary for hardware acceleration
+      "dev"
+      "devices"
+    ];
+    x11 = true;
+    pams = [ "pulse" ];
+    etcs = [
+      "fonts"
+      "pulse"
+      "localtime"
+      "resolv.conf"
+      "ssl/certs/ca-certificates.crt"
+    ];
+    unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" "SHELL" ];
+    unshare-net = false;
+    ro-whitelist = [ "~/.config/gtk-3.0/" "~/.Xauthority" ];
+    whitelist = [ "~/.config/skypeforlinux/" "~/.config/pulse/" ];
+  };
 in {
   nixpkgs.overlays = [
     (self: super: {
@@ -476,6 +509,7 @@ in {
       tor-browser-bundle-bin-wrapped =
         sandbox super.tor-browser-bundle-bin tor-browser;
       zoom-us-sandboxed = sandbox super.zoom-us zoom;
+      skypeforlinux-sandboxed = sandbox super.skypeforlinux skypeforlinux;
     })
   ];
 }
