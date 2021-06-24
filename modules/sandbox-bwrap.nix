@@ -21,7 +21,7 @@ in writeShellScriptBin target-name ''
   fi
 
   ${lib.concatMapStringsSep "\n" (x: "test ! -e ${x} && mkdir -p ${x}")
-  (ro-whitelist ++ whitelist)}
+  (lib.filter (s: builtins.match ".*/" s != null) (ro-whitelist ++ whitelist))}
 
   ${lib.optionalString camera ''
     mapfile -t video < <(find /dev -maxdepth 1 -type c -regex '/dev/video[0-9]+' | sed 's/.*/--dev-bind\n&\n&/')

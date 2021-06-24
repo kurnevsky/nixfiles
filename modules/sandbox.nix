@@ -17,16 +17,16 @@ let
       "MAIL"
       "SHELL"
     ];
-    whitelist = [ "~" ];
-    blacklist = [ "~/.gnupg" "~/.ssh" ];
+    whitelist = [ "~/" ];
+    blacklist = [ "~/.gnupg/" "~/.ssh/" ];
   };
   viewer = name: {
     inherit name;
     x11 = true;
     etcs = [ "fonts" ];
     unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "XDG_RUNTIME_DIR" "MAIL" "SHELL" ];
-    ro-whitelist = [ "~" ];
-    blacklist = [ "~/.gnupg" "~/.ssh" ];
+    ro-whitelist = [ "~/" ];
+    blacklist = [ "~/.gnupg/" "~/.ssh/" ];
   };
   deadbeef = {
     name = "deadbeef";
@@ -43,9 +43,9 @@ let
     etcs = [ "fonts" "pulse" ];
     x11 = true;
     unsetenvs = [ "MAIL" "SHELL" ];
-    ro-whitelist = [ "~" ];
-    whitelist = [ "~/.config/pulse" "~/.config/deadbeef" ];
-    blacklist = [ "~/.gnupg" "~/.ssh" ];
+    ro-whitelist = [ "~/" ];
+    whitelist = [ "~/.config/pulse/" "~/.config/deadbeef/" ];
+    blacklist = [ "~/.gnupg/" "~/.ssh/" ];
   };
   firefox = {
     name = "firefox";
@@ -71,14 +71,15 @@ let
       value = "/run/current-system/sw/bin/bash";
     }];
     unshare-net = false;
-    ro-whitelist = [ "~/.password-store" "~/.config/gtk-3.0" "~/.Xauthority" ];
+    ro-whitelist =
+      [ "~/.password-store/" "~/.config/gtk-3.0/" "~/.Xauthority" ];
     whitelist = [
-      "~/.mozilla"
-      "~/.cache/mozilla/firefox"
-      "~/Downloads"
-      "~/.cache/fontconfig"
-      "~/.config/pulse"
-      "~/.gnupg"
+      "~/.mozilla/"
+      "~/.cache/mozilla/firefox/"
+      "~/Downloads/"
+      "~/.cache/fontconfig/"
+      "~/.config/pulse/"
+      "~/.gnupg/"
     ];
   };
   chromium = {
@@ -104,11 +105,11 @@ let
     unshare-net = false;
     ro-whitelist = [ "~/.Xauthority" ];
     whitelist = [
-      "~/.config/chromium"
-      "~/.cache/chromium"
-      "~/Downloads"
-      "~/.cache/fontconfig"
-      "~/.config/pulse"
+      "~/.config/chromium/"
+      "~/.cache/chromium/"
+      "~/Downloads/"
+      "~/.cache/fontconfig/"
+      "~/.config/pulse/"
     ];
     args = [ "--no-sandbox" ];
   };
@@ -131,7 +132,7 @@ let
     unshare-net = false;
     unsetenvs = [ "MAIL" "SHELL" ];
     ro-whitelist = [ "~/.Xauthority" "~/.gtkrc-2.0" ];
-    whitelist = [ "~/.purple" "~/.config/pulse" ];
+    whitelist = [ "~/.purple/" "~/.config/pulse/" ];
   };
   mpv = {
     name = "mpv";
@@ -154,9 +155,9 @@ let
       name = "SHELL";
       value = "/run/current-system/sw/bin/bash";
     }];
-    ro-whitelist = [ "~" ];
-    whitelist = [ "~/.cache/fontconfig" "~/.config/pulse" ];
-    blacklist = [ "~/.gnupg" "~/.ssh" ];
+    ro-whitelist = [ "~/" ];
+    whitelist = [ "~/.cache/fontconfig/" "~/.config/pulse/" ];
+    blacklist = [ "~/.gnupg/" "~/.ssh/" ];
   };
   vlc = {
     name = "vlc";
@@ -174,10 +175,10 @@ let
       name = "SHELL";
       value = "/run/current-system/sw/bin/bash";
     }];
-    ro-whitelist = [ "~" ];
+    ro-whitelist = [ "~/" ];
     whitelist =
-      [ "~/.local/share/vlc" "~/.cache/fontconfig" "~/.config/pulse" ];
-    blacklist = [ "~/.gnupg" "~/.ssh" ];
+      [ "~/.local/share/vlc/" "~/.cache/fontconfig/" "~/.config/pulse/" ];
+    blacklist = [ "~/.gnupg/" "~/.ssh/" ];
   };
   qtox = {
     name = "qtox";
@@ -193,8 +194,8 @@ let
     etcs = [ "fonts" "pulse" "localtime" "resolv.conf" ];
     unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" "SHELL" ];
     unshare-net = false;
-    ro-whitelist = [ "~/.config/qt5ct" "~/.Xauthority" ];
-    whitelist = [ "~/.config/tox" "~/.cache/Tox" "~/.config/pulse" ];
+    ro-whitelist = [ "~/.config/qt5ct/" "~/.Xauthority" ];
+    whitelist = [ "~/.config/tox/" "~/.cache/Tox/" "~/.config/pulse/" ];
   };
   toxic = {
     name = "toxic";
@@ -207,7 +208,7 @@ let
     unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" "SHELL" ];
     unshare-net = false;
     ro-whitelist = [ "~/.Xauthority" ];
-    whitelist = [ "~/.config/tox" "~/.config/pulse" ];
+    whitelist = [ "~/.config/tox/" "~/.config/pulse/" ];
   };
   tdesktop = {
     name = "telegram-desktop";
@@ -223,8 +224,8 @@ let
     etcs = [ "fonts" "pulse" "localtime" "resolv.conf" ];
     unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" "SHELL" ];
     unshare-net = false;
-    ro-whitelist = [ "~/.config/qt5ct" "~/.Xauthority" ];
-    whitelist = [ "~/.local/share/TelegramDesktop" "~/.config/pulse" ];
+    ro-whitelist = [ "~/.config/qt5ct/" "~/.Xauthority" ];
+    whitelist = [ "~/.local/share/TelegramDesktop/" "~/.config/pulse/" ];
   };
   element-desktop = {
     name = "element-desktop";
@@ -244,8 +245,8 @@ let
     etcs = [ "fonts" "pulse" "localtime" "resolv.conf" ];
     unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" "SHELL" ];
     unshare-net = false;
-    ro-whitelist = [ "~/.config/gtk-3.0" "~/.Xauthority" ];
-    whitelist = [ "~/.config/Element" "~/.config/pulse" ];
+    ro-whitelist = [ "~/.config/gtk-3.0/" "~/.Xauthority" ];
+    whitelist = [ "~/.config/Element/" "~/.config/pulse/" ];
   };
   qbittorrent = {
     name = "qbittorrent";
@@ -261,13 +262,13 @@ let
     etcs = [ "fonts" "localtime" "resolv.conf" ];
     unsetenvs = [ "MAIL" "SHELL" ];
     unshare-net = false;
-    ro-whitelist = [ "~/.config/qt5ct" "~/.Xauthority" ];
+    ro-whitelist = [ "~/.config/qt5ct/" "~/.Xauthority" ];
     whitelist = [
-      "~/.local/share/data/qBittorrent"
-      "~/.config/qBittorrent"
-      "~/.cache/qBittorrent"
-      "~/Torrents"
-      "~/movies"
+      "~/.local/share/data/qBittorrent/"
+      "~/.config/qBittorrent/"
+      "~/.cache/qBittorrent/"
+      "~/Torrents/"
+      "~/movies/"
     ];
   };
   ffmpeg = {
@@ -279,8 +280,8 @@ let
       "dev"
       "devices"
     ];
-    whitelist = [ "~" ];
-    blacklist = [ "~/.gnupg" "~/.ssh" ];
+    whitelist = [ "~/" ];
+    blacklist = [ "~/.gnupg/" "~/.ssh/" ];
     unsetenvs = [
       "DBUS_SESSION_BUS_ADDRESS"
       "XDG_RUNTIME_DIR"
@@ -297,8 +298,8 @@ let
       "dev"
       "devices"
     ];
-    ro-whitelist = [ "~" ];
-    blacklist = [ "~/.gnupg" "~/.ssh" ];
+    ro-whitelist = [ "~/" ];
+    blacklist = [ "~/.gnupg/" "~/.ssh/" ];
     unsetenvs = [
       "DBUS_SESSION_BUS_ADDRESS"
       "XDG_RUNTIME_DIR"
@@ -331,10 +332,10 @@ let
     seccomp = false;
     ro-whitelist = [ "~/.Xauthority" ];
     whitelist = [
-      "\${WINEPREFIX:-~/.wine}"
-      "~/.cache/wine"
-      "~/.cache/winetricks"
-      "~/.config/pulse"
+      "\${WINEPREFIX:-~/.wine/}"
+      "~/.cache/wine/"
+      "~/.cache/winetricks/"
+      "~/.config/pulse/"
     ];
   };
   libreoffice = name: {
@@ -347,8 +348,8 @@ let
     etcs = [ "fonts" "localtime" "pulse" "passwd" ];
     pams = [ "bus" "pulse" ];
     unsetenvs = [ "MAIL" "SHELL" ];
-    whitelist = [ "~" ];
-    blacklist = [ "~/.gnupg" "~/.ssh" ];
+    whitelist = [ "~/" ];
+    blacklist = [ "~/.gnupg/" "~/.ssh/" ];
   };
   tor-browser = {
     name = "tor-browser";
@@ -356,7 +357,7 @@ let
     unsetenvs = [ "MAIL" "SHELL" ];
     unshare-net = false;
     ro-whitelist = [ "~/.Xauthority" ];
-    whitelist = [ "~/.local/share/tor-browser" ];
+    whitelist = [ "~/.local/share/tor-browser/" ];
   };
   zoom = {
     name = "zoom";
@@ -380,8 +381,12 @@ let
     }];
     unshare-net = false;
     ro-whitelist = [ "~/.Xauthority" ];
-    whitelist =
-      [ "~/.zoom" "~/.cache/zoom" "~/.config/zoomus.conf" "~/.config/pulse" ];
+    whitelist = [
+      "~/.zoom/"
+      "~/.cache/zoom/"
+      "~/.config/zoomus.conf"
+      "~/.config/pulse/"
+    ];
   };
 in {
   nixpkgs.overlays = [
@@ -435,7 +440,7 @@ in {
         extra-deps = with pkgs; [ mesa_drivers ];
       });
       zathura-sandboxed = sandbox super.zathura ((viewer "zathura") // {
-        whitelist = [ "~/.local/share/zathura" "~/Print" ];
+        whitelist = [ "~/.local/share/zathura/" "~/Print/" ];
       });
       ffmpeg-full-sandboxed = pkgs.symlinkJoin {
         name = "ffmpeg";
