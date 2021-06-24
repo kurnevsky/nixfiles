@@ -340,8 +340,8 @@ let
   libreoffice = name: {
     inherit name;
     # coreutils-full, gnugrep, gnused are needed because it's
-    # system default stdenv and wine has scripts that rely on
-    # stdenv being in PATH
+    # system default stdenv and libreoffice has scripts that rely
+    # on stdenv being in PATH
     extra-deps = with pkgs; [ coreutils-full gnugrep gnused ];
     x11 = true;
     etcs = [ "fonts" "localtime" "pulse" "passwd" ];
@@ -357,6 +357,31 @@ let
     unshare-net = false;
     ro-whitelist = [ "~/.Xauthority" ];
     whitelist = [ "~/.local/share/tor-browser" ];
+  };
+  zoom = {
+    name = "zoom";
+    extra-deps = with pkgs; [ mesa_drivers ];
+    devs = [ "dri" ];
+    syses = [
+      # Necessary for hardware acceleration
+      "dev"
+      "devices"
+    ];
+    camera = true;
+    x11 = true;
+    system-bus-socket = true;
+    etcs = [ "fonts" "pulse" "localtime" "resolv.conf" ];
+    opengl = true;
+    pams = [ "bus" "pulse" ];
+    unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" ];
+    setenvs = [{
+      name = "SHELL";
+      value = "/run/current-system/sw/bin/bash";
+    }];
+    unshare-net = false;
+    ro-whitelist = [ "~/.Xauthority" ];
+    whitelist =
+      [ "~/.zoom" "~/.cache/zoom" "~/.config/zoomus.conf" "~/.config/pulse" ];
   };
 in {
   nixpkgs.overlays = [
@@ -445,6 +470,7 @@ in {
       };
       tor-browser-bundle-bin-wrapped =
         sandbox super.tor-browser-bundle-bin tor-browser;
+      zoom-us-sandboxed = sandbox super.zoom-us zoom;
     })
   ];
 }
