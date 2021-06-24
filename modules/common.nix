@@ -177,7 +177,7 @@
     tmux
     tor-browser-bundle-bin
     torsocks
-    toxic
+    toxic-sandboxed
     trayer
     unrar-sandboxed
     unzip-natspec-sandboxed

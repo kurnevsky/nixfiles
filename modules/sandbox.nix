@@ -196,6 +196,19 @@ let
     ro-whitelist = [ "~/.config/qt5ct" "~/.Xauthority" ];
     whitelist = [ "~/.config/tox" "~/.cache/Tox" "~/.config/pulse" ];
   };
+  toxic = {
+    name = "toxic";
+    extra-deps = with pkgs; [ glibcLocales ];
+    devs = [ "dri" ];
+    camera = true;
+    x11 = true;
+    pams = [ "pulse" ];
+    etcs = [ "pulse" "localtime" "resolv.conf" ];
+    unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" "SHELL" ];
+    unshare-net = false;
+    ro-whitelist = [ "~/.Xauthority" ];
+    whitelist = [ "~/.config/tox" "~/.config/pulse" ];
+  };
   tdesktop = {
     name = "telegram-desktop";
     devs = [ "dri" ];
@@ -379,6 +392,7 @@ in {
       chromium-sandboxed = sandbox super.chromium chromium;
       pidgin-sandboxed = sandbox super.pidgin-with-plugins pidgin;
       qtox-sandboxed = sandbox super.qtox qtox;
+      toxic-sandboxed = sandbox super.toxic toxic;
       tdesktop-sandboxed = sandbox super.tdesktop tdesktop;
       element-desktop-sandboxed = sandbox super.element-desktop element-desktop;
       qbittorrent-sandboxed = sandbox super.qbittorrent qbittorrent;
