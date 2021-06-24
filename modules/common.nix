@@ -175,7 +175,7 @@
     tinc
     tldr
     tmux
-    tor-browser-bundle-bin
+    tor-browser-bundle-bin-wrapped
     torsocks
     toxic-sandboxed
     trayer

@@ -350,6 +350,14 @@ let
     whitelist = [ "~" ];
     blacklist = [ "~/.gnupg" "~/.ssh" ];
   };
+  tor-browser = {
+    name = "tor-browser";
+    x11 = true;
+    unsetenvs = [ "MAIL" "SHELL" ];
+    unshare-net = false;
+    ro-whitelist = [ "~/.Xauthority" ];
+    whitelist = [ "~/.local/share/tor-browser" ];
+  };
 in {
   nixpkgs.overlays = [
     (self: super: {
@@ -435,6 +443,8 @@ in {
           (sandbox super.libreoffice-fresh (libreoffice "libreoffice"))
         ];
       };
+      tor-browser-bundle-bin-wrapped =
+        sandbox super.tor-browser-bundle-bin tor-browser;
     })
   ];
 }
