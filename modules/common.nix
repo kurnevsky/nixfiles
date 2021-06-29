@@ -355,5 +355,23 @@
         ];
       });
     })
+    (self: super: {
+      haskellPackages = super.haskellPackages.override {
+        overrides = haskellSelf: haskellSuper: {
+          xmonad-contrib = haskellSuper.xmonad-contrib.overrideAttrs
+            (oldAttrs: {
+              patches = (oldAttrs.patches or [ ]) ++ [
+                (pkgs.fetchpatch {
+                  name = "ewmh-windows-ordering.patch";
+                  url =
+                    "https://github.com/kurnevsky/xmonad-contrib/commit/b6ab084f76c182dc2722e50933236358b92eb12a.patch";
+                  sha256 =
+                    "sha256-xXBhDkoqvl33m/IvCqt10jSouK2lo+AZxybh4ZNsSYk=";
+                })
+              ];
+            });
+        };
+      };
+    })
   ];
 }
