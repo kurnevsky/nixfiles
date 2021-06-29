@@ -238,7 +238,7 @@
 
   services = {
     haveged.enable = true;
-    i2p.enable = true;
+    i2pd.enable = true;
     monero.enable = true;
     openssh = {
       enable = true;
@@ -301,7 +301,7 @@
   };
 
   systemd.user.services.dbus.wantedBy = [ "default.target" ];
-  systemd.services.i2p.wantedBy = pkgs.lib.mkForce [ ];
+  systemd.services.i2pd.wantedBy = pkgs.lib.mkForce [ ];
   systemd.services.monero.wantedBy = pkgs.lib.mkForce [ ];
   systemd.services.tor.wantedBy = pkgs.lib.mkForce [ ];
 
