@@ -12,6 +12,13 @@
       owner = "nix-community";
       repo = "emacs-overlay";
     };
+
+    home-manager = {
+      type = "github";
+      owner = "nix-community";
+      repo = "home-manager";
+      ref = "release-21.05";
+    };
   };
 
   outputs = { self, ... }@inputs: {
