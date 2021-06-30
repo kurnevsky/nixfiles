@@ -236,6 +236,8 @@
 
   programs.adb.enable = true;
 
+  gtk.iconCache.enable = true;
+
   services = {
     haveged.enable = true;
     i2pd.enable = true;
