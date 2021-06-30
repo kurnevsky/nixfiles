@@ -190,7 +190,7 @@ let
       "devices"
     ];
     x11 = true;
-    pams = [ "pulse" ];
+    pams = [ "bus" "pulse" ];
     etcs = [ "fonts" "pulse" "localtime" "resolv.conf" ];
     unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" "SHELL" ];
     unshare-net = false;
