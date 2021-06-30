@@ -59,6 +59,7 @@
     cataclysm-dda
     chromium-sandboxed
     clinfo
+    clipit
     coursier
     davfs2
     deadbeef-sandboxed
@@ -140,7 +141,6 @@
     p7zip-sandboxed
     pandoc # TODO: it should depend on texlive
     parallel
-    parcellite
     passff-host
     pavucontrol
     perl
