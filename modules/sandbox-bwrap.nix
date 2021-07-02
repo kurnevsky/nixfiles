@@ -14,7 +14,7 @@ in writeShellScriptBin target-name ''
   set -euETo pipefail
   shopt -s inherit_errexit
 
-  if [ ! -z ''${UNSANDBOXED-} ]
+  if [ -n "''${UNSANDBOXED-}" ]
   then
     echo "Running in unsandboxed mode!"
     exec ${drv}/bin/${name} "$@"
@@ -27,10 +27,10 @@ in writeShellScriptBin target-name ''
     mapfile -t video < <(find /dev -maxdepth 1 -type c -regex '/dev/video[0-9]+' | sed 's/.*/--dev-bind\n&\n&/')
   ''}
 
-  mapfile -t deps < <(cat ${cinfo}/store-paths | sed 's/.*/--ro-bind\n&\n&/')
+  mapfile -t deps < <(sed 's/.*/--ro-bind\n&\n&/' ${cinfo}/store-paths)
 
   exec ${bubblewrap}/bin/bwrap \
-       ''${deps[@]} \
+       "''${deps[@]}" \
        \
        --proc /proc \
        \
@@ -38,7 +38,7 @@ in writeShellScriptBin target-name ''
        ${
          lib.concatMapStringsSep " " (x: "--dev-bind /dev/${x} /dev/${x}") devs
        } \
-       ${lib.optionalString camera "\${video[@]}"} \
+       ${lib.optionalString camera ''"''${video[@]}"''} \
        \
        ${
          lib.concatMapStringsSep " " (x: "--ro-bind /sys/${x} /sys/${x}") syses
