@@ -378,4 +378,15 @@
       };
     })
   ];
+
+  home-manager = {
+    useGlobalPkgs = true;
+    users.kurnevsky = {
+      home.stateVersion = "21.05";
+      services.status-notifier-watcher.enable = true;
+      services.xembed-sni-proxy.enable = true;
+      services.taffybar.enable = true;
+      xsession.preferStatusNotifierItems = true;
+    };
+  };
 }

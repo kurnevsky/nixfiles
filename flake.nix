@@ -25,6 +25,7 @@
     nixosConfigurations.nixos = inputs.nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
+        inputs.home-manager.nixosModules.home-manager
         (args: { nixpkgs.overlays = [ inputs.emacs-overlay.overlay ]; })
         ./modules/common.nix
         ./modules/sandbox.nix
