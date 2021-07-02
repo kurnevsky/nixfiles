@@ -253,6 +253,8 @@
     timesyncd.enable = true;
     xserver = {
       enable = true;
+      # causes GDK_PIXBUF_MODULE_FILE to be set in xsession
+      gdk-pixbuf.modulePackages = [ pkgs.librsvg ];
       # Enable touchpad support.
       # libinput.enable = true;
       layout = "us,ru";
