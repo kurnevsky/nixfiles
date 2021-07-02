@@ -167,7 +167,6 @@
     sourceHighlight
     starship
     subversion
-    taffybar
     tdesktop-sandboxed
     telegram-purple
     tesseract
