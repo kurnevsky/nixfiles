@@ -59,7 +59,6 @@
     cataclysm-dda
     chromium-sandboxed
     clinfo
-    clipit
     coursier
     davfs2
     deadbeef-sandboxed
@@ -386,6 +385,10 @@
         xembed-sni-proxy.enable = true;
         taffybar.enable = true;
         pasystray.enable = true;
+        parcellite = {
+          enable = true;
+          package = pkgs.clipit;
+        };
       };
       xsession = {
         enable = true;
