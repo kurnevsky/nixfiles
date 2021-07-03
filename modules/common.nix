@@ -385,7 +385,11 @@
       services.status-notifier-watcher.enable = true;
       services.xembed-sni-proxy.enable = true;
       services.taffybar.enable = true;
-      xsession.preferStatusNotifierItems = true;
+      xsession = {
+        enable = true;
+        windowManager.command = "xmonad 2>> ~/.xsession-errors";
+        preferStatusNotifierItems = true;
+      };
     };
   };
 }
