@@ -65,7 +65,6 @@
     docker-compose
     dosbox
     dosfstools
-    dunst
     e2fsprogs
     editorconfig-core-c
     eiskaltdcpp
@@ -388,6 +387,41 @@
         parcellite = {
           enable = true;
           package = pkgs.clipit;
+        };
+        dunst = {
+          enable = true;
+          settings = {
+            global = {
+              font = "DejaVu Sans 12";
+              alignment = "center";
+              geometry = "0x0-10+25";
+              frame_width = 1;
+              frame_color = "#888888";
+              transparency = 30;
+              idle_threshold = 60;
+              monitor = 0;
+            };
+            urgency_low = {
+              background = "#000000";
+              foreground = "#888888";
+              timeout = 10;
+            };
+            urgency_normal = {
+              background = "#000000";
+              foreground = "#ffffff";
+              timeout = 20;
+            };
+            urgency_critical = {
+              background = "#ff0000";
+              foreground = "#ffffff";
+              timeout = 0;
+            };
+            shortcuts = {
+              close = "ctrl+space";
+              close_all = "ctrl+shift+space";
+              history = "ctrl+shift+grave";
+            };
+          };
         };
       };
       xsession = {
