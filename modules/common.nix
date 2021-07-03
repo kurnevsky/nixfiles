@@ -185,7 +185,6 @@
     vdpauinfo
     viu
     vlc-sandboxed
-    volumeicon
     vscodium
     websocat
     wesnoth
@@ -382,9 +381,12 @@
     useGlobalPkgs = true;
     users.kurnevsky = {
       home.stateVersion = "21.05";
-      services.status-notifier-watcher.enable = true;
-      services.xembed-sni-proxy.enable = true;
-      services.taffybar.enable = true;
+      services = {
+        status-notifier-watcher.enable = true;
+        xembed-sni-proxy.enable = true;
+        taffybar.enable = true;
+        pasystray.enable = true;
+      };
       xsession = {
         enable = true;
         windowManager.command = "xmonad 2>> ~/.xsession-errors";
