@@ -27,7 +27,7 @@ in {
       PrivateTmp = true;
     };
     script = ''
-      cat ${shadowsocksConfigFile} | jq --arg password "$(cat /etc/xxx)" '. + { password: $password }' > /tmp/shadowsocks.json
+      cat ${shadowsocksConfigFile} | jq --arg password "$(cat /secrets/shadowsocks)" '. + { password: $password }' > /tmp/shadowsocks.json
       exec sslocal --config /tmp/shadowsocks.json
     '';
   };

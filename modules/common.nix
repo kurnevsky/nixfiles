@@ -136,6 +136,7 @@
     openconnect
     openjdk
     openmw
+    openssl
     p7zip-sandboxed
     pandoc # TODO: it should depend on texlive
     parallel
@@ -310,13 +311,6 @@
     unprivilegedUsernsClone = true;
   };
 
-  users.users.kurnevsky = {
-    uid = 1000;
-    isNormalUser = true;
-    extraGroups = [ "wheel" "adbusers" ];
-    shell = pkgs.zsh;
-  };
-
   # system.replaceRuntimeDependencies can be used to make fast fixes
   nixpkgs.overlays = let
     optimizeWithFlag = pkg: flag:
@@ -374,9 +368,30 @@
     })
   ];
 
-  home-manager = {
-    useGlobalPkgs = true;
-    users.kurnevsky = {
+  users = {
+    mutableUsers = false;
+    users = {
+      # To get hash use:
+      # openssl passwd -6 password
+      root.hashedPassword = "!";
+      kurnevsky = {
+        uid = 1000;
+        isNormalUser = true;
+        extraGroups = [ "wheel" "adbusers" ];
+        shell = pkgs.zsh;
+        passwordFile = "/secrets/kurnevsky";
+      };
+      ww = {
+        uid = 1001;
+        isNormalUser = true;
+        shell = pkgs.zsh;
+        passwordFile = "/secrets/ww";
+      };
+    };
+  };
+
+  home-manager = let
+    home = {
       home.stateVersion = "21.05";
       services = {
         status-notifier-watcher.enable = true;
@@ -507,5 +522,9 @@
         "XTerm.backarrowKeyIsErase" = true;
       };
     };
+  in {
+    useGlobalPkgs = true;
+    users.kurnevsky = home;
+    users.ww = home;
   };
 }
