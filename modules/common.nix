@@ -20,11 +20,17 @@
       "unrar"
     ];
 
-  # networking.hostName = "nixos";
-  # networking.wireless.enable = true;
-
-  networking.useDHCP = false;
-  networking.networkmanager.enable = true;
+  networking = {
+    # hostName = "nixos";
+    # wireless.enable = true;
+    useDHCP = false;
+    networkmanager.enable = true;
+    firewall = {
+      enable = true;
+      allowedTCPPorts = [ 22 ];
+      allowedUDPPorts = [ 33445 ];
+    };
+  };
 
   console = {
     font = "cyr-sun16";
@@ -219,16 +225,16 @@
     symbola
   ];
 
-  programs.gnupg.agent.enable = true;
-
-  programs.zsh = {
-    enable = true;
-    enableCompletion = true;
-    autosuggestions.enable = true;
-    syntaxHighlighting.enable = true;
+  programs = {
+    gnupg.agent.enable = true;
+    zsh = {
+      enable = true;
+      enableCompletion = true;
+      autosuggestions.enable = true;
+      syntaxHighlighting.enable = true;
+    };
+    adb.enable = true;
   };
-
-  programs.adb.enable = true;
 
   gtk.iconCache.enable = true;
 
@@ -270,38 +276,39 @@
     };
   };
 
-  networking.firewall = {
-    enable = true;
-    allowedTCPPorts = [ 22 ];
-    allowedUDPPorts = [ 33445 ];
-  };
-
   virtualisation.docker = {
     enable = true;
     enableOnBoot = false;
   };
 
-  hardware.bluetooth = {
-    enable = true;
-    package = pkgs.bluezFull;
+  hardware = {
+    bluetooth = {
+      enable = true;
+      package = pkgs.bluezFull;
+    };
+    usbWwan.enable = true;
+    pulseaudio = {
+      enable = true;
+      package = pkgs.pulseaudioFull;
+    };
+    opengl = {
+      enable = true;
+      extraPackages = with pkgs; [
+        intel-media-driver
+        vaapiVdpau
+        libvdpau-va-gl
+      ];
+    };
   };
 
-  hardware.usbWwan.enable = true;
-
-  hardware.pulseaudio = {
-    enable = true;
-    package = pkgs.pulseaudioFull;
+  systemd = {
+    user.services.dbus.wantedBy = [ "default.target" ];
+    services = {
+      i2pd.wantedBy = pkgs.lib.mkForce [ ];
+      monero.wantedBy = pkgs.lib.mkForce [ ];
+      tor.wantedBy = pkgs.lib.mkForce [ ];
+    };
   };
-
-  hardware.opengl = {
-    enable = true;
-    extraPackages = with pkgs; [ intel-media-driver vaapiVdpau libvdpau-va-gl ];
-  };
-
-  systemd.user.services.dbus.wantedBy = [ "default.target" ];
-  systemd.services.i2pd.wantedBy = pkgs.lib.mkForce [ ];
-  systemd.services.monero.wantedBy = pkgs.lib.mkForce [ ];
-  systemd.services.tor.wantedBy = pkgs.lib.mkForce [ ];
 
   security = {
     # Enable pam_systemd module to set dbus environment variable.
@@ -522,7 +529,9 @@
     };
   in {
     useGlobalPkgs = true;
-    users.kurnevsky = home;
-    users.ww = home;
+    users = {
+      kurnevsky = home;
+      ww = home;
+    };
   };
 }
