@@ -180,7 +180,6 @@
     trayer
     unrar-sandboxed
     unzip-natspec-sandboxed
-    uutils-coreutils
     vdpauinfo
     viu
     vlc-sandboxed
@@ -205,7 +204,6 @@
     zbar
     # findimagedupes
     # tuntox
-    # uutils-coreutils
     # vagrant
     # veloren
     # virtualbox
