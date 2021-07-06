@@ -22,7 +22,7 @@
   };
 
   outputs = { self, ... }@inputs: {
-    nixosConfigurations.nixos = inputs.nixpkgs.lib.nixosSystem {
+    nixosConfigurations.dell = inputs.nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
         inputs.home-manager.nixosModules.home-manager

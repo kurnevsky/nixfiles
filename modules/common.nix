@@ -21,8 +21,6 @@
     ];
 
   networking = {
-    # hostName = "nixos";
-    # wireless.enable = true;
     useDHCP = false;
     networkmanager.enable = true;
     firewall = {
