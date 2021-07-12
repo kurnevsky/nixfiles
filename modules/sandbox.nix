@@ -136,6 +136,7 @@ let
   };
   mpv = {
     name = "mpv";
+    extra-deps = with pkgs; [ mesa_drivers ];
     # unshare-pid breaks xdg-screensaver in a way that it can't detect
     # process termination and therefore might not enable screensaver
     unshare-pid = false;
@@ -148,6 +149,7 @@ let
     x11 = true;
     pams = [ "pulse" ];
     etcs = [ "fonts" "pulse" ];
+    opengl = true;
     # xdg-screensaver creates a lockfile in /tmp
     shared-tmp = true;
     unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" ];
@@ -161,6 +163,7 @@ let
   };
   vlc = {
     name = "vlc";
+    extra-deps = with pkgs; [ mesa_drivers ];
     devs = [ "dri" ];
     syses = [
       # Necessary for hardware acceleration
@@ -170,6 +173,7 @@ let
     x11 = true;
     pams = [ "bus" "pulse" ];
     etcs = [ "fonts" "pulse" ];
+    opengl = true;
     unsetenvs = [ "MAIL" ];
     setenvs = [{
       name = "SHELL";
