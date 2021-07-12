@@ -451,6 +451,10 @@ in {
       xcb-client-id = pkgs.callPackage ./xcb-client-id.nix { };
     })
     (self: super: {
+      deadbeef = super.deadbeef.override { wavpackSupport = true; };
+      deadbeef-with-plugins = super.deadbeef-with-plugins.override {
+        plugins = [ super.deadbeef-mpris2-plugin ];
+      };
       zip-natspec = super.zip.override { enableNLS = true; };
       unzip-natspec = super.unzip.override { enableNLS = true; };
       wine-staging-full =
