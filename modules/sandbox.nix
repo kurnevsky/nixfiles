@@ -14,6 +14,11 @@ let
       unshare-net = false;
       etcs = (attrs.etcs or [ ]) ++ [ "resolv.conf" ];
     };
+  withOpengl = attrs:
+    attrs // {
+      extra-deps = (attrs.extra-deps or [ ]) ++ (with pkgs; [ mesa_drivers ]);
+      opengl = true;
+    };
   archiver = name: {
     inherit name;
     unsetenvs = [
@@ -54,9 +59,8 @@ let
     whitelist = [ "~/.config/pulse/" "~/.config/deadbeef/" ];
     blacklist = [ "~/.gnupg/" "~/.ssh/" ];
   };
-  firefox = withFonts {
+  firefox = lib.pipe {
     name = "firefox";
-    extra-deps = with pkgs; [ mesa_drivers ];
     devs = [ "dri" ];
     camera = true;
     syses = [
@@ -68,7 +72,6 @@ let
     pams = [ "bus" "gnupg" "pulse" ];
     etcs =
       [ "pulse" "resolv.conf" "localtime" "ssl/certs/ca-certificates.crt" ];
-    opengl = true;
     unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" ];
     setenvs = [{
       name = "SHELL";
@@ -85,10 +88,9 @@ let
       "~/.config/pulse/"
       "~/.gnupg/"
     ];
-  };
-  chromium = withFonts {
+  } [ withFonts withOpengl ];
+  chromium = lib.pipe {
     name = "chromium";
-    extra-deps = with pkgs; [ mesa_drivers ];
     devs = [ "dri" ];
     camera = true;
     syses = [
@@ -101,7 +103,6 @@ let
     pams = [ "bus" "gnupg" "pulse" ];
     etcs =
       [ "pulse" "resolv.conf" "localtime" "ssl/certs/ca-certificates.crt" ];
-    opengl = true;
     unsetenvs = [ "MAIL" "SHELL" ];
     unshare-net = false;
     ro-whitelist = [ "~/.Xauthority" ];
@@ -113,7 +114,7 @@ let
       "~/.config/pulse/"
     ];
     args = [ "--no-sandbox" ];
-  };
+  } [ withFonts withOpengl ];
   pidgin = withFonts {
     name = "pidgin";
     extra-deps = with pkgs; [
@@ -130,7 +131,7 @@ let
     ro-whitelist = [ "~/.Xauthority" "~/.gtkrc-2.0" ];
     whitelist = [ "~/.purple/" "~/.config/pulse/" ];
   };
-  mpv = withFonts {
+  mpv = lib.pipe {
     name = "mpv";
     bin-sh = true;
     extra-deps = with pkgs; [
@@ -138,7 +139,6 @@ let
       xdg-utils
       xorg.xprop
       xscreensaver
-      mesa_drivers
       wmctrl
       gawk
       xcb-client-id
@@ -155,7 +155,6 @@ let
     x11 = true;
     pams = [ "pulse" ];
     etcs = [ "pulse" ];
-    opengl = true;
     # xdg-screensaver creates a lockfile in /tmp
     shared-tmp = true;
     unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" ];
@@ -166,10 +165,9 @@ let
     ro-whitelist = [ "~/" ];
     whitelist = [ "~/.cache/fontconfig/" "~/.config/pulse/" ];
     blacklist = [ "~/.gnupg/" "~/.ssh/" ];
-  };
-  vlc = withFonts {
+  } [ withFonts withOpengl ];
+  vlc = lib.pipe {
     name = "vlc";
-    extra-deps = with pkgs; [ mesa_drivers ];
     devs = [ "dri" ];
     syses = [
       # Necessary for hardware acceleration
@@ -179,7 +177,6 @@ let
     x11 = true;
     pams = [ "bus" "pulse" ];
     etcs = [ "pulse" ];
-    opengl = true;
     unsetenvs = [ "MAIL" ];
     setenvs = [{
       name = "SHELL";
@@ -189,7 +186,7 @@ let
     whitelist =
       [ "~/.local/share/vlc/" "~/.cache/fontconfig/" "~/.config/pulse/" ];
     blacklist = [ "~/.gnupg/" "~/.ssh/" ];
-  };
+  } [ withFonts withOpengl ];
   qtox = withFonts {
     name = "qtox";
     devs = [ "dri" ];
@@ -325,11 +322,11 @@ let
     ];
   };
   wine = name:
-    withFonts {
+    lib.pipe {
       inherit name;
       # coreutils-full is needed because it's system default stdenv
       # and wine has scripts that rely on stdenv being in PATH
-      extra-deps = with pkgs; [ coreutils-full mesa_drivers ];
+      extra-deps = with pkgs; [ coreutils-full ];
       devs = [ "dri" ];
       syses = [
         # Necessary for hardware acceleration
@@ -339,7 +336,6 @@ let
       x11 = true;
       pams = [ "bus" "pulse" ];
       etcs = [ "localtime" ];
-      opengl = true;
       unsetenvs = [ "MAIL" ];
       setenvs = [{
         name = "SHELL";
@@ -354,7 +350,7 @@ let
         "~/.cache/winetricks/"
         "~/.config/pulse/"
       ];
-    };
+    } [ withFonts withOpengl ];
   libreoffice = name:
     withFonts {
       inherit name;
@@ -377,9 +373,8 @@ let
     ro-whitelist = [ "~/.Xauthority" ];
     whitelist = [ "~/.local/share/tor-browser/" ];
   };
-  zoom = withFonts {
+  zoom = lib.pipe {
     name = "zoom";
-    extra-deps = with pkgs; [ mesa_drivers ];
     devs = [ "dri" ];
     syses = [
       # Necessary for hardware acceleration
@@ -390,7 +385,6 @@ let
     x11 = true;
     system-bus-socket = true;
     etcs = [ "pulse" "localtime" "resolv.conf" ];
-    opengl = true;
     pams = [ "bus" "pulse" ];
     unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" ];
     setenvs = [{
@@ -405,7 +399,7 @@ let
       "~/.config/zoomus.conf"
       "~/.config/pulse/"
     ];
-  };
+  } [ withFonts withOpengl ];
   skypeforlinux = withFonts {
     name = "skypeforlinux";
     devs = [
@@ -480,10 +474,14 @@ in {
       element-desktop-sandboxed = sandbox super.element-desktop element-desktop;
       qbittorrent-sandboxed = sandbox super.qbittorrent qbittorrent;
       feh-sandboxed = sandbox super.feh (viewer "feh");
-      imv-sandboxed = sandbox super.imv ((viewer "imv") // {
-        opengl = true;
-        extra-deps = with pkgs; [ mesa_drivers ];
-      });
+      imv-sandboxed = sandbox super.imv (withOpengl (viewer "imv" // {
+        devs = [ "dri" ];
+        syses = [
+          # Necessary for hardware acceleration
+          "dev"
+          "devices"
+        ];
+      }));
       zathura-sandboxed = sandbox super.zathura ((viewer "zathura") // {
         whitelist = [ "~/.local/share/zathura/" "~/Print/" ];
       });
