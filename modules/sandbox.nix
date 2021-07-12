@@ -2,11 +2,17 @@
 
 let
   sandbox = pkgs.callPackage ./sandbox-bwrap.nix { };
+  withFonts = attrs:
+    attrs // {
+      extra-deps = (attrs.extra-deps or [ ])
+        ++ config.fonts.fontconfig.confPackages;
+      etcs = (attrs.etcs or [ ]) ++ [ "fonts" ];
+    };
   withNet = attrs:
     attrs // {
       target-name = attrs.name + "-net";
       unshare-net = false;
-      etcs = attrs.etcs ++ [ "resolv.conf" ];
+      etcs = (attrs.etcs or [ ]) ++ [ "resolv.conf" ];
     };
   archiver = name: {
     inherit name;
@@ -20,15 +26,16 @@ let
     whitelist = [ "~/" ];
     blacklist = [ "~/.gnupg/" "~/.ssh/" ];
   };
-  viewer = name: {
-    inherit name;
-    x11 = true;
-    etcs = [ "fonts" ];
-    unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "XDG_RUNTIME_DIR" "MAIL" "SHELL" ];
-    ro-whitelist = [ "~/" ];
-    blacklist = [ "~/.gnupg/" "~/.ssh/" ];
-  };
-  deadbeef = {
+  viewer = name:
+    withFonts {
+      inherit name;
+      x11 = true;
+      unsetenvs =
+        [ "DBUS_SESSION_BUS_ADDRESS" "XDG_RUNTIME_DIR" "MAIL" "SHELL" ];
+      ro-whitelist = [ "~/" ];
+      blacklist = [ "~/.gnupg/" "~/.ssh/" ];
+    };
+  deadbeef = withFonts {
     name = "deadbeef";
     extra-deps = with pkgs; [
       gnome-themes-extra
@@ -40,14 +47,14 @@ let
       "bus"
       "pulse"
     ];
-    etcs = [ "fonts" "pulse" ];
+    etcs = [ "pulse" ];
     x11 = true;
     unsetenvs = [ "MAIL" "SHELL" ];
     ro-whitelist = [ "~/" ];
     whitelist = [ "~/.config/pulse/" "~/.config/deadbeef/" ];
     blacklist = [ "~/.gnupg/" "~/.ssh/" ];
   };
-  firefox = {
+  firefox = withFonts {
     name = "firefox";
     extra-deps = with pkgs; [ mesa_drivers ];
     devs = [ "dri" ];
@@ -59,13 +66,8 @@ let
     ];
     x11 = true;
     pams = [ "bus" "gnupg" "pulse" ];
-    etcs = [
-      "fonts"
-      "pulse"
-      "resolv.conf"
-      "localtime"
-      "ssl/certs/ca-certificates.crt"
-    ];
+    etcs =
+      [ "pulse" "resolv.conf" "localtime" "ssl/certs/ca-certificates.crt" ];
     opengl = true;
     unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" ];
     setenvs = [{
@@ -84,7 +86,7 @@ let
       "~/.gnupg/"
     ];
   };
-  chromium = {
+  chromium = withFonts {
     name = "chromium";
     extra-deps = with pkgs; [ mesa_drivers ];
     devs = [ "dri" ];
@@ -97,13 +99,8 @@ let
     x11 = true;
     system-bus-socket = true;
     pams = [ "bus" "gnupg" "pulse" ];
-    etcs = [
-      "fonts"
-      "pulse"
-      "resolv.conf"
-      "localtime"
-      "ssl/certs/ca-certificates.crt"
-    ];
+    etcs =
+      [ "pulse" "resolv.conf" "localtime" "ssl/certs/ca-certificates.crt" ];
     opengl = true;
     unsetenvs = [ "MAIL" "SHELL" ];
     unshare-net = false;
@@ -117,7 +114,7 @@ let
     ];
     args = [ "--no-sandbox" ];
   };
-  pidgin = {
+  pidgin = withFonts {
     name = "pidgin";
     extra-deps = with pkgs; [
       gnome-themes-extra
@@ -125,20 +122,15 @@ let
       hicolor-icon-theme
     ];
     x11 = true;
-    etcs = [
-      "fonts"
-      "pulse"
-      "resolv.conf"
-      "localtime"
-      "ssl/certs/ca-certificates.crt"
-    ];
+    etcs =
+      [ "pulse" "resolv.conf" "localtime" "ssl/certs/ca-certificates.crt" ];
     pams = [ "bus" "pulse" ];
     unshare-net = false;
     unsetenvs = [ "MAIL" "SHELL" ];
     ro-whitelist = [ "~/.Xauthority" "~/.gtkrc-2.0" ];
     whitelist = [ "~/.purple/" "~/.config/pulse/" ];
   };
-  mpv = {
+  mpv = withFonts {
     name = "mpv";
     bin-sh = true;
     extra-deps = with pkgs; [
@@ -162,7 +154,7 @@ let
     ];
     x11 = true;
     pams = [ "pulse" ];
-    etcs = [ "fonts" "pulse" ];
+    etcs = [ "pulse" ];
     opengl = true;
     # xdg-screensaver creates a lockfile in /tmp
     shared-tmp = true;
@@ -175,7 +167,7 @@ let
     whitelist = [ "~/.cache/fontconfig/" "~/.config/pulse/" ];
     blacklist = [ "~/.gnupg/" "~/.ssh/" ];
   };
-  vlc = {
+  vlc = withFonts {
     name = "vlc";
     extra-deps = with pkgs; [ mesa_drivers ];
     devs = [ "dri" ];
@@ -186,7 +178,7 @@ let
     ];
     x11 = true;
     pams = [ "bus" "pulse" ];
-    etcs = [ "fonts" "pulse" ];
+    etcs = [ "pulse" ];
     opengl = true;
     unsetenvs = [ "MAIL" ];
     setenvs = [{
@@ -198,7 +190,7 @@ let
       [ "~/.local/share/vlc/" "~/.cache/fontconfig/" "~/.config/pulse/" ];
     blacklist = [ "~/.gnupg/" "~/.ssh/" ];
   };
-  qtox = {
+  qtox = withFonts {
     name = "qtox";
     devs = [ "dri" ];
     camera = true;
@@ -209,7 +201,7 @@ let
     ];
     x11 = true;
     pams = [ "bus" "pulse" ];
-    etcs = [ "fonts" "pulse" "localtime" "resolv.conf" ];
+    etcs = [ "pulse" "localtime" "resolv.conf" ];
     unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" "SHELL" ];
     unshare-net = false;
     ro-whitelist = [ "~/.config/qt5ct/" "~/.Xauthority" ];
@@ -228,7 +220,7 @@ let
     ro-whitelist = [ "~/.Xauthority" ];
     whitelist = [ "~/.config/tox/" "~/.config/pulse/" ];
   };
-  tdesktop = {
+  tdesktop = withFonts {
     name = "telegram-desktop";
     devs = [ "dri" ];
     camera = true;
@@ -239,13 +231,13 @@ let
     ];
     x11 = true;
     pams = [ "pulse" ];
-    etcs = [ "fonts" "pulse" "localtime" "resolv.conf" ];
+    etcs = [ "pulse" "localtime" "resolv.conf" ];
     unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" "SHELL" ];
     unshare-net = false;
     ro-whitelist = [ "~/.config/qt5ct/" "~/.Xauthority" ];
     whitelist = [ "~/.local/share/TelegramDesktop/" "~/.config/pulse/" ];
   };
-  element-desktop = {
+  element-desktop = withFonts {
     name = "element-desktop";
     devs = [
       "dri"
@@ -260,19 +252,14 @@ let
     ];
     x11 = true;
     pams = [ "pulse" ];
-    etcs = [
-      "fonts"
-      "pulse"
-      "localtime"
-      "resolv.conf"
-      "ssl/certs/ca-certificates.crt"
-    ];
+    etcs =
+      [ "pulse" "localtime" "resolv.conf" "ssl/certs/ca-certificates.crt" ];
     unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" "SHELL" ];
     unshare-net = false;
     ro-whitelist = [ "~/.config/gtk-3.0/" "~/.Xauthority" ];
     whitelist = [ "~/.config/Element/" "~/.config/pulse/" ];
   };
-  qbittorrent = {
+  qbittorrent = withFonts {
     name = "qbittorrent";
     extra-deps = with pkgs; [
       qt5ct
@@ -288,7 +275,7 @@ let
     ];
     x11 = true;
     pams = [ "bus" ];
-    etcs = [ "fonts" "localtime" "resolv.conf" ];
+    etcs = [ "localtime" "resolv.conf" ];
     unsetenvs = [ "MAIL" "SHELL" ];
     unshare-net = false;
     ro-whitelist = [ "~/.config/qt5ct/" "~/.Xauthority" ];
@@ -337,49 +324,51 @@ let
       "SHELL"
     ];
   };
-  wine = name: {
-    inherit name;
-    # coreutils-full is needed because it's system default stdenv
-    # and wine has scripts that rely on stdenv being in PATH
-    extra-deps = with pkgs; [ coreutils-full mesa_drivers ];
-    devs = [ "dri" ];
-    syses = [
-      # Necessary for hardware acceleration
-      "dev"
-      "devices"
-    ];
-    x11 = true;
-    pams = [ "bus" "pulse" ];
-    etcs = [ "fonts" "localtime" ];
-    opengl = true;
-    unsetenvs = [ "MAIL" ];
-    setenvs = [{
-      name = "SHELL";
-      value = "/run/current-system/sw/bin/bash";
-    }];
-    unshare-cgroup = false;
-    seccomp = false;
-    ro-whitelist = [ "~/.Xauthority" ];
-    whitelist = [
-      "\${WINEPREFIX:-~/.wine/}"
-      "~/.cache/wine/"
-      "~/.cache/winetricks/"
-      "~/.config/pulse/"
-    ];
-  };
-  libreoffice = name: {
-    inherit name;
-    # coreutils-full, gnugrep, gnused are needed because it's
-    # system default stdenv and libreoffice has scripts that rely
-    # on stdenv being in PATH
-    extra-deps = with pkgs; [ coreutils-full gnugrep gnused ];
-    x11 = true;
-    etcs = [ "fonts" "localtime" "pulse" "passwd" ];
-    pams = [ "bus" "pulse" ];
-    unsetenvs = [ "MAIL" "SHELL" ];
-    whitelist = [ "~/" ];
-    blacklist = [ "~/.gnupg/" "~/.ssh/" ];
-  };
+  wine = name:
+    withFonts {
+      inherit name;
+      # coreutils-full is needed because it's system default stdenv
+      # and wine has scripts that rely on stdenv being in PATH
+      extra-deps = with pkgs; [ coreutils-full mesa_drivers ];
+      devs = [ "dri" ];
+      syses = [
+        # Necessary for hardware acceleration
+        "dev"
+        "devices"
+      ];
+      x11 = true;
+      pams = [ "bus" "pulse" ];
+      etcs = [ "localtime" ];
+      opengl = true;
+      unsetenvs = [ "MAIL" ];
+      setenvs = [{
+        name = "SHELL";
+        value = "/run/current-system/sw/bin/bash";
+      }];
+      unshare-cgroup = false;
+      seccomp = false;
+      ro-whitelist = [ "~/.Xauthority" ];
+      whitelist = [
+        "\${WINEPREFIX:-~/.wine/}"
+        "~/.cache/wine/"
+        "~/.cache/winetricks/"
+        "~/.config/pulse/"
+      ];
+    };
+  libreoffice = name:
+    withFonts {
+      inherit name;
+      # coreutils-full, gnugrep, gnused are needed because it's
+      # system default stdenv and libreoffice has scripts that rely
+      # on stdenv being in PATH
+      extra-deps = with pkgs; [ coreutils-full gnugrep gnused ];
+      x11 = true;
+      etcs = [ "localtime" "pulse" "passwd" ];
+      pams = [ "bus" "pulse" ];
+      unsetenvs = [ "MAIL" "SHELL" ];
+      whitelist = [ "~/" ];
+      blacklist = [ "~/.gnupg/" "~/.ssh/" ];
+    };
   tor-browser = {
     name = "tor-browser";
     x11 = true;
@@ -388,7 +377,7 @@ let
     ro-whitelist = [ "~/.Xauthority" ];
     whitelist = [ "~/.local/share/tor-browser/" ];
   };
-  zoom = {
+  zoom = withFonts {
     name = "zoom";
     extra-deps = with pkgs; [ mesa_drivers ];
     devs = [ "dri" ];
@@ -400,7 +389,7 @@ let
     camera = true;
     x11 = true;
     system-bus-socket = true;
-    etcs = [ "fonts" "pulse" "localtime" "resolv.conf" ];
+    etcs = [ "pulse" "localtime" "resolv.conf" ];
     opengl = true;
     pams = [ "bus" "pulse" ];
     unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" ];
@@ -417,7 +406,7 @@ let
       "~/.config/pulse/"
     ];
   };
-  skypeforlinux = {
+  skypeforlinux = withFonts {
     name = "skypeforlinux";
     devs = [
       "dri"
@@ -432,13 +421,8 @@ let
     ];
     x11 = true;
     pams = [ "pulse" ];
-    etcs = [
-      "fonts"
-      "pulse"
-      "localtime"
-      "resolv.conf"
-      "ssl/certs/ca-certificates.crt"
-    ];
+    etcs =
+      [ "pulse" "localtime" "resolv.conf" "ssl/certs/ca-certificates.crt" ];
     unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" "SHELL" ];
     unshare-net = false;
     ro-whitelist = [ "~/.config/gtk-3.0/" "~/.Xauthority" ];
