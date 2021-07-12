@@ -136,7 +136,17 @@ let
   };
   mpv = {
     name = "mpv";
-    extra-deps = with pkgs; [ mesa_drivers ];
+    bin-sh = true;
+    extra-deps = with pkgs; [
+      coreutils-full
+      xdg-utils
+      xorg.xprop
+      xscreensaver
+      mesa_drivers
+      wmctrl
+      gawk
+      xcb-client-id
+    ];
     # unshare-pid breaks xdg-screensaver in a way that it can't detect
     # process termination and therefore might not enable screensaver
     unshare-pid = false;
@@ -434,6 +444,7 @@ in {
   nixpkgs.overlays = [
     (self: super: {
       sandbox-seccomp = pkgs.callPackage ./sandbox-seccomp.nix { };
+      xcb-client-id = pkgs.callPackage ./xcb-client-id.nix { };
     })
     (self: super: {
       zip-natspec = super.zip.override { enableNLS = true; };

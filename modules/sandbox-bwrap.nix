@@ -7,7 +7,8 @@ drv:
 , unshare-cgroup ? true, etcs ? [ ], pams ? [ ], whitelist ? [ ]
 , ro-whitelist ? [ ], blacklist ? [ ], unsetenvs ? [ ], setenvs ? [ ]
 , devs ? [ ], syses ? [ ], shared-tmp ? false, camera ? false, args ? [ ]
-, system-bus-socket ? false, extra-deps ? [ ], opengl ? false, seccomp ? true }:
+, system-bus-socket ? false, extra-deps ? [ ], opengl ? false, seccomp ? true
+, bin-sh ? false }:
 
 let cinfo = closureInfo { rootPaths = [ drv ] ++ extra-deps; };
 in writeShellScriptBin target-name ''
@@ -31,6 +32,8 @@ in writeShellScriptBin target-name ''
 
   exec ${bubblewrap}/bin/bwrap \
        "''${deps[@]}" \
+       \
+       ${lib.optionalString bin-sh "--ro-bind /bin/sh /bin/sh"} \
        \
        --proc /proc \
        \
