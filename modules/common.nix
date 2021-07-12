@@ -469,6 +469,11 @@
         enable = true;
         windowManager.command = "xmonad 2>> ~/.xsession-errors";
         preferStatusNotifierItems = true;
+        pointerCursor = {
+          package = pkgs.gnome3.adwaita-icon-theme;
+          name = "Adwaita";
+          size = 16;
+        };
       };
       xresources.properties = let
         base00 = "#282c34";
