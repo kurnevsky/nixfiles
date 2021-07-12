@@ -49,6 +49,7 @@ let
   };
   firefox = {
     name = "firefox";
+    extra-deps = with pkgs; [ mesa_drivers ];
     devs = [ "dri" ];
     camera = true;
     syses = [
@@ -65,6 +66,7 @@ let
       "localtime"
       "ssl/certs/ca-certificates.crt"
     ];
+    opengl = true;
     unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" ];
     setenvs = [{
       name = "SHELL";
@@ -84,6 +86,7 @@ let
   };
   chromium = {
     name = "chromium";
+    extra-deps = with pkgs; [ mesa_drivers ];
     devs = [ "dri" ];
     camera = true;
     syses = [
@@ -101,6 +104,7 @@ let
       "localtime"
       "ssl/certs/ca-certificates.crt"
     ];
+    opengl = true;
     unsetenvs = [ "MAIL" "SHELL" ];
     unshare-net = false;
     ro-whitelist = [ "~/.Xauthority" ];
