@@ -20,6 +20,8 @@
       "unrar"
     ];
 
+  boot.kernel.sysctl = { "kernel.sysrq" = 1; };
+
   networking = {
     useDHCP = false;
     networkmanager.enable = true;
