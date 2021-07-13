@@ -411,6 +411,7 @@
           enable = true;
           package = pkgs.clipit;
         };
+        network-manager-applet.enable = true;
         dunst = {
           enable = true;
           settings = {
