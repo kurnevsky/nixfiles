@@ -185,6 +185,7 @@
     vdpauinfo
     viu
     vlc-sandboxed
+    vulkan-tools
     websocat
     wesnoth
     wget
