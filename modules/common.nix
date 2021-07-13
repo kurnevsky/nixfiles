@@ -105,7 +105,6 @@
     iodine
     iotop
     isync
-    jetbrains.idea-community
     jq
     kafkacat
     languagetool
@@ -186,7 +185,6 @@
     vdpauinfo
     viu
     vlc-sandboxed
-    vscodium
     websocat
     wesnoth
     wget
