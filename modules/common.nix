@@ -276,6 +276,7 @@
     emacs = {
       enable = true;
       defaultEditor = true;
+      package = pkgs.emacsPatched;
     };
   };
 
@@ -345,7 +346,7 @@
     })
     (self: super: { wine = super.wineWowPackages.staging; })
     (self: super: {
-      emacs = super.emacs.overrideAttrs (oldAttrs: {
+      emacsPatched = super.emacs.overrideAttrs (oldAttrs: {
         patches = (oldAttrs.patches or [ ]) ++ [
           (pkgs.fetchpatch {
             name = "antifreeze.patch";
