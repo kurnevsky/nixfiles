@@ -231,6 +231,8 @@
       enableCompletion = true;
       autosuggestions.enable = true;
       syntaxHighlighting.enable = true;
+      # Override default prompt as it doesn't work good in Midnigt Commander
+      promptInit = "PROMPT='[%n@%m %~]$ '";
     };
     adb.enable = true;
   };
