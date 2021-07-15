@@ -144,7 +144,6 @@
     p7zip-sandboxed
     pandoc # TODO: it should depend on texlive
     parallel
-    passff-host
     pavucontrol
     perl
     picom

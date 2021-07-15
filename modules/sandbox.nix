@@ -437,6 +437,9 @@ in {
       unzip-natspec = super.unzip.override { enableNLS = true; };
       wine-staging-full =
         super.wineWowPackages.full.override { wineRelease = "staging"; };
+      firefox = super.firefox.override {
+        extraNativeMessagingHosts = [ super.passff-host ];
+      };
     })
     (self: super: {
       deadbeef-sandboxed = pkgs.symlinkJoin {
