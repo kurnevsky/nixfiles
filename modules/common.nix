@@ -179,13 +179,13 @@
       sourceHighlight
       starship
       subversion
+      tealdeer
       tdesktop-sandboxed
       telegram-purple
       tesseract
       texlive.combined.scheme-basic
       tigervnc
       tinc
-      tldr
       tmux
       tor-browser-bundle-bin-wrapped
       torsocks
