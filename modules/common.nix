@@ -251,6 +251,7 @@
     tlp.enable = true;
     tor.enable = true;
     timesyncd.enable = true;
+    upower.enable = true;
     xserver = {
       enable = true;
       # causes GDK_PIXBUF_MODULE_FILE to be set in xsession
