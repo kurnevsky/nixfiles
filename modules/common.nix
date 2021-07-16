@@ -448,6 +448,7 @@
 
   users = {
     mutableUsers = false;
+    motd = "Abandon all hope, ye who enter here.";
     users = {
       # To get hash use:
       # openssl passwd -6 password
