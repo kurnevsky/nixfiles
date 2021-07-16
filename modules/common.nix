@@ -118,6 +118,7 @@
       isync
       jq
       kafkacat
+      kubectl
       languagetool
       libreoffice-fresh-sandboxed
       libva-utils
