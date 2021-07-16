@@ -239,7 +239,6 @@
   gtk.iconCache.enable = true;
 
   services = {
-    haveged.enable = true;
     i2pd.enable = true;
     monero.enable = true;
     openssh = {
