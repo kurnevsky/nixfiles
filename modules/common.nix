@@ -395,6 +395,16 @@
                 })
               ];
             });
+          gtk-sni-tray = haskellSuper.gtk-sni-tray.overrideAttrs (oldAttrs: {
+            patches = (oldAttrs.patches or [ ]) ++ [
+              (pkgs.fetchpatch {
+                name = "scroll.patch";
+                url =
+                  "https://github.com/taffybar/gtk-sni-tray/commit/f7af7d00660790fb7143fea5b48e4f83765b3730.patch";
+                sha256 = "sha256-Ap83YnmaPvziST76MWlBKM28+QrG6Vza9btMxLpeOCQ=";
+              })
+            ];
+          });
         };
       };
     })
