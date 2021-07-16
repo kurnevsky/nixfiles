@@ -39,181 +39,189 @@
 
   time.timeZone = "Europe/Minsk";
 
-  environment.systemPackages = with pkgs; [
-    (agda.withPackages (pkgs: with pkgs; [ standard-library ]))
-    (pass.withExtensions (ext: with ext; [ pass-otp ]))
-    R
-    aircrack-ng
-    alacritty
-    anki
-    ansible
-    ansible-lint
-    aspell
-    aspellDicts.en
-    aspellDicts.ru
-    astyle
-    barcode
-    bat
-    bind
-    binutils
-    btrfs-progs
-    bubblewrap
-    cabal-install
-    calibre
-    cargo
-    cataclysm-dda
-    chromium-sandboxed
-    clinfo
-    coursier
-    davfs2
-    deadbeef-sandboxed
-    docker-compose
-    dosbox
-    dosfstools
-    e2fsprogs
-    editorconfig-core-c
-    eiskaltdcpp
-    element-desktop-sandboxed
-    exa
-    exfat-utils
-    extundelete
-    fbreader
-    fd
-    fdupes
-    feh-sandboxed
-    ffmpeg-full-sandboxed
-    firefox-sandboxed
-    fuseiso
-    gdb
-    ghc
-    gimp-with-plugins
-    git
-    gitAndTools.delta
-    gnome-themes-extra
-    gnome3.adwaita-icon-theme
-    gparted
-    graphicsmagick
-    graphicsmagick-imagemagick-compat
-    hans
-    hdparm
-    hicolor-icon-theme # contains deadbeef icon
-    hlint
-    hunspell
-    hunspellDicts.en_US
-    hunspellDicts.ru_RU
-    imv-sandboxed
-    inkscape
-    innoextract
-    iodine
-    iotop
-    isync
-    jq
-    kafkacat
-    languagetool
-    libreoffice-fresh-sandboxed
-    libva-utils
-    lsd
-    lshw
-    maim
-    maxima
-    mc
-    mercurial
-    mesa-demos
-    metals
-    metasploit
-    mono
-    motion
-    mpd
-    mpv-sandboxed
-    mu
-    nettools
-    networkmanagerapplet
-    newsboat
-    nix-diff
-    nixfmt
-    nmap
-    nodePackages.bash-language-server
-    nodePackages.prettier
-    ntfs3g
-    numlockx
-    octave
-    openconnect
-    openjdk
-    openmw
-    openssl
-    p7zip-sandboxed
-    pandoc # TODO: it should depend on texlive
-    parallel
-    pavucontrol
-    perl
-    picom
-    pidgin-sandboxed
-    psmisc # for killall
-    qbittorrent-sandboxed
-    qemu
-    qrencode
-    qt5ct
-    qtox-sandboxed
-    radare2
-    rclone
-    ripgrep
-    ripgrep-all
-    rsync
-    rust-analyzer
-    rustc
-    sbt
-    scala
-    shellcheck
-    skim
-    smartmontools
-    sourceHighlight
-    starship
-    subversion
-    tdesktop-sandboxed
-    telegram-purple
-    tesseract
-    texlive.combined.scheme-basic
-    tigervnc
-    tinc
-    tldr
-    tmux
-    tor-browser-bundle-bin-wrapped
-    torsocks
-    toxic-sandboxed
-    trayer
-    unrar-sandboxed
-    unzip-natspec-sandboxed
-    vdpauinfo
-    viu
-    vlc-sandboxed
-    vulkan-tools
-    websocat
-    wesnoth
-    wget
-    wine-staging-sandboxed
-    winetricks
-    wireguard-tools
-    wmctrl
-    wxmaxima
-    xcalib
-    xcb-client-id
-    xdotool
-    xmlstarlet
-    xmobar
-    xorg.xbacklight
-    xterm
-    you-get
-    youtube-dl
-    zathura-sandboxed
-    zbar
-    # findimagedupes
-    # tuntox
-    # vagrant
-    # veloren
-    # virtualbox
-    # tensorflow
-    # sane xsane
-  ];
+  environment = {
+    systemPackages = with pkgs; [
+      (agda.withPackages (pkgs: with pkgs; [ standard-library ]))
+      (pass.withExtensions (ext: with ext; [ pass-otp ]))
+      R
+      aircrack-ng
+      alacritty
+      anki
+      ansible
+      ansible-lint
+      aspell
+      aspellDicts.en
+      aspellDicts.ru
+      astyle
+      barcode
+      bat
+      bind
+      binutils
+      btrfs-progs
+      bubblewrap
+      cabal-install
+      calibre
+      cargo
+      cataclysm-dda
+      chromium-sandboxed
+      clinfo
+      coursier
+      davfs2
+      deadbeef-sandboxed
+      docker-compose
+      dosbox
+      dosfstools
+      e2fsprogs
+      editorconfig-core-c
+      eiskaltdcpp
+      element-desktop-sandboxed
+      exa
+      exfat-utils
+      extundelete
+      fbreader
+      fd
+      fdupes
+      feh-sandboxed
+      ffmpeg-full-sandboxed
+      firefox-sandboxed
+      fuseiso
+      gdb
+      ghc
+      gimp-with-plugins
+      git
+      gitAndTools.delta
+      gnome-themes-extra
+      gnome3.adwaita-icon-theme
+      gparted
+      graphicsmagick
+      graphicsmagick-imagemagick-compat
+      hans
+      hdparm
+      hicolor-icon-theme # contains deadbeef icon
+      hlint
+      hunspell
+      hunspellDicts.en_US
+      hunspellDicts.ru_RU
+      imv-sandboxed
+      inkscape
+      innoextract
+      iodine
+      iotop
+      isync
+      jq
+      kafkacat
+      languagetool
+      libreoffice-fresh-sandboxed
+      libva-utils
+      lsd
+      lshw
+      maim
+      maxima
+      mc
+      mercurial
+      mesa-demos
+      metals
+      metasploit
+      mono
+      motion
+      mpd
+      mpv-sandboxed
+      mu
+      nettools
+      networkmanagerapplet
+      newsboat
+      nix-diff
+      nixfmt
+      nmap
+      nodePackages.bash-language-server
+      nodePackages.prettier
+      ntfs3g
+      numlockx
+      octave
+      openconnect
+      openjdk
+      openmw
+      openssl
+      p7zip-sandboxed
+      pandoc # TODO: it should depend on texlive
+      parallel
+      pavucontrol
+      perl
+      picom
+      pidgin-sandboxed
+      psmisc # for killall
+      qbittorrent-sandboxed
+      qemu
+      qrencode
+      qt5ct
+      qtox-sandboxed
+      radare2
+      rclone
+      ripgrep
+      ripgrep-all
+      rsync
+      rust-analyzer
+      rustc
+      sbt
+      scala
+      shellcheck
+      skim
+      smartmontools
+      sourceHighlight
+      starship
+      subversion
+      tdesktop-sandboxed
+      telegram-purple
+      tesseract
+      texlive.combined.scheme-basic
+      tigervnc
+      tinc
+      tldr
+      tmux
+      tor-browser-bundle-bin-wrapped
+      torsocks
+      toxic-sandboxed
+      trayer
+      unrar-sandboxed
+      unzip-natspec-sandboxed
+      vdpauinfo
+      viu
+      vlc-sandboxed
+      vulkan-tools
+      websocat
+      wesnoth
+      wget
+      wine-staging-sandboxed
+      winetricks
+      wireguard-tools
+      wmctrl
+      wxmaxima
+      xcalib
+      xcb-client-id
+      xdotool
+      xmlstarlet
+      xmobar
+      xorg.xbacklight
+      xterm
+      you-get
+      youtube-dl
+      zathura-sandboxed
+      zbar
+      # findimagedupes
+      # tuntox
+      # vagrant
+      # veloren
+      # virtualbox
+      # tensorflow
+      # sane xsane
+    ];
+
+    shellAliases = {
+      ls = "ls --color=auto";
+      grep = "grep --color=auto";
+      su = "sudo su";
+    };
+  };
 
   fonts.fonts = with pkgs; [
     (nerdfonts.override { fonts = [ "Hack" ]; })
