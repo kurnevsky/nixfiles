@@ -27,8 +27,16 @@
     networkmanager.enable = true;
     firewall = {
       enable = true;
-      allowedTCPPorts = [ 22 ];
-      allowedUDPPorts = [ 33445 ];
+      allowedTCPPorts = [
+        # SSH
+        22
+      ];
+      allowedUDPPorts = [
+        # Tox
+        33445
+        # WireGuard
+        51871
+      ];
     };
   };
 
