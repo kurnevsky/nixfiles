@@ -335,12 +335,18 @@
     (self: super: {
       uutils-coreutils = super.uutils-coreutils.override { prefix = null; };
     })
-    (self: super: rec {
-      mc = optimizeForThisHost (super.mc.override {
-        zip = super.zip-natspec-sandboxed;
-        unzip = super.unzip-natspec-sandboxed;
-      });
-    })
+    (self: super:
+      let
+        mc = optimizeForThisHost (super.mc.override {
+          zip = super.zip-natspec-sandboxed;
+          unzip = super.unzip-natspec-sandboxed;
+        });
+      in {
+        mc = pkgs.writeShellScriptBin "mc" ''
+          export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${pkgs.xorg.libX11}/lib
+          exec ${mc}/bin/mc
+        '';
+      })
     (self: super: {
       tesseract =
         super.tesseract.override { enableLanguages = [ "eng" "rus" ]; };
