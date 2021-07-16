@@ -469,7 +469,7 @@ in {
         paths = [ (sandbox super.vlc vlc) (sandbox super.vlc (withNet vlc)) ];
       };
       firefox-sandboxed = sandbox super.firefox firefox;
-      chromium-sandboxed = sandbox super.chromium chromium;
+      chromium-sandboxed = sandbox super.ungoogled-chromium chromium;
       pidgin-sandboxed = sandbox super.pidgin-with-plugins pidgin;
       qtox-sandboxed = sandbox super.qtox qtox;
       toxic-sandboxed = sandbox super.toxic toxic;
