@@ -20,7 +20,10 @@
       "unrar"
     ];
 
-  boot.kernel.sysctl = { "kernel.sysrq" = 1; };
+  boot = {
+    kernel.sysctl = { "kernel.sysrq" = 1; };
+    tmpOnTmpfs = true;
+  };
 
   networking = {
     useDHCP = false;
