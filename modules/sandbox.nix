@@ -16,7 +16,8 @@ let
     };
   withOpengl = attrs:
     attrs // {
-      extra-deps = (attrs.extra-deps or [ ]) ++ (with pkgs; [ mesa_drivers ]);
+      extra-deps = with config.hardware.opengl;
+        (attrs.extra-deps or [ ]) ++ [ package ] ++ extraPackages;
       opengl = true;
     };
   archiver = name: {
