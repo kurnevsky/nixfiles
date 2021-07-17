@@ -190,6 +190,12 @@ let
   } [ withFonts withOpengl ];
   qtox = withFonts {
     name = "qtox";
+    extra-deps = with pkgs; [
+      qt5ct
+      gnome-themes-extra
+      gnome3.adwaita-icon-theme
+      hicolor-icon-theme
+    ];
     devs = [ "dri" ];
     camera = true;
     syses = [
