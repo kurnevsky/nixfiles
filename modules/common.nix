@@ -396,7 +396,7 @@
       in {
         mc = pkgs.writeShellScriptBin "mc" ''
           export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${pkgs.xorg.libX11}/lib
-          exec ${mc}/bin/mc
+          exec ${mc}/bin/mc $@
         '';
       })
     (self: super: {
