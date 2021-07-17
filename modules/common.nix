@@ -609,6 +609,7 @@
     };
   in {
     useGlobalPkgs = true;
+    useUserPackages = true;
     users = {
       kurnevsky = home;
       ww = home;
