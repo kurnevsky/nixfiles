@@ -483,6 +483,7 @@
       home.stateVersion = "21.05";
       services = {
         status-notifier-watcher.enable = true;
+        gnome-keyring.enable = true;
         xembed-sni-proxy.enable = true;
         taffybar.enable = true;
         pasystray.enable = true;
