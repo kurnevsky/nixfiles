@@ -479,7 +479,10 @@ in {
         name = "vlc";
         paths = [ (sandbox super.vlc vlc) (sandbox super.vlc (withNet vlc)) ];
       };
-      firefox-sandboxed = sandbox super.firefox firefox;
+      firefox-sandboxed = pkgs.symlinkJoin {
+        name = "firefox";
+        paths = [ (sandbox super.firefox firefox) super.firefox ];
+      };
       chromium-sandboxed = sandbox super.ungoogled-chromium chromium;
       pidgin-sandboxed = sandbox super.pidgin-with-plugins pidgin;
       qtox-sandboxed = sandbox super.qtox qtox;
