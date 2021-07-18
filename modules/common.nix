@@ -442,6 +442,12 @@
                   "https://github.com/taffybar/gtk-sni-tray/commit/f7af7d00660790fb7143fea5b48e4f83765b3730.patch";
                 sha256 = "sha256-Ap83YnmaPvziST76MWlBKM28+QrG6Vza9btMxLpeOCQ=";
               })
+              (pkgs.fetchpatch {
+                name = "mouse.patch";
+                url =
+                  "https://github.com/taffybar/gtk-sni-tray/commit/af631502f89d9686a84e7ab49e8b01b95a817eed.patch";
+                sha256 = "sha256-xJgpZhH7NZzw0VwKYbkXEPrwr+CURL11fpQJRVTMH9g=";
+              })
             ];
           });
         };
