@@ -466,7 +466,7 @@
       kurnevsky = {
         uid = 1000;
         isNormalUser = true;
-        extraGroups = [ "wheel" "adbusers" ];
+        extraGroups = [ "wheel" "adbusers" "audio" "video" ];
         shell = pkgs.zsh;
         passwordFile = "/secrets/kurnevsky";
       };
