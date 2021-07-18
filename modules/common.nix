@@ -561,6 +561,7 @@
           name = "Adwaita";
           size = 16;
         };
+        numlock.enable = true;
       };
       xresources.properties = let
         base00 = "#282c34";
