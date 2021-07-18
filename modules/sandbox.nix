@@ -154,7 +154,7 @@ let
       "devices"
     ];
     x11 = true;
-    pams = [ "pulse" ];
+    pams = [ "bus" "pulse" ];
     etcs = [ "pulse" ];
     # xdg-screensaver creates a lockfile in /tmp
     shared-tmp = true;
@@ -456,6 +456,9 @@ in {
       firefox = super.firefox.override {
         extraNativeMessagingHosts = [ super.passff-host ];
       };
+      mpv-with-scripts = super.mpv-with-scripts.override {
+        scripts = with pkgs.mpvScripts; [ mpris ];
+      };
     })
     (self: super: {
       deadbeef-sandboxed = pkgs.symlinkJoin {
@@ -479,7 +482,11 @@ in {
       unzip-natspec-sandboxed = sandbox super.unzip-natspec (archiver "unzip");
       mpv-sandboxed = pkgs.symlinkJoin {
         name = "mpv";
-        paths = [ (sandbox super.mpv mpv) (sandbox super.mpv (withNet mpv)) ];
+        paths = [
+          (sandbox super.mpv-with-scripts mpv)
+          (sandbox super.mpv-with-scripts (withNet mpv))
+          super.mpv-with-scripts
+        ];
       };
       vlc-sandboxed = pkgs.symlinkJoin {
         name = "vlc";

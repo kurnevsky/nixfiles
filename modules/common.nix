@@ -161,6 +161,7 @@
       perl
       picom
       pidgin-sandboxed
+      playerctl
       psmisc # for killall
       qbittorrent-sandboxed
       qemu
