@@ -68,6 +68,7 @@
       bat
       bind
       binutils
+      brightnessctl
       btrfs-progs
       bubblewrap
       cabal-install
