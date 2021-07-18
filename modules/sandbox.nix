@@ -454,6 +454,7 @@ in {
         paths = [
           (sandbox super.deadbeef-with-plugins deadbeef)
           (sandbox super.deadbeef-with-plugins (withNet deadbeef))
+          super.deadbeef-with-plugins
         ];
       };
       p7zip-sandboxed = pkgs.symlinkJoin {
