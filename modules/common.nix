@@ -23,6 +23,7 @@
   boot = {
     kernel.sysctl = { "kernel.sysrq" = 1; };
     tmpOnTmpfs = true;
+    supportedFilesystems = [ "ntfs" ];
   };
 
   networking = {
@@ -148,7 +149,6 @@
       nmap
       nodePackages.bash-language-server
       nodePackages.prettier
-      ntfs3g
       numlockx
       octave
       openconnect
