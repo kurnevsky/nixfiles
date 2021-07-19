@@ -31,6 +31,7 @@
         ./modules/sandbox.nix
         ./modules/zswap.nix
         ./modules/shadowsocks.nix
+        ./modules/patches.nix
         ./configuration.nix
         ./hardware-configuration.nix
       ];
