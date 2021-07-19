@@ -249,7 +249,8 @@
     gnupg.agent.enable = true;
     zsh = {
       enable = true;
-      enableCompletion = true;
+      # will be enabled in interactiveShellInit differently
+      enableCompletion = false;
       autosuggestions = {
         enable = true;
         extraConfig = { ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE = "10"; };
@@ -289,6 +290,7 @@
         # Use OS file locking
         "hist_fcntl_lock"
       ];
+      interactiveShellInit = builtins.readFile ./interactive-init.zsh;
     };
     adb.enable = true;
   };
@@ -463,7 +465,10 @@
     users = {
       # To get hash use:
       # openssl passwd -6 password
-      root.hashedPassword = "!";
+      root = {
+        shell = pkgs.zsh;
+        hashedPassword = "!";
+      };
       kurnevsky = {
         uid = 1000;
         isNormalUser = true;
