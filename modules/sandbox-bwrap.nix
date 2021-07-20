@@ -21,9 +21,6 @@ in writeShellScriptBin target-name ''
     exec ${drv}/bin/${name} "$@"
   fi
 
-  ${lib.concatMapStringsSep "\n" (x: "test ! -e ${x} && mkdir -p ${x}")
-  (lib.filter (s: builtins.match ".*/" s != null) (ro-whitelist ++ whitelist))}
-
   ${lib.optionalString camera ''
     mapfile -t video < <(find /dev -maxdepth 1 -type c -regex '/dev/video[0-9]+' | sed 's/.*/--dev-bind\n&\n&/')
   ''}
@@ -98,6 +95,12 @@ in writeShellScriptBin target-name ''
        ${
          lib.optionalString seccomp
          "--seccomp 3 3< ${sandbox-seccomp}/seccomp.bpf"
+       } \
+       \
+       ${
+         lib.concatMapStringsSep " " (x: "--dir ${x}")
+         (lib.filter (s: builtins.match ".*/" s != null)
+           (ro-whitelist ++ whitelist))
        } \
        \
        ${drv}/bin/${name} ${lib.concatStringsSep " " args} "$@"
