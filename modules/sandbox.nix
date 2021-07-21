@@ -471,6 +471,7 @@ in {
           purple-lurch
           purple-plugin-pack
           purple-slack
+          (pkgs.callPackage ./pidgin-indicator.nix { })
         ];
       };
     })
