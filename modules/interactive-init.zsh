@@ -41,9 +41,6 @@
   zle -N up-line-or-beginning-search
   zle -N down-line-or-beginning-search
 
-  # Autocompletion for kubernetes
-  command -v kubectl > /dev/null && source <(kubectl completion zsh)
-
   # Many programs change the terminal state, and often do not restore terminal settings on exiting abnormally
   # This avoids the need to manually reset the terminal
   ttyctl -f
