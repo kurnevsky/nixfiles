@@ -251,8 +251,9 @@
     gnupg.agent.enable = true;
     zsh = {
       enable = true;
+      enableCompletion = true;
       # will be enabled in interactiveShellInit differently
-      enableCompletion = false;
+      enableGlobalCompInit = false;
       autosuggestions = {
         enable = true;
         extraConfig = { ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE = "10"; };
