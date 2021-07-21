@@ -462,6 +462,17 @@ in {
         scripts = with pkgs.mpvScripts; [ mpris ];
       };
       p7zip = super.p7zip.override { enableUnfree = true; };
+      pidgin-with-plugins = super.pidgin-with-plugins.override {
+        plugins = with pkgs; [
+          pidgin-otr
+          pidgin-xmpp-receipts
+          pidgin-skypeweb
+          pidgin-carbons
+          purple-lurch
+          purple-plugin-pack
+          purple-slack
+        ];
+      };
     })
     (self: super: {
       deadbeef-sandboxed = pkgs.symlinkJoin {
@@ -500,7 +511,13 @@ in {
         paths = [ (sandbox super.firefox firefox) super.firefox ];
       };
       chromium-sandboxed = sandbox super.ungoogled-chromium chromium;
-      pidgin-sandboxed = sandbox super.pidgin-with-plugins pidgin;
+      pidgin-sandboxed = pkgs.symlinkJoin {
+        name = "qtox";
+        paths = [
+          (sandbox super.pidgin-with-plugins pidgin)
+          super.pidgin-with-plugins
+        ];
+      };
       qtox-sandboxed = pkgs.symlinkJoin {
         name = "qtox";
         paths = [ (sandbox super.qtox qtox) super.qtox ];
