@@ -163,6 +163,7 @@
       perl
       picom
       pidgin-sandboxed
+      pijul
       playerctl
       psmisc # for killall
       qbittorrent-sandboxed
