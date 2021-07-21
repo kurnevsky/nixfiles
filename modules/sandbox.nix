@@ -208,8 +208,6 @@ let
     etcs = [ "pulse" "localtime" "resolv.conf" ];
     unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" "SHELL" ];
     unshare-net = false;
-    # affects tray icon for some reason
-    unshare-pid = false;
     ro-whitelist = [ "~/.config/qt5ct/" "~/.Xauthority" ];
     whitelist = [ "~/.config/tox/" "~/.cache/Tox/" "~/.config/pulse/" ];
   };
