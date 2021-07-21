@@ -47,4 +47,34 @@
   # Many programs change the terminal state, and often do not restore terminal settings on exiting abnormally
   # This avoids the need to manually reset the terminal
   ttyctl -f
+
+  # Find the key with: showkey -a
+  bindkey "^[[1;5C" forward-word # Ctrl-Right
+  bindkey "^[[1;5D" backward-word # Ctrl-Left
+  bindkey '^ ' autosuggest-accept # Ctrl+Space
+
+  # Terminal can send different control sequences depending on whether it has been put in keypad transmit mode or not.
+  # The smkx and rmkx terminfo entries can be used to put a terminal in or out of that mode.
+  [[ -n "${terminfo[kcuu1]}" ]] && bindkey "${terminfo[kcuu1]}" up-line-or-beginning-search # Up
+  [[ -n "${terminfo[kcuu1]/O/[}" ]] && bindkey "${terminfo[kcuu1]/O/[}" up-line-or-beginning-search # Up
+  [[ -n "${terminfo[kcud1]}" ]] && bindkey "${terminfo[kcud1]}" down-line-or-beginning-search # Down
+  [[ -n "${terminfo[kcud1]/O/[}" ]] && bindkey "${terminfo[kcud1]/O/[}" down-line-or-beginning-search # Down
+
+  if command -v sk > /dev/null
+  then
+    skim-history-widget() {
+      local num
+      setopt localoptions pipefail
+      echo -ne "\r"
+      num=$(fc -rl 1 | sk --height 50% -n2..,.. --tiebreak=score,index --layout=reverse --inline-info -p "➜ " --query="$LBUFFER")
+      local ret=$?
+      zle reset-prompt
+      if [ -n "$num" ]; then
+        zle vi-fetch-history -n "$num"
+      fi
+      return $ret
+    }
+    zle -N skim-history-widget
+    bindkey '^R' skim-history-widget
+  fi
 }
