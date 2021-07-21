@@ -461,6 +461,7 @@ in {
       mpv-with-scripts = super.mpv-with-scripts.override {
         scripts = with pkgs.mpvScripts; [ mpris ];
       };
+      p7zip = super.p7zip.override { enableUnfree = true; };
     })
     (self: super: {
       deadbeef-sandboxed = pkgs.symlinkJoin {

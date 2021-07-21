@@ -18,6 +18,7 @@
       "symbola"
       "font-bh-lucidatypewriter"
       "unrar"
+      "p7zip"
     ];
 
   boot = {
