@@ -512,7 +512,7 @@ in {
       };
       chromium-sandboxed = sandbox super.ungoogled-chromium chromium;
       pidgin-sandboxed = pkgs.symlinkJoin {
-        name = "qtox";
+        name = "pidgin";
         paths = [
           (sandbox super.pidgin-with-plugins pidgin)
           super.pidgin-with-plugins
