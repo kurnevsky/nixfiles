@@ -455,6 +455,12 @@
                   "https://github.com/taffybar/gtk-sni-tray/commit/af631502f89d9686a84e7ab49e8b01b95a817eed.patch";
                 sha256 = "sha256-xJgpZhH7NZzw0VwKYbkXEPrwr+CURL11fpQJRVTMH9g=";
               })
+              (pkgs.fetchpatch {
+                name = "coords.patch";
+                url =
+                  "https://github.com/taffybar/gtk-sni-tray/commit/7dd232b75f9a91dbd953771c199302d87ed036ed.patch";
+                sha256 = "sha256-5/Oz8Q3hoqxsFgzC7uBs0Td0QHC3VMX3xK2Zklckcd8=";
+              })
             ];
           });
         };
