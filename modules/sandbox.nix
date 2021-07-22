@@ -20,6 +20,12 @@ let
         (attrs.extra-deps or [ ]) ++ [ package ] ++ extraPackages;
       opengl = true;
     };
+  withOpengl32 = attrs:
+    attrs // {
+      extra-deps = with config.hardware.opengl;
+        (attrs.extra-deps or [ ]) ++ [ package32 ] ++ extraPackages32;
+      opengl32 = true;
+    };
   archiver = name: {
     inherit name;
     unsetenvs = [
@@ -363,7 +369,7 @@ let
         "~/.cache/winetricks/"
         "~/.config/pulse/"
       ];
-    } [ withFonts withOpengl ];
+    } [ withFonts withOpengl withOpengl32 ];
   libreoffice = name:
     withFonts {
       inherit name;

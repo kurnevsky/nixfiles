@@ -7,8 +7,8 @@ drv:
 , unshare-cgroup ? true, etcs ? [ ], pams ? [ ], whitelist ? [ ]
 , ro-whitelist ? [ ], blacklist ? [ ], unsetenvs ? [ ], setenvs ? [ ]
 , devs ? [ ], syses ? [ ], shared-tmp ? false, camera ? false, args ? [ ]
-, system-bus-socket ? false, extra-deps ? [ ], opengl ? false, seccomp ? true
-, bin-sh ? false }:
+, system-bus-socket ? false, extra-deps ? [ ], opengl ? false, opengl32 ? false
+, seccomp ? true, bin-sh ? false }:
 
 let cinfo = closureInfo { rootPaths = [ drv ] ++ extra-deps; };
 in writeShellScriptBin target-name ''
@@ -49,6 +49,10 @@ in writeShellScriptBin target-name ''
        ${
          lib.optionalString opengl
          "--ro-bind /run/opengl-driver /run/opengl-driver"
+       } \
+       ${
+         lib.optionalString opengl32
+         "--ro-bind /run/opengl-driver-32 /run/opengl-driver-32"
        } \
        \
        ${
