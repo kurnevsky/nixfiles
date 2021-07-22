@@ -30,6 +30,7 @@
         ./modules/common.nix
         ./modules/sandbox.nix
         ./modules/zswap.nix
+        ./modules/bfq.nix
         ./modules/shadowsocks.nix
         ./modules/patches.nix
         ./configuration.nix
