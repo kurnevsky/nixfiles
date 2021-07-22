@@ -371,7 +371,10 @@
       enable = true;
       package = pkgs.pulseaudioFull;
     };
-    opengl.enable = true;
+    opengl = {
+      enable = true;
+      driSupport32Bit = true;
+    };
   };
 
   systemd = {
