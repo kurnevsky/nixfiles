@@ -22,6 +22,8 @@
     ];
 
   boot = {
+    # TODO: use pkgs.linuxPackages_xanmod
+    kernelPackages = pkgs.linuxPackages_zen;
     kernel.sysctl = { "kernel.sysrq" = 1; };
     tmpOnTmpfs = true;
     supportedFilesystems = [ "ntfs" ];
