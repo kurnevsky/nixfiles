@@ -33,8 +33,8 @@
         ./modules/bfq.nix
         ./modules/shadowsocks.nix
         ./modules/patches.nix
-        ./configuration.nix
-        ./hardware-configuration.nix
+        ./machines/dell/configuration.nix
+        ./machines/dell/hardware-configuration.nix
       ];
     };
   };
