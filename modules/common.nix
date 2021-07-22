@@ -43,6 +43,17 @@
         51871
       ];
     };
+    wireguard.interfaces.wg0 = {
+      listenPort = 51871;
+      privateKeyFile = "/secrets/wg/private.key";
+      peers = [{
+        endpoint = "kurnevsky.net:51871";
+        publicKey = "5JHCxIYeZ50k7YJM+kLAbqGW4LAXpI5lycYEWSVxkBE=";
+        presharedKeyFile = "/secrets/wg/preshared.psk";
+        allowedIPs = [ "192.168.14.0/24" ];
+        persistentKeepalive = 25;
+      }];
+    };
   };
 
   console = {
