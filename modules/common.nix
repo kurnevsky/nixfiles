@@ -371,14 +371,7 @@
       enable = true;
       package = pkgs.pulseaudioFull;
     };
-    opengl = {
-      enable = true;
-      extraPackages = with pkgs; [
-        intel-media-driver
-        vaapiVdpau
-        libvdpau-va-gl
-      ];
-    };
+    opengl.enable = true;
   };
 
   systemd = {

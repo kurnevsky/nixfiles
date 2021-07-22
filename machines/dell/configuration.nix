@@ -34,5 +34,14 @@
     wireguard.interfaces.wg0.ips = [ "192.168.14.2/32" ];
   };
 
+  hardware = {
+    cpu.intel.updateMicrocode = true;
+    opengl.extraPackages = with pkgs; [
+      # Discrete GPU can be used with DRI_PRIME=1 LIBVA_DRIVER_NAME=radeonsi
+      vaapiIntel
+      libvdpau-va-gl
+    ];
+  };
+
   system.stateVersion = "21.05";
 }
