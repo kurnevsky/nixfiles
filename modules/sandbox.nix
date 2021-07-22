@@ -361,6 +361,7 @@ let
         value = "/run/current-system/sw/bin/bash";
       }];
       unshare-cgroup = false;
+      unshare-pid = false;
       seccomp = false;
       ro-whitelist = [ "~/.Xauthority" ];
       whitelist = [
