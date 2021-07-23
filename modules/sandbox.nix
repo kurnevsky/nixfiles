@@ -346,7 +346,7 @@ let
       # coreutils-full is needed because it's system default stdenv
       # and wine has scripts that rely on stdenv being in PATH
       extra-deps = with pkgs; [ coreutils-full ];
-      devs = [ "dri" ];
+      devs = [ "dri" "snd" ];
       syses = [
         # Necessary for hardware acceleration
         "dev"
