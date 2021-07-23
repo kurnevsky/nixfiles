@@ -390,6 +390,12 @@
     # Enable pam_systemd module to set dbus environment variable.
     pam.services.login.startSession = true;
     unprivilegedUsernsClone = true;
+    sudo.extraRules = [{
+      runAs = "root";
+      users = [ "ww" ];
+      commands =
+        [ "/run/current-system/sw/bin/ip netns exec torjail sudo -u ww [!-]*" ];
+    }];
   };
 
   # system.replaceRuntimeDependencies can be used to make fast fixes
