@@ -558,6 +558,7 @@ in {
           (sandbox super.wineWowPackages.staging (wine "wine"))
           (sandbox super.wineWowPackages.staging (withNet (wine "wine")))
           (sandbox super.wineWowPackages.staging (wine "winecfg"))
+          super.wineWowPackages.staging
         ];
       };
       wine-staging-full-sandboxed = pkgs.symlinkJoin {
@@ -566,6 +567,7 @@ in {
           (sandbox super.wine-staging-full (wine "wine"))
           (sandbox super.wine-staging-full (withNet (wine "wine")))
           (sandbox super.wine-staging-full (wine "winecfg"))
+          super.wine-staging-full
         ];
       };
       libreoffice-fresh-sandboxed = pkgs.symlinkJoin {
