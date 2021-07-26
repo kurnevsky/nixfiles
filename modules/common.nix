@@ -335,8 +335,6 @@
       enable = true;
       # causes GDK_PIXBUF_MODULE_FILE to be set in xsession
       gdk-pixbuf.modulePackages = [ pkgs.librsvg ];
-      # Enable touchpad support.
-      # libinput.enable = true;
       layout = "us,ru";
       xkbOptions = "grp:caps_toggle,grp_led:caps,terminate:ctrl_alt_bksp";
       libinput = {
