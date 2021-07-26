@@ -150,6 +150,9 @@ let
       gawk
       xcb-client-id
     ];
+    extra-deps-no-transitive = lib.unique
+      (lib.mapAttrsToList (name: value: value.home.path)
+        config.home-manager.users);
     # unshare-pid breaks xdg-screensaver in a way that it can't detect
     # process termination and therefore might not enable screensaver
     unshare-pid = false;

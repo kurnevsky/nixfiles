@@ -7,8 +7,8 @@ drv:
 , unshare-cgroup ? true, etcs ? [ ], pams ? [ ], whitelist ? [ ]
 , ro-whitelist ? [ ], blacklist ? [ ], unsetenvs ? [ ], setenvs ? [ ]
 , devs ? [ ], syses ? [ ], shared-tmp ? false, camera ? false, args ? [ ]
-, system-bus-socket ? false, extra-deps ? [ ], opengl ? false, opengl32 ? false
-, seccomp ? true, bin-sh ? false }:
+, system-bus-socket ? false, extra-deps ? [ ], extra-deps-no-transitive ? [ ]
+, opengl ? false, opengl32 ? false, seccomp ? true, bin-sh ? false }:
 
 let cinfo = closureInfo { rootPaths = [ drv ] ++ extra-deps; };
 in writeShellScriptBin target-name ''
@@ -29,6 +29,10 @@ in writeShellScriptBin target-name ''
 
   exec ${bubblewrap}/bin/bwrap \
        "''${deps[@]}" \
+       ${
+         lib.concatMapStringsSep " " (x: "--ro-bind ${x} ${x}")
+         extra-deps-no-transitive
+       } \
        \
        ${lib.optionalString bin-sh "--ro-bind /bin/sh /bin/sh"} \
        \
@@ -64,6 +68,7 @@ in writeShellScriptBin target-name ''
          (x: "--bind /run/user/$UID/${x} /run/user/$UID/${x}") pams
        } \
        \
+       --ro-bind /etc/profiles/per-user/"$(whoami)" /etc/profiles/per-user/"$(whoami)" \
        ${
          lib.concatMapStringsSep " " (x: "--ro-bind /etc/${x} /etc/${x}") etcs
        } \
