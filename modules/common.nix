@@ -22,7 +22,7 @@
     ];
 
   boot = {
-    # TODO: use pkgs.linuxPackages_xanmod
+    # TODO: use pkgs.linuxPackages_xanmod after next nixos release
     kernelPackages = pkgs.linuxPackages_zen;
     kernel.sysctl = { "kernel.sysrq" = 1; };
     tmpOnTmpfs = true;
@@ -432,6 +432,7 @@
           unzip = super.unzip-natspec-sandboxed;
         });
       in {
+        # TODO: don't wrap after next nixos release
         mc = pkgs.writeShellScriptBin "mc" ''
           export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${pkgs.xorg.libX11}/lib
           exec ${mc}/bin/mc $@
