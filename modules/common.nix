@@ -309,6 +309,11 @@
       interactiveShellInit = builtins.readFile ./interactive-init.zsh;
     };
     adb.enable = true;
+    less = {
+      enable = true;
+      lessopen = "| ${pkgs.sourceHighlight}/bin/src-hilite-lesspipe.sh %s";
+      envVariables.LESS = " -R ";
+    };
   };
 
   gtk.iconCache.enable = true;
