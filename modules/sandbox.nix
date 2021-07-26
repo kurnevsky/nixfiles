@@ -2,6 +2,7 @@
 
 let
   sandbox = pkgs.callPackage ./sandbox-bwrap.nix { };
+  pid-hack = pkgs.callPackage ./sandbox-pid-hack.nix { };
   withFonts = attrs:
     attrs // {
       extra-deps = (attrs.extra-deps or [ ])
@@ -530,12 +531,18 @@ in {
       };
       qtox-sandboxed = pkgs.symlinkJoin {
         name = "qtox";
-        paths = [ (sandbox super.qtox qtox) super.qtox ];
+        paths = [ (sandbox (pid-hack super.qtox "qtox") qtox) super.qtox ];
       };
       toxic-sandboxed = sandbox super.toxic toxic;
       tdesktop-sandboxed = sandbox super.tdesktop tdesktop;
       element-desktop-sandboxed = sandbox super.element-desktop element-desktop;
-      qbittorrent-sandboxed = sandbox super.qbittorrent qbittorrent;
+      qbittorrent-sandboxed = pkgs.symlinkJoin {
+        name = "qbittorrent";
+        paths = [
+          (sandbox (pid-hack super.qbittorrent "qbittorrent") qbittorrent)
+          super.qbittorrent
+        ];
+      };
       feh-sandboxed = sandbox super.feh (viewer "feh");
       imv-sandboxed = sandbox super.imv (withOpengl (viewer "imv" // {
         devs = [ "dri" ];
