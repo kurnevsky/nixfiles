@@ -43,5 +43,12 @@
     ];
   };
 
+  services.xserver = {
+    videoDrivers = [ "intel" "amdgpu" ];
+    deviceSection = ''
+      Option "TearFree" "true"
+    '';
+  };
+
   system.stateVersion = "21.05";
 }
