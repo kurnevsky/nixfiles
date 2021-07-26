@@ -1,13 +1,15 @@
-{ lib, stdenv, fetchurl, pkg-config, deadbeef, gtk3, perl, libdbusmenu-glib }:
+{ lib, stdenv, fetchFromGitHub, pkg-config, deadbeef, gtk3, perl
+, libdbusmenu-glib }:
 
 stdenv.mkDerivation rec {
   pname = "deadbeef-statusnotifier-plugin";
   version = "1.6";
 
-  src = fetchurl {
-    url =
-      "https://github.com/vovochka404/deadbeef-statusnotifier-plugin/archive/refs/tags/v${version}.tar.gz";
-    sha256 = "sha256-jl2NUD2hv1ee8fz8L7xNxTfdhSLeUrmqL/yuCIXikXA=";
+  src = fetchFromGitHub {
+    owner = "vovochka404";
+    repo = "deadbeef-statusnotifier-plugin";
+    rev = "v${version}";
+    sha256 = "sha256-6WEbY59vPNrL3W5GUwFQJimmSS+td8Ob+G46fPAxfV4=";
   };
 
   nativeBuildInputs = [ pkg-config ];
@@ -15,10 +17,10 @@ stdenv.mkDerivation rec {
 
   buildFlags = [ "gtk3" ];
 
-  postPatch = [''
+  postPatch = ''
     substituteInPlace tools/glib-mkenums \
       --replace /usr/bin/perl "${perl}/bin/perl"
-  ''];
+  '';
 
   installPhase = ''
     runHook preInstall
