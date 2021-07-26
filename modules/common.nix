@@ -249,6 +249,13 @@
       grep = "grep --color=auto";
       su = "sudo su";
     };
+
+    variables = {
+      ALTERNATE_EDITOR = "nano";
+      VIEWER = "less";
+      # It causes segfaults
+      MAGICK_OCL_DEVICE = "OFF";
+    };
   };
 
   fonts.fonts = with pkgs; [
