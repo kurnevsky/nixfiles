@@ -74,4 +74,7 @@
     zle -N skim-history-widget
     bindkey '^R' skim-history-widget
   fi
+
+  # Set cursor type to steady bar
+  echo -e -n "\x1b[\x36 q"
 }

@@ -197,7 +197,6 @@
       skim
       smartmontools
       sourceHighlight
-      starship
       subversion
       tealdeer
       tdesktop-sandboxed
@@ -513,7 +512,25 @@
   };
 
   home-manager = let
-    home = {
+    common = {
+      programs = {
+        zsh = {
+          enable = true;
+          enableCompletion = false;
+          history = {
+            size = 20000;
+            save = 25000;
+            path = "$HOME/.histfile";
+            expireDuplicatesFirst = true;
+            share = false;
+            ignoreDups = false;
+          };
+        };
+        starship.enable = true;
+      };
+    };
+    root = common // { home.stateVersion = "21.05"; };
+    home = common // {
       home.stateVersion = "21.05";
       services = {
         status-notifier-watcher.enable = true;
@@ -655,6 +672,7 @@
     useGlobalPkgs = true;
     useUserPackages = true;
     users = {
+      root = root;
       kurnevsky = home;
       ww = home;
     };
