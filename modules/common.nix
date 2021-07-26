@@ -305,6 +305,10 @@
         # Use OS file locking
         "hist_fcntl_lock"
       ];
+      shellAliases = {
+        zmv = "noglob zmv -W";
+        calc = "noglob zcalc -e";
+      };
       interactiveShellInit = builtins.readFile ./interactive-init.zsh;
     };
     adb.enable = true;
