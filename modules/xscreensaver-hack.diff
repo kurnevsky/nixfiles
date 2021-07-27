@@ -1,0 +1,16 @@
+diff --git a/driver/xscreensaver.c b/driver/xscreensaver.c
+index bfce5f73..1447b3ab 100644
+--- a/driver/xscreensaver.c
++++ b/driver/xscreensaver.c
+@@ -542,9 +542,9 @@ hack_environment (void)
+   if (! opath) opath = "/bin:/usr/bin";  /* WTF */
+   npath = (char *) malloc(strlen(def_path) + strlen(opath) + 20);
+   strcpy (npath, "PATH=");
+-  strcat (npath, def_path);
+-  strcat (npath, ":");
+   strcat (npath, opath);
++  strcat (npath, ":");
++  strcat (npath, def_path);
+ 
+   /* Can fail if out of memory, I guess. Ignore errors. */
+   putenv (npath);

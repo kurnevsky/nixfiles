@@ -258,6 +258,9 @@
     };
   };
 
+  security.wrappers.xscreensaver-auth.source =
+    "${pkgs.xscreensaver}/libexec/xscreensaver/xscreensaver-auth";
+
   fonts.fonts = with pkgs; [
     (nerdfonts.override { fonts = [ "Hack" ]; })
     noto-fonts
@@ -422,6 +425,12 @@
     optimizeForThisHost = pkg:
       optimizeWithFlags pkg [ "-O3" "-march=native" "-mtune=native" ];
   in [
+    (self: super: {
+      xscreensaver = super.xscreensaver.overrideAttrs (attrs: {
+        patches = (super.xscreensaver.patches or [ ])
+          ++ [ ./xscreensaver-hack.diff ];
+      });
+    })
     (self: super: {
       uutils-coreutils = super.uutils-coreutils.override { prefix = null; };
     })
