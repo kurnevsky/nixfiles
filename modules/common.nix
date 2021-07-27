@@ -56,6 +56,11 @@
         persistentKeepalive = 25;
       }];
     };
+    extraHosts = ''
+      192.168.14.2 home
+      192.168.14.3 work
+      192.168.14.4 parents
+    '';
   };
 
   console = {
