@@ -29,6 +29,12 @@
     "/home".options = [ "noatime" "nodiratime" "compress=zstd:3" ];
   };
 
+  swapDevices = [{
+    device = "/dev/sda2";
+    randomEncryption.enable = true;
+    # TODO: set discardPolicy after next nixos release
+  }];
+
   networking = {
     hostName = "dell";
     wireguard.interfaces.wg0.ips = [ "192.168.14.2/32" ];
