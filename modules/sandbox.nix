@@ -27,6 +27,12 @@ let
         (attrs.extra-deps or [ ]) ++ [ package32 ] ++ extraPackages32;
       opengl32 = true;
     };
+  withHomeManager = attrs:
+    attrs // {
+      extra-deps-no-transitive = (attrs.extra-deps-no-transitive or [ ])
+        ++ lib.unique (lib.mapAttrsToList (name: value: value.home.path)
+          config.home-manager.users);
+    };
   archiver = name: {
     inherit name;
     unsetenvs = [
@@ -151,9 +157,6 @@ let
       gawk
       xcb-client-id
     ];
-    extra-deps-no-transitive = lib.unique
-      (lib.mapAttrsToList (name: value: value.home.path)
-        config.home-manager.users);
     # unshare-pid breaks xdg-screensaver in a way that it can't detect
     # process termination and therefore might not enable screensaver
     unshare-pid = false;
@@ -176,7 +179,7 @@ let
     ro-whitelist = [ "~/" ];
     whitelist = [ "~/.cache/fontconfig/" "~/.config/pulse/" ];
     blacklist = [ "~/.gnupg/" "~/.ssh/" ];
-  } [ withFonts withOpengl ];
+  } [ withFonts withOpengl withHomeManager ];
   vlc = lib.pipe {
     name = "vlc";
     devs = [ "dri" ];
@@ -279,7 +282,7 @@ let
     ro-whitelist = [ "~/.config/gtk-3.0/" "~/.Xauthority" ];
     whitelist = [ "~/.config/Element/" "~/.config/pulse/" ];
   };
-  qbittorrent = withFonts {
+  qbittorrent = lib.pipe {
     name = "qbittorrent";
     extra-deps = with pkgs; [
       qt5ct
@@ -306,7 +309,7 @@ let
       "~/Torrents/"
       "~/movies/"
     ];
-  };
+  } [ withFonts withHomeManager ];
   ffmpeg = {
     name = "ffmpeg";
     devs = [ "dri" ];
