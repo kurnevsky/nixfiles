@@ -492,8 +492,8 @@ in {
       deadbeef-sandboxed = pkgs.symlinkJoin {
         name = "deadbeef";
         paths = [
-          (sandbox super.deadbeef-with-plugins deadbeef)
-          (sandbox super.deadbeef-with-plugins (withNet deadbeef))
+          (sandbox (pid-hack super.deadbeef-with-plugins "deadbeef") deadbeef)
+          (sandbox (pid-hack super.deadbeef-with-plugins "deadbeef") (withNet deadbeef))
           super.deadbeef-with-plugins
         ];
       };
