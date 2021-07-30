@@ -79,6 +79,12 @@ in writeShellScriptBin target-name ''
          "--bind /tmp/.X11-unix /tmp/.X11-unix"
        } \
        \
+       ${
+         lib.concatMapStringsSep " " (x: "--dir ${x}")
+         (lib.filter (s: builtins.match ".*/" s != null)
+           (ro-whitelist ++ whitelist))
+       } \
+       \
        ${lib.concatMapStringsSep " " (x: "--ro-bind ${x} ${x}") ro-whitelist} \
        ${lib.concatMapStringsSep " " (x: "--bind ${x} ${x}") whitelist} \
        ${lib.concatMapStringsSep " " (x: "--tmpfs ${x}") blacklist} \
@@ -104,12 +110,6 @@ in writeShellScriptBin target-name ''
        ${
          lib.optionalString seccomp
          "--seccomp 3 3< ${sandbox-seccomp}/seccomp.bpf"
-       } \
-       \
-       ${
-         lib.concatMapStringsSep " " (x: "--dir ${x}")
-         (lib.filter (s: builtins.match ".*/" s != null)
-           (ro-whitelist ++ whitelist))
        } \
        \
        ${drv}/bin/${name} ${lib.concatStringsSep " " args} "$@"
