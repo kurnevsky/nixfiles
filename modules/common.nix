@@ -347,7 +347,15 @@
     printing.enable = true;
     resolved.enable = true;
     tlp.enable = true;
-    tor.enable = true;
+    tor = {
+      enable = true;
+      client = {
+        enable = true;
+        transparentProxy.enable = true;
+        dns.enable = true;
+      };
+      settings.Socks5Proxy = "127.0.0.1:1080";
+    };
     timesyncd.enable = true;
     upower.enable = true;
     xserver = {

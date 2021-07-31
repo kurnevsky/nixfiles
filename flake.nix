@@ -32,6 +32,7 @@
         ./modules/zswap.nix
         ./modules/bfq.nix
         ./modules/shadowsocks.nix
+        ./modules/torjail.nix
         ./modules/patches.nix
         ./machines/dell/configuration.nix
         ./machines/dell/hardware-configuration.nix
