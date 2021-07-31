@@ -501,6 +501,15 @@
                 rev = "v0.3.1.0";
                 sha256 = "sha256-teycP5kmokSCxtJjRaYEGx8DWnGKKO6qQG37iqdIdEM=";
               };
+              patches = [
+                (pkgs.fetchpatch {
+                  name = "item-is-menu.patch";
+                  url =
+                    "https://github.com/taffybar/status-notifier-item/commit/4a22a449abd30695bb37ebc0fc357f4d547f5cef.patch";
+                  sha256 =
+                    "sha256-Q8vE5/eVtuX+v82qTu6PqTG/fyIw5zziFP8UghVEYUs=";
+                })
+              ];
               prePatch = "${pkgs.hpack}/bin/hpack";
             });
           gtk-sni-tray = haskellSuper.gtk-sni-tray.overrideAttrs (oldAttrs: {
