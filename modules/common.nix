@@ -128,6 +128,7 @@
       graphicsmagick
       graphicsmagick-imagemagick-compat
       hans
+      haskell-language-server
       hdparm
       hicolor-icon-theme # contains deadbeef icon
       hlint
