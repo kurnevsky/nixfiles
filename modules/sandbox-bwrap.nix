@@ -22,7 +22,14 @@ in writeShellScriptBin target-name ''
   fi
 
   ${lib.optionalString camera ''
-    mapfile -t video < <(find /dev -maxdepth 1 -type c -regex '/dev/video[0-9]+' | sed 's/.*/--dev-bind\n&\n&/')
+    mapfile -t video < <(
+      if [[ -v CAMERA ]]
+      then
+        echo -n "$CAMERA"
+      else
+        find /dev -maxdepth 1 -type c -regex '/dev/video[0-9]+'
+      fi | sed 's/.*/--dev-bind\n&\n&/'
+    )
   ''}
 
   mapfile -t deps < <(sed 's/.*/--ro-bind\n&\n&/' ${cinfo}/store-paths)
