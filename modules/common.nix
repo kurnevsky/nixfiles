@@ -485,26 +485,24 @@
                 })
               ];
             });
+          status-notifier-item = haskellSuper.status-notifier-item.overrideAttrs
+            (oldAttrs: {
+              src = pkgs.fetchFromGitHub {
+                owner = "taffybar";
+                repo = "status-notifier-item";
+                rev = "v0.3.1.0";
+                sha256 = "sha256-teycP5kmokSCxtJjRaYEGx8DWnGKKO6qQG37iqdIdEM=";
+              };
+              prePatch = "${pkgs.hpack}/bin/hpack";
+            });
           gtk-sni-tray = haskellSuper.gtk-sni-tray.overrideAttrs (oldAttrs: {
-            patches = (oldAttrs.patches or [ ]) ++ [
-              (pkgs.fetchpatch {
-                name = "scroll.patch";
-                url =
-                  "https://github.com/taffybar/gtk-sni-tray/commit/f7af7d00660790fb7143fea5b48e4f83765b3730.patch";
-                sha256 = "sha256-Ap83YnmaPvziST76MWlBKM28+QrG6Vza9btMxLpeOCQ=";
-              })
-              (pkgs.fetchpatch {
-                name = "mouse.patch";
-                url =
-                  "https://github.com/taffybar/gtk-sni-tray/commit/af631502f89d9686a84e7ab49e8b01b95a817eed.patch";
-                sha256 = "sha256-xJgpZhH7NZzw0VwKYbkXEPrwr+CURL11fpQJRVTMH9g=";
-              })
-              (pkgs.fetchpatch {
-                name = "coords.patch";
-                url =
-                  "https://github.com/taffybar/gtk-sni-tray/commit/7dd232b75f9a91dbd953771c199302d87ed036ed.patch";
-                sha256 = "sha256-5/Oz8Q3hoqxsFgzC7uBs0Td0QHC3VMX3xK2Zklckcd8=";
-              })
+            src = pkgs.fetchFromGitHub {
+              owner = "taffybar";
+              repo = "gtk-sni-tray";
+              rev = "1734aa999ebace650232a0176643cea719ea6d5f";
+              sha256 = "sha256-08nT4sergSy5hj/5ytwaoKaZs0gg8Qyl5OL/hnKkMnQ=";
+            };
+            patches = [
               (pkgs.fetchpatch {
                 name = "scale.patch";
                 url =
@@ -512,6 +510,16 @@
                 sha256 = "sha256-Ml5gTWjemv3WgiTIra2zU4i+afsr3V4G55QJKV/11pM=";
               })
             ];
+            prePatch = "${pkgs.hpack}/bin/hpack";
+          });
+          taffybar = haskellSuper.taffybar.overrideAttrs (oldAttrs: {
+            src = pkgs.fetchFromGitHub {
+              owner = "taffybar";
+              repo = "taffybar";
+              rev = "5a59586d7b715cb088f67634c5be096bb4f3df56";
+              sha256 = "sha256-MRds7ll6VTLTy6k62mWtzkzEewk73EXFGlW7mecAfjk=";
+            };
+            patches = [ ];
           });
         };
       };
