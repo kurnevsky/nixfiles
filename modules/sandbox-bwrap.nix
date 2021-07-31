@@ -8,7 +8,8 @@ drv:
 , ro-whitelist ? [ ], blacklist ? [ ], unsetenvs ? [ ], setenvs ? [ ]
 , devs ? [ ], syses ? [ ], shared-tmp ? false, camera ? false, args ? [ ]
 , system-bus-socket ? false, extra-deps ? [ ], extra-deps-no-transitive ? [ ]
-, opengl ? false, opengl32 ? false, seccomp ? true, bin-sh ? false }:
+, opengl ? false, opengl32 ? false, seccomp ? true, bin-sh ? false
+, localtime ? false }:
 
 let cinfo = closureInfo { rootPaths = [ drv ] ++ extra-deps; };
 in writeShellScriptBin target-name ''
@@ -20,6 +21,17 @@ in writeShellScriptBin target-name ''
     echo "Running in unsandboxed mode!"
     exec ${drv}/bin/${name} "$@"
   fi
+
+  ${lib.optionalString localtime ''
+    mapfile -t localtime < <(
+      if [ -z "''${NOLOCALTIME-}" ]
+      then
+        echo '--ro-bind'
+        echo '/etc/localtime'
+        echo '/etc/localtime'
+      fi
+    )
+  ''}
 
   ${lib.optionalString camera ''
     mapfile -t video < <(
@@ -79,6 +91,7 @@ in writeShellScriptBin target-name ''
        ${
          lib.concatMapStringsSep " " (x: "--ro-bind /etc/${x} /etc/${x}") etcs
        } \
+       ${lib.optionalString localtime ''"''${localtime[@]}"''} \
        \
        ${lib.optionalString shared-tmp "--bind /tmp /tmp"} \
        ${

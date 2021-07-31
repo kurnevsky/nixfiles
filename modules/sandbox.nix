@@ -84,8 +84,8 @@ let
     ];
     x11 = true;
     pams = [ "bus" "gnupg" "pulse" ];
-    etcs =
-      [ "pulse" "resolv.conf" "localtime" "ssl/certs/ca-certificates.crt" ];
+    etcs = [ "pulse" "resolv.conf" "ssl/certs/ca-certificates.crt" ];
+    localtime = true;
     unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" ];
     setenvs = [{
       name = "SHELL";
@@ -115,8 +115,8 @@ let
     x11 = true;
     system-bus-socket = true;
     pams = [ "bus" "gnupg" "pulse" ];
-    etcs =
-      [ "pulse" "resolv.conf" "localtime" "ssl/certs/ca-certificates.crt" ];
+    etcs = [ "pulse" "resolv.conf" "ssl/certs/ca-certificates.crt" ];
+    localtime = true;
     unsetenvs = [ "MAIL" "SHELL" ];
     unshare-net = false;
     ro-whitelist = [ "~/.Xauthority" ];
@@ -137,8 +137,8 @@ let
       hicolor-icon-theme
     ];
     x11 = true;
-    etcs =
-      [ "pulse" "resolv.conf" "localtime" "ssl/certs/ca-certificates.crt" ];
+    etcs = [ "pulse" "resolv.conf" "ssl/certs/ca-certificates.crt" ];
+    localtime = true;
     pams = [ "bus" "pulse" ];
     unshare-net = false;
     unsetenvs = [ "MAIL" "SHELL" ];
@@ -218,7 +218,8 @@ let
     ];
     x11 = true;
     pams = [ "bus" "pulse" ];
-    etcs = [ "pulse" "localtime" "resolv.conf" ];
+    etcs = [ "pulse" "resolv.conf" ];
+    localtime = true;
     unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" "SHELL" ];
     unshare-net = false;
     ro-whitelist = [ "~/.config/qt5ct/" "~/.Xauthority" ];
@@ -231,7 +232,8 @@ let
     camera = true;
     x11 = true;
     pams = [ "pulse" ];
-    etcs = [ "pulse" "localtime" "resolv.conf" ];
+    etcs = [ "pulse" "resolv.conf" ];
+    localtime = true;
     unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" "SHELL" ];
     unshare-net = false;
     ro-whitelist = [ "~/.Xauthority" ];
@@ -254,7 +256,8 @@ let
     ];
     x11 = true;
     pams = [ "bus" "pulse" ];
-    etcs = [ "pulse" "localtime" "resolv.conf" ];
+    etcs = [ "pulse" "resolv.conf" ];
+    localtime = true;
     unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" "SHELL" ];
     unshare-net = false;
     ro-whitelist = [ "~/.config/qt5ct/" "~/.Xauthority" ];
@@ -275,8 +278,8 @@ let
     ];
     x11 = true;
     pams = [ "pulse" ];
-    etcs =
-      [ "pulse" "localtime" "resolv.conf" "ssl/certs/ca-certificates.crt" ];
+    etcs = [ "pulse" "resolv.conf" "ssl/certs/ca-certificates.crt" ];
+    localtime = true;
     unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" "SHELL" ];
     unshare-net = false;
     ro-whitelist = [ "~/.config/gtk-3.0/" "~/.Xauthority" ];
@@ -298,7 +301,8 @@ let
     ];
     x11 = true;
     pams = [ "bus" ];
-    etcs = [ "localtime" "resolv.conf" ];
+    etcs = [ "resolv.conf" ];
+    localtime = true;
     unsetenvs = [ "MAIL" "SHELL" ];
     unshare-net = false;
     ro-whitelist = [ "~/.config/qt5ct/" "~/.Xauthority" ];
@@ -361,7 +365,7 @@ let
       ];
       x11 = true;
       pams = [ "bus" "pulse" ];
-      etcs = [ "localtime" ];
+      localtime = true;
       unsetenvs = [ "MAIL" ];
       setenvs = [{
         name = "SHELL";
@@ -386,7 +390,8 @@ let
       # on stdenv being in PATH
       extra-deps = with pkgs; [ coreutils-full gnugrep gnused ];
       x11 = true;
-      etcs = [ "localtime" "pulse" "passwd" ];
+      etcs = [ "pulse" "passwd" ];
+      localtime = true;
       pams = [ "bus" "pulse" ];
       unsetenvs = [ "MAIL" "SHELL" ];
       whitelist = [ "~/" ];
@@ -411,7 +416,8 @@ let
     camera = true;
     x11 = true;
     system-bus-socket = true;
-    etcs = [ "pulse" "localtime" "resolv.conf" ];
+    etcs = [ "pulse" "resolv.conf" ];
+    localtime = true;
     pams = [ "bus" "pulse" ];
     unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" ];
     setenvs = [{
@@ -442,8 +448,8 @@ let
     ];
     x11 = true;
     pams = [ "pulse" ];
-    etcs =
-      [ "pulse" "localtime" "resolv.conf" "ssl/certs/ca-certificates.crt" ];
+    etcs = [ "pulse" "resolv.conf" "ssl/certs/ca-certificates.crt" ];
+    localtime = true;
     unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" "SHELL" ];
     unshare-net = false;
     ro-whitelist = [ "~/.config/gtk-3.0/" "~/.Xauthority" ];
@@ -493,7 +499,8 @@ in {
         name = "deadbeef";
         paths = [
           (sandbox (pid-hack super.deadbeef-with-plugins "deadbeef") deadbeef)
-          (sandbox (pid-hack super.deadbeef-with-plugins "deadbeef") (withNet deadbeef))
+          (sandbox (pid-hack super.deadbeef-with-plugins "deadbeef")
+            (withNet deadbeef))
           super.deadbeef-with-plugins
         ];
       };
