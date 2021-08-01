@@ -22,6 +22,9 @@ in writeShellScriptBin target-name ''
     exec ${drv}/bin/${name} "$@"
   fi
 
+  ${lib.concatMapStringsSep "\n" (x: "test ! -e ${x} && mkdir -p ${x}")
+  (lib.filter (s: builtins.match ".*/" s != null) (ro-whitelist ++ whitelist))}
+
   ${lib.optionalString (resolv-conf && localtime) ''
     if [[ ! -v NOLOCALTIME ]] && [[ -v TORJAIL ]]
     then
@@ -118,12 +121,6 @@ in writeShellScriptBin target-name ''
        ${
          lib.optionalString (x11 && !shared-tmp)
          "--bind /tmp/.X11-unix /tmp/.X11-unix"
-       } \
-       \
-       ${
-         lib.concatMapStringsSep " " (x: "--dir ${x}")
-         (lib.filter (s: builtins.match ".*/" s != null)
-           (ro-whitelist ++ whitelist))
        } \
        \
        ${lib.concatMapStringsSep " " (x: "--ro-bind ${x} ${x}") ro-whitelist} \
