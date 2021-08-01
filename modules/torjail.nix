@@ -63,5 +63,10 @@ in {
     serviceConfig = { Type = "oneshot"; };
   };
 
+  networking.firewall = {
+    allowedTCPPorts = [ transPort ];
+    allowedUDPPorts = [ dnsPort ];
+  };
+
   environment.etc."resolv-torjail.conf".text = "nameserver ${subnet}.1";
 }
