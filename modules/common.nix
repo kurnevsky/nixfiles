@@ -725,6 +725,10 @@
         "XTerm.vt100.translations" = "#override <Key>BackSpace: string(0x7f)";
         "XTerm.backarrowKeyIsErase" = true;
       };
+      xdg.mimeApps = {
+        enable = true;
+        defaultApplications = import ./default-applications.nix;
+      };
     };
   in {
     useGlobalPkgs = true;
