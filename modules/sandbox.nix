@@ -13,7 +13,7 @@ let
     attrs // {
       target-name = attrs.name + "-net";
       unshare-net = false;
-      etcs = (attrs.etcs or [ ]) ++ [ "resolv.conf" ];
+      resolv-conf = true;
     };
   withOpengl = attrs:
     attrs // {
@@ -84,8 +84,9 @@ let
     ];
     x11 = true;
     pams = [ "bus" "gnupg" "pulse" ];
-    etcs = [ "pulse" "resolv.conf" "ssl/certs/ca-certificates.crt" ];
+    etcs = [ "pulse" "ssl/certs/ca-certificates.crt" ];
     localtime = true;
+    resolv-conf = true;
     unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" ];
     setenvs = [{
       name = "SHELL";
@@ -115,8 +116,9 @@ let
     x11 = true;
     system-bus-socket = true;
     pams = [ "bus" "gnupg" "pulse" ];
-    etcs = [ "pulse" "resolv.conf" "ssl/certs/ca-certificates.crt" ];
+    etcs = [ "pulse" "ssl/certs/ca-certificates.crt" ];
     localtime = true;
+    resolv-conf = true;
     unsetenvs = [ "MAIL" "SHELL" ];
     unshare-net = false;
     ro-whitelist = [ "~/.Xauthority" ];
@@ -137,8 +139,9 @@ let
       hicolor-icon-theme
     ];
     x11 = true;
-    etcs = [ "pulse" "resolv.conf" "ssl/certs/ca-certificates.crt" ];
+    etcs = [ "pulse" "ssl/certs/ca-certificates.crt" ];
     localtime = true;
+    resolv-conf = true;
     pams = [ "bus" "pulse" ];
     unshare-net = false;
     unsetenvs = [ "MAIL" "SHELL" ];
@@ -218,8 +221,9 @@ let
     ];
     x11 = true;
     pams = [ "bus" "pulse" ];
-    etcs = [ "pulse" "resolv.conf" ];
+    etcs = [ "pulse" ];
     localtime = true;
+    resolv-conf = true;
     unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" "SHELL" ];
     unshare-net = false;
     ro-whitelist = [ "~/.config/qt5ct/" "~/.Xauthority" ];
@@ -232,8 +236,9 @@ let
     camera = true;
     x11 = true;
     pams = [ "pulse" ];
-    etcs = [ "pulse" "resolv.conf" ];
+    etcs = [ "pulse" ];
     localtime = true;
+    resolv-conf = true;
     unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" "SHELL" ];
     unshare-net = false;
     ro-whitelist = [ "~/.Xauthority" ];
@@ -256,8 +261,9 @@ let
     ];
     x11 = true;
     pams = [ "bus" "pulse" ];
-    etcs = [ "pulse" "resolv.conf" ];
+    etcs = [ "pulse" ];
     localtime = true;
+    resolv-conf = true;
     unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" "SHELL" ];
     unshare-net = false;
     ro-whitelist = [ "~/.config/qt5ct/" "~/.Xauthority" ];
@@ -278,8 +284,9 @@ let
     ];
     x11 = true;
     pams = [ "pulse" ];
-    etcs = [ "pulse" "resolv.conf" "ssl/certs/ca-certificates.crt" ];
+    etcs = [ "pulse" "ssl/certs/ca-certificates.crt" ];
     localtime = true;
+    resolv-conf = true;
     unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" "SHELL" ];
     unshare-net = false;
     ro-whitelist = [ "~/.config/gtk-3.0/" "~/.Xauthority" ];
@@ -301,8 +308,8 @@ let
     ];
     x11 = true;
     pams = [ "bus" ];
-    etcs = [ "resolv.conf" ];
     localtime = true;
+    resolv-conf = true;
     unsetenvs = [ "MAIL" "SHELL" ];
     unshare-net = false;
     ro-whitelist = [ "~/.config/qt5ct/" "~/.Xauthority" ];
@@ -416,8 +423,9 @@ let
     camera = true;
     x11 = true;
     system-bus-socket = true;
-    etcs = [ "pulse" "resolv.conf" ];
+    etcs = [ "pulse" ];
     localtime = true;
+    resolv-conf = true;
     pams = [ "bus" "pulse" ];
     unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" ];
     setenvs = [{
@@ -448,8 +456,9 @@ let
     ];
     x11 = true;
     pams = [ "pulse" ];
-    etcs = [ "pulse" "resolv.conf" "ssl/certs/ca-certificates.crt" ];
+    etcs = [ "pulse" "ssl/certs/ca-certificates.crt" ];
     localtime = true;
+    resolv-conf = true;
     unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" "SHELL" ];
     unshare-net = false;
     ro-whitelist = [ "~/.config/gtk-3.0/" "~/.Xauthority" ];

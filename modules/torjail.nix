@@ -35,21 +35,33 @@ in {
       ${iproute2}/bin/ip netns exec torjail ${iproute2}/bin/ip route add default via ${subnet}.1
 
       # Forward all dns traffic to tor DNSPort
-      ${iptables}/bin/iptables -t nat -A PREROUTING -i out-torjail -p udp -d ${subnet}.1 --dport 53 -j DNAT --to-destination ${subnet}.1:${toString dnsPort}
+      ${iptables}/bin/iptables -t nat -A PREROUTING -i out-torjail -p udp -d ${subnet}.1 --dport 53 -j DNAT --to-destination ${subnet}.1:${
+        toString dnsPort
+      }
 
       # Forward all traffic to tor TransPort
-      ${iptables}/bin/iptables -t nat -A PREROUTING -i out-torjail -p tcp --syn -j DNAT --to-destination ${subnet}.1:${toString transPort}
+      ${iptables}/bin/iptables -t nat -A PREROUTING -i out-torjail -p tcp --syn -j DNAT --to-destination ${subnet}.1:${
+        toString transPort
+      }
 
       # Accept established connection
       ${iptables}/bin/iptables -A OUTPUT -m state -o out-torjail --state ESTABLISHED,RELATED -j ACCEPT
 
       # Accept only forwarded traffic
-      ${iptables}/bin/iptables -A INPUT -i out-torjail -p udp --destination ${subnet}.1 --dport ${toString dnsPort} -j ACCEPT
-      ${iptables}/bin/iptables -A INPUT -i out-torjail -p tcp --destination ${subnet}.1 --dport ${toString transPort} -j ACCEPT
-      ${iptables}/bin/iptables -A INPUT -i out-torjail -p udp --destination ${subnet}.1 --dport ${toString transPort} -j ACCEPT
+      ${iptables}/bin/iptables -A INPUT -i out-torjail -p udp --destination ${subnet}.1 --dport ${
+        toString dnsPort
+      } -j ACCEPT
+      ${iptables}/bin/iptables -A INPUT -i out-torjail -p tcp --destination ${subnet}.1 --dport ${
+        toString transPort
+      } -j ACCEPT
+      ${iptables}/bin/iptables -A INPUT -i out-torjail -p udp --destination ${subnet}.1 --dport ${
+        toString transPort
+      } -j ACCEPT
       ${iptables}/bin/iptables -A INPUT -i out-torjail -j DROP
     '';
     wantedBy = [ "multi-user.target" ];
     serviceConfig = { Type = "oneshot"; };
   };
+
+  environment.etc."resolv-torjail.conf".text = "nameserver ${subnet}.1";
 }

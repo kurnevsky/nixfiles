@@ -9,7 +9,7 @@ drv:
 , devs ? [ ], syses ? [ ], shared-tmp ? false, camera ? false, args ? [ ]
 , system-bus-socket ? false, extra-deps ? [ ], extra-deps-no-transitive ? [ ]
 , opengl ? false, opengl32 ? false, seccomp ? true, bin-sh ? false
-, localtime ? false }:
+, localtime ? false, resolv-conf ? false }:
 
 let cinfo = closureInfo { rootPaths = [ drv ] ++ extra-deps; };
 in writeShellScriptBin target-name ''
@@ -21,6 +21,26 @@ in writeShellScriptBin target-name ''
     echo "Running in unsandboxed mode!"
     exec ${drv}/bin/${name} "$@"
   fi
+
+  ${lib.optionalString (resolv-conf && localtime) ''
+    if [[ ! -v NOLOCALTIME ]] && [[ -v TORJAIL ]]
+    then
+      NOLOCALTIME="$TORJAIL"
+    fi
+  ''}
+
+  ${lib.optionalString resolv-conf ''
+    mapfile -t resolvconf < <(
+      echo '--ro-bind'
+      if [ -z "''${TORJAIL-}" ]
+      then
+        echo '/etc/resolv.conf'
+      else
+        echo '/etc/resolv-torjail.conf'
+      fi
+      echo '/etc/resolv.conf'
+    )
+  ''}
 
   ${lib.optionalString localtime ''
     mapfile -t localtime < <(
@@ -92,6 +112,7 @@ in writeShellScriptBin target-name ''
          lib.concatMapStringsSep " " (x: "--ro-bind /etc/${x} /etc/${x}") etcs
        } \
        ${lib.optionalString localtime ''"''${localtime[@]}"''} \
+       ${lib.optionalString resolv-conf ''"''${resolvconf[@]}"''} \
        \
        ${lib.optionalString shared-tmp "--bind /tmp /tmp"} \
        ${
