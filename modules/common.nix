@@ -693,6 +693,7 @@
       };
       xsession = {
         enable = true;
+        importedVariables = [ "PATH" "GDK_PIXBUF_MODULE_FILE" ];
         windowManager.command = "xmonad 2>> ~/.xsession-errors";
         preferStatusNotifierItems = true;
         pointerCursor = {
