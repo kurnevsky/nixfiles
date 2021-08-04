@@ -218,7 +218,6 @@
       tor-browser-bundle-bin-wrapped
       torsocks
       toxic-sandboxed
-      trayer
       unrar-sandboxed
       unzip-natspec-sandboxed
       vdpauinfo
