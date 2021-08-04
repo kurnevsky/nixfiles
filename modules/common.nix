@@ -574,39 +574,53 @@
   };
 
   home-manager = let
-    common = {
-      programs = {
-        zsh = {
-          enable = true;
-          enableCompletion = false;
-          history = {
-            size = 20000;
-            save = 25000;
-            path = "$HOME/.histfile";
-            expireDuplicatesFirst = true;
-            share = false;
-            ignoreDups = false;
-          };
+    zsh = {
+      enable = true;
+      enableCompletion = false;
+      history = {
+        size = 20000;
+        save = 25000;
+        path = "$HOME/.histfile";
+        expireDuplicatesFirst = true;
+        share = false;
+        ignoreDups = false;
+      };
+    };
+    starship = {
+      enable = true;
+      settings = {
+        add_newline = false;
+        character = {
+          success_symbol = "[➜](bold green)";
+          error_symbol = "[➜](bold red)";
         };
-        starship = {
-          enable = true;
-          settings = {
-            add_newline = false;
-            character = {
-              success_symbol = "[➜](bold green)";
-              error_symbol = "[➜](bold red)";
-            };
-            directory = {
-              truncation_length = 0;
-              truncate_to_repo = false;
-            };
-          };
+        directory = {
+          truncation_length = 0;
+          truncate_to_repo = false;
         };
       };
     };
-    root = common // { home.stateVersion = "21.05"; };
-    home = common // {
+    feh = {
+      enable = true;
+      buttons = {
+        zoom_in = "C-4";
+        zoom_out = "C-5";
+      };
+    };
+    root = {
       home.stateVersion = "21.05";
+      programs = {
+        inherit zsh;
+        inherit starship;
+      };
+    };
+    home = {
+      home.stateVersion = "21.05";
+      programs = {
+        inherit zsh;
+        inherit starship;
+        inherit feh;
+      };
       services = {
         status-notifier-watcher.enable = true;
         gnome-keyring.enable = true;
