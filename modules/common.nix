@@ -133,6 +133,7 @@
       hans
       haskell-language-server
       hdparm
+      hedgewars
       hicolor-icon-theme # contains deadbeef icon
       hlint
       hunspell
