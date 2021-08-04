@@ -191,7 +191,6 @@
       qbittorrent-sandboxed
       qemu
       qrencode
-      qt5ct
       qtox-sandboxed
       radare2
       rclone
@@ -336,6 +335,7 @@
       lessopen = "| ${pkgs.sourceHighlight}/bin/src-hilite-lesspipe.sh %s";
       envVariables.LESS = " -R ";
     };
+    qt5ct.enable = true;
   };
 
   gtk.iconCache.enable = true;
