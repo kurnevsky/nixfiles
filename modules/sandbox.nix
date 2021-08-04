@@ -244,7 +244,7 @@ let
     ro-whitelist = [ "~/.Xauthority" ];
     whitelist = [ "~/.config/tox/" "~/.config/pulse/" ];
   };
-  tdesktop = withFonts {
+  tdesktop = lib.pipe {
     name = "telegram-desktop";
     extra-deps = with pkgs; [
       qt5ct
@@ -268,7 +268,7 @@ let
     unshare-net = false;
     ro-whitelist = [ "~/.config/qt5ct/" "~/.Xauthority" ];
     whitelist = [ "~/.local/share/TelegramDesktop/" "~/.config/pulse/" ];
-  };
+  } [ withFonts withOpengl ];
   element-desktop = withFonts {
     name = "element-desktop";
     devs = [
