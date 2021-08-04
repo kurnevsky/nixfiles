@@ -184,7 +184,6 @@
       parallel
       pavucontrol
       perl
-      picom
       pidgin-sandboxed
       pijul
       playerctl
@@ -700,8 +699,6 @@
           fadeDelta = 4;
           vSync = true;
           extraOptions = ''
-            dbus = true
-            glx-fshader-win = "${builtins.readFile ./glsl/negative.glsl}"
             glx-no-stencil = true;
             glx-no-rebind-pixmap = true;
             shadow-radius = 5;
@@ -732,6 +729,14 @@
         enable = true;
         defaultApplications = import ./default-applications.nix;
       };
+      # TODO: upstream this wrapper somehow
+      systemd.user.services.picom.Service.ExecStart = let
+        conf = pkgs.writeText "picom.conf" (builtins.readFile ./picom.conf);
+        invert =
+          pkgs.writeText "invert.glsl" (builtins.readFile ./glsl/negative.glsl);
+      in lib.mkForce ''
+        ${pkgs.bash}/bin/bash -c 'exec ${pkgs.picom}/bin/picom --config ${conf} --dbus --glx-fshader-win "$(cat ${invert})"'
+      '';
     };
   in {
     useGlobalPkgs = true;
