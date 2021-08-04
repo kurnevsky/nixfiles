@@ -690,6 +690,30 @@
             authWarningSlack = 20;
           };
         };
+        picom = {
+          enable = true;
+          shadow = true;
+          shadowOffsets = [ (-5) (-5) ];
+          shadowOpacity = "0.5";
+          inactiveDim = "0.2";
+          fade = true;
+          fadeDelta = 4;
+          vSync = true;
+          extraOptions = ''
+            dbus = true
+            glx-fshader-win = "${builtins.readFile ./glsl/negative.glsl}"
+            glx-no-stencil = true;
+            glx-no-rebind-pixmap = true;
+            shadow-radius = 5;
+            mark-wmwin-focused = true;
+            use-ewmh-active-win = true;
+            detect-rounded-corners = true;
+            detect-client-opacity = true;
+            unredir-if-possible = true;
+            detect-transient = true;
+            detect-client-leader = true;
+          '';
+        };
       };
       xsession = {
         enable = true;
