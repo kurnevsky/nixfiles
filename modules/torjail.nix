@@ -59,7 +59,6 @@ in {
       } -j ACCEPT
       ${iptables}/bin/iptables -A INPUT -i out-torjail -j DROP
     '';
-    wantedBy = [ "multi-user.target" ];
     serviceConfig = { Type = "oneshot"; };
   };
 
