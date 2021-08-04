@@ -16,6 +16,8 @@
       "radeon.si_support=0"
       "amdgpu.cik_support=1"
       "amdgpu.si_support=1"
+      # Fixes sound glitches
+      "intel_iommu=igfx_off"
     ];
     extraModulePackages = with config.boot.kernelPackages; [
       acpi_call
