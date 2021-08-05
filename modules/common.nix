@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ lib, pkgs, ... }:
 
 {
   nix = {
@@ -716,6 +716,9 @@
       xsession = {
         enable = true;
         importedVariables = [ "PATH" "GDK_PIXBUF_MODULE_FILE" ];
+        # TODO: upstream
+        profileExtra =
+          "dbus-update-activation-environment DBUS_SESSION_BUS_ADDRESS DISPLAY SSH_AUTH_SOCK XAUTHORITY XDG_DATA_DIRS XDG_RUNTIME_DIR XDG_SESSION_ID PATH GDK_PIXBUF_MODULE_FILE";
         windowManager.command = "xmonad 2>> ~/.xsession-errors";
         preferStatusNotifierItems = true;
         pointerCursor = {
