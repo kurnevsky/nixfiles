@@ -371,6 +371,7 @@ let
         "devices"
       ];
       x11 = true;
+      etcs = [ "ssl/certs/ca-certificates.crt" ];
       pams = [ "bus" "pulse" ];
       localtime = true;
       unsetenvs = [ "MAIL" ];
