@@ -423,6 +423,7 @@
     # Enable pam_systemd module to set dbus environment variable.
     pam.services.login.startSession = true;
     unprivilegedUsernsClone = true;
+    rtkit.enable = true;
     sudo.extraRules = [{
       runAs = "root";
       users = [ "ww" ];
