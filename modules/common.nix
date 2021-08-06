@@ -42,6 +42,8 @@
         22
         # VNC
         5901
+        # MPD
+        8000
       ];
       allowedUDPPorts = [
         # Tox
@@ -164,7 +166,7 @@
       metasploit
       mono
       motion
-      mpd
+      mpc_cli
       mpv-sandboxed
       mu
       nettools
@@ -172,6 +174,7 @@
       newsboat
       nix-diff
       nixfmt
+      ncmpc
       nmap
       nodePackages.bash-language-server
       nodePackages.prettier
@@ -387,6 +390,22 @@
       enable = true;
       defaultEditor = true;
       package = pkgs.emacsPatched;
+    };
+    mpd = {
+      enable = true;
+      startWhenNeeded = true;
+      extraConfig = ''
+        audio_output {
+          type "httpd"
+          name "My HTTP Stream"
+          encoder "vorbis"
+          port "8000"
+          bind_to_address "0.0.0.0"
+          bitrate "192"
+          format "44100:16:1"
+          max_clients "0"
+        }
+      '';
     };
   };
 
