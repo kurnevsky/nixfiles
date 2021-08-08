@@ -523,26 +523,17 @@
               src = pkgs.fetchFromGitHub {
                 owner = "taffybar";
                 repo = "status-notifier-item";
-                rev = "v0.3.1.0";
-                sha256 = "sha256-teycP5kmokSCxtJjRaYEGx8DWnGKKO6qQG37iqdIdEM=";
+                rev = "c5d7d898e4f13ec9864e5047b6da25de62535672";
+                sha256 = "sha256-EJHvVtYQvohhOhznY5Iy3GR0zyjwMF+lsCr5hgL3ziw=";
               };
-              patches = [
-                (pkgs.fetchpatch {
-                  name = "item-is-menu.patch";
-                  url =
-                    "https://github.com/taffybar/status-notifier-item/commit/4a22a449abd30695bb37ebc0fc357f4d547f5cef.patch";
-                  sha256 =
-                    "sha256-Q8vE5/eVtuX+v82qTu6PqTG/fyIw5zziFP8UghVEYUs=";
-                })
-              ];
               prePatch = "${pkgs.hpack}/bin/hpack";
             });
           gtk-sni-tray = haskellSuper.gtk-sni-tray.overrideAttrs (oldAttrs: {
             src = pkgs.fetchFromGitHub {
               owner = "taffybar";
               repo = "gtk-sni-tray";
-              rev = "1734aa999ebace650232a0176643cea719ea6d5f";
-              sha256 = "sha256-08nT4sergSy5hj/5ytwaoKaZs0gg8Qyl5OL/hnKkMnQ=";
+              rev = "ceb15d9c0980d4359ad1b0374ba221229a14acb7";
+              sha256 = "sha256-AgJGmLGNSraNr/zL+IIYF/qFUY0fEfivxfIoqIsiRWk=";
             };
             patches = [
               (pkgs.fetchpatch {
@@ -558,10 +549,23 @@
             src = pkgs.fetchFromGitHub {
               owner = "taffybar";
               repo = "taffybar";
-              rev = "5a59586d7b715cb088f67634c5be096bb4f3df56";
-              sha256 = "sha256-MRds7ll6VTLTy6k62mWtzkzEewk73EXFGlW7mecAfjk=";
+              rev = "bba89541729c4da920320f93dbcb1038a8bbfe9a";
+              sha256 = "sha256-tScpOIX1H3Nyp01gzJheRjK0zFFjWnEYrg9oHKrgrck=";
             };
-            patches = [ ];
+            patches = [
+              (pkgs.fetchpatch {
+                name = "1.patch";
+                url =
+                  "https://github.com/taffybar/taffybar/commit/0efdb9f0ba4f5dc1bb05b5a5899c061b1530091c.patch";
+                sha256 = "sha256-0mbWTuGF+YTlbWbGO2YADdEQbBLFu3B67MTBEJHrI8k=";
+              })
+              (pkgs.fetchpatch {
+                name = "2.patch";
+                url =
+                  "https://github.com/taffybar/taffybar/commit/0a5605b657c78dfc78595b60ceeed70e4ffd75d6.patch";
+                sha256 = "sha256-yKgqN5yyjIztLwm2JpT41dOXevxAMkuLCaLnAwSoSnI=";
+              })
+            ];
           });
         };
       };
