@@ -94,6 +94,7 @@
       barcode
       bat
       bind
+      bindfs
       binutils
       brightnessctl
       btrfs-progs
