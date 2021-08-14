@@ -124,6 +124,7 @@
       ffmpeg-full-sandboxed
       firefox-sandboxed
       fuseiso
+      gcc
       gdb
       ghc
       gimp-with-plugins
