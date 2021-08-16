@@ -167,7 +167,6 @@
       metals
       metasploit
       mono
-      motion
       mpc_cli
       mpv-sandboxed
       mu
