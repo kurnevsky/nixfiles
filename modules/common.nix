@@ -80,6 +80,7 @@
   environment = {
     systemPackages = with pkgs; [
       (agda.withPackages (pkgs: with pkgs; [ standard-library ]))
+      (lutris.override { steamSupport = false; })
       (pass.withExtensions (ext: with ext; [ pass-otp ]))
       R
       aircrack-ng
