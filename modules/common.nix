@@ -347,7 +347,13 @@
   gtk.iconCache.enable = true;
 
   services = {
-    i2pd.enable = true;
+    i2pd = {
+      enable = true;
+      proto = {
+        http.enable = true;
+        socksProxy.enable = true;
+      };
+    };
     monero.enable = true;
     openssh = {
       enable = true;
