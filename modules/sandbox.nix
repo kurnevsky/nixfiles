@@ -271,6 +271,12 @@ let
   } [ withFonts withOpengl ];
   element-desktop = withFonts {
     name = "element-desktop";
+    extra-deps = with pkgs; [
+      qt5ct
+      gnome-themes-extra
+      gnome3.adwaita-icon-theme
+      hicolor-icon-theme
+    ];
     devs = [
       "dri"
       # Necessary for audio
@@ -283,11 +289,13 @@ let
       "devices"
     ];
     x11 = true;
-    pams = [ "pulse" ];
+    pams = [ "bus" "pulse" ];
     etcs = [ "pulse" "ssl/certs/ca-certificates.crt" ];
+    # Tray icon is stored in /tmp
+    shared-tmp = true;
     localtime = true;
     resolv-conf = true;
-    unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" "SHELL" ];
+    unsetenvs = [ "MAIL" "SHELL" ];
     unshare-net = false;
     ro-whitelist = [ "~/.config/gtk-3.0/" "~/.Xauthority" ];
     whitelist = [ "~/.config/Element/" "~/.config/pulse/" ];
@@ -555,7 +563,13 @@ in {
       };
       toxic-sandboxed = sandbox super.toxic toxic;
       tdesktop-sandboxed = sandbox super.tdesktop tdesktop;
-      element-desktop-sandboxed = sandbox super.element-desktop element-desktop;
+      element-desktop-sandboxed = pkgs.symlinkJoin {
+        name = "element-desktop";
+        paths = [
+          (sandbox super.element-desktop element-desktop)
+          super.element-desktop
+        ];
+      };
       qbittorrent-sandboxed = pkgs.symlinkJoin {
         name = "qbittorrent";
         paths = [
