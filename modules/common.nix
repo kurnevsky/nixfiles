@@ -642,6 +642,7 @@
     };
     root = {
       home.stateVersion = "21.05";
+      home.file.".config/mc/ini".source = ./mc.ini;
       programs = {
         inherit zsh;
         inherit starship;
@@ -649,6 +650,7 @@
     };
     home = {
       home.stateVersion = "21.05";
+      home.file.".config/mc/ini".source = ./mc.ini;
       programs = {
         inherit zsh;
         inherit starship;
