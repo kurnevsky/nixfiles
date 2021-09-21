@@ -665,7 +665,13 @@
       services = {
         status-notifier-watcher.enable = true;
         gnome-keyring.enable = true;
-        taffybar.enable = true;
+        taffybar = {
+          enable = true;
+          package = pkgs.writers.writeHaskellBin "taffybar" {
+            libraries = [ pkgs.haskellPackages.taffybar ];
+            ghcArgs = [ "-O2" "-threaded" "-rtsopts" "-with-rtsopts=-N" ];
+          } (builtins.readFile ./taffybar.hs);
+        };
         pasystray.enable = true;
         parcellite = {
           enable = true;
