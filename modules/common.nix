@@ -573,6 +573,12 @@
                   "https://github.com/taffybar/taffybar/commit/0a5605b657c78dfc78595b60ceeed70e4ffd75d6.patch";
                 sha256 = "sha256-yKgqN5yyjIztLwm2JpT41dOXevxAMkuLCaLnAwSoSnI=";
               })
+              (pkgs.fetchpatch {
+                name = "tooltip.patch";
+                url =
+                  "https://github.com/taffybar/taffybar/commit/1b5de6bd50d5198e53de4aff7815e2943926221a.patch";
+                sha256 = "sha256-lTmToEOm0VumIe88trWGJTE4szkK7ZOXnyVuhhUbso0=";
+              })
             ];
           });
         };
