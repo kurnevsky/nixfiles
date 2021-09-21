@@ -67,6 +67,10 @@ in writeShellScriptBin target-name ''
     )
   ''}
 
+  mapfile -t ro_whitelist < <(echo -n "''${RO_WHITELIST-}" | sed 's/.*/--ro-bind\n&\n&/')
+  mapfile -t whitelist < <(echo -n "''${WHITELIST-}" | sed 's/.*/--bind\n&\n&/')
+  mapfile -t blacklist < <(echo -n "''${BLACKLIST-}" | sed 's/.*/--tmpfs\n&/')
+
   mapfile -t deps < <(sed 's/.*/--ro-bind\n&\n&/' ${cinfo}/store-paths)
 
   exec ${bubblewrap}/bin/bwrap \
@@ -126,6 +130,10 @@ in writeShellScriptBin target-name ''
        ${lib.concatMapStringsSep " " (x: "--ro-bind ${x} ${x}") ro-whitelist} \
        ${lib.concatMapStringsSep " " (x: "--bind ${x} ${x}") whitelist} \
        ${lib.concatMapStringsSep " " (x: "--tmpfs ${x}") blacklist} \
+       \
+       "''${ro_whitelist[@]}" \
+       "''${whitelist[@]}" \
+       "''${blacklist[@]}" \
        \
        ${lib.concatMapStringsSep " " (x: "--unsetenv ${x}") unsetenvs} \
        ${
