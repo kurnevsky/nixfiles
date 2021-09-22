@@ -54,6 +54,12 @@
     deviceSection = ''
       Option "TearFree" "true"
     '';
+    displayManager.sessionCommands = let
+      layout = pkgs.writeText "xkb-layout" ''
+        ! Bind right super key as menu.
+        keycode 134 = Menu
+      '';
+    in "${pkgs.xorg.xmodmap}/bin/xmodmap ${layout}";
   };
 
   system.stateVersion = "21.05";

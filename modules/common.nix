@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   nix = {
@@ -671,7 +671,13 @@
       };
     };
     home = {
-      home.file.".config/mc/ini".source = ./mc.ini;
+      home.file = {
+        ".config/mc/ini".source = ./mc.ini;
+        ".xinitrc".text = ''
+          export _JAVA_AWT_WM_NONREPARENTING=1
+          ${config.services.xserver.displayManager.sessionData.wrapper} ~/.xsession
+        '';
+      };
       programs = {
         inherit bash;
         inherit zsh;
