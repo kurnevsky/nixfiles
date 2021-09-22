@@ -613,6 +613,13 @@
   };
 
   home-manager = let
+    bash = {
+      initExtra = ''
+        if [[ $TERM != "dumb" && -z "$MC_SID" && (-z $INSIDE_EMACS || $INSIDE_EMACS == "vterm") ]]; then
+          eval "$(${pkgs.starship}/bin/starship init bash)"
+        fi
+      '';
+    };
     zsh = {
       enable = true;
       enableCompletion = false;
@@ -624,9 +631,18 @@
         share = false;
         ignoreDups = false;
       };
+      initExtra = ''
+        if [[ $TERM != "dumb" && -z "$MC_SID" && (-z $INSIDE_EMACS || $INSIDE_EMACS == "vterm") ]]; then
+          eval "$(${pkgs.starship}/bin/starship init zsh)"
+        fi
+      '';
     };
     starship = {
       enable = true;
+      # Enabled manually since there is no way to disable it for mc
+      enableBashIntegration = false;
+      enableZshIntegration = false;
+      enableFishIntegration = false;
       settings = {
         add_newline = false;
         character = {
@@ -650,6 +666,7 @@
       home.stateVersion = "21.05";
       home.file.".config/mc/ini".source = ./mc.ini;
       programs = {
+        inherit bash;
         inherit zsh;
         inherit starship;
       };
@@ -658,6 +675,7 @@
       home.stateVersion = "21.05";
       home.file.".config/mc/ini".source = ./mc.ini;
       programs = {
+        inherit bash;
         inherit zsh;
         inherit starship;
         inherit feh;
