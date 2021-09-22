@@ -57,4 +57,10 @@
   };
 
   system.stateVersion = "21.05";
+
+  home-manager.users = {
+    root.home.stateVersion = "21.05";
+    kurnevsky.home.stateVersion = "21.05";
+    ww.home.stateVersion = "21.05";
+  };
 }

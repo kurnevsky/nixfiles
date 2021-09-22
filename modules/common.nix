@@ -663,7 +663,6 @@
       };
     };
     root = {
-      home.stateVersion = "21.05";
       home.file.".config/mc/ini".source = ./mc.ini;
       programs = {
         inherit bash;
@@ -672,7 +671,6 @@
       };
     };
     home = {
-      home.stateVersion = "21.05";
       home.file.".config/mc/ini".source = ./mc.ini;
       programs = {
         inherit bash;
