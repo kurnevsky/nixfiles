@@ -125,6 +125,7 @@ taffybarConfig =
           , mpris2
           ]
         , barHeight = 25
+        , cssPath = Just "/etc/taffybar.css"
         }
   in withBatteryRefresh $
      withLogServer $

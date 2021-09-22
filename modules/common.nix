@@ -270,6 +270,8 @@
       # It causes segfaults
       MAGICK_OCL_DEVICE = "OFF";
     };
+
+    etc."taffybar.css".source = ./taffybar.css;
   };
 
   security.wrappers.xscreensaver-auth.source =
