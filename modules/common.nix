@@ -244,6 +244,7 @@
       xmlstarlet
       xmobar
       xorg.xbacklight
+      xsel
       xterm
       you-get
       youtube-dl
@@ -664,12 +665,19 @@
         zoom_out = "C-5";
       };
     };
+    tmux = {
+      enable = true;
+      terminal = "screen-256color";
+      historyLimit = 10000;
+      extraConfig = builtins.readFile ./tmux.conf;
+    };
     root = {
       home.file.".config/mc/ini".source = ./mc.ini;
       programs = {
         inherit bash;
         inherit zsh;
         inherit starship;
+        inherit tmux;
       };
     };
     home = {
@@ -684,6 +692,7 @@
         inherit bash;
         inherit zsh;
         inherit starship;
+        inherit tmux;
         inherit feh;
       };
       services = {
