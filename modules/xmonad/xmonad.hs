@@ -38,7 +38,7 @@ import XMonad.Layout.Minimize (minimize)
 import XMonad.Layout.Named (named)
 import XMonad.Layout.NoBorders (smartBorders)
 import XMonad.Prompt.Shell (shellPrompt)
-import XMonad.Layout.Spacing (smartSpacing)
+import XMonad.Layout.Spacing (spacingRaw, Border(..))
 import XMonad.Layout.TrackFloating (trackFloating)
 import XMonad.Prompt (XPConfig(..), XPPosition(..))
 import XMonad.Prompt.ConfirmPrompt (confirmPrompt)
@@ -264,9 +264,10 @@ myLayout = fullLayoutModifiers fullLayout |||
            mirrorLayoutModifiers mirrorLayout |||
            gridLayoutModifiers gridLayout where
   fullLayoutModifiers = named "Full" . smartBorders . avoidStruts . maximize . minimize . boringWindows . trackFloating
-  tiledLayoutModifiers = named "Tiled" . dwmStyle shrinkText myTheme . smartBorders . smartSpacing 2 . avoidStruts . maximize . minimize . boringWindows
-  mirrorLayoutModifiers = named "Mirror" . dwmStyle shrinkText myTheme . smartBorders . smartSpacing 2 . avoidStruts . maximize . minimize . boringWindows
-  gridLayoutModifiers = named "Grid" . dwmStyle shrinkText myTheme . smartBorders . smartSpacing 2 . avoidStruts . maximize . minimize . boringWindows
+  tiledLayoutModifiers = named "Tiled" . dwmStyle shrinkText myTheme . smartBorders . spacing . avoidStruts . maximize . minimize . boringWindows
+  mirrorLayoutModifiers = named "Mirror" . dwmStyle shrinkText myTheme . smartBorders . spacing . avoidStruts . maximize . minimize . boringWindows
+  gridLayoutModifiers = named "Grid" . dwmStyle shrinkText myTheme . smartBorders . spacing . avoidStruts . maximize . minimize . boringWindows
+  spacing = spacingRaw True (Border 0 0 0 0) False (Border 2 2 2 2) True
   fullLayout = Full
   tiledLayout = Tall nmaster delta ratio
   mirrorLayout = Mirror tiledLayout
