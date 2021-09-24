@@ -672,6 +672,122 @@
       historyLimit = 10000;
       extraConfig = builtins.readFile ./tmux.conf;
     };
+    alacritty = {
+      enable = true;
+      settings = {
+        window.decorations = "none";
+        scrolling.history = 100000;
+        font = {
+          normal.family = "Hack Nerd Font";
+          size = 12;
+        };
+        # Base16 OneDark
+        colors = {
+          primary = {
+            background = "0x282c34";
+            foreground = "0xabb2bf";
+          };
+          cursor = {
+            text = "0x282c34";
+            cursor = "0xabb2bf";
+          };
+          normal = {
+            black = "0x282c34";
+            red = "0xe06c75";
+            green = "0x98c379";
+            yellow = "0xe5c07b";
+            blue = "0x61afef";
+            magenta = "0xc678dd";
+            cyan = "0x56b6c2";
+            white = "0xabb2bf";
+          };
+          bright = {
+            black = "0x545862";
+            red = "0xd19a66";
+            green = "0x353b45";
+            yellow = "0x3e4451";
+            blue = "0x565c64";
+            magenta = "0xb6bdca";
+            cyan = "0xbe5046";
+            white = "0xc8ccd4";
+          };
+        };
+        draw_bold_text_with_bright_colors = false;
+        cursor.style = "Beam";
+        live_config_reload = false;
+        hints.enabled = [{
+          regex = ''
+            (ipfs:|ipns:|magnet:|mailto:|gemini:|gopher:|https:|http:|news:|file:|git:|ssh:|ftp:)[^\u0000-\u001F\u007F-\u009F<>"\\s{-}\\^⟨⟩`]+'';
+          command = "xdg-open";
+          post_processing = true;
+          mouse = {
+            enabled = true;
+            mods = "Control";
+          };
+          binding = {
+            key = "U";
+            mods = "Control|Shift";
+          };
+        }];
+        key_bindings = [
+          {
+            key = "Insert";
+            mods = "Control";
+            action = "Copy";
+          }
+          {
+            key = "Home";
+            chars = "x1bOH";
+          }
+          {
+            key = "End";
+            chars = "x1bOF";
+          }
+          {
+            key = "B";
+            mods = "Control|Shift";
+            action = "SearchForward";
+          }
+          {
+            key = "F";
+            mods = "Control|Shift";
+            action = "SearchBackward";
+          }
+          {
+            key = "Home";
+            mods = "Control";
+            mode = "Vi";
+            action = "ScrollToTop";
+          }
+          {
+            key = "End";
+            mods = "Control";
+            mode = "Vi";
+            action = "ScrollToBottom";
+          }
+          {
+            key = "PageUp";
+            mode = "Vi";
+            action = "ScrollPageUp";
+          }
+          {
+            key = "PageDown";
+            mode = "Vi";
+            action = "ScrollPageDown";
+          }
+          {
+            key = "Space";
+            mode = "Vi";
+            action = "ToggleNormalSelection";
+          }
+          {
+            key = "Q";
+            mode = "Vi";
+            action = "ToggleViMode";
+          }
+        ];
+      };
+    };
     root = {
       home.file.".config/mc/ini".source = ./mc.ini;
       programs = {
@@ -695,6 +811,7 @@
         inherit starship;
         inherit tmux;
         inherit feh;
+        inherit alacritty;
       };
       services = {
         status-notifier-watcher.enable = true;
