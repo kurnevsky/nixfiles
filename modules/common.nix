@@ -272,7 +272,7 @@
       MAGICK_OCL_DEVICE = "OFF";
     };
 
-    etc."taffybar.css".source = ./taffybar.css;
+    etc."taffybar.css".source = ./taffybar/taffybar.css;
   };
 
   security.wrappers.xscreensaver-auth.source =
@@ -394,7 +394,8 @@
         enable = true;
         enableContribAndExtras = true;
         extraPackages = pkgs: with pkgs; [ dbus regex-compat taffybar ];
-        # config = pkgs.builtins.readFile "/etc/xmonad.hs";
+        config = builtins.readFile ./xmonad/xmonad.hs;
+        ghcArgs = [ "-O2" "${./xmonad/lib/XMonad/Util/Compton.hs}" ];
       };
     };
     emacs = {
@@ -703,7 +704,7 @@
           package = pkgs.writers.writeHaskellBin "taffybar" {
             libraries = [ pkgs.haskellPackages.taffybar ];
             ghcArgs = [ "-O2" "-threaded" "-rtsopts" "-with-rtsopts=-N" ];
-          } (builtins.readFile ./taffybar.hs);
+          } (builtins.readFile ./taffybar/taffybar.hs);
         };
         pasystray.enable = true;
         parcellite = {
