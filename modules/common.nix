@@ -737,11 +737,11 @@
           }
           {
             key = "Home";
-            chars = "x1bOH";
+            chars = "\\x1bOH";
           }
           {
             key = "End";
-            chars = "x1bOF";
+            chars = "\\x1bOF";
           }
           {
             key = "B";
