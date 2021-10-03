@@ -138,7 +138,7 @@
       graphicsmagick
       graphicsmagick-imagemagick-compat
       hans
-      haskell-language-server
+      # haskell-language-server
       hdparm
       hedgewars
       hicolor-icon-theme # contains deadbeef icon
