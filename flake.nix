@@ -28,6 +28,7 @@
         inputs.home-manager.nixosModules.home-manager
         (args: { nixpkgs.overlays = [ inputs.emacs-overlay.overlay ]; })
         ./modules/common.nix
+        ./modules/xmonad.nix
         ./modules/sandbox.nix
         ./modules/zswap.nix
         ./modules/bfq.nix
