@@ -466,10 +466,6 @@
           exec ${mc}/bin/mc $@
         '';
       })
-    (self: super: {
-      tesseract =
-        super.tesseract.override { enableLanguages = [ "eng" "rus" ]; };
-    })
     (self: super: { wine = super.wineWowPackages.staging; })
     (self: super: {
       emacsPatched = super.emacs.overrideAttrs (oldAttrs: {
