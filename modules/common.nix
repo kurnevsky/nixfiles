@@ -375,7 +375,26 @@
     emacs = {
       enable = true;
       defaultEditor = true;
-      package = pkgs.emacsPatched;
+      package = (pkgs.emacsWithPackagesFromUsePackage {
+        config = ./init.el;
+        package = pkgs.emacsPatched;
+        alwaysEnsure = true;
+        extraEmacsPackages = epkgs:
+          [
+            (pkgs.stdenv.mkDerivation {
+              name = "hexrgb.el";
+              src = pkgs.fetchurl {
+                url = "https://www.emacswiki.org/emacs/download/hexrgb.el";
+                sha256 = "sha256-qFKdT3IjhUAgNaCVTjCe2cT8rOqfPSdbVCL14/JCC6I=";
+              };
+              unpackCmd = "mkdir el && cp $curSrc el/hexrgb.el";
+              buildPhase =
+                "${pkgs.emacs}/bin/emacs -Q -nw -batch -f batch-byte-compile hexrgb.el";
+              installPhase =
+                "mkdir -p $out/share/emacs/site-lisp && install *.el* $out/share/emacs/site-lisp";
+            })
+          ];
+      });
     };
     mpd = {
       enable = true;
@@ -689,7 +708,16 @@
       };
     };
     home = {
-      home.file.".config/mc/ini".source = ./mc.ini;
+      home.file = {
+        ".config/mc/ini".source = ./mc.ini;
+        ".config/emacs/init.el" = {
+          source = ./init.el;
+          onChange = ''
+            rm -fv ~/.config/emacs/init.elc
+            emacs -Q -nw -l ~/.config/emacs/init.el -batch -f batch-byte-compile ~/.config/emacs/init.el
+          '';
+        };
+      };
       programs = {
         inherit bash;
         inherit zsh;
