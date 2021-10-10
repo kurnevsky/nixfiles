@@ -23,7 +23,7 @@
 
   boot = {
     # TODO: use pkgs.linuxPackages_xanmod after next nixos release
-    kernelPackages = pkgs.linuxPackages_zen;
+    kernelPackages = pkgs.linuxPackages_latest;
     kernel.sysctl = {
       "kernel.sysrq" = 1;
       "net.ipv4.ip_forward" = 1;
