@@ -284,7 +284,6 @@
   ];
 
   programs = {
-    gnupg.agent.enable = true;
     zsh = {
       enable = true;
       enableCompletion = true;
@@ -726,7 +725,16 @@
         inherit feh;
         inherit alacritty;
       };
-      services.gnome-keyring.enable = true;
+      services = {
+        gnome-keyring.enable = true;
+        # Gnupg can be enabled via programs.gnupg from nixpkgs, but it doesn't allow to set a config
+        gpg-agent = {
+          enable = true;
+          defaultCacheTtl = 14400;
+          maxCacheTtl = 14400;
+          pinentryFlavor = "gnome3";
+        };
+      };
       xresources.properties = import ./xresources.nix;
       xdg.mimeApps = {
         enable = true;
