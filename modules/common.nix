@@ -133,6 +133,7 @@
       gitAndTools.delta
       gnome-themes-extra
       gnome3.adwaita-icon-theme
+      gnupg
       gparted
       graphicsmagick
       graphicsmagick-imagemagick-compat
