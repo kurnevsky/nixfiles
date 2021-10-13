@@ -119,7 +119,6 @@
       exa
       exfat-utils
       extundelete
-      fbreader
       fd
       fdupes
       feh-sandboxed
