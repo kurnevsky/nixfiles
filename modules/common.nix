@@ -133,7 +133,6 @@
       gitAndTools.delta
       gnome-themes-extra
       gnome3.adwaita-icon-theme
-      gnupg
       gparted
       graphicsmagick
       graphicsmagick-imagemagick-compat
@@ -284,6 +283,7 @@
   ];
 
   programs = {
+    gnupg.agent.enable = true;
     zsh = {
       enable = true;
       enableCompletion = true;
@@ -727,7 +727,7 @@
       };
       services = {
         gnome-keyring.enable = true;
-        # Gnupg can be enabled via programs.gnupg from nixpkgs, but it doesn't allow to set a config
+        # Enable together with programs.gnupg because it handles pinentry
         gpg-agent = {
           enable = true;
           defaultCacheTtl = 14400;
