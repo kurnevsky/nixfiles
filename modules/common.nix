@@ -107,6 +107,7 @@
       chromium-sandboxed
       clinfo
       coursier
+      cuetools
       davfs2
       deadbeef-sandboxed
       docker-compose
@@ -124,6 +125,7 @@
       feh-sandboxed
       ffmpeg-full-sandboxed
       firefox-sandboxed
+      flac
       fuseiso
       gcc
       gdb
@@ -208,6 +210,7 @@
       sbt
       scala
       shellcheck
+      shntool
       skim
       smartmontools
       sourceHighlight
@@ -225,10 +228,13 @@
       toxic-sandboxed
       unrar-sandboxed
       unzip-natspec-sandboxed
+      usbutils
       vdpauinfo
       viu
       vlc-sandboxed
+      vorbis-tools
       vulkan-tools
+      wavpack
       websocat
       wesnoth
       wget
