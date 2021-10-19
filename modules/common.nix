@@ -259,7 +259,6 @@
       # tuntox
       # vagrant
       # veloren
-      # virtualbox
       # tensorflow
       # sane xsane
     ];
@@ -419,9 +418,12 @@
     };
   };
 
-  virtualisation.docker = {
-    enable = true;
-    enableOnBoot = false;
+  virtualisation = {
+    docker = {
+      enable = true;
+      enableOnBoot = false;
+    };
+    virtualbox.host.enable = true;
   };
 
   hardware = {
@@ -518,7 +520,7 @@
       kurnevsky = {
         uid = 1000;
         isNormalUser = true;
-        extraGroups = [ "wheel" "adbusers" "audio" "video" ];
+        extraGroups = [ "wheel" "adbusers" "audio" "video" "vboxusers" ];
         shell = pkgs.zsh;
         passwordFile = "/secrets/kurnevsky";
       };
