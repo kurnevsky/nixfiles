@@ -49,17 +49,22 @@
     ];
   };
 
-  services.xserver = {
-    videoDrivers = [ "intel" "amdgpu" ];
-    deviceSection = ''
-      Option "TearFree" "true"
+  services = {
+    udev.extraRules = ''
+      ACTION=="add|change", SUBSYSTEM=="usb", TEST=="power/control", ATTR{idVendor}=="0cf3", ATTR{idProduct}=="0036", ATTR{power/control}="on"
     '';
-    displayManager.sessionCommands = let
-      layout = pkgs.writeText "xkb-layout" ''
-        ! Bind right super key as menu.
-        keycode 134 = Menu
+    xserver = {
+      videoDrivers = [ "intel" "amdgpu" ];
+      deviceSection = ''
+        Option "TearFree" "true"
       '';
-    in "${pkgs.xorg.xmodmap}/bin/xmodmap ${layout}";
+      displayManager.sessionCommands = let
+        layout = pkgs.writeText "xkb-layout" ''
+          ! Bind right super key as menu.
+          keycode 134 = Menu
+        '';
+      in "${pkgs.xorg.xmodmap}/bin/xmodmap ${layout}";
+    };
   };
 
   system.stateVersion = "21.05";
