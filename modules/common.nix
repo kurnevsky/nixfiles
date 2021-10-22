@@ -248,7 +248,6 @@
       xdotool
       xmlstarlet
       xmobar
-      xorg.xbacklight
       xsel
       xterm
       you-get
