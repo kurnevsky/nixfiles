@@ -241,14 +241,8 @@
       wine-staging-sandboxed
       winetricks
       wireguard-tools
-      wmctrl
       wxmaxima
-      xcalib
-      xcb-client-id
-      xdotool
       xmlstarlet
-      xsel
-      xterm
       you-get
       youtube-dl
       zathura-sandboxed

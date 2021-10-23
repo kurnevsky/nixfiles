@@ -1,6 +1,17 @@
 { config, lib, pkgs, ... }:
 
 {
+  environment = {
+    systemPackages = with pkgs; [
+      wmctrl
+      xcalib
+      xcb-client-id
+      xdotool
+      xsel
+      xterm
+    ];
+  };
+
   security.wrappers.xscreensaver-auth.source =
     "${pkgs.xscreensaver}/libexec/xscreensaver/xscreensaver-auth";
 
