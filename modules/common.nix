@@ -267,8 +267,6 @@
       # It causes segfaults
       MAGICK_OCL_DEVICE = "OFF";
     };
-
-    etc."taffybar.css".source = ./taffybar/taffybar.css;
   };
 
   fonts.fonts = with pkgs; [

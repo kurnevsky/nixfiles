@@ -10,6 +10,7 @@
       xsel
       xterm
     ];
+    etc."taffybar.css".source = ./taffybar/taffybar.css;
   };
 
   security.wrappers.xscreensaver-auth.source =
