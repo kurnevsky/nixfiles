@@ -247,7 +247,6 @@
       xcb-client-id
       xdotool
       xmlstarlet
-      xmobar
       xsel
       xterm
       you-get
