@@ -1259,7 +1259,9 @@ If CLEAR is specified, clear them instead."
   :custom
   (lsp-rust-clippy-preference "on")
   (lsp-rust-cfg-test t)
-  (lsp-rust-build-on-save t))
+  (lsp-rust-build-on-save t)
+  (lsp-rust-analyzer-cargo-watch-command "clippy")
+  (lsp-rust-analyzer-cargo-watch-args ["--all"]))
 
 (use-package lsp-metals
   :after lsp-mode
