@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, nixpkgs-unstable, ... }:
 
 {
   nix = {
@@ -183,7 +183,7 @@
       nodePackages.prettier
       numlockx
       octave
-      openconnect
+      nixpkgs-unstable.openconnect # TODO: use stable after next nixos release
       openjdk
       openmw
       openssl
