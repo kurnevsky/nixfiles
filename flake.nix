@@ -60,6 +60,7 @@
         evo = inputs.nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = commonModules ++ [
+            ./modules/validity.nix
             ./machines/evo/configuration.nix
             ./machines/evo/hardware-configuration.nix
           ];
