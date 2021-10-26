@@ -1269,8 +1269,7 @@ If CLEAR is specified, clear them instead."
   :custom
   (lsp-metals-server-args '("-J-Dmetals.allow-multiline-string-formatting=off"
                              "-J-Dmetals.icons=unicode"))
-  (lsp-metals-super-method-lenses-enabled t)
-  (lsp-metals-show-inferred-type t))
+  (lsp-metals-super-method-lenses-enabled t))
 
 (use-package lsp-haskell
   :disabled
