@@ -106,6 +106,12 @@ let
   } [ withFonts withOpengl ];
   chromium = lib.pipe {
     name = "chromium";
+    extra-deps = with pkgs; [
+      qt5ct
+      gnome-themes-extra
+      gnome3.adwaita-icon-theme
+      hicolor-icon-theme
+    ];
     devs = [ "dri" ];
     camera = true;
     syses = [
