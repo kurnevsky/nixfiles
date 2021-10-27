@@ -7,7 +7,7 @@ let
       (pkgs.fetchpatch {
         url =
           "https://patch-diff.githubusercontent.com/raw/NixOS/nixpkgs/pull/140966.diff";
-        sha256 = "sha256-Ydqvbn4q+oakVRPrQkavXRJMuIGLluO38nNTCTgumqM=";
+        sha256 = "sha256-QXnQYoMiy536UjAWuLSC7ivJj5AQVU8rveevYTC091o=";
       })
     ];
   };
