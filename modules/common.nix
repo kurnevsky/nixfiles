@@ -97,6 +97,7 @@
       bind
       bindfs
       binutils
+      blender
       brightnessctl
       btrfs-progs
       bubblewrap
