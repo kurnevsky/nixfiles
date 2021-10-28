@@ -107,6 +107,7 @@
       cataclysm-dda
       chromium-sandboxed
       clinfo
+      clippy
       coursier
       cuetools
       davfs2
@@ -208,6 +209,7 @@
       rsync
       rust-analyzer
       rustc
+      rustfmt
       sbt
       scala
       shellcheck
