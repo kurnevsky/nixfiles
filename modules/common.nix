@@ -343,6 +343,14 @@
   gtk.iconCache.enable = true;
 
   services = {
+    pipewire = {
+      enable = true;
+      alsa = {
+        enable = true;
+        support32Bit = true;
+      };
+      pulse.enable = true;
+    };
     i2pd = {
       enable = true;
       proto = {
@@ -425,11 +433,6 @@
       package = pkgs.bluezFull;
     };
     usbWwan.enable = true;
-    pulseaudio = {
-      enable = true;
-      package = pkgs.pulseaudioFull;
-      support32Bit = true;
-    };
     opengl = {
       enable = true;
       driSupport32Bit = true;
