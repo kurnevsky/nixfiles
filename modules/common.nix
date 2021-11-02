@@ -193,6 +193,7 @@
       pandoc # TODO: it should depend on texlive
       parallel
       pavucontrol
+      pulseaudio
       perl
       pidgin-sandboxed
       pijul
