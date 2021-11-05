@@ -46,6 +46,7 @@
         ./modules/shadowsocks.nix
         ./modules/motion.nix
         ./modules/torjail.nix
+        ./modules/rnnoise.nix
         ./modules/patches.nix
       ];
     in {
