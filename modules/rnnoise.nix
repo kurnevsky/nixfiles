@@ -52,6 +52,7 @@ in {
     environment.LADSPA_PATH = "${pkgs.rnnoise-plugin}/lib/ladspa";
     description = "Noise canceling source for pipewire";
     requires = [ "pipewire.service" ];
+    after = [ "pipewire.service" ];
     wantedBy = [ "pipewire.service" ];
     script = "${pkgs.pipewire}/bin/pipewire -c source-rnnoise.conf";
   };
