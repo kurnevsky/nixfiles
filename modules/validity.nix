@@ -6,7 +6,10 @@ let
 in {
   environment.systemPackages = with pkgs; [ fprintd ];
 
-  systemd.packages = [ open-fprintd python-validity ];
+  systemd = {
+    packages = [ open-fprintd python-validity ];
+    services.python3-validity.wantedBy = [ "default.target" ];
+  };
 
   services.dbus.packages = [ open-fprintd python-validity ];
 
