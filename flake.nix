@@ -14,6 +14,13 @@
       ref = "nixos-unstable";
     };
 
+    nixpkgs-master = {
+      type = "github";
+      owner = "NixOS";
+      repo = "nixpkgs";
+      ref = "master";
+    };
+
     emacs-overlay = {
       type = "github";
       owner = "nix-community";
@@ -32,9 +39,12 @@
     let
       commonModules = [
         ({ pkgs, ... }: {
-          _module.args.nixpkgs-unstable = import inputs.nixpkgs-unstable {
-            inherit (pkgs.stdenv.targetPlatform) system;
-          };
+          _module.args =
+            let platform = { inherit (pkgs.stdenv.targetPlatform) system; };
+            in {
+              nixpkgs-unstable = import inputs.nixpkgs-unstable platform;
+              nixpkgs-master = import inputs.nixpkgs-master platform;
+            };
         })
         inputs.home-manager.nixosModules.home-manager
         (args: { nixpkgs.overlays = [ inputs.emacs-overlay.overlay ]; })
@@ -45,8 +55,9 @@
         ./modules/bfq.nix
         ./modules/shadowsocks.nix
         ./modules/motion.nix
-        ./modules/torjail.nix
         ./modules/rnnoise.nix
+        ./modules/torjail.nix
+        ./modules/overlays.nix
         ./modules/patches.nix
       ];
     in {
