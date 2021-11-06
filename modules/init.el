@@ -1490,6 +1490,9 @@ properly."
 (global-set-key (kbd "S-C-M-<down>") #'shrink-window)
 (global-set-key (kbd "S-C-M-<up>") #'enlarge-window)
 (global-set-key (kbd "<f7>") #'pop-global-mark)
+(global-set-key (kbd "S-<f4>") (lambda ()
+                                 (interactive)
+                                 (kmacro-call-macro 0)))
 
 ;; ========== Startup actions ==========
 
