@@ -385,21 +385,32 @@
         config = ./init.el;
         package = pkgs.emacsPatched;
         alwaysEnsure = true;
-        extraEmacsPackages = epkgs:
-          [
-            (pkgs.stdenv.mkDerivation {
-              name = "hexrgb.el";
-              src = pkgs.fetchurl {
-                url = "https://www.emacswiki.org/emacs/download/hexrgb.el";
-                sha256 = "sha256-qFKdT3IjhUAgNaCVTjCe2cT8rOqfPSdbVCL14/JCC6I=";
+        extraEmacsPackages = epkgs: [
+          (pkgs.stdenv.mkDerivation {
+            name = "hexrgb.el";
+            src = pkgs.fetchurl {
+              url = "https://www.emacswiki.org/emacs/download/hexrgb.el";
+              sha256 = "sha256-qFKdT3IjhUAgNaCVTjCe2cT8rOqfPSdbVCL14/JCC6I=";
+            };
+            unpackCmd = "mkdir el && cp $curSrc el/hexrgb.el";
+            buildPhase =
+              "${pkgs.emacs}/bin/emacs -Q -nw -batch -f batch-byte-compile hexrgb.el";
+            installPhase =
+              "mkdir -p $out/share/emacs/site-lisp && install *.el* $out/share/emacs/site-lisp";
+          })
+          epkgs.fringe-helper # for revive origami
+        ];
+        override = epkgs:
+          epkgs // {
+            origami = epkgs.melpaPackages.origami.overrideAttrs (old: {
+              src = pkgs.fetchFromGitHub {
+                owner = "elp-revive";
+                repo = "origami.el";
+                rev = "adf3cf1b813d93cfd7153a3e3799232e8545366b";
+                sha256 = "sha256-lnK3+o9m7qBs82UTp6qQ8kRwP7js2WI2wlxi9jOF4Jw=";
               };
-              unpackCmd = "mkdir el && cp $curSrc el/hexrgb.el";
-              buildPhase =
-                "${pkgs.emacs}/bin/emacs -Q -nw -batch -f batch-byte-compile hexrgb.el";
-              installPhase =
-                "mkdir -p $out/share/emacs/site-lisp && install *.el* $out/share/emacs/site-lisp";
-            })
-          ];
+            });
+          };
       });
     };
     mpd = {
