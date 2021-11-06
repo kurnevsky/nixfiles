@@ -556,6 +556,10 @@ If CLEAR is specified, clear them instead."
   (ivy-extra-directories nil)
   (ivy-fixed-height-minibuffer t)
   (ivy-format-function #'ivy-format-function-line)
+  (ivy-sort-matches-functions-alist
+    '((t . ivy--prefix-sort)
+       (ivy-completion-in-region . ivy--shorter-matches-first)
+       (ivy-switch-buffer . ivy-sort-function-buffer)))
   :config
   (ivy-mode 1)
   (setq ivy-re-builders-alist '((t . ivy--regex-fuzzy))))
