@@ -4,7 +4,11 @@
   nix = {
     package = pkgs.nixFlakes;
     autoOptimiseStore = true;
-    extraOptions = "experimental-features = nix-command flakes";
+    extraOptions = ''
+      experimental-features = nix-command flakes
+      keep-outputs = true
+      keep-derivations = true
+    '';
     binaryCaches =
       [ "https://cachix.cachix.org" "https://nix-community.cachix.org" ];
     binaryCachePublicKeys = [
