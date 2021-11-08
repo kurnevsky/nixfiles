@@ -86,6 +86,7 @@
       (agda.withPackages (pkgs: with pkgs; [ standard-library ]))
       (lutris.override { steamSupport = false; })
       (pass.withExtensions (ext: with ext; [ pass-otp ]))
+      (pkgs.callPackage ./pan-globalprotect-okta.nix { })
       R
       aircrack-ng
       alacritty
