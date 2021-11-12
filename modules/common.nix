@@ -94,7 +94,6 @@
       aspell
       aspellDicts.en
       aspellDicts.ru
-      astyle
       barcode
       bat
       bind
@@ -231,6 +230,7 @@
       wesnoth
       # Languages
       (agda.withPackages (pkgs: with pkgs; [ standard-library ]))
+      astyle
       gcc
       mono
       nodePackages.bash-language-server
