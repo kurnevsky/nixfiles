@@ -83,11 +83,9 @@
 
   environment = {
     systemPackages = with pkgs; [
-      (agda.withPackages (pkgs: with pkgs; [ standard-library ]))
       (lutris.override { steamSupport = false; })
       (pass.withExtensions (ext: with ext; [ pass-otp ]))
       (pkgs.callPackage ./pan-globalprotect-okta.nix { })
-      R
       aircrack-ng
       alacritty
       anki
@@ -106,12 +104,8 @@
       brightnessctl
       btrfs-progs
       bubblewrap
-      cabal-install
       calibre
-      cataclysm-dda
-      chromium-sandboxed
       clinfo
-      coursier
       cuetools
       davfs2
       deadbeef-sandboxed
@@ -120,34 +114,25 @@
       dosfstools
       e2fsprogs
       eiskaltdcpp
-      element-desktop-sandboxed
       exa
       exfat-utils
       extundelete
       fd
-      fdupes
+      fdupes # TODO: replace with rust alternative
       feh-sandboxed
       ffmpeg-full-sandboxed
-      firefox-sandboxed
       flac
       fuseiso
-      gcc
       gdb
-      ghc
       gimp-with-plugins
-      git
-      gitAndTools.delta
       gnome-themes-extra
       gnome3.adwaita-icon-theme
       gparted
       graphicsmagick
       graphicsmagick-imagemagick-compat
       hans
-      haskell-language-server
       hdparm
-      hedgewars
       hicolor-icon-theme # contains deadbeef icon
-      hlint
       hunspell
       hunspellDicts.en_US
       hunspellDicts.ru_RU
@@ -166,13 +151,9 @@
       lsd
       lshw
       maim
-      maxima
       mc
-      mercurial
       mesa-demos
-      metals
       metasploit
-      mono
       mpc_cli
       mpv-sandboxed
       mu
@@ -182,51 +163,37 @@
       nixfmt
       ncmpc
       nmap
-      nodePackages.bash-language-server
       nodePackages.prettier
       numlockx
-      octave
       nixpkgs-unstable.openconnect # TODO: use stable after next nixos release
-      openjdk
-      openmw
       openssl
       p7zip-sandboxed
       pandoc # TODO: it should depend on texlive
       parallel
       pavucontrol
-      pulseaudio
+      pulseaudio # for pactl
       perl
-      pidgin-sandboxed
-      pijul
       playerctl
       psmisc # for killall
       qbittorrent-sandboxed
       qemu
       qrencode
-      qtox-sandboxed
       radare2
       rclone
       ripgrep
       ripgrep-all
       rsync
-      sbt
-      scala
-      shellcheck
       shntool
       skim
       smartmontools
       sourceHighlight
-      subversion
       tealdeer
-      tdesktop-sandboxed
       tesseract
       texlive.combined.scheme-basic
       tigervnc
       tinc
       tmux
-      tor-browser-bundle-bin-wrapped
       torsocks
-      toxic-sandboxed
       unrar-sandboxed
       unzip-natspec-sandboxed
       usbutils
@@ -237,18 +204,44 @@
       vulkan-tools
       wavpack
       websocat
-      wesnoth
       wget
       wine-staging-sandboxed
       winetricks
       wireguard-tools
-      wxmaxima
       xmlstarlet
       you-get
       youtube-dl
       zathura-sandboxed
       zbar
-      # Rust
+      # Browsers
+      chromium-sandboxed
+      firefox-sandboxed
+      tor-browser-bundle-bin-wrapped
+      # Messengers
+      element-desktop-sandboxed
+      pidgin-sandboxed
+      tdesktop-sandboxed
+      ## Tox
+      qtox-sandboxed
+      toxic-sandboxed
+      # Games
+      cataclysm-dda
+      hedgewars
+      openmw
+      wesnoth
+      # Languages
+      (agda.withPackages (pkgs: with pkgs; [ standard-library ]))
+      gcc
+      mono
+      nodePackages.bash-language-server
+      openjdk
+      shellcheck
+      ## Haskell
+      cabal-install
+      ghc
+      haskell-language-server
+      hlint
+      ## Rust
       (fenix.stable.withComponents [
         "cargo"
         "clippy"
@@ -257,6 +250,22 @@
         "rustfmt"
       ])
       rust-analyzer
+      ## Scala
+      coursier
+      metals
+      sbt
+      scala
+      ## Math
+      maxima
+      wxmaxima
+      octave
+      R
+      # VCS
+      git
+      gitAndTools.delta
+      mercurial
+      pijul
+      subversion
       # TODO
       # findimagedupes
       # tuntox
