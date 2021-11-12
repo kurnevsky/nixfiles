@@ -178,7 +178,6 @@
       mpv-sandboxed
       mu
       nettools
-      networkmanagerapplet
       newsboat
       nix-diff
       nixfmt
