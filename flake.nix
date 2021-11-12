@@ -21,6 +21,13 @@
       ref = "master";
     };
 
+    fenix = {
+      type = "github";
+      owner = "nix-community";
+      repo = "fenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     emacs-overlay = {
       type = "github";
       owner = "nix-community";
@@ -47,7 +54,10 @@
             };
         })
         inputs.home-manager.nixosModules.home-manager
-        (args: { nixpkgs.overlays = [ inputs.emacs-overlay.overlay ]; })
+        (args: {
+          nixpkgs.overlays =
+            [ inputs.emacs-overlay.overlay inputs.fenix.overlay ];
+        })
         ./modules/common.nix
         ./modules/xmonad.nix
         ./modules/sandbox.nix

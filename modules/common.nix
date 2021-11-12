@@ -108,11 +108,9 @@
       bubblewrap
       cabal-install
       calibre
-      cargo
       cataclysm-dda
       chromium-sandboxed
       clinfo
-      clippy
       coursier
       cuetools
       davfs2
@@ -213,9 +211,6 @@
       ripgrep
       ripgrep-all
       rsync
-      rust-analyzer
-      rustc
-      rustfmt
       sbt
       scala
       shellcheck
@@ -256,6 +251,16 @@
       youtube-dl
       zathura-sandboxed
       zbar
+      # Rust
+      (fenix.stable.withComponents [
+        "cargo"
+        "clippy"
+        "rust-src"
+        "rustc"
+        "rustfmt"
+      ])
+      rust-analyzer
+      # TODO
       # findimagedupes
       # tuntox
       # vagrant
