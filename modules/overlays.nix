@@ -29,6 +29,7 @@
           purple-lurch
           purple-plugin-pack
           purple-slack
+          telegram-purple
           (pkgs.callPackage ./pidgin-indicator.nix { })
         ];
       };

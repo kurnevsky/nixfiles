@@ -221,7 +221,6 @@
       subversion
       tealdeer
       tdesktop-sandboxed
-      telegram-purple
       tesseract
       texlive.combined.scheme-basic
       tigervnc
