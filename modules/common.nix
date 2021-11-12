@@ -119,7 +119,6 @@
       dosbox
       dosfstools
       e2fsprogs
-      editorconfig-core-c
       eiskaltdcpp
       element-desktop-sandboxed
       exa
