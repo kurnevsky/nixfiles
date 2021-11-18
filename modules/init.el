@@ -557,12 +557,26 @@ If CLEAR is specified, clear them instead."
   (ivy-fixed-height-minibuffer t)
   (ivy-format-function #'ivy-format-function-line)
   (ivy-sort-matches-functions-alist
-    '((t . ivy--prefix-sort)
-       (ivy-completion-in-region . ivy--shorter-matches-first)
+    '((t . ivy--flx-prefix-sort)
        (ivy-switch-buffer . ivy-sort-function-buffer)))
   :config
   (ivy-mode 1)
-  (setq ivy-re-builders-alist '((t . ivy--regex-fuzzy))))
+  (setq ivy-re-builders-alist '((t . ivy--regex-fuzzy)))
+  (defun ivy--flx-prefix-sort (name candidates)
+    (if (or (string= name "")
+          (= (aref name 0) ?^))
+      candidates
+      (let ((candidates (ivy--flx-sort name candidates))
+             (name (s-chop-suffix "$" (s-chop-prefix "^" (downcase name))))
+             res-prefix
+             res-noprefix)
+        (dolist (s candidates)
+          (if (string-prefix-p name (downcase s))
+            (push s res-prefix)
+            (push s res-noprefix)))
+        (nconc
+          (sort (nreverse res-prefix) (-on #'< #'length))
+          (nreverse res-noprefix))))))
 
 (use-package counsel
   :demand t
