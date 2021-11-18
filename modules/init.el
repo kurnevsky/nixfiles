@@ -233,12 +233,13 @@ ARGS is `kill-buffer' arguments."
             (base08 (plist-get colors :base08))
             (base0A (plist-get colors :base0A))
             (base0B (plist-get colors :base0B))
+            (base005 (color-blend base00 base01 0.5))
             (base08-highlight (color-saturate-darken base08 20 10))
             (base0A-highlight (color-saturate-darken base0A 20 10))
             (base0B-highlight (color-saturate-darken base0B 20 10)))
       (base16-set-faces theme (symbol-value (intern (concat (symbol-name theme) "-colors")))
         `( ;; Make it slightly different from highlighting
-           (hl-line :background ,(color-blend base00 base01 0.5))
+           (hl-line :background ,base005)
            ;; Ediff
            (ediff-current-diff-A :foreground base08 :inverse-video t)
            (ediff-current-diff-B :foreground base0B :inverse-video t)
@@ -259,6 +260,14 @@ ARGS is `kill-buffer' arguments."
            (magit-diff-base-highlight :foreground ,base0A-highlight :inverse-video t)
            (magit-diff-added-highlight :foreground ,base0B-highlight :inverse-video t)
            (magit-diff-removed-highlight :foreground ,base08-highlight :inverse-video t)
+           ;; lsp-ui
+           (lsp-ui-peek-peek :background ,base005)
+           (lsp-ui-peek-list :background ,base005)
+           (lsp-ui-peek-filename :foreground base09)
+           (lsp-ui-peek-line-number :foreground base03)
+           (lsp-ui-peek-highlight :box (:line-width -1 :color base08))
+           (lsp-ui-peek-header :background base07 :foreground base00)
+           (lsp-ui-peek-selection :background base07 :foreground base00)
            ;; Smerge
            (smerge-base :foreground base0A :inverse-video t)
            (smerge-upper :foreground base08 :inverse-video t)
