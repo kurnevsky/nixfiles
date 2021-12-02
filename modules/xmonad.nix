@@ -13,8 +13,11 @@
     etc."taffybar.css".source = ./taffybar/taffybar.css;
   };
 
-  security.wrappers.xscreensaver-auth.source =
-    "${pkgs.xscreensaver}/libexec/xscreensaver/xscreensaver-auth";
+  security.wrappers.xscreensaver-auth = {
+    owner = "root";
+    group = "root";
+    source = "${pkgs.xscreensaver}/libexec/xscreensaver/xscreensaver-auth";
+  };
 
   programs.qt5ct.enable = true;
 

@@ -26,8 +26,7 @@
     ];
 
   boot = {
-    # TODO: use pkgs.linuxPackages_xanmod after next nixos release
-    kernelPackages = pkgs.linuxPackages_latest;
+    kernelPackages = pkgs.linuxPackages_xanmod;
     kernel.sysctl = {
       "kernel.sysrq" = 1;
       "net.ipv4.ip_forward" = 1;
@@ -164,7 +163,7 @@
       nmap
       nodePackages.prettier
       numlockx
-      nixpkgs-unstable.openconnect # TODO: use stable after next nixos release
+      openconnect
       openssl
       p7zip-sandboxed
       pandoc # TODO: it should depend on texlive
@@ -503,19 +502,12 @@
     (self: super: {
       uutils-coreutils = super.uutils-coreutils.override { prefix = null; };
     })
-    (self: super:
-      let
-        mc = optimizeForThisHost (super.mc.override {
-          zip = super.zip-natspec-sandboxed;
-          unzip = super.unzip-natspec-sandboxed;
-        });
-      in {
-        # TODO: don't wrap after next nixos release
-        mc = pkgs.writeShellScriptBin "mc" ''
-          export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${pkgs.xorg.libX11}/lib
-          exec ${mc}/bin/mc $@
-        '';
-      })
+    (self: super: {
+      mc = optimizeForThisHost (super.mc.override {
+        zip = super.zip-natspec-sandboxed;
+        unzip = super.unzip-natspec-sandboxed;
+      });
+    })
     (self: super: { wine = super.wineWowPackages.staging; })
     (self: super: {
       emacsPatched = super.emacs.overrideAttrs (oldAttrs: {

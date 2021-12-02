@@ -25,8 +25,11 @@
 
   swapDevices = [{
     device = "/dev/nvme0n1p2";
-    randomEncryption.enable = true;
-    # TODO: set discardPolicy after next nixos release
+    randomEncryption = {
+      enable = true;
+      allowDiscards = true;
+    };
+    discardPolicy = "both";
   }];
 
   networking = {

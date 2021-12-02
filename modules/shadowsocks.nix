@@ -23,7 +23,7 @@ in {
     wantedBy = [ "multi-user.target" ];
     path = [ pkgs.shadowsocks-rust pkgs.jq pkgs.shadowsocks-v2ray-plugin ];
     serviceConfig = {
-      User = "nobody";
+      User = "nobody"; # TODO: don't use
       PrivateTmp = true;
     };
     script = ''

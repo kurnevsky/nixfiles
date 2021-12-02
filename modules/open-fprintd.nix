@@ -1,6 +1,6 @@
-{ lib, fetchFromGitHub, python3, python3Packages }:
+{ lib, fetchFromGitHub, python38Packages }:
 
-python3Packages.buildPythonPackage rec {
+python38Packages.buildPythonPackage rec {
   pname = "open-fprintd";
   version = "0.6";
 
@@ -11,9 +11,9 @@ python3Packages.buildPythonPackage rec {
     sha256 = "sha256-uVFuwtsmR/9epoqot3lJ/5v5OuJjuRjL7FJF7oXNDzU=";
   };
 
-  checkInputs = with python3Packages; [ dbus-python ];
+  checkInputs = with python38Packages; [ dbus-python ];
 
-  propagatedBuildInputs = with python3Packages; [ dbus-python pygobject3 ];
+  propagatedBuildInputs = with python38Packages; [ dbus-python pygobject3 ];
 
   postInstall = ''
     install -D -m 644 debian/open-fprintd.service \

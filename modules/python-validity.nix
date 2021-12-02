@@ -1,6 +1,6 @@
-{ lib, fetchFromGitHub, python3, python3Packages }:
+{ lib, fetchFromGitHub, python38Packages }:
 
-python3Packages.buildPythonPackage rec {
+python38Packages.buildPythonPackage rec {
   pname = "python-validity";
   version = "0.12";
 
@@ -11,9 +11,9 @@ python3Packages.buildPythonPackage rec {
     sha256 = "sha256-s0o99CRW9gwxCv3AMKrtXh8mrblVAA9r9IIPgy6fv4U=";
   };
 
-  buildInputs = with python3Packages; [ cryptography pyyaml pyusb ];
+  buildInputs = with python38Packages; [ cryptography pyyaml pyusb ];
 
-  propagatedBuildInputs = with python3Packages; [
+  propagatedBuildInputs = with python38Packages; [
     dbus-python
     pygobject3
     cryptography

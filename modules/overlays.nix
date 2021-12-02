@@ -5,11 +5,7 @@
     (self: super: {
       deadbeef = super.deadbeef.override { wavpackSupport = true; };
       deadbeef-with-plugins = super.deadbeef-with-plugins.override {
-        plugins = [
-          super.deadbeef-mpris2-plugin
-          # TODO: use plugin from nixpkgs after nixos release
-          (pkgs.callPackage ./deadbeef-statusnotifier-plugin.nix { })
-        ];
+        plugins = with super.deadbeefPlugins; [ mpris2 statusnotifier ];
       };
       zip-natspec = super.zip.override { enableNLS = true; };
       unzip-natspec = super.unzip.override { enableNLS = true; };

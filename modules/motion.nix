@@ -20,6 +20,7 @@ let
   '';
 in {
   users.extraUsers.motion = {
+    group = "nogroup"; # TODO: don't use
     description = "Motion Service user";
     extraGroups = [ "video" ];
     home = homeDir;
@@ -41,19 +42,4 @@ in {
       ExecStart = "${pkgs.motion}/bin/motion -n -c ${config}";
     };
   };
-
-  nixpkgs.overlays = [
-    (self: super: {
-      motion = super.motion.overrideAttrs (oldAttrs: {
-        patches = (oldAttrs.patches or [ ]) ++ [
-          (pkgs.fetchpatch {
-            name = "first-picture-output.patch";
-            url =
-              "https://patch-diff.githubusercontent.com/raw/Motion-Project/motion/pull/1136.patch";
-            sha256 = "0g48j2xlzg3fifzqwy2llx1bb8wy685698bn0fjgz62m6fdpwr4j";
-          })
-        ];
-      });
-    })
-  ];
 }
