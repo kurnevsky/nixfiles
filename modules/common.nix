@@ -162,7 +162,6 @@
       ncmpc
       nmap
       nodePackages.prettier
-      numlockx
       openconnect
       openssl
       p7zip-sandboxed

@@ -3,6 +3,7 @@
 {
   environment = {
     systemPackages = with pkgs; [
+      numlockx
       wmctrl
       xcalib
       xcb-client-id
