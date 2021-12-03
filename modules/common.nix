@@ -116,7 +116,7 @@
       exfat-utils
       extundelete
       fd
-      fdupes # TODO: replace with rust alternative
+      fclones
       feh-sandboxed
       ffmpeg-full-sandboxed
       flac
