@@ -131,6 +131,7 @@
 
   home-manager = let
     home = {
+      xresources.properties = import ./xresources.nix;
       home.file = {
         ".xinitrc".text = ''
           export _JAVA_AWT_WM_NONREPARENTING=1

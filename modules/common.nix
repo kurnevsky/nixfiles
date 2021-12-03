@@ -759,7 +759,6 @@
           pinentryFlavor = "gnome3";
         };
       };
-      xresources.properties = import ./xresources.nix;
       xdg.mimeApps = {
         enable = true;
         defaultApplications = import ./default-applications.nix;
