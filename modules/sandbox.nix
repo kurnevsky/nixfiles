@@ -572,6 +572,15 @@ in {
           super.ffmpeg-full
         ];
       };
+      wine-full-sandboxed = pkgs.symlinkJoin {
+        name = "wine";
+        paths = [
+          (sandbox super.wineWowPackages.full (wine "wine"))
+          (sandbox super.wineWowPackages.full (withNet (wine "wine")))
+          (sandbox super.wineWowPackages.full (wine "winecfg"))
+          super.wineWowPackages.full
+        ];
+      };
       wine-staging-sandboxed = pkgs.symlinkJoin {
         name = "wine";
         paths = [

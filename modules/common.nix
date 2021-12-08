@@ -202,7 +202,7 @@
       wavpack
       websocat
       wget
-      wine-staging-sandboxed
+      wine-full-sandboxed
       winetricks
       wireguard-tools
       xmlstarlet
