@@ -720,6 +720,27 @@
         ];
       };
     };
+    git = {
+      enable = true;
+      userName = "Evgeny Kurnevsky";
+      userEmail = "kurnevsky@gmail.com";
+      signing = {
+        key = null;
+        signByDefault = true;
+      };
+      aliases = {
+        lol = "log --graph --decorate --pretty=oneline --abbrev-commit --all";
+      };
+      delta.enable = true;
+      extraConfig = {
+        push.default = "simple";
+        merge.conflictstyle = "diff3";
+        pull.ff = "only";
+        github.user = "kurnevsky";
+        gitlab.user = "kurnevsky";
+        gitlab."gitlab.evolutiongaming.com/api/v4".user = "ykurneuski";
+      };
+    };
     root = {
       home.file.".config/mc/ini".source = ./mc.ini;
       programs = {
@@ -747,6 +768,7 @@
         inherit tmux;
         inherit feh;
         inherit alacritty;
+        inherit git;
       };
       services = {
         gnome-keyring.enable = true;
