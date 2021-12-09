@@ -1089,6 +1089,7 @@ If CLEAR is specified, clear them instead."
   (auth-source-save-behavior nil))
 
 (use-package auth-source-pass
+  :ensure nil
   :demand t
   :after auth-source
   :config
