@@ -49,6 +49,7 @@
       # Discrete GPU can be used with DRI_PRIME=1 LIBVA_DRIVER_NAME=radeonsi
       vaapiIntel
       libvdpau-va-gl
+      mesa.opencl
     ];
   };
 
