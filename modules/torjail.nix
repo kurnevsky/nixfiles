@@ -61,6 +61,7 @@ in {
         ${iptables}/bin/iptables -A INPUT -i out-torjail -j DROP
       '';
       serviceConfig = { Type = "oneshot"; };
+      restartIfChanged = false;
     };
     tor.requires = [ "torjail-ns.service" ];
   };
