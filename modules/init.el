@@ -1094,11 +1094,7 @@ If CLEAR is specified, clear them instead."
   :config
   (auth-source-pass-enable))
 
-(use-package gitattributes-mode)
-
-(use-package gitconfig-mode)
-
-(use-package gitignore-mode)
+(use-package git-modes)
 
 (use-package diff-hl
   :demand t
