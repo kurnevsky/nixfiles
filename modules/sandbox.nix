@@ -94,7 +94,7 @@ let
     }];
     unshare-net = false;
     ro-whitelist =
-      [ "~/.password-store/" "~/.config/gtk-3.0/" "~/.Xauthority" ];
+      [ "~/.password-store/" "~/.config/gtk-3.0/" ];
     whitelist = [
       "~/.mozilla/"
       "~/.cache/mozilla/firefox/"
@@ -127,7 +127,6 @@ let
     resolv-conf = true;
     unsetenvs = [ "MAIL" "SHELL" ];
     unshare-net = false;
-    ro-whitelist = [ "~/.Xauthority" ];
     whitelist = [
       "~/.config/chromium/"
       "~/.cache/chromium/"
@@ -151,7 +150,7 @@ let
     pams = [ "bus" "pulse" ];
     unshare-net = false;
     unsetenvs = [ "MAIL" "SHELL" ];
-    ro-whitelist = [ "~/.Xauthority" "~/.gtkrc-2.0" ];
+    ro-whitelist = [ "~/.gtkrc-2.0" ];
     whitelist = [ "~/.purple/" "~/.config/pulse/" ];
   };
   mpv = lib.pipe {
@@ -232,7 +231,7 @@ let
     resolv-conf = true;
     unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" "SHELL" ];
     unshare-net = false;
-    ro-whitelist = [ "~/.config/qt5ct/" "~/.Xauthority" ];
+    ro-whitelist = [ "~/.config/qt5ct/" ];
     whitelist = [ "~/.config/tox/" "~/.cache/Tox/" "~/.config/pulse/" ];
   };
   toxic = {
@@ -247,7 +246,6 @@ let
     resolv-conf = true;
     unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" "SHELL" ];
     unshare-net = false;
-    ro-whitelist = [ "~/.Xauthority" ];
     whitelist = [ "~/.config/tox/" "~/.config/pulse/" ];
   };
   tdesktop = lib.pipe {
@@ -272,7 +270,7 @@ let
     resolv-conf = true;
     unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" "SHELL" ];
     unshare-net = false;
-    ro-whitelist = [ "~/.config/qt5ct/" "~/.Xauthority" ];
+    ro-whitelist = [ "~/.config/qt5ct/" ];
     whitelist = [ "~/.local/share/TelegramDesktop/" "~/.config/pulse/" ];
   } [ withFonts withOpengl ];
   element-desktop = withFonts {
@@ -303,7 +301,7 @@ let
     resolv-conf = true;
     unsetenvs = [ "MAIL" "SHELL" ];
     unshare-net = false;
-    ro-whitelist = [ "~/.config/gtk-3.0/" "~/.Xauthority" ];
+    ro-whitelist = [ "~/.config/gtk-3.0/" ];
     whitelist = [ "~/.config/Element/" "~/.config/pulse/" ];
   };
   qbittorrent = lib.pipe {
@@ -326,7 +324,7 @@ let
     resolv-conf = true;
     unsetenvs = [ "MAIL" "SHELL" ];
     unshare-net = false;
-    ro-whitelist = [ "~/.config/qt5ct/" "~/.Xauthority" ];
+    ro-whitelist = [ "~/.config/qt5ct/" ];
     whitelist = [
       "~/.local/share/data/qBittorrent/"
       "~/.config/qBittorrent/"
@@ -396,7 +394,6 @@ let
       unshare-cgroup = false;
       unshare-pid = false;
       seccomp = false;
-      ro-whitelist = [ "~/.Xauthority" ];
       whitelist = [
         "\${WINEPREFIX:-~/.wine/}"
         "~/.cache/wine/"
@@ -424,7 +421,6 @@ let
     x11 = true;
     unsetenvs = [ "MAIL" "SHELL" ];
     unshare-net = false;
-    ro-whitelist = [ "~/.Xauthority" ];
     whitelist = [ "~/.local/share/tor-browser/" ];
   };
   zoom = lib.pipe {
@@ -448,7 +444,6 @@ let
       value = "/run/current-system/sw/bin/bash";
     }];
     unshare-net = false;
-    ro-whitelist = [ "~/.Xauthority" ];
     whitelist = [
       "~/.zoom/"
       "~/.cache/zoom/"
@@ -476,7 +471,7 @@ let
     resolv-conf = true;
     unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" "SHELL" ];
     unshare-net = false;
-    ro-whitelist = [ "~/.config/gtk-3.0/" "~/.Xauthority" ];
+    ro-whitelist = [ "~/.config/gtk-3.0/" ];
     whitelist = [ "~/.config/skypeforlinux/" "~/.config/pulse/" ];
   };
 in {

@@ -113,6 +113,10 @@ in writeShellScriptBin target-name ''
          lib.concatMapStringsSep " "
          (x: "--bind /run/user/$UID/${x} /run/user/$UID/${x}") pams
        } \
+       ${
+         lib.optionalString x11
+         "--bind-try /run/user/$UID/wayland-0 /run/user/$UID/wayland-0"
+       } \
        \
        --ro-bind /etc/profiles/per-user/"$(whoami)" /etc/profiles/per-user/"$(whoami)" \
        ${
@@ -130,6 +134,11 @@ in writeShellScriptBin target-name ''
        ${lib.concatMapStringsSep " " (x: "--ro-bind ${x} ${x}") ro-whitelist} \
        ${lib.concatMapStringsSep " " (x: "--bind ${x} ${x}") whitelist} \
        ${lib.concatMapStringsSep " " (x: "--tmpfs ${x}") blacklist} \
+       ${
+         lib.optionalString
+         (x11 && !(builtins.elem "~/" (whitelist ++ ro-whitelist)))
+         "--ro-bind ~/.Xauthority ~/.Xauthority"
+       } \
        \
        "''${ro_whitelist[@]}" \
        "''${whitelist[@]}" \
