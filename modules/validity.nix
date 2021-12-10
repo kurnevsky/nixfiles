@@ -13,7 +13,9 @@ in {
 
   services.dbus.packages = [ open-fprintd python-validity ];
 
-  security.pam.services.sudo.fprintAuth = true;
-  security.pam.services.login.fprintAuth = true;
-  security.pam.services.xscreensaver.fprintAuth = true;
+  security.pam.services = {
+    sudo.fprintAuth = true;
+    login.fprintAuth = true;
+    xscreensaver.fprintAuth = true;
+  };
 }
