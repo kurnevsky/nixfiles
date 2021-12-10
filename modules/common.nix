@@ -607,7 +607,6 @@
     alacritty = {
       enable = true;
       settings = {
-        window.decorations = "none";
         scrolling.history = 100000;
         font = {
           normal.family = "Hack Nerd Font";
