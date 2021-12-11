@@ -17,5 +17,8 @@ in {
     sudo.fprintAuth = true;
     login.fprintAuth = true;
     xscreensaver.fprintAuth = true;
+    # KDE and SDDM don't support it properly at the moment.
+    # sddm.fprintAuth = true;
+    # kde.fprintAuth = true;
   };
 }
