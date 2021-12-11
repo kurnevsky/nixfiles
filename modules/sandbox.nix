@@ -519,6 +519,10 @@ in {
         name = "firefox";
         paths = [ (sandbox super.firefox firefox) super.firefox ];
       };
+      firefox-wayland-sandboxed = pkgs.symlinkJoin {
+        name = "firefox-wayland";
+        paths = [ (sandbox super.firefox-wayland firefox) super.firefox-wayland ];
+      };
       chromium-sandboxed = sandbox super.ungoogled-chromium chromium;
       pidgin-sandboxed = pkgs.symlinkJoin {
         name = "pidgin";
