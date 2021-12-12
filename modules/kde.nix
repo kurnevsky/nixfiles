@@ -150,6 +150,14 @@
               "stop current activity" = "none,Meta+S,Stop Current Activity";
             };
           };
+          kxkbrc = {
+            Layout = {
+              LayoutList = "us,ru";
+              Options = "grp:caps_toggle,grp_led:caps";
+              SwitchMode = "Global";
+              Use = true;
+            };
+          };
         };
         lines = lib.flatten (lib.mapAttrsToList (file: groups:
           lib.mapAttrsToList (group: keys:
