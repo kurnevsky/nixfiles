@@ -1,6 +1,7 @@
 { pkgs, nixpkgs-master, ... }:
 
 {
+  # system.replaceRuntimeDependencies can be used to make fast fixes
   nixpkgs.overlays = [
     (self: super: {
       deadbeef = super.deadbeef.override { wavpackSupport = true; };

@@ -1,18 +1,7 @@
 { config, lib, pkgs, ... }:
 
 {
-  environment = {
-    systemPackages = with pkgs; [
-      numlockx
-      wmctrl
-      xcalib
-      xcb-client-id
-      xdotool
-      xsel
-      xterm
-    ];
-    etc."taffybar.css".source = ./taffybar/taffybar.css;
-  };
+  environment.etc."taffybar.css".source = ./taffybar/taffybar.css;
 
   security.wrappers.xscreensaver-auth = {
     owner = "root";
@@ -22,29 +11,15 @@
 
   programs.qt5ct.enable = true;
 
-  services = {
-    xserver = {
+  services.xserver = {
+    windowManager.xmonad = {
       enable = true;
-      # causes GDK_PIXBUF_MODULE_FILE to be set in xsession
-      gdk-pixbuf.modulePackages = [ pkgs.librsvg ];
-      layout = "us,ru";
-      xkbOptions = "grp:caps_toggle,grp_led:caps,terminate:ctrl_alt_bksp";
-      libinput = {
-        enable = true;
-        touchpad.disableWhileTyping = true;
-      };
-      displayManager = {
-        xserverArgs = [ "-nolisten local" ];
-        startx.enable = true;
-      };
-      windowManager.xmonad = {
-        enable = true;
-        enableContribAndExtras = true;
-        extraPackages = pkgs: with pkgs; [ dbus regex-compat taffybar ];
-        config = builtins.readFile ./xmonad/xmonad.hs;
-        ghcArgs = [ "-O2" "${./xmonad/lib/XMonad/Util/Compton.hs}" ];
-      };
+      enableContribAndExtras = true;
+      extraPackages = pkgs: with pkgs; [ dbus regex-compat taffybar ];
+      config = builtins.readFile ./xmonad/xmonad.hs;
+      ghcArgs = [ "-O2" "${./xmonad/lib/XMonad/Util/Compton.hs}" ];
     };
+    displayManager.startx.enable = true;
   };
 
   # system.replaceRuntimeDependencies can be used to make fast fixes
@@ -132,7 +107,6 @@
 
   home-manager = let
     home = {
-      xresources.properties = import ./xresources.nix;
       home.file = {
         ".xinitrc".text = ''
           export _JAVA_AWT_WM_NONREPARENTING=1

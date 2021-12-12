@@ -59,6 +59,7 @@
             [ inputs.emacs-overlay.overlay inputs.fenix.overlay ];
         })
         ./modules/common.nix
+        ./modules/x11.nix
         ./modules/xmonad.nix
         ./modules/sandbox.nix
         ./modules/zswap.nix
