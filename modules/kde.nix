@@ -149,6 +149,9 @@
                 "none,Meta+V,Open Klipper at Mouse Position";
               "stop current activity" = "none,Meta+S,Stop Current Activity";
             };
+            "org.kde.krunner.desktop" = {
+              "_launch" = "Meta+F2	Search,Alt+Space	Alt+F2	Search,KRunner";
+            };
             "org.kde.dolphin.desktop" = {
               "_launch" = "Meta+E,Meta+E,Dolphin";
             };
