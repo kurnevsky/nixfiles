@@ -155,6 +155,9 @@
                 "none,Meta+V,Open Klipper at Mouse Position";
               "stop current activity" = "none,Meta+S,Stop Current Activity";
             };
+            org_kde_powerdevil = {
+              "Turn Off Screen" = "Meta+F6,none,Turn Off Screen";
+            };
             "org.kde.krunner.desktop" = {
               "_launch" = "Meta+F2	Search,Alt+Space	Alt+F2	Search,KRunner";
             };
