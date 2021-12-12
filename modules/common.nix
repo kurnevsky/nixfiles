@@ -83,7 +83,6 @@
   environment = {
     systemPackages = with pkgs; [
       (lutris.override { steamSupport = false; })
-      (pass.withExtensions (ext: with ext; [ pass-otp ]))
       (pkgs.callPackage ./pan-globalprotect-okta.nix { })
       aircrack-ng
       alacritty
@@ -212,10 +211,8 @@
       zbar
       # Browsers
       chromium-sandboxed
-      firefox-sandboxed
       tor-browser-bundle-bin-wrapped
       # Messengers
-      element-desktop-sandboxed
       pidgin-sandboxed
       tdesktop-sandboxed
       ## Tox

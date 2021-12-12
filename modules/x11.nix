@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   environment.systemPackages = with pkgs; [
@@ -9,6 +9,9 @@
     xdotool
     xsel
     xterm
+    (pass.withExtensions (ext: with ext; [ pass-otp ]))
+    firefox-sandboxed
+    element-desktop-sandboxed
   ];
 
   services.xserver = {
