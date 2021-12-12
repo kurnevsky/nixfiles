@@ -116,7 +116,6 @@
       extundelete
       fd
       fclones
-      feh-sandboxed
       ffmpeg-full-sandboxed
       flac
       fuseiso

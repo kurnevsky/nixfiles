@@ -2,6 +2,7 @@
 
 {
   environment.systemPackages = with pkgs; [
+    feh-sandboxed
     numlockx
     wmctrl
     xcalib
