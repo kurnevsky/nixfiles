@@ -93,8 +93,7 @@ let
       value = "/run/current-system/sw/bin/bash";
     }];
     unshare-net = false;
-    ro-whitelist =
-      [ "~/.password-store/" "~/.config/gtk-3.0/" ];
+    ro-whitelist = [ "~/.password-store/" "~/.config/gtk-3.0/" ];
     whitelist = [
       "~/.mozilla/"
       "~/.cache/mozilla/firefox/"
@@ -521,9 +520,16 @@ in {
       };
       firefox-wayland-sandboxed = pkgs.symlinkJoin {
         name = "firefox-wayland";
-        paths = [ (sandbox super.firefox-wayland firefox) super.firefox-wayland ];
+        paths =
+          [ (sandbox super.firefox-wayland firefox) super.firefox-wayland ];
       };
-      chromium-sandboxed = sandbox super.ungoogled-chromium chromium;
+      chromium-sandboxed = pkgs.symlinkJoin {
+        name = "chromium";
+        paths = [
+          (sandbox super.ungoogled-chromium chromium)
+          super.ungoogled-chromium
+        ];
+      };
       pidgin-sandboxed = pkgs.symlinkJoin {
         name = "pidgin";
         paths = [
@@ -536,12 +542,22 @@ in {
         paths = [ (sandbox (pid-hack super.qtox "qtox") qtox) super.qtox ];
       };
       toxic-sandboxed = sandbox super.toxic toxic;
-      tdesktop-sandboxed = sandbox super.tdesktop tdesktop;
+      tdesktop-sandboxed = pkgs.symlinkJoin {
+        name = "tdesktop";
+        paths = [ (sandbox super.tdesktop tdesktop) super.tdesktop ];
+      };
       element-desktop-sandboxed = pkgs.symlinkJoin {
         name = "element-desktop";
         paths = [
           (sandbox super.element-desktop element-desktop)
           super.element-desktop
+        ];
+      };
+      element-desktop-wayland-sandboxed = pkgs.symlinkJoin {
+        name = "element-desktop";
+        paths = [
+          (sandbox super.element-desktop-wayland element-desktop)
+          super.element-desktop-wayland
         ];
       };
       qbittorrent-sandboxed = pkgs.symlinkJoin {
@@ -605,8 +621,13 @@ in {
           (sandbox super.libreoffice-fresh (libreoffice "libreoffice"))
         ];
       };
-      tor-browser-bundle-bin-wrapped =
-        sandbox super.tor-browser-bundle-bin tor-browser;
+      tor-browser-bundle-bin-wrapped = pkgs.symlinkJoin {
+        name = "tor-browser-bundle";
+        paths = [
+          (sandbox super.tor-browser-bundle-bin tor-browser)
+          super.tor-browser-bundle-bin
+        ];
+      };
       zoom-us-sandboxed = sandbox super.zoom-us zoom;
       skypeforlinux-sandboxed = sandbox super.skypeforlinux skypeforlinux;
     })
