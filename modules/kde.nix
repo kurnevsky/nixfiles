@@ -38,6 +38,12 @@
               Number = 9;
               Rows = 3;
             };
+            Effect-DesktopGrid.BorderActivate = 5;
+            Effect-PresentWindows = {
+              BorderActivate = 7;
+              BorderActivateAll = 9;
+              MiddleButtonWindow = 6;
+            };
             Effect-Slide.Duration = 300;
             Plugins.invertEnabled = true;
             TabBox.LayoutName = "thumbnail_grid";
