@@ -149,6 +149,10 @@
                 "none,Meta+V,Open Klipper at Mouse Position";
               "stop current activity" = "none,Meta+S,Stop Current Activity";
             };
+            "org.kde.dolphin.desktop" = {
+              "_launch" = "Meta+E,Meta+E,Dolphin";
+            };
+            "Alacritty.desktop" = { "_launch" = "Meta+R,,Alacritty"; };
           };
           kxkbrc = {
             Layout = {
