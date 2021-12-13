@@ -179,6 +179,10 @@
               Use = true;
             };
           };
+          baloofilerc = {
+            "Basic Settings".Indexing-Enabled = false;
+            General."only basic indexing" = true;
+          };
         };
         lines = lib.flatten (lib.mapAttrsToList (file: groups:
           lib.mapAttrsToList (group: keys:
