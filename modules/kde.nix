@@ -191,6 +191,7 @@
               useDetailed = true;
             };
           };
+          ksmserverrc = { General.loginMode = "emptySession"; };
         };
         lines = lib.flatten (lib.mapAttrsToList (file: groups:
           lib.mapAttrsToList (group: keys:
