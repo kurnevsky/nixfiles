@@ -10,8 +10,10 @@
     desktopManager.plasma5.enable = true;
   };
 
-  # TODO: use lookandfeeltool for setting plasma theme once plasma bug is fixed
-  # See also https://github.com/maldoinc/plasma-theme-switcher
+  # Things that still have to be configured manually:
+  # - Theme: it could be configured with lookandfeeltool or https://github.com/maldoinc/plasma-theme-switcher but at the moment it doesn't work
+  # - Touchpad: its configs are bound to exact touchpad model
+  # - Entire dock panel
 
   home-manager.users = let
     home = { lib, ... }:
@@ -53,7 +55,10 @@
             Effect-Slide.Duration = 300;
             Plugins.invertEnabled = true;
             TabBox.LayoutName = "thumbnail_grid";
-            Windows.RollOverDesktops = false;
+            Windows = {
+              Placement = "Maximizing";
+              RollOverDesktops = false;
+            };
           };
           kglobalshortcutsrc = {
             ksmserver = {
