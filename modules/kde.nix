@@ -5,7 +5,8 @@
     enable = true;
     displayManager = {
       defaultSession = "plasmawayland";
-      sddm.enable = true;};
+      sddm.enable = true;
+    };
     desktopManager.plasma5.enable = true;
   };
 
@@ -182,6 +183,13 @@
           baloofilerc = {
             "Basic Settings".Indexing-Enabled = false;
             General."only basic indexing" = true;
+          };
+          plasma-localerc = {
+            Formats = {
+              LANG = "en_US.UTF-8";
+              LC_MEASUREMENT = "ru_RU.UTF-8";
+              useDetailed = true;
+            };
           };
         };
         lines = lib.flatten (lib.mapAttrsToList (file: groups:
