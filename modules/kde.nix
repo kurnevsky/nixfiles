@@ -7,6 +7,11 @@
     desktopManager.plasma5.enable = true;
   };
 
+  # TODO: use lookandfeeltool for setting plasma theme once plasma bug is fixed
+  # See also:
+  # https://github.com/maldoinc/plasma-theme-switcher
+  # https://github.com/baduhai/Koi
+
   home-manager.users = let
     home = { lib, ... }:
       let
