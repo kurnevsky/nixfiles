@@ -192,6 +192,7 @@
             };
           };
           ksmserverrc = { General.loginMode = "emptySession"; };
+          kcminputrc = { Keyboard.NumLock = 0; };
         };
         lines = lib.flatten (lib.mapAttrsToList (file: groups:
           lib.mapAttrsToList (group: keys:
