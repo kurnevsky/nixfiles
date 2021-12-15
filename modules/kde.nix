@@ -198,11 +198,57 @@
           };
           ksmserverrc = { General.loginMode = "emptySession"; };
           kcminputrc = { Keyboard.NumLock = 0; };
+          khotkeysrc = {
+            Data.DataCount = 5;
+            # First 3 are set by KDE by default
+            Data_4 = {
+              Comment = "Set brightness to 10%";
+              Enabled = true;
+              Name = "Brightness 10%";
+              Type = "SIMPLE_ACTION_DATA";
+            };
+            Data_4Actions.ActionsCount = 1;
+            Data_4Actions0 = {
+              CommandURL = ''
+                dbus-send --session --type=method_call --print-reply --dest=org.kde.Solid.PowerManagement /org/kde/Solid/PowerManagement/Actions/BrightnessControl org.kde.Solid.PowerManagement.Actions.BrightnessControl.setBrightness int32:$(dbus-send --session --type=method_call --print-reply=literal --dest=org.kde.Solid.PowerManagement /org/kde/Solid/PowerManagement/Actions/BrightnessControl org.kde.Solid.PowerManagement.Actions.BrightnessControl.brightnessMax | awk "{print int(\$NF/10)}")'';
+              Type = "COMMAND_URL";
+            };
+            Data_4Triggers = {
+              Comment = "Simple_action";
+              TriggersCount = 1;
+            };
+            Data_4Triggers0 = {
+              Key = "Shift+Monitor Brightness Down";
+              Type = "SHORTCUT";
+              Uuid = "{bc4dfdf5-1244-42f9-989e-22a5f6d21f73}";
+            };
+            Data_5 = {
+              Comment = "Set brightness to 100%";
+              Enabled = true;
+              Name = "Brightness 100%";
+              Type = "SIMPLE_ACTION_DATA";
+            };
+            Data_5Actions.ActionsCount = 1;
+            Data_5Actions0 = {
+              CommandURL = ''
+                dbus-send --session --type=method_call --print-reply --dest=org.kde.Solid.PowerManagement /org/kde/Solid/PowerManagement/Actions/BrightnessControl org.kde.Solid.PowerManagement.Actions.BrightnessControl.setBrightness int32:$(dbus-send --session --type=method_call --print-reply=literal --dest=org.kde.Solid.PowerManagement /org/kde/Solid/PowerManagement/Actions/BrightnessControl org.kde.Solid.PowerManagement.Actions.BrightnessControl.brightnessMax | awk "{print \$NF}")'';
+              Type = "COMMAND_URL";
+            };
+            Data_5Triggers = {
+              Comment = "Simple_action";
+              TriggersCount = 1;
+            };
+            Data_5Triggers0 = {
+              Key = "Shift+Monitor Brightness Up";
+              Type = "SHORTCUT";
+              Uuid = "{42547858-8c2f-4a2b-916e-2cd916b011ce}";
+            };
+          };
         };
         lines = lib.flatten (lib.mapAttrsToList (file: groups:
           lib.mapAttrsToList (group: keys:
             lib.mapAttrsToList (key: value:
-              "${pkgs.libsForQt5.kconfig}/bin/kwriteconfig5 --file ~/.config/'${file}' --group '${group}' --key '${key}' '${
+              "test -f ~/.config/'${file}' && ${pkgs.libsForQt5.kconfig}/bin/kwriteconfig5 --file ~/.config/'${file}' --group '${group}' --key '${key}' '${
                 toValue value
               }'") keys) groups) configs);
       in {
