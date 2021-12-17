@@ -13,6 +13,9 @@
       firefox = super.firefox.override {
         extraNativeMessagingHosts = [ super.passff-host ];
       };
+      firefox-wayland = super.firefox-wayland.override {
+        extraNativeMessagingHosts = [ super.passff-host ];
+      };
       mpv-with-scripts = super.mpv-with-scripts.override {
         scripts = with pkgs.mpvScripts; [ mpris ];
       };
