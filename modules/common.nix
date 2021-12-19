@@ -732,6 +732,7 @@
         lol = "log --graph --decorate --pretty=oneline --abbrev-commit --all";
       };
       delta.enable = true;
+      lfs.enable = true;
       extraConfig = {
         push.default = "simple";
         merge.conflictstyle = "diff3";
