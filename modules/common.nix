@@ -203,6 +203,7 @@
       wine-full-sandboxed
       winetricks
       wireguard-tools
+      wirelesstools
       xmlstarlet
       you-get
       youtube-dl
