@@ -208,7 +208,7 @@ let
       [ "~/.local/share/vlc/" "~/.cache/fontconfig/" "~/.config/pulse/" ];
     blacklist = [ "~/.gnupg/" "~/.ssh/" ];
   } [ withFonts withOpengl ];
-  qtox = withFonts {
+  qtox = lib.pipe {
     name = "qtox";
     extra-deps = with pkgs; [
       qt5ct
@@ -232,7 +232,7 @@ let
     unshare-net = false;
     ro-whitelist = [ "~/.config/qt5ct/" ];
     whitelist = [ "~/.config/tox/" "~/.cache/Tox/" "~/.config/pulse/" ];
-  };
+  } [ withFonts withOpengl ];
   toxic = {
     name = "toxic";
     extra-deps = with pkgs; [ glibcLocales ];
@@ -331,7 +331,7 @@ let
       "~/Torrents/"
       "~/movies/"
     ];
-  } [ withFonts withHomeManager ];
+  } [ withFonts withOpengl withHomeManager ];
   ffmpeg = {
     name = "ffmpeg";
     devs = [ "dri" ];
