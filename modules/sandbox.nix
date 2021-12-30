@@ -254,6 +254,7 @@ let
       gnome-themes-extra
       gnome3.adwaita-icon-theme
       hicolor-icon-theme
+      plasma-integration
     ];
     devs = [ "dri" ];
     camera = true;
@@ -310,6 +311,7 @@ let
       gnome-themes-extra
       gnome3.adwaita-icon-theme
       hicolor-icon-theme
+      plasma-integration
     ];
     devs = [ "dri" ];
     syses = [
