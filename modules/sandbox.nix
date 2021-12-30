@@ -230,7 +230,7 @@ let
     resolv-conf = true;
     unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" "SHELL" ];
     unshare-net = false;
-    ro-whitelist = [ "~/.config/qt5ct/" ];
+    ro-whitelist = [ "~/.config/qt5ct/" "~/.config/kdeglobals" ];
     whitelist = [ "~/.config/tox/" "~/.cache/Tox/" "~/.config/pulse/" ];
   } [ withFonts withOpengl ];
   toxic = {
@@ -270,7 +270,7 @@ let
     resolv-conf = true;
     unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" "SHELL" ];
     unshare-net = false;
-    ro-whitelist = [ "~/.config/qt5ct/" ];
+    ro-whitelist = [ "~/.config/qt5ct/" "~/.config/kdeglobals" ];
     whitelist = [ "~/.local/share/TelegramDesktop/" "~/.config/pulse/" ];
   } [ withFonts withOpengl ];
   element-desktop = withFonts {
@@ -325,7 +325,7 @@ let
     resolv-conf = true;
     unsetenvs = [ "MAIL" "SHELL" ];
     unshare-net = false;
-    ro-whitelist = [ "~/.config/qt5ct/" ];
+    ro-whitelist = [ "~/.config/qt5ct/" "~/.config/kdeglobals" ];
     whitelist = [
       "~/.local/share/data/qBittorrent/"
       "~/.config/qBittorrent/"
