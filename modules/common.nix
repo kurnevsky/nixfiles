@@ -200,7 +200,7 @@
       wavpack
       websocat
       wget
-      wine-full-sandboxed
+      wine-staging-full-sandboxed
       winetricks
       wireguard-tools
       wirelesstools
@@ -504,7 +504,7 @@
         unzip = super.unzip-natspec-sandboxed;
       });
     })
-    (self: super: { wine = super.wineWowPackages.staging; })
+    (self: super: { wine = super.wineWowPackages.stagingFull; })
     (self: super: {
       emacsPatched = super.emacs.overrideAttrs (oldAttrs: {
         patches = (oldAttrs.patches or [ ]) ++ [

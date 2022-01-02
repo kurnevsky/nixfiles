@@ -480,8 +480,6 @@ in {
     (self: super: {
       sandbox-seccomp = pkgs.callPackage ./sandbox-seccomp.nix { };
       xcb-client-id = pkgs.callPackage ./xcb-client-id.nix { };
-      wine-staging-full =
-        super.wineWowPackages.full.override { wineRelease = "staging"; };
     })
     (self: super: {
       deadbeef-sandboxed = pkgs.symlinkJoin {
@@ -589,31 +587,13 @@ in {
           super.ffmpeg-full
         ];
       };
-      wine-full-sandboxed = pkgs.symlinkJoin {
-        name = "wine";
-        paths = [
-          (sandbox super.wineWowPackages.full (wine "wine"))
-          (sandbox super.wineWowPackages.full (withNet (wine "wine")))
-          (sandbox super.wineWowPackages.full (wine "winecfg"))
-          super.wineWowPackages.full
-        ];
-      };
-      wine-staging-sandboxed = pkgs.symlinkJoin {
-        name = "wine";
-        paths = [
-          (sandbox super.wineWowPackages.staging (wine "wine"))
-          (sandbox super.wineWowPackages.staging (withNet (wine "wine")))
-          (sandbox super.wineWowPackages.staging (wine "winecfg"))
-          super.wineWowPackages.staging
-        ];
-      };
       wine-staging-full-sandboxed = pkgs.symlinkJoin {
         name = "wine";
         paths = [
-          (sandbox super.wine-staging-full (wine "wine"))
-          (sandbox super.wine-staging-full (withNet (wine "wine")))
-          (sandbox super.wine-staging-full (wine "winecfg"))
-          super.wine-staging-full
+          (sandbox super.wineWowPackages.stagingFull (wine "wine"))
+          (sandbox super.wineWowPackages.stagingFull (withNet (wine "wine")))
+          (sandbox super.wineWowPackages.stagingFull (wine "winecfg"))
+          super.wineWowPackages.stagingFull
         ];
       };
       libreoffice-fresh-sandboxed = pkgs.symlinkJoin {
