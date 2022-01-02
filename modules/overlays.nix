@@ -33,7 +33,9 @@
           (pkgs.callPackage ./pidgin-indicator.nix { })
         ];
       };
-      tor-browser-bundle-bin = nixpkgs-master.tor-browser-bundle-bin;
+      tor-browser-bundle-bin = nixpkgs-master.tor-browser-bundle-bin.override {
+        useHardenedMalloc = false;
+      };
     })
   ];
 }
