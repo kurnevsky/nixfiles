@@ -162,7 +162,6 @@
       nodePackages.prettier
       openconnect
       openssl
-      p7zip-sandboxed
       pandoc # TODO: it should depend on texlive
       parallel
       pavucontrol
@@ -189,8 +188,6 @@
       tinc
       tmux
       torsocks
-      unrar-sandboxed
-      unzip-natspec-sandboxed
       usbutils
       vdpauinfo
       viu
@@ -209,6 +206,11 @@
       youtube-dl
       zathura-sandboxed
       zbar
+      # Archivers
+      _7zz-sandboxed
+      p7zip-sandboxed
+      unrar-sandboxed
+      unzip-natspec-sandboxed
       # Browsers
       chromium-sandboxed
       tor-browser-bundle-bin-wrapped

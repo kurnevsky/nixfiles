@@ -499,6 +499,7 @@ in {
           (sandbox super.p7zip (archiver "7zr"))
         ];
       };
+      _7zz-sandboxed = sandbox super._7zz (archiver "7zz");
       unrar-sandboxed = sandbox super.unrar (archiver "unrar");
       zip-natspec-sandboxed = sandbox super.zip-natspec (archiver "zip");
       unzip-natspec-sandboxed = sandbox super.unzip-natspec (archiver "unzip");
