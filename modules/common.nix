@@ -84,6 +84,7 @@
     systemPackages = with pkgs; [
       (lutris.override { steamSupport = false; })
       (pkgs.callPackage ./pan-globalprotect-okta.nix { })
+      (pkgs.callPackage ./webcam-filters.nix { })
       aircrack-ng
       alacritty
       anki
