@@ -5,7 +5,11 @@
     enable = true;
     displayManager = {
       defaultSession = "plasmawayland";
-      sddm.enable = true;
+      sddm = {
+        enable = true;
+        autoNumlock = true;
+        settings.Users.HideUsers = "ww";
+      };
     };
     desktopManager.plasma5.enable = true;
   };
