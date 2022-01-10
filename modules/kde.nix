@@ -30,10 +30,12 @@
     home = { lib, ... }:
       let
         toValue = v:
-          if builtins.isString v then
-            v
+          if v == null then
+            "--delete"
+          else if builtins.isString v then
+            "'" + v + "'"
           else if builtins.isBool v then
-            lib.boolToString v
+            "--type bool " + lib.boolToString v
           else if builtins.isInt v then
             builtins.toString v
           else
@@ -259,9 +261,9 @@
         lines = lib.flatten (lib.mapAttrsToList (file: groups:
           lib.mapAttrsToList (group: keys:
             lib.mapAttrsToList (key: value:
-              "test -f ~/.config/'${file}' && ${pkgs.libsForQt5.kconfig}/bin/kwriteconfig5 --file ~/.config/'${file}' --group '${group}' --key '${key}' '${
+              "test -f ~/.config/'${file}' && ${pkgs.libsForQt5.kconfig}/bin/kwriteconfig5 --file ~/.config/'${file}' --group '${group}' --key '${key}' ${
                 toValue value
-              }'") keys) groups) configs);
+              }") keys) groups) configs);
       in {
         home.activation.kdeConfigs = lib.hm.dag.entryAfter [ "writeBoundary" ]
           (builtins.concatStringsSep "\n" lines);
