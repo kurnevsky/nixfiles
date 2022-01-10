@@ -212,7 +212,7 @@
           ksmserverrc = { General.loginMode = "emptySession"; };
           kcminputrc = { Keyboard.NumLock = 0; };
           khotkeysrc = {
-            Data.DataCount = 5;
+            Data.DataCount = 6;
             # First 3 are set by KDE by default
             Data_4 = {
               Comment = "Set brightness to 10%";
@@ -255,6 +255,27 @@
               Key = "Shift+Monitor Brightness Up";
               Type = "SHORTCUT";
               Uuid = "{42547858-8c2f-4a2b-916e-2cd916b011ce}";
+            };
+            Data_6 = {
+              Comment = "Switch User";
+              Enabled = true;
+              Name = "Switch User";
+              Type = "SIMPLE_ACTION_DATA";
+            };
+            Data_6Actions.ActionsCount = 1;
+            Data_6Actions0 = {
+              CommandURL =
+                "dbus-send --session --type=method_call --print-reply=literal --dest=org.kde.krunner /App org.kde.krunner.App.switchUser";
+              Type = "COMMAND_URL";
+            };
+            Data_6Triggers = {
+              Comment = "Simple_action";
+              TriggersCount = 1;
+            };
+            Data_6Triggers0 = {
+              Key = "Meta+Alt+Esc";
+              Type = "SHORTCUT";
+              Uuid = "{7c6b0e9c-46af-4839-bb1f-5a805d8b4b3c}";
             };
           };
         };
