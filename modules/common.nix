@@ -145,6 +145,7 @@
       languagetool
       libreoffice-fresh-sandboxed
       libva-utils
+      libxml2 # for xmllint
       lsd
       lshw
       maim
