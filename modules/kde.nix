@@ -80,6 +80,7 @@
               RollOverDesktops = false;
             };
           };
+          kdeglobals.KDE.SingleClick = false;
           kglobalshortcutsrc = {
             ksmserver = {
               "Lock Session" =
