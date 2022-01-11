@@ -115,11 +115,11 @@ in writeShellScriptBin target-name ''
        } \
        ${
          lib.concatMapStringsSep " "
-         (x: "--bind /run/user/$UID/${x} /run/user/$UID/${x}") pams
+         (x: "--bind $XDG_RUNTIME_DIR/${x} $XDG_RUNTIME_DIR/${x}") pams
        } \
        ${
          lib.optionalString x11
-         "--bind-try /run/user/$UID/wayland-0 /run/user/$UID/wayland-0"
+         "--bind-try $XDG_RUNTIME_DIR/\${WAYLAND_DISPLAY-wayland-0} $XDG_RUNTIME_DIR/\${WAYLAND_DISPLAY-wayland-0}"
        } \
        \
        --ro-bind /etc/profiles/per-user/"$(whoami)" /etc/profiles/per-user/"$(whoami)" \
