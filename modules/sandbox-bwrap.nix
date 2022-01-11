@@ -71,6 +71,10 @@ in writeShellScriptBin target-name ''
   mapfile -t whitelist < <(echo -n "''${WHITELIST-}" | sed 's/.*/--bind\n&\n&/')
   mapfile -t blacklist < <(echo -n "''${BLACKLIST-}" | sed 's/.*/--tmpfs\n&/')
 
+  ${lib.optionalString x11 ''
+    mapfile -t xauthority < <(echo -n "''${XAUTHORITY-}" | sed 's/.*/--ro-bind\n&\n&/')
+  ''}
+
   mapfile -t deps < <(sed 's/.*/--ro-bind\n&\n&/' ${cinfo}/store-paths)
 
   exec ${bubblewrap}/bin/bwrap \
@@ -134,11 +138,8 @@ in writeShellScriptBin target-name ''
        ${lib.concatMapStringsSep " " (x: "--ro-bind ${x} ${x}") ro-whitelist} \
        ${lib.concatMapStringsSep " " (x: "--bind ${x} ${x}") whitelist} \
        ${lib.concatMapStringsSep " " (x: "--tmpfs ${x}") blacklist} \
-       ${
-         lib.optionalString
-         (x11 && !(builtins.elem "~/" (whitelist ++ ro-whitelist)))
-         "--ro-bind ~/.Xauthority ~/.Xauthority"
-       } \
+       \
+       ${lib.optionalString x11 ''"''${xauthority[@]}"''} \
        \
        "''${ro_whitelist[@]}" \
        "''${whitelist[@]}" \
