@@ -14,6 +14,13 @@
     desktopManager.plasma5.enable = true;
   };
 
+  environment.systemPackages = with pkgs; [
+    # TODO: upstream
+    (pkgs.krfb.overrideAttrs
+      (old: { buildInputs = old.buildInputs ++ [ pipewire ]; }))
+    krdc
+  ];
+
   xdg.portal = {
     enable = true;
     gtkUsePortal = true;
