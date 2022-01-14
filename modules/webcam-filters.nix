@@ -19,6 +19,7 @@ poetry2nix.mkPoetryApplication rec {
   strictDeps = false;
 
   # https://github.com/nix-community/poetry2nix/issues/155
+  # TODO: upstreamed, remove after next release
   overrides = poetry2nix.overrides.withDefaults (self: super: {
     opencv-contrib-python = super.opencv-contrib-python.overridePythonAttrs
       (old: {
