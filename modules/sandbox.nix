@@ -50,7 +50,7 @@ let
       inherit name;
       x11 = true;
       unsetenvs =
-        [ "DBUS_SESSION_BUS_ADDRESS" "XDG_RUNTIME_DIR" "MAIL" "SHELL" ];
+        [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" "SHELL" ];
       ro-whitelist = [ "~/" ];
       blacklist = [ "~/.gnupg/" "~/.ssh/" ];
     };
