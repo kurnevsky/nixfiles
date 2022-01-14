@@ -500,6 +500,10 @@
       optimizeWithFlags pkg [ "-O3" "-march=native" "-mtune=native" ];
   in [
     (self: super: {
+      # home-manager doesn't allow to specify feh derivation so use overlays
+      feh = super.feh-sandboxed;
+    })
+    (self: super: {
       uutils-coreutils = super.uutils-coreutils.override { prefix = null; };
     })
     (self: super: {
