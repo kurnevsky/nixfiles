@@ -215,7 +215,7 @@
       unzip-natspec-sandboxed
       # Browsers
       chromium-sandboxed
-      tor-browser-bundle-bin-wrapped
+      tor-browser-bundle-bin-sandboxed
       # Messengers
       pidgin-sandboxed
       tdesktop-sandboxed

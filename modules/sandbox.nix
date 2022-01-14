@@ -604,7 +604,7 @@ in {
           (sandbox super.libreoffice-fresh (libreoffice "libreoffice"))
         ];
       };
-      tor-browser-bundle-bin-wrapped = pkgs.symlinkJoin {
+      tor-browser-bundle-bin-sandboxed = pkgs.symlinkJoin {
         name = "tor-browser-bundle";
         paths = [
           (sandbox super.tor-browser-bundle-bin tor-browser)
