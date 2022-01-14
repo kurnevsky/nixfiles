@@ -76,6 +76,8 @@
             Plugins.invertEnabled = true;
             TabBox.LayoutName = "thumbnail_grid";
             Windows = {
+              FocusPolicy = "FocusFollowsMouse";
+              NextFocusPrefersMouse = true;
               Placement = "Maximizing";
               RollOverDesktops = false;
             };
