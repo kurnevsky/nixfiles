@@ -30,6 +30,8 @@
 ;; Set font.
 (set-face-attribute 'default nil :font "Hack Nerd Font Mono:size=15")
 (add-to-list 'default-frame-alist '(font . "Hack Nerd Font Mono:size=15"))
+;; Disable deferred compilation.
+(setq native-comp-deferred-compilation nil)
 ;; Don't do backup files.
 (setq make-backup-files nil)
 ;; Don't save discarded files.
