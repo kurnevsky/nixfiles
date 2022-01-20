@@ -1516,11 +1516,6 @@ properly."
                                  (interactive)
                                  (kmacro-call-macro 0)))
 
-;; ========== Startup actions ==========
-
-;; Kill scratch buffer.
-(kill-buffer "*scratch*")
-
 (provide 'init)
 ;;; init.el ends here
 
