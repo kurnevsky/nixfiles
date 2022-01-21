@@ -25,6 +25,15 @@ in writeShellScriptBin target-name ''
   ${lib.concatMapStringsSep "\n" (x: "test ! -e ${x} && mkdir -p ${x}")
   (lib.filter (s: builtins.match ".*/" s != null) (ro-whitelist ++ whitelist))}
 
+  ${lib.optionalString unshare-net ''
+    mapfile -t unshare_net < <(
+      if [ -z "''${WITH_NETWORK-}" ]
+      then
+        echo '--unshare-net'
+      fi
+    )
+  ''}
+
   ${lib.optionalString (resolv-conf && localtime) ''
     if [[ ! -v NOLOCALTIME ]] && [[ -v TORJAIL ]]
     then
@@ -154,7 +163,7 @@ in writeShellScriptBin target-name ''
        ${lib.optionalString unshare-user "--unshare-user"} \
        ${lib.optionalString unshare-ipc "--unshare-ipc"} \
        ${lib.optionalString unshare-pid "--unshare-pid"} \
-       ${lib.optionalString unshare-net "--unshare-net"} \
+       ${lib.optionalString unshare-net "\${unshare_net[@]}"} \
        ${lib.optionalString unshare-uts "--unshare-uts"} \
        ${lib.optionalString unshare-cgroup "--unshare-cgroup"} \
        \

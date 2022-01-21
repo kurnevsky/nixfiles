@@ -9,12 +9,6 @@ let
         ++ config.fonts.fontconfig.confPackages;
       etcs = (attrs.etcs or [ ]) ++ [ "fonts" ];
     };
-  withNet = attrs:
-    attrs // {
-      target-name = attrs.name + "-net";
-      unshare-net = false;
-      resolv-conf = true;
-    };
   withOpengl = attrs:
     attrs // {
       extra-deps = with config.hardware.opengl;
@@ -49,8 +43,7 @@ let
     withFonts {
       inherit name;
       x11 = true;
-      unsetenvs =
-        [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" "SHELL" ];
+      unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" "SHELL" ];
       ro-whitelist = [ "~/" ];
       blacklist = [ "~/.gnupg/" "~/.ssh/" ];
     };
@@ -486,8 +479,6 @@ in {
         name = "deadbeef";
         paths = [
           (sandbox (pid-hack super.deadbeef-with-plugins "deadbeef") deadbeef)
-          (sandbox (pid-hack super.deadbeef-with-plugins "deadbeef")
-            (withNet deadbeef))
           super.deadbeef-with-plugins
         ];
       };
@@ -505,15 +496,11 @@ in {
       unzip-natspec-sandboxed = sandbox super.unzip-natspec (archiver "unzip");
       mpv-sandboxed = pkgs.symlinkJoin {
         name = "mpv";
-        paths = [
-          (sandbox super.mpv-with-scripts mpv)
-          (sandbox super.mpv-with-scripts (withNet mpv))
-          super.mpv-with-scripts
-        ];
+        paths = [ (sandbox super.mpv-with-scripts mpv) super.mpv-with-scripts ];
       };
       vlc-sandboxed = pkgs.symlinkJoin {
         name = "vlc";
-        paths = [ (sandbox super.vlc vlc) (sandbox super.vlc (withNet vlc)) ];
+        paths = [ (sandbox super.vlc vlc) super.vlc ];
       };
       firefox-sandboxed = pkgs.symlinkJoin {
         name = "firefox";
@@ -599,7 +586,6 @@ in {
         name = "wine";
         paths = [
           (sandbox super.wineWowPackages.stagingFull (wine "wine"))
-          (sandbox super.wineWowPackages.stagingFull (withNet (wine "wine")))
           (sandbox super.wineWowPackages.stagingFull (wine "winecfg"))
           super.wineWowPackages.stagingFull
         ];
