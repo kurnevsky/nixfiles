@@ -531,6 +531,13 @@ in {
           super.ungoogled-chromium
         ];
       };
+      chromium-wayland-sandboxed = pkgs.symlinkJoin {
+        name = "chromium";
+        paths = [
+          (sandbox super.ungoogled-chromium-wayland chromium)
+          super.ungoogled-chromium-wayland
+        ];
+      };
       pidgin-sandboxed = pkgs.symlinkJoin {
         name = "pidgin";
         paths = [

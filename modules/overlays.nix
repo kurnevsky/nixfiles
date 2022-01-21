@@ -33,6 +33,10 @@
           (pkgs.callPackage ./pidgin-indicator.nix { })
         ];
       };
+      ungoogled-chromium-wayland = super.ungoogled-chromium.override {
+        commandLineArgs =
+          "--enable-features=UseOzonePlatform --ozone-platform=wayland";
+      };
       tor-browser-bundle-bin = nixpkgs-master.tor-browser-bundle-bin.override {
         useHardenedMalloc = false;
       };

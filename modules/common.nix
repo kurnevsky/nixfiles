@@ -214,7 +214,6 @@
       unrar-sandboxed
       unzip-natspec-sandboxed
       # Browsers
-      chromium-sandboxed
       tor-browser-bundle-bin-sandboxed
       # Messengers
       pidgin-sandboxed

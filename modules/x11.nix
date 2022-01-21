@@ -11,6 +11,7 @@
     xterm
     (pass.withExtensions (ext: with ext; [ pass-otp ]))
     firefox-sandboxed
+    chromium-sandboxed
     element-desktop-sandboxed
   ];
 
