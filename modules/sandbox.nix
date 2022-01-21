@@ -2,7 +2,16 @@
 
 let
   sandbox = pkgs.callPackage ./sandbox-bwrap.nix { };
-  pid-hack = pkgs.callPackage ./sandbox-pid-hack.nix { };
+  pid-hack = drv: name:
+    pkgs.symlinkJoin {
+      inherit name;
+      paths = [ (pkgs.callPackage ./sandbox-pid-hack.nix { } drv name) drv ];
+    };
+  wrap = drv: bins:
+    pkgs.symlinkJoin {
+      name = drv.name + "-sandboxed";
+      paths = (map (sandbox drv) bins) ++ [ drv ];
+    };
   withFonts = attrs:
     attrs // {
       extra-deps = (attrs.extra-deps or [ ])
@@ -475,145 +484,65 @@ in {
       xcb-client-id = pkgs.callPackage ./xcb-client-id.nix { };
     })
     (self: super: {
-      deadbeef-sandboxed = pkgs.symlinkJoin {
-        name = "deadbeef";
-        paths = [
-          (sandbox (pid-hack super.deadbeef-with-plugins "deadbeef") deadbeef)
-          super.deadbeef-with-plugins
-        ];
-      };
-      p7zip-sandboxed = pkgs.symlinkJoin {
-        name = "p7zip";
-        paths = [
-          (sandbox super.p7zip (archiver "7z"))
-          (sandbox super.p7zip (archiver "7za"))
-          (sandbox super.p7zip (archiver "7zr"))
-        ];
-      };
-      _7zz-sandboxed = sandbox super._7zz (archiver "7zz");
-      unrar-sandboxed = sandbox super.unrar (archiver "unrar");
-      zip-natspec-sandboxed = sandbox super.zip-natspec (archiver "zip");
-      unzip-natspec-sandboxed = sandbox super.unzip-natspec (archiver "unzip");
-      mpv-sandboxed = pkgs.symlinkJoin {
-        name = "mpv";
-        paths = [ (sandbox super.mpv-with-scripts mpv) super.mpv-with-scripts ];
-      };
-      vlc-sandboxed = pkgs.symlinkJoin {
-        name = "vlc";
-        paths = [ (sandbox super.vlc vlc) super.vlc ];
-      };
-      firefox-sandboxed = pkgs.symlinkJoin {
-        name = "firefox";
-        paths = [ (sandbox super.firefox firefox) super.firefox ];
-      };
-      firefox-wayland-sandboxed = pkgs.symlinkJoin {
-        name = "firefox-wayland";
-        paths =
-          [ (sandbox super.firefox-wayland firefox) super.firefox-wayland ];
-      };
-      chromium-sandboxed = pkgs.symlinkJoin {
-        name = "chromium";
-        paths = [
-          (sandbox super.ungoogled-chromium chromium)
-          super.ungoogled-chromium
-        ];
-      };
-      chromium-wayland-sandboxed = pkgs.symlinkJoin {
-        name = "chromium";
-        paths = [
-          (sandbox super.ungoogled-chromium-wayland chromium)
-          super.ungoogled-chromium-wayland
-        ];
-      };
-      pidgin-sandboxed = pkgs.symlinkJoin {
-        name = "pidgin";
-        paths = [
-          (sandbox super.pidgin-with-plugins pidgin)
-          super.pidgin-with-plugins
-        ];
-      };
-      qtox-sandboxed = pkgs.symlinkJoin {
-        name = "qtox";
-        paths = [ (sandbox (pid-hack super.qtox "qtox") qtox) super.qtox ];
-      };
-      toxic-sandboxed = sandbox super.toxic toxic;
-      tdesktop-sandboxed = pkgs.symlinkJoin {
-        name = "tdesktop";
-        paths = [ (sandbox super.tdesktop tdesktop) super.tdesktop ];
-      };
-      element-desktop-sandboxed = pkgs.symlinkJoin {
-        name = "element-desktop";
-        paths = [
-          (sandbox super.element-desktop element-desktop)
-          super.element-desktop
-        ];
-      };
-      element-desktop-wayland-sandboxed = pkgs.symlinkJoin {
-        name = "element-desktop";
-        paths = [
-          (sandbox super.element-desktop-wayland element-desktop)
-          super.element-desktop-wayland
-        ];
-      };
-      qbittorrent-sandboxed = pkgs.symlinkJoin {
-        name = "qbittorrent";
-        paths = [
-          (sandbox (pid-hack super.qbittorrent "qbittorrent") qbittorrent)
-          super.qbittorrent
-        ];
-      };
-      feh-sandboxed = sandbox super.feh (viewer "feh");
-      imv-sandboxed = sandbox super.imv (withOpengl (viewer "imv" // {
-        devs = [ "dri" ];
-        syses = [
-          # Necessary for hardware acceleration
-          "dev"
-          "devices"
-        ];
-      }));
-      zathura-sandboxed = sandbox super.zathura ((viewer "zathura") // {
-        whitelist = [ "~/.local/share/zathura/" "~/Print/" ];
-      });
-      ffmpeg-full-sandboxed = pkgs.symlinkJoin {
-        name = "ffmpeg";
-        paths = [
-          (sandbox super.ffmpeg-full ffmpeg)
-          (sandbox super.ffmpeg-full ffprobe)
-          super.ffmpeg-full
-        ];
-      };
-      wine-staging-full-sandboxed = pkgs.symlinkJoin {
-        name = "wine";
-        paths = [
-          (sandbox super.wineWowPackages.stagingFull (wine "wine"))
-          (sandbox super.wineWowPackages.stagingFull (wine "winecfg"))
-          super.wineWowPackages.stagingFull
-        ];
-      };
-      libreoffice-fresh-sandboxed = pkgs.symlinkJoin {
-        name = "libreoffice";
-        paths = [
-          (sandbox super.libreoffice-fresh (libreoffice "libreoffice"))
-          (sandbox super.libreoffice-fresh (libreoffice "sbase"))
-          (sandbox super.libreoffice-fresh (libreoffice "scalc"))
-          (sandbox super.libreoffice-fresh (libreoffice "sdraw"))
-          (sandbox super.libreoffice-fresh (libreoffice "simpress"))
-          (sandbox super.libreoffice-fresh (libreoffice "smath"))
-          (sandbox super.libreoffice-fresh (libreoffice "soffice"))
-          (sandbox super.libreoffice-fresh (libreoffice "swriter"))
-          (sandbox super.libreoffice-fresh (libreoffice "unopkg"))
-          super.libreoffice-fresh
-        ];
-      };
-      tor-browser-bundle-bin-sandboxed = pkgs.symlinkJoin {
-        name = "tor-browser-bundle";
-        paths = [
-          (sandbox super.tor-browser-bundle-bin tor-browser)
-          super.tor-browser-bundle-bin
-        ];
-      };
-      zoom-us-sandboxed = sandbox super.zoom-us zoom;
-      skypeforlinux-sandboxed = sandbox super.skypeforlinux skypeforlinux;
+      deadbeef-sandboxed =
+        wrap (pid-hack super.deadbeef-with-plugins "deadbeef") [ deadbeef ];
+      p7zip-sandboxed = wrap super.p7zip (map archiver [ "7z" "7za" "7zr" ]);
+      _7zz-sandboxed = wrap super._7zz [ (archiver "7zz") ];
+      unrar-sandboxed = wrap super.unrar [ (archiver "unrar") ];
+      zip-natspec-sandboxed = wrap super.zip-natspec [ (archiver "zip") ];
+      unzip-natspec-sandboxed = wrap super.unzip-natspec [ (archiver "unzip") ];
+      mpv-sandboxed = wrap super.mpv-with-scripts [ mpv ];
+      vlc-sandboxed = wrap super.vlc [ vlc ];
+      firefox-sandboxed = wrap super.firefox [ firefox ];
+      firefox-wayland-sandboxed = wrap super.firefox-wayland [ firefox ];
+      chromium-sandboxed = wrap super.ungoogled-chromium [ chromium ];
+      chromium-wayland-sandboxed =
+        wrap super.ungoogled-chromium-wayland [ chromium ];
+      pidgin-sandboxed = wrap super.pidgin-with-plugins [ pidgin ];
+      qtox-sandboxed = wrap (pid-hack super.qtox "qtox") [ qtox ];
+      toxic-sandboxed = wrap super.toxic [ toxic ];
+      tdesktop-sandboxed = wrap super.tdesktop [ tdesktop ];
+      element-desktop-sandboxed =
+        wrap super.element-desktop [ element-desktop ];
+      element-desktop-wayland-sandboxed =
+        wrap super.element-desktop-wayland [ element-desktop ];
+      qbittorrent-sandboxed =
+        wrap (pid-hack super.qbittorrent "qbittorrent") [ qbittorrent ];
+      feh-sandboxed = wrap super.feh [ (viewer "feh") ];
+      imv-sandboxed = wrap super.imv [
+        (withOpengl (viewer "imv" // {
+          devs = [ "dri" ];
+          syses = [
+            # Necessary for hardware acceleration
+            "dev"
+            "devices"
+          ];
+        }))
+      ];
+      zathura-sandboxed = wrap super.zathura [
+        ((viewer "zathura") // {
+          whitelist = [ "~/.local/share/zathura/" "~/Print/" ];
+        })
+      ];
+      ffmpeg-full-sandboxed = wrap super.ffmpeg-full [ ffmpeg ffprobe ];
+      wine-staging-full-sandboxed =
+        wrap super.wineWowPackages.stagingFull (map wine [ "wine" "winecfg" ]);
+      libreoffice-fresh-sandboxed = wrap super.libreoffice-fresh
+        (map libreoffice [
+          "libreoffice"
+          "sbase"
+          "scalc"
+          "sdraw"
+          "simpress"
+          "smath"
+          "soffice"
+          "swriter"
+          "unopkg"
+        ]);
+      tor-browser-bundle-bin-sandboxed =
+        wrap super.tor-browser-bundle-bin [ tor-browser ];
+      zoom-us-sandboxed = wrap super.zoom-us [ zoom ];
+      skypeforlinux-sandboxed = wrap super.skypeforlinux [ skypeforlinux ];
     })
   ];
 }
