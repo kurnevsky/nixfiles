@@ -233,6 +233,7 @@
       mono
       nodePackages.bash-language-server
       openjdk
+      python3
       shellcheck
       ## Haskell
       cabal-install
