@@ -607,8 +607,16 @@ in {
       libreoffice-fresh-sandboxed = pkgs.symlinkJoin {
         name = "libreoffice";
         paths = [
-          (sandbox super.libreoffice-fresh (libreoffice "soffice"))
           (sandbox super.libreoffice-fresh (libreoffice "libreoffice"))
+          (sandbox super.libreoffice-fresh (libreoffice "sbase"))
+          (sandbox super.libreoffice-fresh (libreoffice "scalc"))
+          (sandbox super.libreoffice-fresh (libreoffice "sdraw"))
+          (sandbox super.libreoffice-fresh (libreoffice "simpress"))
+          (sandbox super.libreoffice-fresh (libreoffice "smath"))
+          (sandbox super.libreoffice-fresh (libreoffice "soffice"))
+          (sandbox super.libreoffice-fresh (libreoffice "swriter"))
+          (sandbox super.libreoffice-fresh (libreoffice "unopkg"))
+          super.libreoffice-fresh
         ];
       };
       tor-browser-bundle-bin-sandboxed = pkgs.symlinkJoin {
