@@ -68,6 +68,7 @@
         ./modules/motion.nix
         ./modules/rnnoise.nix
         ./modules/torjail.nix
+        ./modules/nspawn.nix
         ./modules/overlays.nix
         ./modules/patches.nix
       ];
