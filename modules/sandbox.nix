@@ -539,6 +539,22 @@ in {
           "swriter"
           "unopkg"
         ]);
+      wesnoth-sandboxed = wrap super.wesnoth [
+        (withFonts {
+          name = "wesnoth";
+          pams = [ "pulse" ];
+          etcs = [ "pulse" ];
+          x11 = true;
+          unsetenvs = [ "MAIL" "SHELL" ];
+          unshare-net = false;
+          whitelist = [
+            "~/.config/wesnoth/"
+            "~/.cache/wesnoth/"
+            "~/.local/share/wesnoth/"
+            "~/.config/pulse/"
+          ];
+        })
+      ];
       tor-browser-bundle-bin-sandboxed =
         wrap super.tor-browser-bundle-bin [ tor-browser ];
       zoom-us-sandboxed = wrap super.zoom-us [ zoom ];

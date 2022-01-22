@@ -225,7 +225,7 @@
       cataclysm-dda
       hedgewars
       openmw
-      wesnoth
+      wesnoth-sandboxed
       # Languages
       (agda.withPackages (pkgs: with pkgs; [ standard-library ]))
       astyle
