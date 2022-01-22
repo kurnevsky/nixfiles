@@ -19,7 +19,13 @@
     (pkgs.krfb.overrideAttrs
       (old: { buildInputs = old.buildInputs ++ [ pipewire ]; }))
     krdc
+    # TODO: remove after https://github.com/NixOS/nixpkgs/pull/148344
+    xdg-desktop-portal-kde
   ];
+
+  # TODO: remove after https://github.com/NixOS/nixpkgs/pull/148344
+  environment.sessionVariables.XDG_DATA_DIRS =
+    [ "${pkgs.xdg-desktop-portal-kde}/share" ];
 
   xdg.portal = {
     enable = true;
