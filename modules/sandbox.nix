@@ -62,6 +62,7 @@ let
       gnome-themes-extra
       gnome3.adwaita-icon-theme
       hicolor-icon-theme
+      plasma-integration
     ];
     pams = [
       # Necessary for MPRIS2
@@ -143,6 +144,7 @@ let
       gnome-themes-extra
       gnome3.adwaita-icon-theme
       hicolor-icon-theme
+      plasma-integration
     ];
     x11 = true;
     etcs = [ "pulse" "ssl/certs/ca-certificates.crt" ];
@@ -165,6 +167,7 @@ let
       wmctrl
       gawk
       xcb-client-id
+      plasma-integration
     ];
     # unshare-pid breaks xdg-screensaver in a way that it can't detect
     # process termination and therefore might not enable screensaver
@@ -191,6 +194,7 @@ let
   } [ withFonts withOpengl withHomeManager ];
   vlc = lib.pipe {
     name = "vlc";
+    extra-deps = with pkgs; [ plasma-integration ];
     devs = [ "dri" ];
     syses = [
       # Necessary for hardware acceleration
@@ -217,6 +221,7 @@ let
       gnome-themes-extra
       gnome3.adwaita-icon-theme
       hicolor-icon-theme
+      plasma-integration
     ];
     devs = [ "dri" ];
     camera = true;
@@ -282,6 +287,7 @@ let
       gnome-themes-extra
       gnome3.adwaita-icon-theme
       hicolor-icon-theme
+      plasma-integration
     ];
     devs = [
       "dri"
@@ -410,7 +416,12 @@ let
       # coreutils-full, gnugrep, gnused are needed because it's
       # system default stdenv and libreoffice has scripts that rely
       # on stdenv being in PATH
-      extra-deps = with pkgs; [ coreutils-full gnugrep gnused ];
+      extra-deps = with pkgs; [
+        coreutils-full
+        gnugrep
+        gnused
+        plasma-integration
+      ];
       x11 = true;
       etcs = [ "pulse" "passwd" ];
       localtime = true;
