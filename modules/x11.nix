@@ -9,7 +9,6 @@
     xdotool
     xsel
     xterm
-    (pass.withExtensions (ext: with ext; [ pass-otp ]))
     firefox
     ungoogled-chromium
     element-desktop

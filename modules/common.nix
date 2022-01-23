@@ -83,6 +83,7 @@
   environment = {
     systemPackages = with pkgs; [
       (lutris.override { steamSupport = false; })
+      (pass-wayland.withExtensions (ext: with ext; [ pass-otp ]))
       (pkgs.callPackage ./pan-globalprotect-okta.nix { })
       (pkgs.callPackage ./webcam-filters.nix { })
       aircrack-ng
