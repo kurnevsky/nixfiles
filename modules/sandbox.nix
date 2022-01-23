@@ -8,10 +8,14 @@ let
       paths = [ (pkgs.callPackage ./sandbox-pid-hack.nix { } drv name) drv ];
     };
   wrap = drv: bins:
-    pkgs.symlinkJoin {
-      name = drv.name + "-sandboxed";
-      paths = (map (sandbox drv) bins) ++ [ drv ];
-    };
+    # Don't join with original drv because only bins will be used
+    if lib.length bins == 1 then
+      sandbox drv (lib.head bins)
+    else
+      pkgs.symlinkJoin {
+        name = drv.name + "-sandboxed";
+        paths = map (sandbox drv) bins;
+      };
   withFonts = attrs:
     attrs // {
       extra-deps = (attrs.extra-deps or [ ])
@@ -30,11 +34,23 @@ let
         (attrs.extra-deps or [ ]) ++ [ package32 ] ++ extraPackages32;
       opengl32 = true;
     };
-  withHomeManager = attrs:
+  withHomeManager = paths:
+    let
+      home-files = lib.mapAttrsToList (name: value: value.home-files)
+        config.home-manager.users;
+      home-paths = lib.mapAttrsToList (name: value: value.home.path)
+        config.home-manager.users;
+      home-deps-drv =
+        pkgs.runCommand "home-files" { disallowedReferences = home-files; }
+        (lib.concatMapStrings (files:
+          lib.concatMapStrings (path: ''
+            [ -d ${files}/${path} ] && find ${files}/${path} -type l | xargs -r readlink -f >> $out
+          '') paths) home-files);
+    in attrs:
     attrs // {
       extra-deps-no-transitive = (attrs.extra-deps-no-transitive or [ ])
-        ++ lib.unique (lib.mapAttrsToList (name: value: value.home.path)
-          config.home-manager.users);
+        ++ home-files ++ home-paths;
+      extra-deps = if paths == [ ] then [ ] else [ home-deps-drv ];
     };
   archiver = name: {
     inherit name;
@@ -191,7 +207,7 @@ let
     ro-whitelist = [ "~/" ];
     whitelist = [ "~/.cache/fontconfig/" "~/.config/pulse/" ];
     blacklist = [ "~/.gnupg/" "~/.ssh/" ];
-  } [ withFonts withOpengl withHomeManager ];
+  } [ withFonts withOpengl (withHomeManager [ ".config/mpv" ]) ];
   vlc = lib.pipe {
     name = "vlc";
     extra-deps = with pkgs; [ plasma-integration ];
@@ -341,7 +357,7 @@ let
       "~/Torrents/"
       "~/movies/"
     ];
-  } [ withFonts withOpengl withHomeManager ];
+  } [ withFonts withOpengl ];
   ffmpeg = {
     name = "ffmpeg";
     devs = [ "dri" ];
@@ -495,51 +511,50 @@ in {
       xcb-client-id = pkgs.callPackage ./xcb-client-id.nix { };
     })
     (self: super: {
-      deadbeef-sandboxed =
-        wrap (pid-hack super.deadbeef-with-plugins "deadbeef") [ deadbeef ];
-      p7zip-sandboxed = wrap super.p7zip (map archiver [ "7z" "7za" "7zr" ]);
-      _7zz-sandboxed = wrap super._7zz [ (archiver "7zz") ];
-      unrar-sandboxed = wrap super.unrar [ (archiver "unrar") ];
-      zip-natspec-sandboxed = wrap super.zip-natspec [ (archiver "zip") ];
-      unzip-natspec-sandboxed = wrap super.unzip-natspec [ (archiver "unzip") ];
-      mpv-sandboxed = wrap super.mpv-with-scripts [ mpv ];
-      vlc-sandboxed = wrap super.vlc [ vlc ];
-      firefox-sandboxed = wrap super.firefox [ firefox ];
-      firefox-wayland-sandboxed = wrap super.firefox-wayland [ firefox ];
-      chromium-sandboxed = wrap super.ungoogled-chromium [ chromium ];
-      chromium-wayland-sandboxed =
-        wrap super.ungoogled-chromium-wayland [ chromium ];
-      pidgin-sandboxed = wrap super.pidgin-with-plugins [ pidgin ];
-      qtox-sandboxed = wrap (pid-hack super.qtox "qtox") [ qtox ];
-      toxic-sandboxed = wrap super.toxic [ toxic ];
-      tdesktop-sandboxed = wrap super.tdesktop [ tdesktop ];
-      element-desktop-sandboxed =
-        wrap super.element-desktop [ element-desktop ];
-      element-desktop-wayland-sandboxed =
-        wrap super.element-desktop-wayland [ element-desktop ];
-      qbittorrent-sandboxed =
-        wrap (pid-hack super.qbittorrent "qbittorrent") [ qbittorrent ];
-      feh-sandboxed = wrap super.feh [ (viewer "feh") ];
-      imv-sandboxed = wrap super.imv [
-        (withOpengl (viewer "imv" // {
-          devs = [ "dri" ];
-          syses = [
-            # Necessary for hardware acceleration
-            "dev"
-            "devices"
-          ];
-        }))
-      ];
-      zathura-sandboxed = wrap super.zathura [
-        ((viewer "zathura") // {
-          whitelist = [ "~/.local/share/zathura/" "~/Print/" ];
-        })
-      ];
-      ffmpeg-full-sandboxed = wrap super.ffmpeg-full [ ffmpeg ffprobe ];
-      wine-staging-full-sandboxed =
-        wrap super.wineWowPackages.stagingFull (map wine [ "wine" "winecfg" ]);
-      libreoffice-fresh-sandboxed = wrap super.libreoffice-fresh
-        (map libreoffice [
+      sandboxed = {
+        deadbeef =
+          wrap (pid-hack super.deadbeef-with-plugins "deadbeef") [ deadbeef ];
+        p7zip = wrap super.p7zip (map archiver [ "7z" "7za" "7zr" ]);
+        _7zz = wrap super._7zz [ (archiver "7zz") ];
+        unrar = wrap super.unrar [ (archiver "unrar") ];
+        zip-natspec = wrap super.zip-natspec [ (archiver "zip") ];
+        unzip-natspec = wrap super.unzip-natspec [ (archiver "unzip") ];
+        mpv = wrap super.mpv-with-scripts [ mpv ];
+        vlc = wrap super.vlc [ vlc ];
+        firefox = wrap super.firefox [ firefox ];
+        firefox-wayland = wrap super.firefox-wayland [ firefox ];
+        chromium = wrap super.ungoogled-chromium [ chromium ];
+        chromium-wayland = wrap super.ungoogled-chromium-wayland [ chromium ];
+        pidgin = wrap super.pidgin-with-plugins [ pidgin ];
+        qtox = wrap (pid-hack super.qtox "qtox") [ qtox ];
+        toxic = wrap super.toxic [ toxic ];
+        tdesktop = wrap super.tdesktop [ tdesktop ];
+        element-desktop = wrap super.element-desktop [ element-desktop ];
+        element-desktop-wayland =
+          wrap super.element-desktop-wayland [ element-desktop ];
+        qbittorrent =
+          wrap (pid-hack super.qbittorrent "qbittorrent") [ qbittorrent ];
+        feh =
+          wrap super.feh [ (withHomeManager [ ".config/feh" ] (viewer "feh")) ];
+        imv = wrap super.imv [
+          (withOpengl (viewer "imv" // {
+            devs = [ "dri" ];
+            syses = [
+              # Necessary for hardware acceleration
+              "dev"
+              "devices"
+            ];
+          }))
+        ];
+        zathura = wrap super.zathura [
+          ((viewer "zathura") // {
+            whitelist = [ "~/.local/share/zathura/" "~/Print/" ];
+          })
+        ];
+        ffmpeg-full = wrap super.ffmpeg-full [ ffmpeg ffprobe ];
+        wine-staging-full = wrap super.wineWowPackages.stagingFull
+          (map wine [ "wine" "winecfg" ]);
+        libreoffice-fresh = wrap super.libreoffice-fresh (map libreoffice [
           "libreoffice"
           "sbase"
           "scalc"
@@ -550,26 +565,73 @@ in {
           "swriter"
           "unopkg"
         ]);
-      wesnoth-sandboxed = wrap super.wesnoth [
-        (withFonts {
-          name = "wesnoth";
-          pams = [ "pulse" ];
-          etcs = [ "pulse" ];
-          x11 = true;
-          unsetenvs = [ "MAIL" "SHELL" ];
-          unshare-net = false;
-          whitelist = [
-            "~/.config/wesnoth/"
-            "~/.cache/wesnoth/"
-            "~/.local/share/wesnoth/"
-            "~/.config/pulse/"
-          ];
-        })
-      ];
-      tor-browser-bundle-bin-sandboxed =
-        wrap super.tor-browser-bundle-bin [ tor-browser ];
-      zoom-us-sandboxed = wrap super.zoom-us [ zoom ];
-      skypeforlinux-sandboxed = wrap super.skypeforlinux [ skypeforlinux ];
+        wesnoth = wrap super.wesnoth [
+          (withFonts {
+            name = "wesnoth";
+            pams = [ "pulse" ];
+            etcs = [ "pulse" ];
+            x11 = true;
+            unsetenvs = [ "MAIL" "SHELL" ];
+            unshare-net = false;
+            whitelist = [
+              "~/.config/wesnoth/"
+              "~/.cache/wesnoth/"
+              "~/.local/share/wesnoth/"
+              "~/.config/pulse/"
+            ];
+          })
+        ];
+        tor-browser-bundle-bin =
+          wrap super.tor-browser-bundle-bin [ tor-browser ];
+        zoom-us = wrap super.zoom-us [ zoom ];
+        skypeforlinux = wrap super.skypeforlinux [ skypeforlinux ];
+      };
+    })
+    (self: super: {
+      mc = super.mc.override {
+        zip = super.sandboxed.zip-natspec;
+        unzip = super.sandboxed.unzip-natspec;
+      };
     })
   ];
+
+  environment = let
+    env = pkgs.buildEnv {
+      name = "sandboxed";
+      paths = with pkgs.sandboxed; [
+        deadbeef
+        p7zip
+        _7zz
+        unrar
+        zip-natspec
+        unzip-natspec
+        mpv
+        vlc
+        # firefox
+        firefox-wayland
+        # chromium
+        chromium-wayland
+        pidgin
+        qtox
+        toxic
+        tdesktop
+        # element-desktop
+        element-desktop-wayland
+        qbittorrent
+        feh
+        imv
+        zathura
+        ffmpeg-full
+        wine-staging-full
+        libreoffice-fresh
+        wesnoth
+        tor-browser-bundle-bin
+      ];
+    };
+  in {
+    extraInit = ''
+      export PATH="/etc/sandboxed:$PATH"
+    '';
+    etc.sandboxed.source = "${env}/bin";
+  };
 }

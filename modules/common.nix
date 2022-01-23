@@ -106,7 +106,7 @@
       clinfo
       cuetools
       davfs2
-      deadbeef-sandboxed
+      deadbeef-with-plugins
       docker-compose
       dosbox
       dosfstools
@@ -117,7 +117,7 @@
       extundelete
       fd
       fclones
-      ffmpeg-full-sandboxed
+      ffmpeg-full
       flac
       fuseiso
       gdb
@@ -133,7 +133,7 @@
       hunspell
       hunspellDicts.en_US
       hunspellDicts.ru_RU
-      imv-sandboxed
+      imv
       inkscape
       innoextract
       iodine
@@ -143,7 +143,7 @@
       kafkacat
       kubectl
       languagetool
-      libreoffice-fresh-sandboxed
+      libreoffice-fresh
       libva-utils
       libxml2 # for xmllint
       lsd
@@ -153,7 +153,6 @@
       mesa-demos
       metasploit
       mpc_cli
-      mpv-sandboxed
       mu
       nettools
       newsboat
@@ -171,7 +170,7 @@
       perl
       playerctl
       psmisc # for killall
-      qbittorrent-sandboxed
+      qbittorrent
       qemu
       qrencode
       radare2
@@ -193,39 +192,39 @@
       usbutils
       vdpauinfo
       viu
-      vlc-sandboxed
+      vlc
       vorbis-tools
       vulkan-tools
       wavpack
       websocat
       wget
-      wine-staging-full-sandboxed
+      wineWowPackages.stagingFull
       winetricks
       wireguard-tools
       wirelesstools
       xmlstarlet
       you-get
       youtube-dl
-      zathura-sandboxed
+      zathura
       zbar
       # Archivers
-      _7zz-sandboxed
-      p7zip-sandboxed
-      unrar-sandboxed
-      unzip-natspec-sandboxed
+      _7zz
+      p7zip
+      unrar
+      unzip-natspec
       # Browsers
-      tor-browser-bundle-bin-sandboxed
+      tor-browser-bundle-bin
       # Messengers
-      pidgin-sandboxed
-      tdesktop-sandboxed
+      pidgin-with-plugins
+      tdesktop
       ## Tox
-      qtox-sandboxed
-      toxic-sandboxed
+      qtox
+      toxic
       # Games
       cataclysm-dda
       hedgewars
       openmw
-      wesnoth-sandboxed
+      wesnoth
       # Languages
       (agda.withPackages (pkgs: with pkgs; [ standard-library ]))
       astyle
@@ -489,28 +488,9 @@
   };
 
   # system.replaceRuntimeDependencies can be used to make fast fixes
-  nixpkgs.overlays = let
-    optimizeWithFlag = pkg: flag:
-      pkg.overrideAttrs (attrs: {
-        NIX_CFLAGS_COMPILE = (attrs.NIX_CFLAGS_COMPILE or "") + " ${flag}";
-      });
-    optimizeWithFlags = pkg: flags:
-      pkgs.lib.foldl' (pkg: flag: optimizeWithFlag pkg flag) pkg flags;
-    optimizeForThisHost = pkg:
-      optimizeWithFlags pkg [ "-O3" "-march=native" "-mtune=native" ];
-  in [
-    (self: super: {
-      # home-manager doesn't allow to specify feh derivation so use overlays
-      feh = super.feh-sandboxed;
-    })
+  nixpkgs.overlays = [
     (self: super: {
       uutils-coreutils = super.uutils-coreutils.override { prefix = null; };
-    })
-    (self: super: {
-      mc = optimizeForThisHost (super.mc.override {
-        zip = super.zip-natspec-sandboxed;
-        unzip = super.unzip-natspec-sandboxed;
-      });
     })
     (self: super: { wine = super.wineWowPackages.stagingFull; })
   ];
@@ -589,6 +569,19 @@
       buttons = {
         zoom_in = "C-4";
         zoom_out = "C-5";
+      };
+    };
+    mpv = {
+      enable = true;
+      config = {
+        hwdec = "auto";
+        cache = true;
+        demuxer-max-bytes = 41943040;
+        demuxer-max-back-bytes = 41943040;
+        volume-max = 500;
+      };
+      bindings = {
+        "Ctrl+n" = ''af toggle "lavfi=[dynaudnorm=f=175:g=25:p=0.75]"'';
       };
     };
     tmux = {
@@ -760,6 +753,7 @@
         inherit starship;
         inherit tmux;
         inherit feh;
+        inherit mpv;
         inherit alacritty;
         inherit git;
       };
