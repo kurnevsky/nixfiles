@@ -124,11 +124,11 @@ in writeShellScriptBin target-name ''
        } \
        ${
          lib.concatMapStringsSep " "
-         (x: "--bind $XDG_RUNTIME_DIR/${x} $XDG_RUNTIME_DIR/${x}") pams
+         (x: ''--bind "$XDG_RUNTIME_DIR"/${x} "$XDG_RUNTIME_DIR"/${x}'') pams
        } \
        ${
-         lib.optionalString x11
-         "--bind-try $XDG_RUNTIME_DIR/\${WAYLAND_DISPLAY-wayland-0} $XDG_RUNTIME_DIR/\${WAYLAND_DISPLAY-wayland-0}"
+         lib.optionalString x11 ''
+           --bind-try "$XDG_RUNTIME_DIR"/"''${WAYLAND_DISPLAY-wayland-0}" "$XDG_RUNTIME_DIR"/"''${WAYLAND_DISPLAY-wayland-0}"''
        } \
        \
        --ro-bind /etc/profiles/per-user/"$(whoami)" /etc/profiles/per-user/"$(whoami)" \
@@ -163,7 +163,7 @@ in writeShellScriptBin target-name ''
        ${lib.optionalString unshare-user "--unshare-user"} \
        ${lib.optionalString unshare-ipc "--unshare-ipc"} \
        ${lib.optionalString unshare-pid "--unshare-pid"} \
-       ${lib.optionalString unshare-net "\${unshare_net[@]}"} \
+       ${lib.optionalString unshare-net ''"''${unshare_net[@]}"''} \
        ${lib.optionalString unshare-uts "--unshare-uts"} \
        ${lib.optionalString unshare-cgroup "--unshare-cgroup"} \
        \
