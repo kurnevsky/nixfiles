@@ -52,7 +52,7 @@ let
         ++ home-files ++ home-paths;
       extra-deps = if paths == [ ] then [ ] else [ home-deps-drv ];
     };
-  archiver = name: {
+  archiver-cfg = name: {
     inherit name;
     unsetenvs = [
       "DBUS_SESSION_BUS_ADDRESS"
@@ -64,7 +64,7 @@ let
     whitelist = [ "~/" ];
     blacklist = [ "~/.gnupg/" "~/.ssh/" ];
   };
-  viewer = name:
+  viewer-cfg = name:
     withFonts {
       inherit name;
       x11 = true;
@@ -72,27 +72,7 @@ let
       ro-whitelist = [ "~/" ];
       blacklist = [ "~/.gnupg/" "~/.ssh/" ];
     };
-  deadbeef = withFonts {
-    name = "deadbeef";
-    extra-deps = with pkgs; [
-      gnome-themes-extra
-      gnome3.adwaita-icon-theme
-      hicolor-icon-theme
-      plasma-integration
-    ];
-    pams = [
-      # Necessary for MPRIS2
-      "bus"
-      "pulse"
-    ];
-    etcs = [ "pulse" ];
-    x11 = true;
-    unsetenvs = [ "MAIL" "SHELL" ];
-    ro-whitelist = [ "~/" ];
-    whitelist = [ "~/.config/pulse/" "~/.config/deadbeef/" ];
-    blacklist = [ "~/.gnupg/" "~/.ssh/" ];
-  };
-  firefox = lib.pipe {
+  firefox-cfg = lib.pipe {
     name = "firefox";
     devs = [ "dri" ];
     camera = true;
@@ -122,7 +102,7 @@ let
       "~/.gnupg/"
     ];
   } [ withFonts withOpengl ];
-  chromium = lib.pipe {
+  chromium-cfg = lib.pipe {
     name = "chromium";
     extra-deps = with pkgs; [
       qt5ct
@@ -154,149 +134,7 @@ let
     ];
     args = [ "--no-sandbox" ];
   } [ withFonts withOpengl ];
-  pidgin = withFonts {
-    name = "pidgin";
-    extra-deps = with pkgs; [
-      gnome-themes-extra
-      gnome3.adwaita-icon-theme
-      hicolor-icon-theme
-      plasma-integration
-    ];
-    x11 = true;
-    etcs = [ "pulse" "ssl/certs/ca-certificates.crt" ];
-    localtime = true;
-    resolv-conf = true;
-    pams = [ "bus" "pulse" ];
-    unshare-net = false;
-    unsetenvs = [ "MAIL" "SHELL" ];
-    ro-whitelist = [ "~/.gtkrc-2.0" ];
-    whitelist = [ "~/.purple/" "~/.config/pulse/" ];
-  };
-  mpv = lib.pipe {
-    name = "mpv";
-    bin-sh = true;
-    extra-deps = with pkgs; [
-      coreutils-full
-      xdg-utils
-      xorg.xprop
-      xscreensaver
-      wmctrl
-      gawk
-      xcb-client-id
-      plasma-integration
-    ];
-    # unshare-pid breaks xdg-screensaver in a way that it can't detect
-    # process termination and therefore might not enable screensaver
-    unshare-pid = false;
-    devs = [ "dri" ];
-    syses = [
-      # Necessary for hardware acceleration
-      "dev"
-      "devices"
-    ];
-    x11 = true;
-    pams = [ "bus" "pulse" ];
-    etcs = [ "pulse" ];
-    # xdg-screensaver creates a lockfile in /tmp
-    shared-tmp = true;
-    unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" ];
-    setenvs = [{
-      name = "SHELL";
-      value = "/run/current-system/sw/bin/bash";
-    }];
-    ro-whitelist = [ "~/" ];
-    whitelist = [ "~/.cache/fontconfig/" "~/.config/pulse/" ];
-    blacklist = [ "~/.gnupg/" "~/.ssh/" ];
-  } [ withFonts withOpengl (withHomeManager [ ".config/mpv" ]) ];
-  vlc = lib.pipe {
-    name = "vlc";
-    extra-deps = with pkgs; [ plasma-integration ];
-    devs = [ "dri" ];
-    syses = [
-      # Necessary for hardware acceleration
-      "dev"
-      "devices"
-    ];
-    x11 = true;
-    pams = [ "bus" "pulse" ];
-    etcs = [ "pulse" ];
-    unsetenvs = [ "MAIL" ];
-    setenvs = [{
-      name = "SHELL";
-      value = "/run/current-system/sw/bin/bash";
-    }];
-    ro-whitelist = [ "~/" ];
-    whitelist =
-      [ "~/.local/share/vlc/" "~/.cache/fontconfig/" "~/.config/pulse/" ];
-    blacklist = [ "~/.gnupg/" "~/.ssh/" ];
-  } [ withFonts withOpengl ];
-  qtox = lib.pipe {
-    name = "qtox";
-    extra-deps = with pkgs; [
-      qt5ct
-      gnome-themes-extra
-      gnome3.adwaita-icon-theme
-      hicolor-icon-theme
-      plasma-integration
-    ];
-    devs = [ "dri" ];
-    camera = true;
-    syses = [
-      # Necessary for hardware acceleration
-      "dev"
-      "devices"
-    ];
-    x11 = true;
-    pams = [ "bus" "pulse" ];
-    etcs = [ "pulse" ];
-    localtime = true;
-    resolv-conf = true;
-    unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" "SHELL" ];
-    unshare-net = false;
-    ro-whitelist = [ "~/.config/qt5ct/" "~/.config/kdeglobals" ];
-    whitelist = [ "~/.config/tox/" "~/.cache/Tox/" "~/.config/pulse/" ];
-  } [ withFonts withOpengl ];
-  toxic = {
-    name = "toxic";
-    extra-deps = with pkgs; [ glibcLocales ];
-    devs = [ "dri" ];
-    camera = true;
-    x11 = true;
-    pams = [ "pulse" ];
-    etcs = [ "pulse" ];
-    localtime = true;
-    resolv-conf = true;
-    unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" "SHELL" ];
-    unshare-net = false;
-    whitelist = [ "~/.config/tox/" "~/.config/pulse/" ];
-  };
-  tdesktop = lib.pipe {
-    name = "telegram-desktop";
-    extra-deps = with pkgs; [
-      qt5ct
-      gnome-themes-extra
-      gnome3.adwaita-icon-theme
-      hicolor-icon-theme
-      plasma-integration
-    ];
-    devs = [ "dri" ];
-    camera = true;
-    syses = [
-      # Necessary for hardware acceleration
-      "dev"
-      "devices"
-    ];
-    x11 = true;
-    pams = [ "bus" "pulse" ];
-    etcs = [ "pulse" ];
-    localtime = true;
-    resolv-conf = true;
-    unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" "SHELL" ];
-    unshare-net = false;
-    ro-whitelist = [ "~/.config/qt5ct/" "~/.config/kdeglobals" ];
-    whitelist = [ "~/.local/share/TelegramDesktop/" "~/.config/pulse/" ];
-  } [ withFonts withOpengl ];
-  element-desktop = withFonts {
+  element-desktop-cfg = withFonts {
     name = "element-desktop";
     extra-deps = with pkgs; [
       qt5ct
@@ -328,74 +166,7 @@ let
     ro-whitelist = [ "~/.config/gtk-3.0/" ];
     whitelist = [ "~/.config/Element/" "~/.config/pulse/" ];
   };
-  qbittorrent = lib.pipe {
-    name = "qbittorrent";
-    extra-deps = with pkgs; [
-      qt5ct
-      gnome-themes-extra
-      gnome3.adwaita-icon-theme
-      hicolor-icon-theme
-      plasma-integration
-    ];
-    devs = [ "dri" ];
-    syses = [
-      # Necessary for hardware acceleration
-      "dev"
-      "devices"
-    ];
-    x11 = true;
-    pams = [ "bus" ];
-    localtime = true;
-    resolv-conf = true;
-    unsetenvs = [ "MAIL" "SHELL" ];
-    unshare-net = false;
-    ro-whitelist = [ "~/.config/qt5ct/" "~/.config/kdeglobals" ];
-    whitelist = [
-      "~/.local/share/data/qBittorrent/"
-      "~/.config/qBittorrent/"
-      "~/.cache/qBittorrent/"
-      "~/Torrents/"
-      "~/movies/"
-    ];
-  } [ withFonts withOpengl ];
-  ffmpeg = {
-    name = "ffmpeg";
-    devs = [ "dri" ];
-    camera = true;
-    syses = [
-      # Necessary for hardware acceleration
-      "dev"
-      "devices"
-    ];
-    whitelist = [ "~/" ];
-    blacklist = [ "~/.gnupg/" "~/.ssh/" ];
-    unsetenvs = [
-      "DBUS_SESSION_BUS_ADDRESS"
-      "XDG_RUNTIME_DIR"
-      "XAUTHORITY"
-      "MAIL"
-      "SHELL"
-    ];
-  };
-  ffprobe = {
-    name = "ffprobe";
-    devs = [ "dri" ];
-    syses = [
-      # Necessary for hardware acceleration
-      "dev"
-      "devices"
-    ];
-    ro-whitelist = [ "~/" ];
-    blacklist = [ "~/.gnupg/" "~/.ssh/" ];
-    unsetenvs = [
-      "DBUS_SESSION_BUS_ADDRESS"
-      "XDG_RUNTIME_DIR"
-      "XAUTHORITY"
-      "MAIL"
-      "SHELL"
-    ];
-  };
-  wine = name:
+  wine-cfg = name:
     lib.pipe {
       inherit name;
       # coreutils-full is needed because it's system default stdenv
@@ -426,7 +197,7 @@ let
         "~/.config/pulse/"
       ];
     } [ withFonts withOpengl withOpengl32 ];
-  libreoffice = name:
+  libreoffice-cfg = name:
     withFonts {
       inherit name;
       # coreutils-full, gnugrep, gnused are needed because it's
@@ -446,64 +217,6 @@ let
       whitelist = [ "~/" ];
       blacklist = [ "~/.gnupg/" "~/.ssh/" ];
     };
-  tor-browser = {
-    name = "tor-browser";
-    x11 = true;
-    unsetenvs = [ "MAIL" "SHELL" ];
-    unshare-net = false;
-    whitelist = [ "~/.local/share/tor-browser/" ];
-  };
-  zoom = lib.pipe {
-    name = "zoom";
-    devs = [ "dri" ];
-    syses = [
-      # Necessary for hardware acceleration
-      "dev"
-      "devices"
-    ];
-    camera = true;
-    x11 = true;
-    system-bus-socket = true;
-    etcs = [ "pulse" ];
-    localtime = true;
-    resolv-conf = true;
-    pams = [ "bus" "pulse" ];
-    unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" ];
-    setenvs = [{
-      name = "SHELL";
-      value = "/run/current-system/sw/bin/bash";
-    }];
-    unshare-net = false;
-    whitelist = [
-      "~/.zoom/"
-      "~/.cache/zoom/"
-      "~/.config/zoomus.conf"
-      "~/.config/pulse/"
-    ];
-  } [ withFonts withOpengl ];
-  skypeforlinux = withFonts {
-    name = "skypeforlinux";
-    devs = [
-      "dri"
-      # Necessary for audio
-      "snd"
-    ];
-    camera = true;
-    syses = [
-      # Necessary for hardware acceleration
-      "dev"
-      "devices"
-    ];
-    x11 = true;
-    pams = [ "pulse" ];
-    etcs = [ "pulse" "ssl/certs/ca-certificates.crt" ];
-    localtime = true;
-    resolv-conf = true;
-    unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" "SHELL" ];
-    unshare-net = false;
-    ro-whitelist = [ "~/.config/gtk-3.0/" ];
-    whitelist = [ "~/.config/skypeforlinux/" "~/.config/pulse/" ];
-  };
 in {
   nixpkgs.overlays = [
     (self: super: {
@@ -512,32 +225,233 @@ in {
     })
     (self: super: {
       sandboxed = {
-        deadbeef =
-          wrap (pid-hack super.deadbeef-with-plugins "deadbeef") [ deadbeef ];
-        p7zip = wrap super.p7zip (map archiver [ "7z" "7za" "7zr" ]);
-        _7zz = wrap super._7zz [ (archiver "7zz") ];
-        unrar = wrap super.unrar [ (archiver "unrar") ];
-        zip-natspec = wrap super.zip-natspec [ (archiver "zip") ];
-        unzip-natspec = wrap super.unzip-natspec [ (archiver "unzip") ];
-        mpv = wrap super.mpv-with-scripts [ mpv ];
-        vlc = wrap super.vlc [ vlc ];
-        firefox = wrap super.firefox [ firefox ];
-        firefox-wayland = wrap super.firefox-wayland [ firefox ];
-        chromium = wrap super.ungoogled-chromium [ chromium ];
-        chromium-wayland = wrap super.ungoogled-chromium-wayland [ chromium ];
-        pidgin = wrap super.pidgin-with-plugins [ pidgin ];
-        qtox = wrap (pid-hack super.qtox "qtox") [ qtox ];
-        toxic = wrap super.toxic [ toxic ];
-        tdesktop = wrap super.tdesktop [ tdesktop ];
-        element-desktop = wrap super.element-desktop [ element-desktop ];
+        deadbeef = wrap (pid-hack super.deadbeef-with-plugins "deadbeef") [
+          (withFonts {
+            name = "deadbeef";
+            extra-deps = with pkgs; [
+              gnome-themes-extra
+              gnome3.adwaita-icon-theme
+              hicolor-icon-theme
+              plasma-integration
+            ];
+            pams = [
+              # Necessary for MPRIS2
+              "bus"
+              "pulse"
+            ];
+            etcs = [ "pulse" ];
+            x11 = true;
+            unsetenvs = [ "MAIL" "SHELL" ];
+            ro-whitelist = [ "~/" ];
+            whitelist = [ "~/.config/pulse/" "~/.config/deadbeef/" ];
+            blacklist = [ "~/.gnupg/" "~/.ssh/" ];
+          })
+        ];
+        p7zip = wrap super.p7zip (map archiver-cfg [ "7z" "7za" "7zr" ]);
+        _7zz = wrap super._7zz [ (archiver-cfg "7zz") ];
+        unrar = wrap super.unrar [ (archiver-cfg "unrar") ];
+        zip-natspec = wrap super.zip-natspec [ (archiver-cfg "zip") ];
+        unzip-natspec = wrap super.unzip-natspec [ (archiver-cfg "unzip") ];
+        mpv = wrap super.mpv-with-scripts [
+          (lib.pipe {
+            name = "mpv";
+            bin-sh = true;
+            extra-deps = with pkgs; [
+              coreutils-full
+              xdg-utils
+              xorg.xprop
+              xscreensaver
+              wmctrl
+              gawk
+              xcb-client-id
+              plasma-integration
+            ];
+            # unshare-pid breaks xdg-screensaver in a way that it can't detect
+            # process termination and therefore might not enable screensaver
+            unshare-pid = false;
+            devs = [ "dri" ];
+            syses = [
+              # Necessary for hardware acceleration
+              "dev"
+              "devices"
+            ];
+            x11 = true;
+            pams = [ "bus" "pulse" ];
+            etcs = [ "pulse" ];
+            # xdg-screensaver creates a lockfile in /tmp
+            shared-tmp = true;
+            unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" ];
+            setenvs = [{
+              name = "SHELL";
+              value = "/run/current-system/sw/bin/bash";
+            }];
+            ro-whitelist = [ "~/" ];
+            whitelist = [ "~/.cache/fontconfig/" "~/.config/pulse/" ];
+            blacklist = [ "~/.gnupg/" "~/.ssh/" ];
+          } [ withFonts withOpengl (withHomeManager [ ".config/mpv" ]) ])
+        ];
+        vlc = wrap super.vlc [
+          (lib.pipe {
+            name = "vlc";
+            extra-deps = with pkgs; [ plasma-integration ];
+            devs = [ "dri" ];
+            syses = [
+              # Necessary for hardware acceleration
+              "dev"
+              "devices"
+            ];
+            x11 = true;
+            pams = [ "bus" "pulse" ];
+            etcs = [ "pulse" ];
+            unsetenvs = [ "MAIL" ];
+            setenvs = [{
+              name = "SHELL";
+              value = "/run/current-system/sw/bin/bash";
+            }];
+            ro-whitelist = [ "~/" ];
+            whitelist = [
+              "~/.local/share/vlc/"
+              "~/.cache/fontconfig/"
+              "~/.config/pulse/"
+            ];
+            blacklist = [ "~/.gnupg/" "~/.ssh/" ];
+          } [ withFonts withOpengl ])
+        ];
+        firefox = wrap super.firefox [ firefox-cfg ];
+        firefox-wayland = wrap super.firefox-wayland [ firefox-cfg ];
+        chromium = wrap super.ungoogled-chromium [ chromium-cfg ];
+        chromium-wayland =
+          wrap super.ungoogled-chromium-wayland [ chromium-cfg ];
+        pidgin = wrap super.pidgin-with-plugins [
+          (withFonts {
+            name = "pidgin";
+            extra-deps = with pkgs; [
+              gnome-themes-extra
+              gnome3.adwaita-icon-theme
+              hicolor-icon-theme
+              plasma-integration
+            ];
+            x11 = true;
+            etcs = [ "pulse" "ssl/certs/ca-certificates.crt" ];
+            localtime = true;
+            resolv-conf = true;
+            pams = [ "bus" "pulse" ];
+            unshare-net = false;
+            unsetenvs = [ "MAIL" "SHELL" ];
+            ro-whitelist = [ "~/.gtkrc-2.0" ];
+            whitelist = [ "~/.purple/" "~/.config/pulse/" ];
+          })
+        ];
+        qtox = wrap (pid-hack super.qtox "qtox") [
+          (lib.pipe {
+            name = "qtox";
+            extra-deps = with pkgs; [
+              qt5ct
+              gnome-themes-extra
+              gnome3.adwaita-icon-theme
+              hicolor-icon-theme
+              plasma-integration
+            ];
+            devs = [ "dri" ];
+            camera = true;
+            syses = [
+              # Necessary for hardware acceleration
+              "dev"
+              "devices"
+            ];
+            x11 = true;
+            pams = [ "bus" "pulse" ];
+            etcs = [ "pulse" ];
+            localtime = true;
+            resolv-conf = true;
+            unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" "SHELL" ];
+            unshare-net = false;
+            ro-whitelist = [ "~/.config/qt5ct/" "~/.config/kdeglobals" ];
+            whitelist = [ "~/.config/tox/" "~/.cache/Tox/" "~/.config/pulse/" ];
+          } [ withFonts withOpengl ])
+        ];
+        toxic = wrap super.toxic [{
+          name = "toxic";
+          extra-deps = with pkgs; [ glibcLocales ];
+          devs = [ "dri" ];
+          camera = true;
+          x11 = true;
+          pams = [ "pulse" ];
+          etcs = [ "pulse" ];
+          localtime = true;
+          resolv-conf = true;
+          unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" "SHELL" ];
+          unshare-net = false;
+          whitelist = [ "~/.config/tox/" "~/.config/pulse/" ];
+        }];
+        tdesktop = wrap super.tdesktop [
+          (lib.pipe {
+            name = "telegram-desktop";
+            extra-deps = with pkgs; [
+              qt5ct
+              gnome-themes-extra
+              gnome3.adwaita-icon-theme
+              hicolor-icon-theme
+              plasma-integration
+            ];
+            devs = [ "dri" ];
+            camera = true;
+            syses = [
+              # Necessary for hardware acceleration
+              "dev"
+              "devices"
+            ];
+            x11 = true;
+            pams = [ "bus" "pulse" ];
+            etcs = [ "pulse" ];
+            localtime = true;
+            resolv-conf = true;
+            unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" "SHELL" ];
+            unshare-net = false;
+            ro-whitelist = [ "~/.config/qt5ct/" "~/.config/kdeglobals" ];
+            whitelist =
+              [ "~/.local/share/TelegramDesktop/" "~/.config/pulse/" ];
+          } [ withFonts withOpengl ])
+        ];
+        element-desktop = wrap super.element-desktop [ element-desktop-cfg ];
         element-desktop-wayland =
-          wrap super.element-desktop-wayland [ element-desktop ];
-        qbittorrent =
-          wrap (pid-hack super.qbittorrent "qbittorrent") [ qbittorrent ];
-        feh =
-          wrap super.feh [ (withHomeManager [ ".config/feh" ] (viewer "feh")) ];
+          wrap super.element-desktop-wayland [ element-desktop-cfg ];
+        qbittorrent = wrap (pid-hack super.qbittorrent "qbittorrent") [
+          (lib.pipe {
+            name = "qbittorrent";
+            extra-deps = with pkgs; [
+              qt5ct
+              gnome-themes-extra
+              gnome3.adwaita-icon-theme
+              hicolor-icon-theme
+              plasma-integration
+            ];
+            devs = [ "dri" ];
+            syses = [
+              # Necessary for hardware acceleration
+              "dev"
+              "devices"
+            ];
+            x11 = true;
+            pams = [ "bus" ];
+            localtime = true;
+            resolv-conf = true;
+            unsetenvs = [ "MAIL" "SHELL" ];
+            unshare-net = false;
+            ro-whitelist = [ "~/.config/qt5ct/" "~/.config/kdeglobals" ];
+            whitelist = [
+              "~/.local/share/data/qBittorrent/"
+              "~/.config/qBittorrent/"
+              "~/.cache/qBittorrent/"
+              "~/Torrents/"
+              "~/movies/"
+            ];
+          } [ withFonts withOpengl ])
+        ];
+        feh = wrap super.feh
+          [ (withHomeManager [ ".config/feh" ] (viewer-cfg "feh")) ];
         imv = wrap super.imv [
-          (withOpengl (viewer "imv" // {
+          (withOpengl (viewer-cfg "imv" // {
             devs = [ "dri" ];
             syses = [
               # Necessary for hardware acceleration
@@ -547,14 +461,52 @@ in {
           }))
         ];
         zathura = wrap super.zathura [
-          ((viewer "zathura") // {
+          ((viewer-cfg "zathura") // {
             whitelist = [ "~/.local/share/zathura/" "~/Print/" ];
           })
         ];
-        ffmpeg-full = wrap super.ffmpeg-full [ ffmpeg ffprobe ];
+        ffmpeg-full = wrap super.ffmpeg-full [
+          {
+            name = "ffmpeg";
+            devs = [ "dri" ];
+            camera = true;
+            syses = [
+              # Necessary for hardware acceleration
+              "dev"
+              "devices"
+            ];
+            whitelist = [ "~/" ];
+            blacklist = [ "~/.gnupg/" "~/.ssh/" ];
+            unsetenvs = [
+              "DBUS_SESSION_BUS_ADDRESS"
+              "XDG_RUNTIME_DIR"
+              "XAUTHORITY"
+              "MAIL"
+              "SHELL"
+            ];
+          }
+          {
+            name = "ffprobe";
+            devs = [ "dri" ];
+            syses = [
+              # Necessary for hardware acceleration
+              "dev"
+              "devices"
+            ];
+            ro-whitelist = [ "~/" ];
+            blacklist = [ "~/.gnupg/" "~/.ssh/" ];
+            unsetenvs = [
+              "DBUS_SESSION_BUS_ADDRESS"
+              "XDG_RUNTIME_DIR"
+              "XAUTHORITY"
+              "MAIL"
+              "SHELL"
+            ];
+          }
+        ];
         wine-staging-full = wrap super.wineWowPackages.stagingFull
-          (map wine [ "wine" "winecfg" ]);
-        libreoffice-fresh = wrap super.libreoffice-fresh (map libreoffice [
+          (map wine-cfg [ "wine" "winecfg" ]);
+        libreoffice-fresh = wrap super.libreoffice-fresh (map libreoffice-cfg [
           "libreoffice"
           "sbase"
           "scalc"
@@ -581,10 +533,68 @@ in {
             ];
           })
         ];
-        tor-browser-bundle-bin =
-          wrap super.tor-browser-bundle-bin [ tor-browser ];
-        zoom-us = wrap super.zoom-us [ zoom ];
-        skypeforlinux = wrap super.skypeforlinux [ skypeforlinux ];
+        tor-browser-bundle-bin = wrap super.tor-browser-bundle-bin [{
+          name = "tor-browser";
+          x11 = true;
+          unsetenvs = [ "MAIL" "SHELL" ];
+          unshare-net = false;
+          whitelist = [ "~/.local/share/tor-browser/" ];
+        }];
+        zoom-us = wrap super.zoom-us [
+          (lib.pipe {
+            name = "zoom";
+            devs = [ "dri" ];
+            syses = [
+              # Necessary for hardware acceleration
+              "dev"
+              "devices"
+            ];
+            camera = true;
+            x11 = true;
+            system-bus-socket = true;
+            etcs = [ "pulse" ];
+            localtime = true;
+            resolv-conf = true;
+            pams = [ "bus" "pulse" ];
+            unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" ];
+            setenvs = [{
+              name = "SHELL";
+              value = "/run/current-system/sw/bin/bash";
+            }];
+            unshare-net = false;
+            whitelist = [
+              "~/.zoom/"
+              "~/.cache/zoom/"
+              "~/.config/zoomus.conf"
+              "~/.config/pulse/"
+            ];
+          } [ withFonts withOpengl ])
+        ];
+        skypeforlinux = wrap super.skypeforlinux [
+          (withFonts {
+            name = "skypeforlinux";
+            devs = [
+              "dri"
+              # Necessary for audio
+              "snd"
+            ];
+            camera = true;
+            syses = [
+              # Necessary for hardware acceleration
+              "dev"
+              "devices"
+            ];
+            x11 = true;
+            pams = [ "pulse" ];
+            etcs = [ "pulse" "ssl/certs/ca-certificates.crt" ];
+            localtime = true;
+            resolv-conf = true;
+            unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" "SHELL" ];
+            unshare-net = false;
+            ro-whitelist = [ "~/.config/gtk-3.0/" ];
+            whitelist = [ "~/.config/skypeforlinux/" "~/.config/pulse/" ];
+          })
+        ];
       };
     })
     (self: super: {
