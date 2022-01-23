@@ -50,7 +50,8 @@ let
     attrs // {
       extra-deps-no-transitive = (attrs.extra-deps-no-transitive or [ ])
         ++ home-files ++ home-paths;
-      extra-deps = if paths == [ ] then [ ] else [ home-deps-drv ];
+      extra-deps = (attrs.extra-deps or [ ])
+        ++ (if paths == [ ] then [ ] else [ home-deps-drv ]);
     };
   archiver-cfg = name: {
     inherit name;
