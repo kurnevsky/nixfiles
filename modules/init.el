@@ -57,7 +57,7 @@
 ;; File size in percents.
 (size-indication-mode t)
 ;; Short messages.
-(defalias 'yes-or-no-p #'y-or-n-p)
+(setq use-short-answers t)
 ;; Add new line at the end of file if it doesn't exist.
 (setq require-final-newline t)
 ;; Highlight trailing whitespaces.
