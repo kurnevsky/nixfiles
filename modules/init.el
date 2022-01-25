@@ -1262,6 +1262,8 @@ If CLEAR is specified, clear them instead."
   (lsp-ui-doc-position 'top)
   (lsp-ui-sideline-wait-for-all-symbols nil)
   (lsp-ui-doc-show-with-mouse nil)
+  (lsp-ui-doc-show-with-cursor t)
+  (lsp-ui-sideline-show-code-actions t)
   :config
   (delete (list 'no-accept-focus) lsp-ui-doc-frame-parameters)
   (add-to-list 'lsp-ui-doc-frame-parameters '(no-accept-focus . t)))
