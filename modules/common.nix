@@ -298,6 +298,10 @@
 
   programs = {
     gnupg.agent.enable = true;
+    bash.interactiveShellInit = ''
+      # Set cursor type to steady bar
+      echo -e -n "\x1b[\x36 q"
+    '';
     zsh = {
       enable = true;
       enableCompletion = true;
@@ -524,6 +528,10 @@
 
   home-manager = let
     bash = {
+      enable = true;
+      historySize = 25000;
+      historyControl = [ "erasedups" "ignoredups" "ignorespace" ];
+      sessionVariables.PS1 = "[u@h W]$ ";
       initExtra = ''
         if [[ $TERM != "dumb" && -z "$MC_SID" && (-z $INSIDE_EMACS || $INSIDE_EMACS == "vterm") ]]; then
           eval "$(${pkgs.starship}/bin/starship init bash)"
