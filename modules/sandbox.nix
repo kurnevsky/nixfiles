@@ -102,7 +102,7 @@ let
       "~/.config/pulse/"
       "~/.gnupg/"
     ];
-  } [ withFonts withOpengl ];
+  } [ withFonts withOpengl (withHomeManager [ ".mozilla" ]) ];
   chromium-cfg = lib.pipe {
     name = "chromium";
     extra-deps = with pkgs; [

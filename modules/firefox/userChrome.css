@@ -1,0 +1,7 @@
+:root {
+  --dark-color: #101010;
+}
+
+#tabbrowser-tabpanels {
+  background: var(--dark-color) !important;
+}

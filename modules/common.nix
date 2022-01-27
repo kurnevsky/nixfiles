@@ -728,6 +728,14 @@
         gitlab."gitlab.evolutiongaming.com/api/v4".user = "ykurneuski";
       };
     };
+    firefox = {
+      enable = true;
+      package = pkgs.firefox-wayland;
+      profiles.default = {
+        settings = import ./firefox/firefox.nix;
+        userChrome = builtins.readFile ./firefox/userChrome.css;
+      };
+    };
     root = {
       home.file.".config/mc/ini".source = ./mc.ini;
       programs = {
@@ -757,6 +765,7 @@
         inherit mpv;
         inherit alacritty;
         inherit git;
+        inherit firefox;
       };
       services = {
         gnome-keyring.enable = true;

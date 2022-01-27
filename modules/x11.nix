@@ -9,7 +9,6 @@
     xdotool
     xsel
     xterm
-    firefox
     ungoogled-chromium
     element-desktop
   ];
