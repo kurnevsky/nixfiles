@@ -1352,9 +1352,9 @@ If CLEAR is specified, clear them instead."
                                              "/Archive" ;; yandex, outlook
                                              ))
   (defun choose-mu4e-alternative (name alternatives)
-    (string-remove-prefix "~/Mail"
+    (string-remove-prefix "~/Maildir"
       (seq-find #'file-directory-p
-        (mapcar (lambda (value) (concat "~/Mail/" name value))
+        (mapcar (lambda (value) (concat "~/Maildir/" name value))
           (symbol-value alternatives)))))
   (defun make-mu4e-context-generic (name)
     (make-mu4e-context
@@ -1367,7 +1367,7 @@ If CLEAR is specified, clear them instead."
                (mu4e-drafts-folder . ,(choose-mu4e-alternative name 'mu4e-drafts-folder-alternatives))
                (mu4e-trash-folder . ,(choose-mu4e-alternative name 'mu4e-trash-folder-alternatives))
                (mu4e-refile-folder . ,(choose-mu4e-alternative name 'mu4e-refile-folder-alternatives)))))
-  (setq mu4e-contexts (mapcar #'make-mu4e-context-generic (directory-files "~/Mail" nil "[^.]"))))
+  (setq mu4e-contexts (mapcar #'make-mu4e-context-generic (directory-files "~/Maildir" nil "[^.]"))))
 
 ;; ========== Key bindings ==========
 

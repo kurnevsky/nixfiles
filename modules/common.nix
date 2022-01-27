@@ -747,6 +747,7 @@
         userChrome = builtins.readFile ./firefox/userChrome.css;
       };
     };
+    mbsync = { enable = true; };
     root = {
       home.file.".config/mc/ini".source = ./mc.ini;
       programs = {
@@ -777,6 +778,48 @@
         inherit alacritty;
         inherit git;
         inherit firefox;
+        inherit mbsync;
+      };
+      accounts.email.accounts = {
+        gmail = {
+          mbsync = {
+            enable = true;
+            patterns = [ "*" "![Gmail]/All Mail" ];
+            create = "both";
+            expunge = "both";
+          };
+          primary = true;
+          maildir.path = "gmail";
+          userName = "kurnevsky@gmail.com";
+          imap.host = "imap.gmail.com";
+          passwordCommand =
+            "pass show web/google.com | grep Isync | cut -d ' ' -f 2";
+        };
+        yandex = {
+          mbsync = {
+            enable = true;
+            create = "both";
+            expunge = "both";
+          };
+          maildir.path = "yandex";
+          userName = "kurnevsky";
+          imap.host = "imap.ya.ru";
+          passwordCommand = "pass show web/yandex.ru | head -n 1";
+        };
+        evolution = let user = "ykurneuski@evolution.com";
+        in {
+          mbsync = {
+            enable = true;
+            create = "both";
+            expunge = "both";
+            extraConfig.account.AuthMech = "XOAUTH2";
+          };
+          maildir.path = "evolution";
+          userName = user;
+          imap.host = "outlook.office365.com";
+          passwordCommand =
+            "~/cloud_mdir_sync/cms-oauth --cms_sock=/var/run/user/$UID/cms.sock --proto=IMAP --user ${user} --output=token";
+        };
       };
       services = {
         gnome-keyring.enable = true;
