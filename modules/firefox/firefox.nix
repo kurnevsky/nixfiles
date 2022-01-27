@@ -38,6 +38,9 @@
   "browser.newtabpage.activity-stream.section.highlights.includePocket" = false;
   "browser.newtabpage.activity-stream.showSponsored" = false;
   "browser.newtabpage.activity-stream.feeds.discoverystreamfeed" = false;
+  "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
+  # 0106: clear default topsites
+  "browser.newtabpage.activity-stream.default.sites" = "";
 
   # [SECTION 0300]: QUIET FOX
 
