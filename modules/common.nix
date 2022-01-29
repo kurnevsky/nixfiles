@@ -760,6 +760,7 @@
     home = {
       home.file = {
         ".config/mc/ini".source = ./mc.ini;
+        ".config/tox/toxic.conf".source = ./toxic.conf;
         ".config/emacs/init.el" = {
           source = ./init.el;
           onChange = ''

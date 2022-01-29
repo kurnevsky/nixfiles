@@ -371,20 +371,22 @@ in {
             whitelist = [ "~/.config/tox/" "~/.cache/Tox/" "~/.config/pulse/" ];
           } [ withFonts withOpengl ])
         ];
-        toxic = wrap super.toxic [{
-          name = "toxic";
-          extra-deps = with pkgs; [ glibcLocales ];
-          devs = [ "dri" ];
-          camera = true;
-          x11 = true;
-          pams = [ "pulse" ];
-          etcs = [ "pulse" ];
-          localtime = true;
-          resolv-conf = true;
-          unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" "SHELL" ];
-          unshare-net = false;
-          whitelist = [ "~/.config/tox/" "~/.config/pulse/" ];
-        }];
+        toxic = wrap super.toxic [
+          (withHomeManager [ ".config/tox" ] {
+            name = "toxic";
+            extra-deps = with pkgs; [ glibcLocales ];
+            devs = [ "dri" ];
+            camera = true;
+            x11 = true;
+            pams = [ "pulse" ];
+            etcs = [ "pulse" ];
+            localtime = true;
+            resolv-conf = true;
+            unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" "SHELL" ];
+            unshare-net = false;
+            whitelist = [ "~/.config/tox/" "~/.config/pulse/" ];
+          })
+        ];
         tdesktop = wrap super.tdesktop [
           (lib.pipe {
             name = "telegram-desktop";
