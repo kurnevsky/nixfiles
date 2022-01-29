@@ -437,6 +437,8 @@ in {
             ];
             x11 = true;
             pams = [ "bus" ];
+            # Creates lockfile there to launch a single instance
+            shared-tmp = true;
             localtime = true;
             resolv-conf = true;
             unsetenvs = [ "MAIL" "SHELL" ];
