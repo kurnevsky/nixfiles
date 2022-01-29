@@ -524,7 +524,9 @@ in {
           (withFonts {
             name = "wesnoth";
             pams = [ "pulse" ];
-            etcs = [ "pulse" ];
+            etcs = [ "pulse" "ssl/certs/ca-certificates.crt" ];
+            localtime = true;
+            resolv-conf = true;
             x11 = true;
             unsetenvs = [ "MAIL" "SHELL" ];
             unshare-net = false;
