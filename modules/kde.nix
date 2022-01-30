@@ -34,6 +34,8 @@
     extraPortals = with pkgs; [ xdg-desktop-portal-wlr xdg-desktop-portal-gtk ];
   };
 
+  programs.kdeconnect.enable = true;
+
   # Things that still have to be configured manually:
   # - Theme: it could be configured with lookandfeeltool or https://github.com/maldoinc/plasma-theme-switcher but at the moment it doesn't work
   # - Touchpad: its configs are bound to exact touchpad model
