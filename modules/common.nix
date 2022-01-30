@@ -297,6 +297,7 @@
   ];
 
   programs = {
+    dconf.enable = true;
     gnupg.agent.enable = true;
     bash.interactiveShellInit = ''
       # Set cursor type to steady bar
