@@ -135,6 +135,7 @@
       hunspellDicts.en_US
       hunspellDicts.ru_RU
       imv
+      inetutils
       inkscape
       innoextract
       iodine
