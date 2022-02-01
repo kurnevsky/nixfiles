@@ -41,8 +41,6 @@
     firewall = {
       enable = true;
       allowedTCPPorts = [
-        # SSH
-        22
         # VNC
         5901
         # MPD
