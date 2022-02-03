@@ -371,6 +371,23 @@
       };
       pulse.enable = true;
     };
+    yggdrasil = {
+      enable = true;
+      config = {
+        Peers = [
+          "tls://yggby.ddns.net:7992"
+          "tls://54.37.137.221:11129"
+          "tls://pl1.servers.devices.cwinfo.net:11129"
+          "tls://193.111.114.28:1443"
+          "tls://ygg-ukr.incognet.io:8884"
+        ];
+        AllowedPublicKeys = [
+          "cb875a43a4afadb2a5fa3ec785f5f041d5a7c8c3533f9a245634329294d4a558"
+        ];
+      };
+      openMulticastPort = true;
+      persistentKeys = true;
+    };
     i2pd = {
       enable = true;
       proto = {
