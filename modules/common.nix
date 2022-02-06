@@ -126,6 +126,7 @@
       gimp-with-plugins
       gnome-themes-extra
       gnome3.adwaita-icon-theme
+      google-authenticator
       gparted
       graphicsmagick
       graphicsmagick-imagemagick-compat
@@ -404,6 +405,7 @@
     openssh = {
       enable = true;
       forwardX11 = true;
+      permitRootLogin = "no";
     };
     printing.enable = true;
     resolved.enable = true;
@@ -502,8 +504,11 @@
   };
 
   security = {
-    # Enable pam_systemd module to set dbus environment variable.
-    pam.services.login.startSession = true;
+    pam.services = {
+      # Enable pam_systemd module to set dbus environment variable.
+      login.startSession = true;
+      sshd.googleAuthenticator.enable = true;
+    };
     unprivilegedUsernsClone = true;
     rtkit.enable = true;
     sudo.extraRules = [{
