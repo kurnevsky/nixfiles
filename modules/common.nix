@@ -21,7 +21,6 @@
   nixpkgs.config.allowUnfreePredicate = pkg:
     builtins.elem (lib.getName pkg) [
       "symbola"
-      "font-bh-lucidatypewriter"
       "unrar"
       "p7zip"
     ];
