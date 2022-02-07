@@ -3,7 +3,6 @@
 {
   nix = {
     package = pkgs.nixFlakes;
-    allowedUsers = [ "@wheel" ];
     autoOptimiseStore = true;
     extraOptions = ''
       experimental-features = nix-command flakes
