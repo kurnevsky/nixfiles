@@ -391,6 +391,7 @@
       enable = true;
       proto = {
         http.enable = true;
+        httpProxy.enable = true;
         socksProxy.enable = true;
         i2cp.enable = true;
       };
