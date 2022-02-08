@@ -383,10 +383,6 @@
           "tls://193.111.114.28:1443"
           "tls://ygg-ukr.incognet.io:8884"
         ];
-        AllowedPublicKeys = [
-          "cb875a43a4afadb2a5fa3ec785f5f041d5a7c8c3533f9a245634329294d4a558"
-          "e251c33f1776870ec2606f380c0ad79109f6be440fe52b240757c37854711ef1"
-        ];
       };
       openMulticastPort = true;
       persistentKeys = true;
