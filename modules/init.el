@@ -58,8 +58,6 @@
 (size-indication-mode t)
 ;; Short messages.
 (setq use-short-answers t)
-;; Add new line at the end of file if it doesn't exist.
-(setq require-final-newline t)
 ;; Highlight trailing whitespaces.
 (add-hook 'prog-mode-hook (lambda () (setq show-trailing-whitespace t)))
 ;; Easy transition between buffers: M-arrow-keys.
