@@ -15,6 +15,7 @@
   };
 
   environment.systemPackages = with pkgs; [
+    ark
     # TODO: upstream
     (pkgs.krfb.overrideAttrs
       (old: { buildInputs = old.buildInputs ++ [ pipewire ]; }))
