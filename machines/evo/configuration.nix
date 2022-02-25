@@ -11,11 +11,8 @@
       };
     };
     initrd.luks.devices.root.allowDiscards = true;
-    extraModulePackages = with config.boot.kernelPackages; [
-      acpi_call
-      v4l2loopback
-    ];
-    kernelModules = [ "v4l2loopback" "acpi_call" ];
+    extraModulePackages = with config.boot.kernelPackages; [ v4l2loopback ];
+    kernelModules = [ "v4l2loopback" ];
   };
 
   fileSystems = {
