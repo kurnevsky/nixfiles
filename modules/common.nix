@@ -215,6 +215,7 @@
       unrar
       unzip-natspec
       # Browsers
+      ungoogled-chromium-wayland
       tor-browser-bundle-bin
       # Messengers
       pidgin-with-plugins
