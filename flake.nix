@@ -61,17 +61,19 @@
             };
         })
         inputs.home-manager.nixosModules.home-manager
+        ./modules/common.nix
+        ./modules/bfq.nix
+      ];
+      desktopModules = commonModules ++ [
         (args: {
           nixpkgs.overlays =
             [ inputs.emacs-overlay.overlay inputs.fenix.overlay ];
         })
-        ./modules/common.nix
         ./modules/desktop.nix
         ./modules/wayland.nix
         ./modules/kde.nix
         ./modules/sandbox.nix
         ./modules/zswap.nix
-        ./modules/bfq.nix
         ./modules/shadowsocks.nix
         ./modules/motion.nix
         ./modules/rnnoise.nix
@@ -84,14 +86,14 @@
       nixosConfigurations = {
         dell = inputs.nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          modules = commonModules ++ [
+          modules = desktopModules ++ [
             ./machines/dell/configuration.nix
             ./machines/dell/hardware-configuration.nix
           ];
         };
         evo = inputs.nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          modules = commonModules ++ [
+          modules = desktopModules ++ [
             inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t480
             ./modules/validity.nix
             ./machines/evo/configuration.nix
@@ -100,8 +102,7 @@
         };
         digitalocean = inputs.nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          modules = [
-            ./modules/common.nix
+          modules = commonModules ++ [
             ./machines/digitalocean/configuration.nix
             ./machines/digitalocean/hardware-configuration.nix
             ./machines/digitalocean/networking.nix
