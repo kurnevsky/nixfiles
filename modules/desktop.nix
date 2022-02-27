@@ -20,8 +20,6 @@
     firewall = {
       enable = true;
       allowedTCPPorts = [
-        # VNC
-        5901
         # MPD
         8000
       ];
