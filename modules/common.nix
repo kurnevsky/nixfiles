@@ -17,6 +17,8 @@
     ];
   };
 
+  environment.systemPackages = [ pkgs.git ];
+
   users = {
     mutableUsers = false;
     motd = "Abandon all hope, ye who enter here.";
