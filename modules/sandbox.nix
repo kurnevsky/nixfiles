@@ -624,9 +624,7 @@ in {
         unzip-natspec
         mpv
         vlc
-        # firefox
         firefox-wayland
-        # chromium
         chromium-wayland
         pidgin
         qtox
