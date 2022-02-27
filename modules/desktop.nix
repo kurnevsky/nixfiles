@@ -245,8 +245,6 @@
       subversion
       # TODO
       # findimagedupes
-      # tuntox
-      # vagrant
       # veloren
       # tensorflow
       # sane xsane
