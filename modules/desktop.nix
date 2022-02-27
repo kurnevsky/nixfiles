@@ -426,7 +426,6 @@
     (self: super: {
       uutils-coreutils = super.uutils-coreutils.override { prefix = null; };
     })
-    (self: super: { wine = super.wineWowPackages.stagingFull; })
   ];
 
   users.users = {
