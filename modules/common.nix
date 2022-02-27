@@ -17,7 +17,14 @@
     ];
   };
 
-  environment.systemPackages = [ pkgs.git ];
+  environment = {
+    systemPackages = [ pkgs.git ];
+    shellAliases = {
+      ls = "ls --color=auto";
+      grep = "grep --color=auto";
+      su = "sudo su";
+    };
+  };
 
   users = {
     mutableUsers = false;

@@ -254,12 +254,6 @@
       # sane xsane
     ];
 
-    shellAliases = {
-      ls = "ls --color=auto";
-      grep = "grep --color=auto";
-      su = "sudo su";
-    };
-
     variables = {
       ALTERNATE_EDITOR = "nano";
       VIEWER = "less";
