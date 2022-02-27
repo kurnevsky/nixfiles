@@ -122,6 +122,7 @@
       gnome3.adwaita-icon-theme
       google-authenticator
       gparted
+      grafana-loki # for logcli
       graphicsmagick
       graphicsmagick-imagemagick-compat
       hans
