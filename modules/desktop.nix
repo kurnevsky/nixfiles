@@ -377,11 +377,6 @@
       yggdrasil.enable = true;
     };
     monero.enable = true;
-    openssh = {
-      enable = true;
-      forwardX11 = true;
-      permitRootLogin = "no";
-    };
     printing.enable = true;
     resolved.enable = true;
     tlp.enable = true;
