@@ -2,8 +2,8 @@
 
 drv:
 
-{ name, x11 ? false, target-name ? name, unshare-user ? true, unshare-ipc ? true
-, unshare-pid ? true, unshare-net ? true, unshare-uts ? true
+{ name, graphics ? false, target-name ? name, unshare-user ? true
+, unshare-ipc ? true, unshare-pid ? true, unshare-net ? true, unshare-uts ? true
 , unshare-cgroup ? true, etcs ? [ ], pams ? [ ], whitelist ? [ ]
 , ro-whitelist ? [ ], blacklist ? [ ], unsetenvs ? [ ], setenvs ? [ ]
 , devs ? [ ], syses ? [ ], shared-tmp ? false, camera ? false, args ? [ ]
@@ -80,7 +80,7 @@ in writeShellScriptBin target-name ''
   mapfile -t whitelist < <(echo -n "''${WHITELIST-}" | sed 's/.*/--bind\n&\n&/')
   mapfile -t blacklist < <(echo -n "''${BLACKLIST-}" | sed 's/.*/--tmpfs\n&/')
 
-  ${lib.optionalString x11 ''
+  ${lib.optionalString graphics ''
     mapfile -t xauthority < <(echo -n "''${XAUTHORITY-}" | sed 's/.*/--ro-bind\n&\n&/')
   ''}
 
@@ -127,7 +127,7 @@ in writeShellScriptBin target-name ''
          (x: ''--bind "$XDG_RUNTIME_DIR"/${x} "$XDG_RUNTIME_DIR"/${x}'') pams
        } \
        ${
-         lib.optionalString x11 ''
+         lib.optionalString graphics ''
            --bind-try "$XDG_RUNTIME_DIR"/"''${WAYLAND_DISPLAY-wayland-0}" "$XDG_RUNTIME_DIR"/"''${WAYLAND_DISPLAY-wayland-0}"''
        } \
        \
@@ -140,7 +140,7 @@ in writeShellScriptBin target-name ''
        \
        ${lib.optionalString shared-tmp "--bind /tmp /tmp"} \
        ${
-         lib.optionalString (x11 && !shared-tmp)
+         lib.optionalString (graphics && !shared-tmp)
          "--bind /tmp/.X11-unix /tmp/.X11-unix"
        } \
        \
@@ -148,7 +148,7 @@ in writeShellScriptBin target-name ''
        ${lib.concatMapStringsSep " " (x: "--bind ${x} ${x}") whitelist} \
        ${lib.concatMapStringsSep " " (x: "--tmpfs ${x}") blacklist} \
        \
-       ${lib.optionalString x11 ''"''${xauthority[@]}"''} \
+       ${lib.optionalString graphics ''"''${xauthority[@]}"''} \
        \
        "''${ro_whitelist[@]}" \
        "''${whitelist[@]}" \

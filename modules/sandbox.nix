@@ -68,7 +68,7 @@ let
   viewer-cfg = name:
     withFonts {
       inherit name;
-      x11 = true;
+      graphics = true;
       unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" "SHELL" ];
       ro-whitelist = [ "~/" ];
       blacklist = [ "~/.gnupg/" "~/.ssh/" ];
@@ -82,7 +82,7 @@ let
       "dev"
       "devices"
     ];
-    x11 = true;
+    graphics = true;
     pams = [ "bus" "gnupg" "pulse" ];
     etcs = [ "pulse" "ssl/certs/ca-certificates.crt" ];
     localtime = true;
@@ -118,7 +118,7 @@ let
       "dev"
       "devices"
     ];
-    x11 = true;
+    graphics = true;
     system-bus-socket = true;
     pams = [ "bus" "gnupg" "pulse" ];
     etcs = [ "pulse" "ssl/certs/ca-certificates.crt" ];
@@ -155,7 +155,7 @@ let
       "dev"
       "devices"
     ];
-    x11 = true;
+    graphics = true;
     pams = [ "bus" "pulse" ];
     etcs = [ "pulse" "ssl/certs/ca-certificates.crt" ];
     # Tray icon is stored in /tmp
@@ -179,7 +179,7 @@ let
         "dev"
         "devices"
       ];
-      x11 = true;
+      graphics = true;
       etcs = [ "ssl/certs/ca-certificates.crt" ];
       pams = [ "bus" "pulse" ];
       localtime = true;
@@ -210,7 +210,7 @@ let
         gnused
         plasma-integration
       ];
-      x11 = true;
+      graphics = true;
       etcs = [ "pulse" "passwd" ];
       localtime = true;
       pams = [ "bus" "pulse" ];
@@ -241,7 +241,7 @@ in {
               "pulse"
             ];
             etcs = [ "pulse" ];
-            x11 = true;
+            graphics = true;
             unsetenvs = [ "MAIL" "SHELL" ];
             ro-whitelist = [ "~/" ];
             whitelist = [ "~/.config/pulse/" "~/.config/deadbeef/" ];
@@ -276,7 +276,7 @@ in {
               "dev"
               "devices"
             ];
-            x11 = true;
+            graphics = true;
             pams = [ "bus" "pulse" ];
             etcs = [ "pulse" ];
             # xdg-screensaver creates a lockfile in /tmp
@@ -301,7 +301,7 @@ in {
               "dev"
               "devices"
             ];
-            x11 = true;
+            graphics = true;
             pams = [ "bus" "pulse" ];
             etcs = [ "pulse" ];
             unsetenvs = [ "MAIL" ];
@@ -332,7 +332,7 @@ in {
               hicolor-icon-theme
               plasma-integration
             ];
-            x11 = true;
+            graphics = true;
             etcs = [ "pulse" "ssl/certs/ca-certificates.crt" ];
             localtime = true;
             resolv-conf = true;
@@ -360,7 +360,7 @@ in {
               "dev"
               "devices"
             ];
-            x11 = true;
+            graphics = true;
             pams = [ "bus" "pulse" ];
             etcs = [ "pulse" ];
             localtime = true;
@@ -377,7 +377,7 @@ in {
             extra-deps = with pkgs; [ glibcLocales ];
             devs = [ "dri" ];
             camera = true;
-            x11 = true;
+            graphics = true;
             pams = [ "pulse" ];
             etcs = [ "pulse" ];
             localtime = true;
@@ -404,7 +404,7 @@ in {
               "dev"
               "devices"
             ];
-            x11 = true;
+            graphics = true;
             pams = [ "bus" "pulse" ];
             etcs = [ "pulse" ];
             localtime = true;
@@ -435,7 +435,7 @@ in {
               "dev"
               "devices"
             ];
-            x11 = true;
+            graphics = true;
             pams = [ "bus" ];
             # Creates lockfile there to launch a single instance
             shared-tmp = true;
@@ -529,7 +529,7 @@ in {
             etcs = [ "pulse" "ssl/certs/ca-certificates.crt" ];
             localtime = true;
             resolv-conf = true;
-            x11 = true;
+            graphics = true;
             unsetenvs = [ "MAIL" "SHELL" ];
             unshare-net = false;
             whitelist = [
@@ -542,7 +542,7 @@ in {
         ];
         tor-browser-bundle-bin = wrap super.tor-browser-bundle-bin [{
           name = "tor-browser";
-          x11 = true;
+          graphics = true;
           unsetenvs = [ "MAIL" "SHELL" ];
           unshare-net = false;
           whitelist = [ "~/.local/share/tor-browser/" ];
@@ -557,7 +557,7 @@ in {
               "devices"
             ];
             camera = true;
-            x11 = true;
+            graphics = true;
             system-bus-socket = true;
             etcs = [ "pulse" ];
             localtime = true;
@@ -591,7 +591,7 @@ in {
               "dev"
               "devices"
             ];
-            x11 = true;
+            graphics = true;
             pams = [ "pulse" ];
             etcs = [ "pulse" "ssl/certs/ca-certificates.crt" ];
             localtime = true;
