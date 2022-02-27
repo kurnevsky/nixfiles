@@ -242,8 +242,6 @@
       octave
       R
       # VCS
-      git
-      gitAndTools.delta
       mercurial
       pijul
       subversion
