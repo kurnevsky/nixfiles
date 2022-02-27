@@ -393,6 +393,7 @@
         socksProxy.enable = true;
         i2cp.enable = true;
       };
+      yggdrasil.enable = true;
     };
     monero.enable = true;
     openssh = {
