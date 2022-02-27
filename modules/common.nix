@@ -18,11 +18,7 @@
   };
 
   nixpkgs.config.allowUnfreePredicate = pkg:
-    builtins.elem (lib.getName pkg) [
-      "symbola"
-      "unrar"
-      "p7zip"
-    ];
+    builtins.elem (lib.getName pkg) [ "symbola" "unrar" "p7zip" ];
 
   boot = {
     kernelPackages = pkgs.linuxPackages_xanmod;
