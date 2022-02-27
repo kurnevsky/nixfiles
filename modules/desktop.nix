@@ -497,29 +497,13 @@
     (self: super: { wine = super.wineWowPackages.stagingFull; })
   ];
 
-  users = {
-    mutableUsers = false;
-    motd = "Abandon all hope, ye who enter here.";
-    users = {
-      # To get hash use:
-      # openssl passwd -6 password
-      root = {
-        shell = pkgs.zsh;
-        hashedPassword = "!";
-      };
-      kurnevsky = {
-        uid = 1000;
-        isNormalUser = true;
-        extraGroups = [ "wheel" "adbusers" "audio" "video" "vboxusers" ];
-        shell = pkgs.zsh;
-        passwordFile = "/secrets/kurnevsky";
-      };
-      ww = {
-        uid = 1001;
-        isNormalUser = true;
-        shell = pkgs.zsh;
-        passwordFile = "/secrets/ww";
-      };
+  users.users = {
+    kurnevsky.extraGroups = [ "adbusers" "audio" "video" "vboxusers" ];
+    ww = {
+      uid = 1001;
+      isNormalUser = true;
+      shell = pkgs.zsh;
+      passwordFile = "/secrets/ww";
     };
   };
 
