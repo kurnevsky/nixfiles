@@ -250,7 +250,6 @@
       rust-analyzer
       ## Scala
       coursier
-      metals
       sbt
       scala
       ## Math
