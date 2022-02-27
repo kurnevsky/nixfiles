@@ -65,6 +65,7 @@
           nixpkgs.overlays =
             [ inputs.emacs-overlay.overlay inputs.fenix.overlay ];
         })
+        ./modules/common.nix
         ./modules/desktop.nix
         ./modules/wayland.nix
         ./modules/kde.nix
@@ -100,6 +101,7 @@
         digitalocean = inputs.nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
+            ./modules/common.nix
             ./machines/digitalocean/configuration.nix
             ./machines/digitalocean/hardware-configuration.nix
             ./machines/digitalocean/networking.nix
