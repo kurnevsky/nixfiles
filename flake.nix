@@ -65,7 +65,7 @@
           nixpkgs.overlays =
             [ inputs.emacs-overlay.overlay inputs.fenix.overlay ];
         })
-        ./modules/common.nix
+        ./modules/desktop.nix
         ./modules/wayland.nix
         ./modules/kde.nix
         ./modules/sandbox.nix
