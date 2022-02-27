@@ -474,11 +474,8 @@
   };
 
   security = {
-    pam.services = {
-      # Enable pam_systemd module to set dbus environment variable.
-      login.startSession = true;
-      sshd.googleAuthenticator.enable = true;
-    };
+    # Enable pam_systemd module to set dbus environment variable.
+    pam.services.login.startSession = true;
     unprivilegedUsernsClone = true;
     rtkit.enable = true;
     sudo.extraRules = [{
