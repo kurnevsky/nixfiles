@@ -6,6 +6,7 @@
     firewall = {
       enable = true;
       allowedTCPPorts = [ 80 443 ];
+      allowedUDPPorts = [ 53 ];
     };
   };
 
@@ -44,6 +45,13 @@
         enableACME = true;
         forceSSL = true;
       };
+    };
+    iodine.server = {
+      enable = true;
+      ip = "172.18.42.1/24";
+      domain = "i.kurnevsky.me";
+      extraConfig = "-n 82.196.15.215";
+      passwordFile = "/secrets/iodine";
     };
   };
 }
