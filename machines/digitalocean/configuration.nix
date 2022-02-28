@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, config, ... }: {
   boot.cleanTmpDir = true;
 
   networking = {
@@ -27,10 +27,6 @@
     tt-rss = {
       enable = true;
       virtualHost = null;
-      database = {
-        name = "ttrss";
-        user = "ttrss";
-      };
       sessionCookieLifetime = 2592000;
       selfUrlPath = "https://kurnevsky.me/tt-rss/";
     };
@@ -44,6 +40,24 @@
       virtualHosts."kurnevsky.me" = {
         enableACME = true;
         forceSSL = true;
+        # TODO: enable after new nixos release
+        # kTLS = true;
+        root = "${config.services.tt-rss.root}/www";
+        locations = {
+          "/" = { index = "index.php"; };
+          "^~ /feed-icons" = { root = config.services.tt-rss.root; };
+          "~ \\.php$" = {
+            extraConfig = ''
+              fastcgi_split_path_info ^(.+\.php)(/.+)$;
+              fastcgi_pass unix:${
+                config.services.phpfpm.pools.${config.services.tt-rss.pool}.socket
+              };
+              fastcgi_index index.php;
+              include ${pkgs.nginxMainline}/conf/fastcgi_params;
+              include ${pkgs.nginxMainline}/conf/fastcgi.conf;
+            '';
+          };
+        };
       };
     };
     hans.server = {
