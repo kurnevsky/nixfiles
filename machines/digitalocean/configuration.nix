@@ -1,7 +1,13 @@
 { pkgs, ... }: {
   boot.cleanTmpDir = true;
 
-  networking.hostName = "digitalocean";
+  networking = {
+    hostName = "digitalocean";
+    firewall = {
+      enable = true;
+      allowedTCPPorts = [ 80 443 ];
+    };
+  };
 
   security.acme = {
     acceptTerms = true;
