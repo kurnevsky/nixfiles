@@ -65,6 +65,11 @@
             proxyPass = "http://localhost:8388";
             proxyWebsockets = true;
           };
+          "/static/" = {
+            alias = "/srv/www/";
+            tryFiles = "$uri =404";
+            extraConfig = "expires 24h;";
+          };
         };
       };
     };
