@@ -42,19 +42,22 @@
         forceSSL = true;
         # TODO: enable after new nixos release
         # kTLS = true;
-        root = "${config.services.tt-rss.root}/www";
         locations = {
-          "/" = { index = "index.php"; };
-          "^~ /feed-icons" = { root = config.services.tt-rss.root; };
-          "~ \\.php$" = {
+          "= /tt-rss".return = "301 $request_uri/";
+          "/tt-rss/" = {
+            alias = "${config.services.tt-rss.root}/www/";
+            index = "index.php";
+          };
+          "^~ /tt-rss/feed-icons/".alias =
+            "${config.services.tt-rss.root}/feed-icons/";
+          "~ /tt-rss/.+\\.php$" = {
+            alias = "${config.services.tt-rss.root}/www/";
             extraConfig = ''
-              fastcgi_split_path_info ^(.+\.php)(/.+)$;
+              fastcgi_split_path_info ^/tt-rss/(.+\.php)(.*)$;
               fastcgi_pass unix:${
                 config.services.phpfpm.pools.${config.services.tt-rss.pool}.socket
               };
               fastcgi_index index.php;
-              include ${pkgs.nginxMainline}/conf/fastcgi_params;
-              include ${pkgs.nginxMainline}/conf/fastcgi.conf;
             '';
           };
         };
