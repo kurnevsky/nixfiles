@@ -18,10 +18,10 @@
   services = {
     postgresql = {
       enable = true;
-      ensureDatabases = [ "ttrss" ];
+      ensureDatabases = [ "tt_rss" ];
       ensureUsers = [{
-        name = "ttrss";
-        ensurePermissions = { "DATABASE \"ttrss\"" = "ALL PRIVILEGES"; };
+        name = "tt_rss";
+        ensurePermissions = { "DATABASE \"tt_rss\"" = "ALL PRIVILEGES"; };
       }];
     };
     tt-rss = {
