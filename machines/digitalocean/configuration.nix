@@ -3,6 +3,11 @@
 
   networking.hostName = "digitalocean";
 
+  security.acme = {
+    acceptTerms = true;
+    email = "kurnevsky@gmail.com";
+  };
+
   services = {
     postgresql = {
       enable = true;
