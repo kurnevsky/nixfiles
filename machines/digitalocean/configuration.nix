@@ -14,12 +14,25 @@
     };
     tt-rss = {
       enable = true;
+      virtualHost = null;
       database = {
         name = "ttrss";
         user = "ttrss";
       };
       sessionCookieLifetime = 2592000;
       selfUrlPath = "https://kurnevsky.net/tt-rss/";
+    };
+    nginx = {
+      enable = true;
+      package = pkgs.nginxMainline;
+      recommendedTlsSettings = true;
+      recommendedOptimisation = true;
+      recommendedGzipSettings = true;
+      recommendedProxySettings = true;
+      virtualHosts."kurnevsky.net" = {
+        enableACME = true;
+        forceSSL = true;
+      };
     };
   };
 }
