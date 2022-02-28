@@ -46,6 +46,12 @@
         forceSSL = true;
       };
     };
+    hans.server = {
+      enable = true;
+      ip = "172.18.43.0";
+      extraConfig = "-d icmp -m 1200";
+      passwordFile = "/secrets/hans";
+    };
     iodine.server = {
       enable = true;
       ip = "172.18.42.1/24";
@@ -54,4 +60,6 @@
       passwordFile = "/secrets/iodine";
     };
   };
+
+  users.users.hans.group = "nogroup"; # TODO: don't use
 }
