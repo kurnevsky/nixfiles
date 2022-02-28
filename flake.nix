@@ -103,6 +103,7 @@
         digitalocean = inputs.nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = commonModules ++ [
+            ./modules/shadowsocks-server.nix
             ./machines/digitalocean/configuration.nix
             ./machines/digitalocean/hardware-configuration.nix
             ./machines/digitalocean/networking.nix

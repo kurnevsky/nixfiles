@@ -37,6 +37,7 @@
       recommendedOptimisation = true;
       recommendedGzipSettings = true;
       recommendedProxySettings = true;
+      proxyTimeout = "300s";
       virtualHosts."kurnevsky.me" = {
         enableACME = true;
         forceSSL = true;
@@ -59,6 +60,10 @@
               };
               fastcgi_index index.php;
             '';
+          };
+          "/ss" = {
+            proxyPass = "http://localhost:8388";
+            proxyWebsockets = true;
           };
         };
       };
