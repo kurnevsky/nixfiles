@@ -25,7 +25,7 @@
         user = "ttrss";
       };
       sessionCookieLifetime = 2592000;
-      selfUrlPath = "https://kurnevsky.net/tt-rss/";
+      selfUrlPath = "https://kurnevsky.me/tt-rss/";
     };
     nginx = {
       enable = true;
@@ -34,7 +34,7 @@
       recommendedOptimisation = true;
       recommendedGzipSettings = true;
       recommendedProxySettings = true;
-      virtualHosts."kurnevsky.net" = {
+      virtualHosts."kurnevsky.me" = {
         enableACME = true;
         forceSSL = true;
       };
