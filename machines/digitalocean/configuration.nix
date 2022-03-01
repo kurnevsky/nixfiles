@@ -12,6 +12,8 @@
         443
         # Tox
         33445
+        # Yggdrasil
+        42853
       ];
       allowedUDPPorts = [
         # DNS
@@ -129,6 +131,22 @@
       domain = "i.kurnevsky.net";
       extraConfig = "-n 82.196.15.215";
       passwordFile = "/secrets/iodine";
+    };
+    yggdrasil = {
+      enable = true;
+      config = {
+        Peers = [
+          "tls://45.147.198.155:6010"
+          "tls://94.103.82.150:8080"
+          "tls://ygg-nl.incognet.io:8884"
+          "tls://ygg1.ezdomain.ru:11130"
+          "tls://ygg.mkg20001.io:443"
+        ];
+        Listen = [
+          "tls://0.0.0.0:42853"
+        ];
+      };
+      persistentKeys = true;
     };
     tox-node = {
       enable = true;
