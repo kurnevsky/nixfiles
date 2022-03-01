@@ -38,11 +38,18 @@
       recommendedGzipSettings = true;
       recommendedProxySettings = true;
       proxyTimeout = "300s";
-      virtualHosts."kurnevsky.me" = {
+      virtualHosts."kurnevsky.me" = let
+        index = pkgs.writeTextFile {
+          name = "index.html";
+          destination = "/index.html";
+          text = builtins.readFile ./index.html;
+        };
+      in {
         enableACME = true;
         forceSSL = true;
         # TODO: enable after new nixos release
         # kTLS = true;
+        root = "${index}";
         locations = {
           "= /tt-rss".return = "301 $request_uri/";
           "/tt-rss/" = {
