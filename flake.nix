@@ -63,6 +63,7 @@
         inputs.home-manager.nixosModules.home-manager
         ./modules/common.nix
         ./modules/bfq.nix
+        ./modules/patches.nix
       ];
       desktopModules = commonModules ++ [
         (args: {
@@ -80,7 +81,6 @@
         ./modules/torjail.nix
         ./modules/nspawn.nix
         ./modules/overlays.nix
-        ./modules/patches.nix
       ];
     in {
       nixosConfigurations = {
