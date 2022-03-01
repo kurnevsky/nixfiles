@@ -6,7 +6,29 @@
     firewall = {
       enable = true;
       allowedTCPPorts = [ 80 443 ];
-      allowedUDPPorts = [ 53 ];
+      allowedUDPPorts = [ 53 51871 ];
+    };
+    wireguard.interfaces.wg0 = {
+      ips = [ "192.168.14.1/32" ];
+      listenPort = 51871;
+      privateKeyFile = "/secrets/wg/private.key";
+      peers = [
+        {
+          publicKey = "aRD0dqodCPyqTklk0KinKiTXYTnIBXZ0WFKy/q0dhQo=";
+          presharedKeyFile = "/secrets/wg/home.psk";
+          allowedIPs = [ "192.168.14.2/32" ];
+        }
+        {
+          publicKey = "KTZl5SWnLkMCRAp/vq8McPCDPJqaWK3iMBlk8yME6x4=";
+          presharedKeyFile = "/secrets/wg/work.psk";
+          allowedIPs = [ "192.168.14.3/32" ];
+        }
+        {
+          publicKey = "7Do1rDKMm8dZLgChf8pkS57Cg2A/jEj0JhNEfu0YTHM=";
+          presharedKeyFile = "/secrets/wg/parents.psk";
+          allowedIPs = [ "192.168.14.4/32" ];
+        }
+      ];
     };
   };
 
