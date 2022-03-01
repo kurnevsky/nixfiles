@@ -64,7 +64,7 @@
       enable = true;
       virtualHost = null;
       sessionCookieLifetime = 2592000;
-      selfUrlPath = "https://kurnevsky.me/tt-rss/";
+      selfUrlPath = "https://kurnevsky.net/tt-rss/";
     };
     nginx = {
       enable = true;
@@ -74,7 +74,7 @@
       recommendedGzipSettings = true;
       recommendedProxySettings = true;
       proxyTimeout = "300s";
-      virtualHosts."kurnevsky.me" = let
+      virtualHosts."kurnevsky.net" = let
         index = pkgs.writeTextFile {
           name = "index.html";
           destination = "/index.html";
@@ -125,7 +125,7 @@
     iodine.server = {
       enable = true;
       ip = "172.18.42.1/24";
-      domain = "i.kurnevsky.me";
+      domain = "i.kurnevsky.net";
       extraConfig = "-n 82.196.15.215";
       passwordFile = "/secrets/iodine";
     };
