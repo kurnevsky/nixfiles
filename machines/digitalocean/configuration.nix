@@ -5,8 +5,22 @@
     hostName = "digitalocean";
     firewall = {
       enable = true;
-      allowedTCPPorts = [ 80 443 ];
-      allowedUDPPorts = [ 53 51871 ];
+      allowedTCPPorts = [
+        # HTTP
+        80
+        # HTTPS
+        443
+        # Tox
+        33445
+      ];
+      allowedUDPPorts = [
+        # DNS
+        53
+        # Tox
+        33445
+        # WireGuard
+        51871
+      ];
     };
     wireguard.interfaces.wg0 = {
       ips = [ "192.168.14.1/32" ];
@@ -114,6 +128,13 @@
       domain = "i.kurnevsky.me";
       extraConfig = "-n 82.196.15.215";
       passwordFile = "/secrets/iodine";
+    };
+    tox-node = {
+      enable = true;
+      keysFile = "/secrets/tox";
+      tcpAddresses = [ ];
+      lanDiscovery = false;
+      motd = "Hi from tox-rs!";
     };
   };
 
