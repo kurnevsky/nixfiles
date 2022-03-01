@@ -52,6 +52,7 @@
   };
 
   services = {
+    do-agent.enable = true;
     postgresql = {
       enable = true;
       ensureDatabases = [ "tt_rss" ];
