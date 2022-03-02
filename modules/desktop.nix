@@ -1,4 +1,4 @@
-{ config, lib, pkgs, nixpkgs-unstable, ... }:
+{ lib, pkgs, ... }:
 
 {
   nixpkgs.config.allowUnfreePredicate = pkg:
@@ -436,239 +436,8 @@
   };
 
   home-manager = let
-    bash = {
-      enable = true;
-      historySize = 25000;
-      historyControl = [ "erasedups" "ignoredups" "ignorespace" ];
-      sessionVariables.PS1 = "[u@h W]$ ";
-      initExtra = ''
-        if [[ $TERM != "dumb" && -z "$MC_SID" && (-z $INSIDE_EMACS || $INSIDE_EMACS == "vterm") ]]; then
-          eval "$(${pkgs.starship}/bin/starship init bash)"
-        fi
-      '';
-    };
-    zsh = {
-      enable = true;
-      enableCompletion = false;
-      history = {
-        size = 20000;
-        save = 25000;
-        path = "$HOME/.histfile";
-        expireDuplicatesFirst = true;
-        share = false;
-        ignoreDups = false;
-      };
-      initExtra = ''
-        if [[ $TERM != "dumb" && -z "$MC_SID" && (-z $INSIDE_EMACS || $INSIDE_EMACS == "vterm") ]]; then
-          eval "$(${pkgs.starship}/bin/starship init zsh)"
-        fi
-      '';
-    };
-    starship = {
-      enable = true;
-      # Enabled manually since there is no way to disable it for mc
-      enableBashIntegration = false;
-      enableZshIntegration = false;
-      enableFishIntegration = false;
-      settings = {
-        add_newline = false;
-        format = "$username$hostname$shlvl$directory$character";
-        right_format =
-          "$git_branch$git_commit$git_state$git_metrics$git_status$hg_branch$nix_shell$cmd_duration";
-        character = {
-          success_symbol = "[➜](bold green)";
-          error_symbol = "[➜](bold red)";
-        };
-        directory = {
-          truncation_length = 0;
-          truncate_to_repo = false;
-        };
-      };
-    };
-    feh = {
-      enable = true;
-      buttons = {
-        zoom_in = "C-4";
-        zoom_out = "C-5";
-      };
-    };
-    mpv = {
-      enable = true;
-      config = {
-        hwdec = "auto";
-        cache = true;
-        demuxer-max-bytes = 41943040;
-        demuxer-max-back-bytes = 41943040;
-        volume-max = 500;
-      };
-      bindings = {
-        "Ctrl+n" = ''af toggle "lavfi=[dynaudnorm=f=175:g=25:p=0.75]"'';
-      };
-    };
-    tmux = {
-      enable = true;
-      terminal = "screen-256color";
-      historyLimit = 10000;
-      extraConfig = builtins.readFile ./tmux.conf;
-    };
-    alacritty = {
-      enable = true;
-      settings = {
-        scrolling.history = 100000;
-        font = {
-          normal.family = "Hack Nerd Font";
-          size = 12;
-        };
-        # Base16 OneDark
-        colors = {
-          primary = {
-            background = "0x282c34";
-            foreground = "0xabb2bf";
-          };
-          cursor = {
-            text = "0x282c34";
-            cursor = "0xabb2bf";
-          };
-          normal = {
-            black = "0x282c34";
-            red = "0xe06c75";
-            green = "0x98c379";
-            yellow = "0xe5c07b";
-            blue = "0x61afef";
-            magenta = "0xc678dd";
-            cyan = "0x56b6c2";
-            white = "0xabb2bf";
-          };
-          bright = {
-            black = "0x545862";
-            red = "0xd19a66";
-            green = "0x353b45";
-            yellow = "0x3e4451";
-            blue = "0x565c64";
-            magenta = "0xb6bdca";
-            cyan = "0xbe5046";
-            white = "0xc8ccd4";
-          };
-        };
-        draw_bold_text_with_bright_colors = false;
-        cursor.style = "Beam";
-        live_config_reload = false;
-        hints.enabled = [{
-          regex = ''
-            (ipfs:|ipns:|magnet:|mailto:|gemini:|gopher:|https:|http:|news:|file:|git:|ssh:|ftp:)[^\u0000-\u001F\u007F-\u009F<>"\\s{-}\\^⟨⟩`]+'';
-          command = "xdg-open";
-          post_processing = true;
-          mouse = {
-            enabled = true;
-            mods = "Control";
-          };
-          binding = {
-            key = "U";
-            mods = "Control|Shift";
-          };
-        }];
-        key_bindings = [
-          {
-            key = "Insert";
-            mods = "Control";
-            action = "Copy";
-          }
-          {
-            key = "Home";
-            chars = "\\x1bOH";
-          }
-          {
-            key = "End";
-            chars = "\\x1bOF";
-          }
-          {
-            key = "B";
-            mods = "Control|Shift";
-            action = "SearchForward";
-          }
-          {
-            key = "F";
-            mods = "Control|Shift";
-            action = "SearchBackward";
-          }
-          {
-            key = "Home";
-            mods = "Control";
-            mode = "Vi";
-            action = "ScrollToTop";
-          }
-          {
-            key = "End";
-            mods = "Control";
-            mode = "Vi";
-            action = "ScrollToBottom";
-          }
-          {
-            key = "PageUp";
-            mode = "Vi";
-            action = "ScrollPageUp";
-          }
-          {
-            key = "PageDown";
-            mode = "Vi";
-            action = "ScrollPageDown";
-          }
-          {
-            key = "Space";
-            mode = "Vi";
-            action = "ToggleNormalSelection";
-          }
-          {
-            key = "Q";
-            mode = "Vi";
-            action = "ToggleViMode";
-          }
-        ];
-      };
-    };
-    git = {
-      enable = true;
-      userName = "Evgeny Kurnevsky";
-      userEmail = "kurnevsky@gmail.com";
-      signing = {
-        key = null;
-        signByDefault = true;
-      };
-      aliases = {
-        lol = "log --graph --decorate --pretty=oneline --abbrev-commit --all";
-      };
-      delta.enable = true;
-      lfs.enable = true;
-      extraConfig = {
-        push.default = "simple";
-        merge.conflictstyle = "diff3";
-        pull.ff = "only";
-        github.user = "kurnevsky";
-        gitlab.user = "kurnevsky";
-        gitlab."gitlab.evolutiongaming.com/api/v4".user = "ykurneuski";
-      };
-    };
-    firefox = {
-      enable = true;
-      package = pkgs.firefox-wayland;
-      profiles.default = {
-        settings = import ./firefox/firefox.nix;
-        userChrome = builtins.readFile ./firefox/userChrome.css;
-      };
-    };
-    mbsync = { enable = true; };
-    root = {
-      home.file.".config/mc/ini".source = ./mc.ini;
-      programs = {
-        inherit bash;
-        inherit zsh;
-        inherit starship;
-        inherit tmux;
-      };
-    };
-    home = {
+    home-config = {
       home.file = {
-        ".config/mc/ini".source = ./mc.ini;
         ".config/tox/toxic.conf".source = ./toxic.conf;
         ".config/emacs/init.el" = {
           source = ./init.el;
@@ -679,16 +448,173 @@
         };
       };
       programs = {
-        inherit bash;
-        inherit zsh;
-        inherit starship;
-        inherit tmux;
-        inherit feh;
-        inherit mpv;
-        inherit alacritty;
-        inherit git;
-        inherit firefox;
-        inherit mbsync;
+        feh = {
+          enable = true;
+          buttons = {
+            zoom_in = "C-4";
+            zoom_out = "C-5";
+          };
+        };
+        mpv = {
+          enable = true;
+          config = {
+            hwdec = "auto";
+            cache = true;
+            demuxer-max-bytes = 41943040;
+            demuxer-max-back-bytes = 41943040;
+            volume-max = 500;
+          };
+          bindings = {
+            "Ctrl+n" = ''af toggle "lavfi=[dynaudnorm=f=175:g=25:p=0.75]"'';
+          };
+        };
+        alacritty = {
+          enable = true;
+          settings = {
+            scrolling.history = 100000;
+            font = {
+              normal.family = "Hack Nerd Font";
+              size = 12;
+            };
+            # Base16 OneDark
+            colors = {
+              primary = {
+                background = "0x282c34";
+                foreground = "0xabb2bf";
+              };
+              cursor = {
+                text = "0x282c34";
+                cursor = "0xabb2bf";
+              };
+              normal = {
+                black = "0x282c34";
+                red = "0xe06c75";
+                green = "0x98c379";
+                yellow = "0xe5c07b";
+                blue = "0x61afef";
+                magenta = "0xc678dd";
+                cyan = "0x56b6c2";
+                white = "0xabb2bf";
+              };
+              bright = {
+                black = "0x545862";
+                red = "0xd19a66";
+                green = "0x353b45";
+                yellow = "0x3e4451";
+                blue = "0x565c64";
+                magenta = "0xb6bdca";
+                cyan = "0xbe5046";
+                white = "0xc8ccd4";
+              };
+            };
+            draw_bold_text_with_bright_colors = false;
+            cursor.style = "Beam";
+            live_config_reload = false;
+            hints.enabled = [{
+              regex = ''
+                (ipfs:|ipns:|magnet:|mailto:|gemini:|gopher:|https:|http:|news:|file:|git:|ssh:|ftp:)[^\u0000-\u001F\u007F-\u009F<>"\\s{-}\\^⟨⟩`]+'';
+              command = "xdg-open";
+              post_processing = true;
+              mouse = {
+                enabled = true;
+                mods = "Control";
+              };
+              binding = {
+                key = "U";
+                mods = "Control|Shift";
+              };
+            }];
+            key_bindings = [
+              {
+                key = "Insert";
+                mods = "Control";
+                action = "Copy";
+              }
+              {
+                key = "Home";
+                chars = "\\x1bOH";
+              }
+              {
+                key = "End";
+                chars = "\\x1bOF";
+              }
+              {
+                key = "B";
+                mods = "Control|Shift";
+                action = "SearchForward";
+              }
+              {
+                key = "F";
+                mods = "Control|Shift";
+                action = "SearchBackward";
+              }
+              {
+                key = "Home";
+                mods = "Control";
+                mode = "Vi";
+                action = "ScrollToTop";
+              }
+              {
+                key = "End";
+                mods = "Control";
+                mode = "Vi";
+                action = "ScrollToBottom";
+              }
+              {
+                key = "PageUp";
+                mode = "Vi";
+                action = "ScrollPageUp";
+              }
+              {
+                key = "PageDown";
+                mode = "Vi";
+                action = "ScrollPageDown";
+              }
+              {
+                key = "Space";
+                mode = "Vi";
+                action = "ToggleNormalSelection";
+              }
+              {
+                key = "Q";
+                mode = "Vi";
+                action = "ToggleViMode";
+              }
+            ];
+          };
+        };
+        git = {
+          enable = true;
+          userName = "Evgeny Kurnevsky";
+          userEmail = "kurnevsky@gmail.com";
+          signing = {
+            key = null;
+            signByDefault = true;
+          };
+          aliases = {
+            lol =
+              "log --graph --decorate --pretty=oneline --abbrev-commit --all";
+          };
+          delta.enable = true;
+          lfs.enable = true;
+          extraConfig = {
+            push.default = "simple";
+            merge.conflictstyle = "diff3";
+            pull.ff = "only";
+            github.user = "kurnevsky";
+            gitlab.user = "kurnevsky";
+            gitlab."gitlab.evolutiongaming.com/api/v4".user = "ykurneuski";
+          };
+        };
+        firefox = {
+          enable = true;
+          package = pkgs.firefox-wayland;
+          profiles.default = {
+            settings = import ./firefox/firefox.nix;
+            userChrome = builtins.readFile ./firefox/userChrome.css;
+          };
+        };
+        mbsync = { enable = true; };
       };
       accounts.email.accounts = {
         gmail = {
@@ -747,12 +673,9 @@
       };
     };
   in {
-    useGlobalPkgs = true;
-    useUserPackages = true;
     users = {
-      root = root;
-      kurnevsky = home;
-      ww = home;
+      kurnevsky = home-config;
+      ww = home-config;
     };
   };
 }

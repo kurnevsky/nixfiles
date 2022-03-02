@@ -64,12 +64,14 @@
         ./modules/common.nix
         ./modules/bfq.nix
         ./modules/patches.nix
+        (import ./modules/common-home.nix [ "root" "kurnevsky" ])
       ];
       desktopModules = commonModules ++ [
         (args: {
           nixpkgs.overlays =
             [ inputs.emacs-overlay.overlay inputs.fenix.overlay ];
         })
+        (import ./modules/common-home.nix [ "ww" ])
         ./modules/desktop.nix
         ./modules/wayland.nix
         ./modules/kde.nix
