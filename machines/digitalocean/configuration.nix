@@ -78,17 +78,21 @@
       recommendedProxySettings = true;
       proxyTimeout = "300s";
       virtualHosts."kurnevsky.net" = let
-        index = pkgs.writeTextFile {
-          name = "index.html";
-          destination = "/index.html";
-          text = builtins.readFile ./index.html;
+        index = pkgs.writeTextDir "index.html" (builtins.readFile ./index.html);
+        robots = pkgs.writeTextDir "robots.txt" ''
+          User-agent: *
+          Disallow: /
+        '';
+        root = pkgs.symlinkJoin {
+          name = "root";
+          paths = [ index robots ];
         };
       in {
         enableACME = true;
         forceSSL = true;
         # TODO: enable after new nixos release
         # kTLS = true;
-        root = "${index}";
+        root = "${root}";
         locations = {
           "= /tt-rss".return = "301 $request_uri/";
           "/tt-rss/" = {
@@ -142,9 +146,7 @@
           "tls://ygg1.ezdomain.ru:11130"
           "tls://ygg.mkg20001.io:443"
         ];
-        Listen = [
-          "tls://0.0.0.0:42853"
-        ];
+        Listen = [ "tls://0.0.0.0:42853" ];
       };
       persistentKeys = true;
     };
