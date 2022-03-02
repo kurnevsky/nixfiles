@@ -158,4 +158,11 @@
   };
 
   users.users.hans.group = "nogroup"; # TODO: don't use
+
+  system.stateVersion = "21.11";
+
+  home-manager.users = {
+    root.home.stateVersion = "21.11";
+    kurnevsky.home.stateVersion = "21.11";
+  };
 }
