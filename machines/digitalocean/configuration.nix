@@ -69,6 +69,13 @@
       sessionCookieLifetime = 2592000;
       selfUrlPath = "https://kurnevsky.net/tt-rss/";
     };
+    phpfpm.pools.tt-rss.settings = {
+      "pm.max_children" = 10;
+      "pm.start_servers" = 2;
+      "pm.min_spare_servers" = 1;
+      "pm.max_spare_servers" = 2;
+      "pm.max_requests" = 100;
+    };
     nginx = {
       enable = true;
       package = pkgs.nginxMainline;
