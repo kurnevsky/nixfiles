@@ -18,7 +18,7 @@
   };
 
   environment = {
-    systemPackages = [ pkgs.git ];
+    systemPackages = with pkgs; [ git mc ];
     shellAliases = {
       ls = "ls --color=auto";
       grep = "grep --color=auto";

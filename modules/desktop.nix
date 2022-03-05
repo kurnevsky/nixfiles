@@ -131,7 +131,6 @@
       lsd
       lshw
       maim
-      mc
       mesa-demos
       metasploit
       mpc_cli
