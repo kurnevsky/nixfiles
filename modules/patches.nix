@@ -17,8 +17,8 @@ in {
     })
     (builtins.fetchurl {
       url =
-        "https://raw.githubusercontent.com/NixOS/nixpkgs/2f17f2c279718c3d8d7fb045d1f6e1ebc72299bc/nixos/modules/services/networking/tox-node.nix";
-      sha256 = "01gsz7gq3486yknjnlrnriv2lbwn8876mjnkvh6d6pnc45zyk16q";
+        "https://raw.githubusercontent.com/NixOS/nixpkgs/d94be445264f6e376502fcf07622451423b756d8/nixos/modules/services/networking/tox-node.nix";
+      sha256 = "0dn1zqy937sbwkd4qzdpr3mn1l1bvkr9fn2680k3mhidfc2x4k6b";
     })
   ];
   nixpkgs.overlays = [ (self: super: { }) ];
