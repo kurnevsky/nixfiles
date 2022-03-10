@@ -27,6 +27,7 @@
         # WireGuard
         51871
       ];
+      trustedInterfaces = [ "wg0" "icmp" "dns0" ];
     };
     wireguard.interfaces.wg0 = {
       ips = [ "192.168.14.1/32" ];
