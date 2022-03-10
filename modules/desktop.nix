@@ -6,10 +6,7 @@
 
   boot = {
     kernelPackages = pkgs.linuxPackages_xanmod;
-    kernel.sysctl = {
-      "kernel.sysrq" = 1;
-      "net.ipv4.ip_forward" = 1;
-    };
+    kernel.sysctl."kernel.sysrq" = 1;
     tmpOnTmpfs = true;
     supportedFilesystems = [ "ntfs" ];
   };

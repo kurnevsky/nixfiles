@@ -3,6 +3,10 @@
 
   networking = {
     hostName = "digitalocean";
+    nat = {
+      enable = true;
+      internalInterfaces = [ "wg0" "icmp" "dns0" ];
+    };
     firewall = {
       enable = true;
       allowedTCPPorts = [
