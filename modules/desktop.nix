@@ -105,7 +105,6 @@
       grafana-loki # for logcli
       graphicsmagick
       graphicsmagick-imagemagick-compat
-      hans
       hdparm
       hicolor-icon-theme # contains deadbeef icon
       hunspell
@@ -115,7 +114,6 @@
       inetutils
       inkscape
       innoextract
-      iodine
       iotop
       isync
       jq
@@ -294,6 +292,14 @@
       openMulticastPort = true;
       persistentKeys = true;
     };
+    hans.clients.digitalocean = {
+      server = "kurnevsky.net";
+      passwordFile = "/secrets/hans";
+    };
+    iodine.clients.digitalocean = {
+      server = "i.kurnevsky.net";
+      passwordFile = "/secrets/iodine";
+    };
     i2pd = {
       enable = true;
       proto = {
@@ -395,6 +401,8 @@
   systemd = {
     user.services.dbus.wantedBy = [ "default.target" ];
     services = {
+      iodine-digitalocean.wantedBy = pkgs.lib.mkForce [ ];
+      hans-digitalocean.wantedBy = pkgs.lib.mkForce [ ];
       i2pd.wantedBy = pkgs.lib.mkForce [ ];
       monero.wantedBy = pkgs.lib.mkForce [ ];
       tor.wantedBy = pkgs.lib.mkForce [ ];
@@ -429,6 +437,7 @@
       shell = pkgs.zsh;
       passwordFile = "/secrets/ww";
     };
+    hans.group = "nogroup"; # TODO: don't use
   };
 
   home-manager = let
