@@ -171,7 +171,10 @@
     };
   };
 
-  users.users.hans.group = "nogroup"; # TODO: don't use
+  users = {
+    users.hans.group = "hans";
+    groups.hans = { };
+  };
 
   system.stateVersion = "21.11";
 

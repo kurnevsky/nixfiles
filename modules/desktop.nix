@@ -429,15 +429,18 @@
     })
   ];
 
-  users.users = {
-    kurnevsky.extraGroups = [ "adbusers" "audio" "video" "vboxusers" ];
-    ww = {
-      uid = 1001;
-      isNormalUser = true;
-      shell = pkgs.zsh;
-      passwordFile = "/secrets/ww";
+  users = {
+    users = {
+      kurnevsky.extraGroups = [ "adbusers" "audio" "video" "vboxusers" ];
+      ww = {
+        uid = 1001;
+        isNormalUser = true;
+        shell = pkgs.zsh;
+        passwordFile = "/secrets/ww";
+      };
+      hans.group = "hans";
     };
-    hans.group = "nogroup"; # TODO: don't use
+    groups.hans = { };
   };
 
   home-manager = let
