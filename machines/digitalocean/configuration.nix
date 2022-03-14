@@ -1,6 +1,11 @@
 { pkgs, config, ... }: {
   boot.cleanTmpDir = true;
 
+  swapDevices = [{
+    device = "/swap";
+    size = 1024;
+  }];
+
   networking = {
     hostName = "digitalocean";
     nat = {
