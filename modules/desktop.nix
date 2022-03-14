@@ -60,7 +60,6 @@
       (lutris.override { steamSupport = false; })
       (pass-wayland.withExtensions (ext: with ext; [ pass-otp pass-update ]))
       (pkgs.callPackage ./pan-globalprotect-okta.nix { })
-      (pkgs.callPackage ./shapeshifter-dispatcher.nix { })
       (pkgs.callPackage ./webcam-filters.nix { })
       aircrack-ng
       alacritty

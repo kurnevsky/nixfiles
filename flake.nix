@@ -78,6 +78,7 @@
         ./modules/sandbox.nix
         ./modules/zswap.nix
         ./modules/shadowsocks.nix
+        ./modules/shapeshifter-client.nix
         ./modules/motion.nix
         ./modules/rnnoise.nix
         ./modules/torjail.nix
