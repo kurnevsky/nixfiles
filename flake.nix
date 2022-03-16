@@ -63,6 +63,7 @@
         inputs.home-manager.nixosModules.home-manager
         ./modules/common.nix
         ./modules/bfq.nix
+        ./modules/zswap.nix
         ./modules/patches.nix
         (import ./modules/common-home.nix [ "root" "kurnevsky" ])
       ];
@@ -76,7 +77,6 @@
         ./modules/wayland.nix
         ./modules/kde.nix
         ./modules/sandbox.nix
-        ./modules/zswap.nix
         ./modules/shadowsocks.nix
         ./modules/shapeshifter-client.nix
         ./modules/motion.nix
