@@ -221,10 +221,6 @@ let
 in {
   nixpkgs.overlays = [
     (self: super: {
-      sandbox-seccomp = pkgs.callPackage ./sandbox-seccomp.nix { };
-      xcb-client-id = pkgs.callPackage ./xcb-client-id.nix { };
-    })
-    (self: super: {
       sandboxed = {
         deadbeef = wrap (pid-hack super.deadbeef-with-plugins "deadbeef") [
           (withFonts {
@@ -257,16 +253,7 @@ in {
           (lib.pipe {
             name = "mpv";
             bin-sh = true;
-            extra-deps = with pkgs; [
-              coreutils-full
-              xdg-utils
-              xorg.xprop
-              xscreensaver
-              wmctrl
-              gawk
-              xcb-client-id
-              plasma-integration
-            ];
+            extra-deps = with pkgs; [ plasma-integration ];
             # unshare-pid breaks xdg-screensaver in a way that it can't detect
             # process termination and therefore might not enable screensaver
             unshare-pid = false;

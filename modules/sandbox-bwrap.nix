@@ -1,4 +1,4 @@
-{ bubblewrap, lib, sandbox-seccomp, writeShellScriptBin, closureInfo }:
+{ bubblewrap, callPackage, lib, writeShellScriptBin, closureInfo }:
 
 drv:
 
@@ -11,7 +11,9 @@ drv:
 , opengl ? false, opengl32 ? false, seccomp ? true, bin-sh ? false
 , localtime ? false, resolv-conf ? false }:
 
-let cinfo = closureInfo { rootPaths = [ drv ] ++ extra-deps; };
+let
+  sandbox-seccomp = callPackage ./sandbox-seccomp.nix { };
+  cinfo = closureInfo { rootPaths = [ drv ] ++ extra-deps; };
 in writeShellScriptBin target-name ''
   set -euETo pipefail
   shopt -s inherit_errexit
