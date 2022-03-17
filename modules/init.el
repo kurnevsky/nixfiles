@@ -975,6 +975,7 @@ If CLEAR is specified, clear them instead."
   (setq undo-tree-map (make-sparse-keymap))
   :custom
   (undo-tree-enable-undo-in-region nil)
+  (undo-tree-auto-save-history nil)
   :config
   (global-undo-tree-mode)
   (defun undo-tree-overridden-undo-bindings-p () nil)
