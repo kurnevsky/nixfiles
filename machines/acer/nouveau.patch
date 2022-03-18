@@ -1,0 +1,11 @@
+--- linux/drivers/gpu/drm/nouveau/nvkm/subdev/therm/base.c	2019-03-09 09:18:28.393054273 +0300
++++ linux/drivers/gpu/drm/nouveau/nvkm/subdev/therm/base.c	2019-03-09 09:24:11.930322388 +0300
+@@ -136,7 +136,7 @@
+ 				duty = therm->cstate;
+ 				poll = false;
+ 			} else {
+-				duty = nvkm_therm_update_linear_fallback(therm);
++				// duty = nvkm_therm_update_linear_fallback(therm);
+ 			}
+ 			break;
+ 		}

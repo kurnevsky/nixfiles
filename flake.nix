@@ -103,6 +103,10 @@
             ./machines/evo/hardware-configuration.nix
           ];
         };
+        acer = inputs.nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = commonModules ++ [ ./machines/acer/configuration.nix ];
+        };
         digitalocean = inputs.nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = commonModules ++ [
