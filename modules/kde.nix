@@ -16,6 +16,7 @@
 
   environment.systemPackages = with pkgs; [
     ark
+    kcalc
     # TODO: upstream
     (pkgs.krfb.overrideAttrs
       (old: { buildInputs = old.buildInputs ++ [ pipewire ]; }))
