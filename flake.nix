@@ -105,7 +105,11 @@
         };
         acer = inputs.nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          modules = commonModules ++ [ ./machines/acer/configuration.nix ];
+          modules = commonModules ++ [
+            (import ./modules/common-home.nix [ "parents" ])
+            ./machines/acer/hardware-configuration.nix
+            ./machines/acer/configuration.nix
+          ];
         };
         digitalocean = inputs.nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
