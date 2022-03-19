@@ -315,7 +315,6 @@
       };
       settings.Socks5Proxy = "127.0.0.1:1080";
     };
-    timesyncd.enable = true;
     upower.enable = true;
     emacs = {
       enable = true;

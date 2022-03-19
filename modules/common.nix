@@ -121,11 +121,14 @@
     };
   };
 
-  services.openssh = {
-    enable = true;
-    permitRootLogin = "no";
-    passwordAuthentication = false;
-    # TODO: rename to kbdInteractiveAuthentication after new nixos release
-    challengeResponseAuthentication = false;
+  services = {
+    openssh = {
+      enable = true;
+      permitRootLogin = "no";
+      passwordAuthentication = false;
+      # TODO: rename to kbdInteractiveAuthentication after new nixos release
+      challengeResponseAuthentication = false;
+    };
+    timesyncd.enable = true;
   };
 }
