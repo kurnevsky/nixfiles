@@ -117,8 +117,8 @@
         };
         sessionCommands = let
           layout = pkgs.writeText "xkb-layout" ''
-            keycode 183 = dollar
-            keycode 184 = EuroSign
+            keycode 191 = dollar
+            keycode 192 = EuroSign
           '';
         in "${pkgs.xorg.xmodmap}/bin/xmodmap ${layout}";
       };
