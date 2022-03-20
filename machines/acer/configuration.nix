@@ -13,6 +13,7 @@
       enable = true;
       device = "/dev/sda";
     };
+    initrd.kernelModules = [ "nouveau" ];
   };
 
   networking = {
@@ -79,7 +80,7 @@
     };
     xserver = {
       enable = true;
-      videoDrivers = [ "nouveau" ];
+      videoDrivers = [ "modesetting" ];
       displayManager = {
         defaultSession = "plasma";
         autoLogin = {
