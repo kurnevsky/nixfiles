@@ -136,16 +136,23 @@
     };
   };
 
-  systemd.services.eurodollar = {
-    description = "Setkeycodes for € and $ keys";
-    wantedBy = [ "multi-user.target" ];
-    serviceConfig = {
-      Type = "oneshot";
-      ExecStart = [
-        "${pkgs.kbd}/bin/setkeycodes b3 183"
-        "${pkgs.kbd}/bin/setkeycodes b4 184"
-      ];
+  systemd.services = {
+    eurodollar = {
+      description = "Setkeycodes for € and $ keys";
+      wantedBy = [ "multi-user.target" ];
+      serviceConfig = {
+        Type = "oneshot";
+        ExecStart = [
+          "${pkgs.kbd}/bin/setkeycodes b3 183"
+          "${pkgs.kbd}/bin/setkeycodes b4 184"
+        ];
+      };
     };
+    "wireguard-wg0-peer-5JHCxIYeZ50k7YJM\\x2bkLAbqGW4LAXpI5lycYEWSVxkBE\\x3d-refresh".serviceConfig =
+      {
+        Restart = "always";
+        RestartSec = "30";
+      };
   };
 
   system.stateVersion = "21.11";

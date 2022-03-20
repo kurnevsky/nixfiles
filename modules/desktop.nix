@@ -399,6 +399,11 @@
       i2pd.wantedBy = pkgs.lib.mkForce [ ];
       monero.wantedBy = pkgs.lib.mkForce [ ];
       tor.wantedBy = pkgs.lib.mkForce [ ];
+      "wireguard-wg0-peer-5JHCxIYeZ50k7YJM\\x2bkLAbqGW4LAXpI5lycYEWSVxkBE\\x3d-refresh".serviceConfig =
+        {
+          Restart = "always";
+          RestartSec = "30";
+        };
     };
   };
 
