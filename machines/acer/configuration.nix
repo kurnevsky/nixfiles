@@ -91,6 +91,12 @@
           enable = true;
           autoNumlock = true;
         };
+        sessionCommands = let
+          layout = pkgs.writeText "xkb-layout" ''
+            keycode 183 = dollar
+            keycode 184 = EuroSign
+          '';
+        in "${pkgs.xorg.xmodmap}/bin/xmodmap ${layout}";
       };
       desktopManager.plasma5.enable = true;
       libinput = {
