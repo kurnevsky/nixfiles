@@ -40,6 +40,7 @@
         presharedKeyFile = "/secrets/wg/preshared.psk";
         allowedIPs = [ "192.168.14.0/24" ];
         persistentKeepalive = 25;
+        dynamicEndpointRefreshSeconds = 30;
       }];
       ips = [ "192.168.14.4/32" ];
     };
