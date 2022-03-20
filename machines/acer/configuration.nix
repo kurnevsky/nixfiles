@@ -93,6 +93,10 @@
         };
       };
       desktopManager.plasma5.enable = true;
+      libinput = {
+        enable = true;
+        touchpad.disableWhileTyping = true;
+      };
     };
   };
 
