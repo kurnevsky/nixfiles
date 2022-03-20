@@ -1,6 +1,9 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 {
+  nixpkgs.config.allowUnfreePredicate = pkg:
+    builtins.elem (lib.getName pkg) [ "symbola" "unrar" "p7zip" ];
+
   nix = {
     package = pkgs.nixFlakes;
     autoOptimiseStore = true;
