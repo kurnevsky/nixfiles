@@ -35,6 +35,7 @@
     192.168.14.4 parents
     200:3b5c:7981:d112:f1e2:7b3f:218f:e7ea home-ygg
     200:68f1:4b78:b6a0:a49a:b40b:8270:f414 work-ygg
+    201:613a:44c6:38ad:a0f2:d452:dd0a:94c7 parents-ygg
     200:6381:a789:fbbe:3411:2135:e3b:b4a9 digitalocean-ygg
   '';
 
