@@ -115,12 +115,6 @@
           enable = true;
           autoNumlock = true;
         };
-        sessionCommands = let
-          layout = pkgs.writeText "xkb-layout" ''
-            keycode 191 = dollar
-            keycode 192 = EuroSign
-          '';
-        in "${pkgs.xorg.xmodmap}/bin/xmodmap ${layout}";
       };
       desktopManager.plasma5.enable = true;
       libinput = {
@@ -179,7 +173,13 @@
   home-manager.users = {
     root.home.stateVersion = "21.11";
     parents = {
-      home.stateVersion = "21.11";
+      home = {
+        stateVersion = "21.11";
+        file.".Xmodmap".text = ''
+          keycode 191 = dollar
+          keycode 192 = EuroSign
+        '';
+      };
       systemd.user.services.x0vncserver = {
         Unit.Description = "Remote desktop service (VNC)";
         Service = {
