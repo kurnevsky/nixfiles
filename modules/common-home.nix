@@ -43,7 +43,7 @@ users:
           enableFishIntegration = false;
           settings = {
             add_newline = false;
-            format = "$username$hostname$shlvl$directory$character";
+            format = "$username$hostname$localip$shlvl$directory$character";
             right_format =
               "$git_branch$git_commit$git_state$git_metrics$git_status$hg_branch$nix_shell$cmd_duration";
             character = {
