@@ -22,6 +22,10 @@
     networkmanager.enable = true;
     firewall = {
       enable = true;
+      allowedTCPPorts = [
+        # VNC
+        5900
+      ];
       allowedUDPPorts = [
         # WireGuard
         51871
@@ -147,7 +151,21 @@
 
   home-manager.users = {
     root.home.stateVersion = "21.11";
-    parents.home.stateVersion = "21.11";
+    parents = {
+      home.stateVersion = "21.11";
+      systemd.user.services.x0vncserver = {
+        Unit.Description = "Remote desktop service (VNC)";
+        Service = {
+          Type = "simple";
+          # wait for Xorg started by ${USER}
+          ExecStartPre =
+            "${pkgs.bash}/bin/sh -c 'while ! ${pkgs.procps}/bin/pgrep -U \"$USER\" plasmashell; do ${pkgs.coreutils}/bin/sleep 2; done'";
+          ExecStart =
+            "${pkgs.tigervnc}/bin/x0vncserver -rfbauth /home/\${USER}/.vnc/passwd";
+        };
+        Install.WantedBy = [ "default.target" ];
+      };
+    };
     kurnevsky.home.stateVersion = "21.11";
   };
 }
