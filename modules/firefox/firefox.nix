@@ -2,8 +2,6 @@
 # Compare with master using https://github.com/ghacksuserjs/ghacks-user.js/compare/HASH1...HASH2
 
 {
-  # Enable OpenGL Off-Main-Thread Compositing (OMTC)
-  "layers.acceleration.force-enabled" = true;
   # Enable webrender
   "gfx.webrender.all" = true;
   "gfx.webrender.enabled" = true;
