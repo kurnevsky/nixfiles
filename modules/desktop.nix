@@ -223,7 +223,7 @@
       maxima
       wxmaxima
       octave
-      R
+      (rWrapper.override { packages = with rPackages; [ ggplot2 ]; })
       # VCS
       mercurial
       pijul
