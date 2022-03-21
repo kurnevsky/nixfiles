@@ -621,6 +621,17 @@
             settings = import ./firefox/firefox.nix;
             userChrome = builtins.readFile ./firefox/userChrome.css;
           };
+          extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+            darkreader
+            decentraleyes
+            plasma-integration
+            privacy-badger
+            sponsorblock
+            ublock-origin
+            # Not in NUR:
+            # find+
+            # passff
+          ];
         };
         mbsync = { enable = true; };
       };

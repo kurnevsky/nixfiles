@@ -47,6 +47,12 @@
       repo = "home-manager";
       ref = "release-21.11";
     };
+
+    nur = {
+      type = "github";
+      owner = "nix-community";
+      repo = "nur";
+    };
   };
 
   outputs = { self, ... }@inputs:
@@ -69,8 +75,11 @@
       ];
       desktopModules = commonModules ++ [
         (args: {
-          nixpkgs.overlays =
-            [ inputs.emacs-overlay.overlay inputs.fenix.overlay ];
+          nixpkgs.overlays = [
+            inputs.emacs-overlay.overlay
+            inputs.fenix.overlay
+            inputs.nur.overlay
+          ];
         })
         (import ./modules/common-home.nix [ "ww" ])
         ./modules/desktop.nix
