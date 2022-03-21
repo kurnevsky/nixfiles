@@ -7,6 +7,8 @@
   # Enable webrender
   "gfx.webrender.all" = true;
   "gfx.webrender.enabled" = true;
+  # Enable video hardware acceleration
+  "media.ffmpeg.vaapi.enabled" = true;
   # Allow unsigned Add-ons. Or at least try...
   "xpinstall.signatures.required" = false;
   # Read userChrome.css and userContent.css
