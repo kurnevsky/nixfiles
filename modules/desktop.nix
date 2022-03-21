@@ -241,6 +241,8 @@
       # It causes segfaults
       MAGICK_OCL_DEVICE = "OFF";
     };
+
+    sessionVariables.MOZ_USE_XINPUT2 = "1";
   };
 
   fonts.fonts = with pkgs; [
