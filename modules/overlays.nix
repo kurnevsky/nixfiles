@@ -4,6 +4,7 @@
   # system.replaceRuntimeDependencies can be used to make fast fixes
   nixpkgs.overlays = [
     (self: super: {
+      vaapiIntel = super.vaapiIntel.override { enableHybridCodec = true; };
       deadbeef = super.deadbeef.override { wavpackSupport = true; };
       deadbeef-with-plugins = super.deadbeef-with-plugins.override {
         plugins = with super.deadbeefPlugins; [ mpris2 statusnotifier ];
