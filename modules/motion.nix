@@ -17,8 +17,14 @@ let
     post_capture 1
     picture_output first
     movie_codec hevc
+    webcontrol_ipv6 on
+    stream_port 8081
+    stream_localhost off
+    stream_auth_method 2
   '';
 in {
+  networking.firewall.allowedTCPPorts = [ 8081 ];
+
   users.extraUsers.motion = {
     group = "nogroup"; # TODO: don't use
     description = "Motion Service user";
@@ -39,7 +45,10 @@ in {
       PrivateTmp = true;
       ProtectSystem = "strict";
       ReadWritePaths = homeDir;
-      ExecStart = "${pkgs.motion}/bin/motion -n -c ${config}";
     };
+    script = ''
+      cat ${config} /secrets/motion > /tmp/motion.conf
+      exec ${pkgs.motion}/bin/motion -n -c /tmp/motion.conf
+    '';
   };
 }
