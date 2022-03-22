@@ -25,13 +25,16 @@ let
 in {
   networking.firewall.allowedTCPPorts = [ 8081 ];
 
-  users.extraUsers.motion = {
-    group = "nogroup"; # TODO: don't use
-    description = "Motion Service user";
-    extraGroups = [ "video" ];
-    home = homeDir;
-    createHome = true;
-    isSystemUser = true;
+  users = {
+    extraUsers.motion = {
+      group = "motion";
+      description = "Motion Service user";
+      extraGroups = [ "video" ];
+      home = homeDir;
+      createHome = true;
+      isSystemUser = true;
+    };
+    groups.motion = { };
   };
 
   systemd.services.motion = {
