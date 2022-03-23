@@ -85,8 +85,11 @@
 (setq read-buffer-completion-ignore-case t)
 (setq read-file-name-completion-ignore-case t)
 ;; Use fuzzy matching in completion.
-(unless (version< emacs-version "27")
-  (setq completion-styles '(flex)))
+(setq completion-styles '(basic flex))
+;; Don't allow cursor in the read only minibuffer text.
+(setq minibuffer-prompt-properties
+  '(read-only t cursor-intangible t face minibuffer-prompt))
+(add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
 ;; Show line and column numbers.
 (line-number-mode t)
 (column-number-mode t)
@@ -399,7 +402,7 @@ ARGS is `kill-buffer' arguments."
   (defun indent-between-pair (&rest _ignored)
     "Open a new brace or bracket expression, with relevant newlines and indent."
     ;; Need to check last operation to prevent newline insertion when switching
-    ;; buffers with ivy buffer and pressing RET.
+    ;; buffers and pressing RET.
     (when (eq sp-last-operation 'sp-self-insert)
       (newline)
       (indent-according-to-mode)
@@ -517,82 +520,6 @@ ARGS is `kill-buffer' arguments."
       ((and (not (ends-with-/ a)) (ends-with-/ b)) nil)
       (t (string-lessp a b)))))
 
-(use-package flx-ido
-  :demand t
-  :after ido
-  :custom
-  (flx-ido-use-faces t)
-  :config
-  (flx-ido-mode 1)
-  (defun clear-flx-highlight-face (str)
-    "Clear flx-highlight-face from str"
-    (remove-text-properties 0 (length str) '(face flx-highlight-face) str))
-  (advice-add 'ido-complete :before (lambda ()
-                                      (dolist (str ido-matches)
-                                        (clear-flx-highlight-face str))
-                                      (clear-flx-highlight-face ido-common-match-string)))
-  ;; Remove ido-max-prospects limit from flx-ido-decorate since we can use ido-prev-match and ido-next-match.
-  (defun flx-ido-decorate (things &optional clear)
-    "Add ido text properties to THINGS.
-If CLEAR is specified, clear them instead."
-    (if flx-ido-use-faces
-      (cl-loop for thing in things
-        for i from 0 below (length things)
-        collect (if clear
-                  (flx-propertize thing nil)
-                  (flx-propertize (car thing) (cdr thing))))
-      (if clear
-        things
-        (mapcar #'car things)))))
-
-(use-package smex
-  :commands (smex
-              smex-major-mode-commands)
-  :config
-  (smex-initialize))
-
-(use-package ivy
-  :demand t
-  :bind (("<f2>" . ivy-switch-buffer)
-          :map ivy-minibuffer-map
-          ("RET" . ivy-alt-done)
-          ("<C-return>" . ivy-immediate-done)
-          ("C-s" . ignore)
-          :map ivy-switch-buffer-map
-          ("<f2>" . keyboard-escape-quit))
-  :custom
-  (ivy-magic-tilde nil)
-  (ivy-extra-directories nil)
-  (ivy-fixed-height-minibuffer t)
-  (ivy-format-function #'ivy-format-function-line)
-  (ivy-sort-matches-functions-alist
-    '((t . ivy--flx-prefix-sort)
-       (ivy-switch-buffer . ivy-sort-function-buffer)))
-  :config
-  (ivy-mode 1)
-  (setq ivy-re-builders-alist '((t . ivy--regex-fuzzy)))
-  (defun ivy--flx-prefix-sort (name candidates)
-    (if (or (string= name "")
-          (= (aref name 0) ?^))
-      candidates
-      (let ((candidates (ivy--flx-sort name candidates))
-             (name (s-chop-suffix "$" (s-chop-prefix "^" (downcase name))))
-             res-prefix
-             res-noprefix)
-        (dolist (s candidates)
-          (if (string-prefix-p name (downcase s))
-            (push s res-prefix)
-            (push s res-noprefix)))
-        (nconc
-          (sort (nreverse res-prefix) (-on #'< #'length))
-          (nreverse res-noprefix))))))
-
-(use-package counsel
-  :demand t
-  :after ivy
-  :config
-  (counsel-mode 1))
-
 (use-package all-the-icons
   :commands (all-the-icons-icon-for-file
               all-the-icons-icon-for-mode
@@ -604,104 +531,75 @@ If CLEAR is specified, clear them instead."
     (unless (member "all-the-icons" (font-family-list))
       (all-the-icons-install-fonts t))))
 
-(use-package ivy-rich
+(use-package vertico
   :demand t
-  :after ivy
+  :bind (:map vertico-map
+          ("TAB" . minibuffer-complete)
+          ("M-TAB" . vertico-insert)
+          ("<prior>" . vertico-scroll-down)
+          ("<next>" . vertico-scroll-up))
+  :custom
+  (vertico-multiform-categories '((file (vertico-sort-function . sort-directories-first))))
   :config
-  ;; Workaround for buggy nix elisp parser
-  (defconst ivy-rich-separator (eval (car (read-from-string "(char-to-string #x200B)"))))
-  ;; Prevent highlighting helper columns
-  (advice-add 'ivy-rich-format-column :around (lambda (orig-fun &rest args)
-                                                (let ((candidate (car (car (cdr args))))
-                                                       (formatted (apply orig-fun args)))
-                                                  (if (or
-                                                        (eq candidate 'ivy-rich-candidate)
-                                                        (string-suffix-p "-transformer" (symbol-name candidate)))
-                                                    (concat ivy-rich-separator formatted ivy-rich-separator)
-                                                    formatted))))
-  (advice-add 'ivy--highlight-fuzzy :around (lambda (orig-fun &rest args)
-                                              (pcase (split-string (car args) ivy-rich-separator)
-                                                (`(,left ,candidate ,right) (concat left (apply orig-fun (list candidate)) right))
-                                                (_ (apply orig-fun args)))))
-  (ivy-rich-mode 1))
+  ;; Sort directories before files
+  (defun sort-directories-first (files)
+    (setq files (vertico-sort-history-length-alpha files))
+    (nconc (seq-filter (-partial #'string-suffix-p "/") files)
+      (seq-remove (-partial #'string-suffix-p "/") files)))
+  (vertico-mode)
+  (vertico-multiform-mode))
 
-(use-package all-the-icons-ivy-rich
+(use-package vertico-directory
+  :after vertico
+  :ensure nil
+  :bind (:map vertico-map
+          ("RET" . vertico-directory-enter)
+          ("DEL" . vertico-directory-delete-char)
+          ("M-DEL" . vertico-directory-delete-word))
+  :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
+
+(use-package marginalia
   :demand t
-  :after ivy-rich
   :config
-  (defun ivy-rich-file-size (candidate)
-    (let ((candidate (expand-file-name candidate ivy--directory)))
-      (if (or (not (file-exists-p candidate)) (file-remote-p candidate))
-        "?"
-        (let ((size (file-attribute-size (file-attributes candidate))))
-          (cond
-            ((> size 1000000) (format "%.1fM " (/ size 1000000.0)))
-            ((> size 1000) (format "%.1fk " (/ size 1000.0)))
-            (t (format "%d " size)))))))
-  (defun ivy-rich-file-modes (candidate)
-    (let ((candidate (expand-file-name candidate ivy--directory)))
-      (if (or (not (file-exists-p candidate)) (file-remote-p candidate))
-        "?"
-        (format "%s" (file-attribute-modes (file-attributes candidate))))))
-  (defun ivy-rich-file-user (candidate)
-    (let ((candidate (expand-file-name candidate ivy--directory)))
-      (if (or (not (file-exists-p candidate)) (file-remote-p candidate))
-        "?"
-        (let* ((user-id (file-attribute-user-id (file-attributes candidate)))
-                (user-name (user-login-name user-id)))
-          (format "%s" user-name)))))
-  (defun ivy-rich-file-group (candidate)
-    (let ((candidate (expand-file-name candidate ivy--directory)))
-      (if (or (not (file-exists-p candidate)) (file-remote-p candidate))
-        "?"
-        (let* ((group-id (file-attribute-group-id (file-attributes candidate)))
-                (group-function #'group-name)
-                (group-name (funcall group-function group-id)))
-          (format "%s" group-name)))))
-  (defun modify-all-the-icons-ivy-rich-display-transformers-list (key value)
-    (setcar
-      (nthcdr
-        (+ (-elem-index key all-the-icons-ivy-rich-display-transformers-list) 1)
-        all-the-icons-ivy-rich-display-transformers-list)
-      value))
-  (modify-all-the-icons-ivy-rich-display-transformers-list
-    'counsel-find-file
-    '(:columns
-       ((all-the-icons-ivy-rich-file-icon)
-         (ivy-read-file-transformer (:width 60))
-         (ivy-rich-file-user (:width 10 :face font-lock-doc-face))
-         (ivy-rich-file-group (:width 10 :face font-lock-doc-face))
-         (ivy-rich-file-modes (:width 11 :face font-lock-doc-face))
-         (ivy-rich-file-size (:width 10 :face font-lock-doc-face))
-         (ivy-rich-file-last-modified-time (:width 30 :face font-lock-doc-face)))
-       :delimiter "\t"))
-  (modify-all-the-icons-ivy-rich-display-transformers-list
-    'ivy-switch-buffer
-    '(:columns
-       ((all-the-icons-ivy-rich-buffer-icon)
-         (ivy-rich-candidate (:width 30))
-         (ivy-rich-switch-buffer-size (:width 7))
-         (ivy-rich-switch-buffer-indicators (:width 4 :face error :align right))
-         (ivy-rich-switch-buffer-major-mode (:width 20 :face warning))
-         (ivy-rich-switch-buffer-project (:width 15 :face success))
-         (ivy-rich-switch-buffer-path (:width (lambda (x) (ivy-rich-switch-buffer-shorten-path x (ivy-rich-minibuffer-width 0.3))))))
-       :predicate
-       (lambda (cand) (get-buffer cand))
-       :delimiter "\t"))
-  (modify-all-the-icons-ivy-rich-display-transformers-list
-    'ivy-switch-buffer-other-window
-    '(:columns
-       ((all-the-icons-ivy-rich-buffer-icon)
-         (ivy-rich-candidate (:width 30))
-         (ivy-rich-switch-buffer-size (:width 7))
-         (ivy-rich-switch-buffer-indicators (:width 4 :face error :align right))
-         (ivy-rich-switch-buffer-major-mode (:width 20 :face warning))
-         (ivy-rich-switch-buffer-project (:width 15 :face success))
-         (ivy-rich-switch-buffer-path (:width (lambda (x) (ivy-rich-switch-buffer-shorten-path x (ivy-rich-minibuffer-width 0.3))))))
-       :predicate
-       (lambda (cand) (get-buffer cand))
-       :delimiter "\t"))
-  (all-the-icons-ivy-rich-mode 1))
+  (marginalia-mode))
+
+(use-package all-the-icons-completion
+  :demand t
+  :config
+  (all-the-icons-completion-mode))
+
+(use-package embark
+  :commands (kill-target-buffer)
+  :bind (:map minibuffer-local-map
+          ("C-." . embark-act)
+          ("C-;" . embark-dwim))
+  :custom
+  (embark-mixed-indicator-delay 0)
+  (embark-mixed-indicator-both t)
+  (embark-quit-after-action nil)
+  :config
+  (setq embark-pre-action-hooks
+    (delete '(kill-buffer embark--confirm) embark-pre-action-hooks))
+  (defun kill-target-buffer ()
+    (interactive)
+    (if-let ((buffer (seq-find
+                       (lambda (target)
+                         (eq (plist-get target :type) 'buffer))
+                       (embark--targets))))
+      (embark--act 'kill-buffer buffer)
+      (user-error "No buffer target found"))))
+
+(use-package consult
+  :bind (("<f2>" . consult-buffer))
+  :custom
+  ;; messes with buffer ordering
+  (consult-preview-key nil)
+  :config
+  (consult-customize consult-buffer
+    :keymap (let ((map (make-sparse-keymap)))
+              (define-key map (kbd "<f2>") #'keyboard-escape-quit)
+              (define-key map (kbd "C-k") #'kill-target-buffer)
+              map)))
 
 (use-package helpful
   :bind (([remap describe-key] . helpful-key))
@@ -760,8 +658,6 @@ If CLEAR is specified, clear them instead."
           ("C-p f" . projectile-find-file)
           ("C-p o" . projectile-find-file)
           ("C-p C-p" . projectile-switch-project))
-  :custom
-  (projectile-completion-system 'ivy)
   :config
   (projectile-mode))
 
@@ -1229,7 +1125,7 @@ If CLEAR is specified, clear them instead."
 
 (use-package dumb-jump
   :custom
-  (dumb-jump-selector 'ivy))
+  (dumb-jump-selector 'completing-read))
 
 (use-package lsp-mode
   :init
