@@ -90,6 +90,8 @@
 (setq minibuffer-prompt-properties
   '(read-only t cursor-intangible t face minibuffer-prompt))
 (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
+;; Hide commands in M-x which do not work in the current mode.
+(setq read-extended-command-predicate #'command-completion-default-include-p)
 ;; Show line and column numbers.
 (line-number-mode t)
 (column-number-mode t)
@@ -375,9 +377,6 @@ ARGS is `kill-buffer' arguments."
   :config
   (global-so-long-mode))
 
-(use-package goto-line-preview
-  :bind (([remap goto-line] . goto-line-preview)))
-
 (use-package which-key
   :demand t
   :config
@@ -537,7 +536,11 @@ ARGS is `kill-buffer' arguments."
           ("TAB" . minibuffer-complete)
           ("M-TAB" . vertico-insert)
           ("<prior>" . vertico-scroll-down)
-          ("<next>" . vertico-scroll-up))
+          ("<next>" . vertico-scroll-up)
+          ("RET" . vertico-directory-enter)
+          ("DEL" . vertico-directory-delete-char)
+          ("M-DEL" . vertico-directory-delete-word))
+  :hook (rfn-eshadow-update-overlay . vertico-directory-tidy)
   :custom
   (vertico-multiform-categories '((file (vertico-sort-function . sort-directories-first))))
   :config
@@ -550,14 +553,10 @@ ARGS is `kill-buffer' arguments."
   (vertico-multiform-mode)
   (vertico-mouse-mode))
 
-(use-package vertico-directory
-  :after vertico
+(use-package savehist
   :ensure nil
-  :bind (:map vertico-map
-          ("RET" . vertico-directory-enter)
-          ("DEL" . vertico-directory-delete-char)
-          ("M-DEL" . vertico-directory-delete-word))
-  :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
+  :init
+  (savehist-mode))
 
 (use-package marginalia
   :demand t
@@ -591,12 +590,18 @@ ARGS is `kill-buffer' arguments."
       (user-error "No buffer target found"))))
 
 (use-package consult
-  :bind (("<f2>" . consult-buffer))
-  :custom
-  ;; messes with buffer ordering
-  (consult-preview-key nil)
+  :bind (("<f2>" . consult-buffer)
+          ([remap goto-line] . consult-goto-line))
+  :init
+  (setq
+    register-preview-function #'consult-register-format
+    xref-show-xrefs-function #'consult-xref
+    xref-show-definitions-function #'consult-xref)
+  (advice-add #'register-preview :override #'consult-register-window)
+  (advice-add #'completing-read-multiple :override #'consult-completing-read-multiple)
   :config
   (consult-customize consult-buffer
+    :preview-key nil
     :keymap (let ((map (make-sparse-keymap)))
               (define-key map (kbd "<f2>") #'keyboard-escape-quit)
               (define-key map (kbd "C-k") #'kill-target-buffer)
