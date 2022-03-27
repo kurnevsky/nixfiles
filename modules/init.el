@@ -547,7 +547,8 @@ ARGS is `kill-buffer' arguments."
     (nconc (seq-filter (-partial #'string-suffix-p "/") files)
       (seq-remove (-partial #'string-suffix-p "/") files)))
   (vertico-mode)
-  (vertico-multiform-mode))
+  (vertico-multiform-mode)
+  (vertico-mouse-mode))
 
 (use-package vertico-directory
   :after vertico
