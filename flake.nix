@@ -14,13 +14,6 @@
       ref = "nixos-unstable";
     };
 
-    nixpkgs-master = {
-      type = "github";
-      owner = "NixOS";
-      repo = "nixpkgs";
-      ref = "master";
-    };
-
     nixos-hardware = {
       type = "github";
       owner = "NixOS";
@@ -61,10 +54,7 @@
         ({ pkgs, ... }: {
           _module.args =
             let platform = { inherit (pkgs.stdenv.targetPlatform) system; };
-            in {
-              nixpkgs-unstable = import inputs.nixpkgs-unstable platform;
-              nixpkgs-master = import inputs.nixpkgs-master platform;
-            };
+            in { nixpkgs-unstable = import inputs.nixpkgs-unstable platform; };
         })
         inputs.home-manager.nixosModules.home-manager
         ./modules/common.nix

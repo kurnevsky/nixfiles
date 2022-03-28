@@ -1,4 +1,4 @@
-{ pkgs, nixpkgs-master, ... }:
+{ pkgs, nixpkgs-unstable, ... }:
 
 {
   # system.replaceRuntimeDependencies can be used to make fast fixes
@@ -37,7 +37,7 @@
       ungoogled-chromium-wayland = super.ungoogled-chromium.override {
         commandLineArgs = "--ozone-platform-hint=auto";
       };
-      tor-browser-bundle-bin = nixpkgs-master.tor-browser-bundle-bin.override {
+      tor-browser-bundle-bin = nixpkgs-unstable.tor-browser-bundle-bin.override {
         useHardenedMalloc = false;
       };
     })
