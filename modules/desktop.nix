@@ -13,16 +13,13 @@
     networkmanager.enable = true;
     firewall = {
       enable = true;
-      allowedTCPPorts = [
-        # MPD
-        8000
-      ];
       allowedUDPPorts = [
         # Tox
         33445
         # WireGuard
         51871
       ];
+      trustedInterfaces = [ "wg0" "icmp" "dns0" ];
     };
     wireguard.interfaces.wg0 = {
       listenPort = 51871;
@@ -291,6 +288,7 @@
     hans.clients.digitalocean = {
       server = "kurnevsky.net";
       passwordFile = "/secrets/hans";
+      extraConfig = "-d icmp -m 1200";
     };
     iodine.clients.digitalocean = {
       server = "i.kurnevsky.net";
