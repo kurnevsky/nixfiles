@@ -542,6 +542,7 @@ ARGS is `kill-buffer' arguments."
           ("M-DEL" . vertico-directory-delete-word))
   :hook (rfn-eshadow-update-overlay . vertico-directory-tidy)
   :custom
+  (vertico-resize nil)
   (vertico-multiform-categories '((file (vertico-sort-function . sort-directories-first))))
   :config
   ;; Sort directories before files
