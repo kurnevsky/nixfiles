@@ -1,4 +1,4 @@
-{ fetchFromGitHub, python3, python3Packages }:
+{ fetchFromGitHub, fetchpatch, python3, python3Packages }:
 
 python3Packages.buildPythonPackage rec {
   pname = "pan-globalprotect-okta";
@@ -7,10 +7,10 @@ python3Packages.buildPythonPackage rec {
   format = "other";
 
   src = fetchFromGitHub {
-    owner = "arthepsy";
+    owner = "agriic";
     repo = "pan-globalprotect-okta";
-    rev = "f88beb9d076c3371dc4697cea0ec3b7a85d169d5";
-    sha256 = "sha256-Y8S1ua+TkjQ59tMQYwercJfHKzX0KyOi2oN2Ap/ne6I=";
+    rev = "7128b2996f1c950a8ddcd1e13d82c5564e2f5864";
+    sha256 = "sha256-cn2TsBjFtUhPq37VC6VqUfgafiBUvw1wqkMJV+Y1UXY=";
   };
 
   propagatedBuildInputs = with python3Packages; [ requests lxml pyotp ];
