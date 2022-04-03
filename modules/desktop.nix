@@ -187,6 +187,7 @@
       # Games
       cataclysm-dda
       hedgewars
+      minetest
       openmw
       wesnoth
       # Languages
