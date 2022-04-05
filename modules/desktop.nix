@@ -347,8 +347,8 @@
               src = pkgs.fetchFromGitHub {
                 owner = "elp-revive";
                 repo = "origami.el";
-                rev = "adf3cf1b813d93cfd7153a3e3799232e8545366b";
-                sha256 = "sha256-lnK3+o9m7qBs82UTp6qQ8kRwP7js2WI2wlxi9jOF4Jw=";
+                rev = "f5521df41edf5ffde782e20f3fe3201bf53c27c2";
+                sha256 = "sha256-Q0oE2L2rNshTdSpNkbiyknhxoUXG+X2/GJ8Fgo3q5sg=";
               };
             });
           };
