@@ -59,6 +59,7 @@
     vlc
     qtox
     tdesktop
+    xorg.xmodmap
   ];
 
   fonts.fonts = with pkgs; [
