@@ -562,6 +562,20 @@ ARGS is `kill-buffer' arguments."
 (use-package marginalia
   :demand t
   :config
+  (defun marginalia-project-name (buffer)
+    (let ((name (buffer-file-name buffer)))
+      (if (and name (projectile-project-p name))
+        (projectile-project-name (projectile-project-root name))
+        "")))
+  (el-patch-defun marginalia-annotate-buffer (cand)
+    "Annotate buffer CAND with modification status, file name and major mode."
+    (when-let (buffer (get-buffer cand))
+      (marginalia--fields
+        ((marginalia--buffer-status buffer))
+        (el-patch-add ((marginalia-project-name buffer)
+                        :truncate 0.2 :face 'marginalia-modified))
+        ((marginalia--buffer-file buffer)
+          :truncate -0.5 :face 'marginalia-file-name))))
   (marginalia-mode))
 
 (use-package all-the-icons-completion
