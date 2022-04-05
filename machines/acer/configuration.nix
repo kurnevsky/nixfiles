@@ -177,8 +177,8 @@
       home = {
         stateVersion = "21.11";
         file.".Xmodmap".text = ''
-          keycode 191 = dollar
-          keycode 192 = EuroSign
+          keycode 191 = EuroSign
+          keycode 192 = dollar
         '';
       };
       systemd.user.services.x0vncserver = {
