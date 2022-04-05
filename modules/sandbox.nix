@@ -600,7 +600,7 @@ in {
   ];
 
   environment = let
-    env = pkgs.buildEnv {
+    env = pkgs.symlinkJoin {
       name = "sandboxed";
       paths = with pkgs.sandboxed; [
         deadbeef
