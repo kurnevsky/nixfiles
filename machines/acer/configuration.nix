@@ -30,7 +30,7 @@
         # WireGuard
         51871
       ];
-      trustedInterfaces = [ "wg0" ];
+      trustedInterfaces = [ "wg0" "icmp" "dns0" ];
     };
     wireguard.interfaces.wg0 = {
       listenPort = 51871;
@@ -104,6 +104,15 @@
       openMulticastPort = true;
       persistentKeys = true;
     };
+    hans.clients.digitalocean = {
+      server = "kurnevsky.net";
+      passwordFile = "/secrets/hans";
+      extraConfig = "-d icmp -m 1200";
+    };
+    iodine.clients.digitalocean = {
+      server = "i.kurnevsky.net";
+      passwordFile = "/secrets/iodine";
+    };
     xserver = {
       enable = true;
       videoDrivers = [ "modesetting" ];
@@ -130,6 +139,22 @@
     # Enable pam_systemd module to set dbus environment variable.
     pam.services.login.startSession = true;
     rtkit.enable = true;
+    sudo.extraRules = [{
+      runAs = "root";
+      users = [ "parents" ];
+      commands = [
+        {
+          command =
+            "/run/current-system/sw/bin/systemctl start iodine-digitalocean.service";
+          options = [ "NOPASSWD" ];
+        }
+        {
+          command =
+            "/run/current-system/sw/bin/systemctl start hans-digitalocean.service";
+          options = [ "NOPASSWD" ];
+        }
+      ];
+    }];
   };
 
   hardware = {
@@ -141,17 +166,23 @@
     cpu.intel.updateMicrocode = true;
   };
 
-  users.users = {
-    parents = {
-      uid = 1001;
-      isNormalUser = true;
-      shell = pkgs.zsh;
-      passwordFile = "/secrets/parents";
-      extraGroups = [ "audio" "video" ];
+  users = {
+    users = {
+      parents = {
+        uid = 1001;
+        isNormalUser = true;
+        shell = pkgs.zsh;
+        passwordFile = "/secrets/parents";
+        extraGroups = [ "audio" "video" ];
+      };
+      hans.group = "hans";
     };
+    groups.hans = { };
   };
 
   systemd.services = {
+    iodine-digitalocean.wantedBy = pkgs.lib.mkForce [ ];
+    hans-digitalocean.wantedBy = pkgs.lib.mkForce [ ];
     eurodollar = {
       description = "Setkeycodes for € and $ keys";
       wantedBy = [ "multi-user.target" ];
