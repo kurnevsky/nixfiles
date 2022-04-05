@@ -30,6 +30,7 @@
         # WireGuard
         51871
       ];
+      trustedInterfaces = [ "wg0" ];
     };
     wireguard.interfaces.wg0 = {
       listenPort = 51871;
