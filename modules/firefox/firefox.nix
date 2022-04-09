@@ -154,8 +154,6 @@
   "security.ssl.enable_ocsp_stapling" = true;
   # 1211: control when to use OCSP fetching (to confirm current validity of certificates)
   "security.OCSP.enabled" = 1;
-  # 1212: set OCSP fetch failures (non-stapled, see 1211) to hard-fail
-  "security.OCSP.require" = true;
   # 1220: disable or limit SHA-1 certificates
   "security.pki.sha1_enforcement_level" = 1;
   # 1223: enforce strict pinning
