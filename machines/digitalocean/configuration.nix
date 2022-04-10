@@ -54,6 +54,11 @@
           presharedKeyFile = "/secrets/wg/parents.psk";
           allowedIPs = [ "192.168.14.4/32" ];
         }
+        {
+          publicKey = "79Eup4goIfcp2Iv2TuLDhxZVfK4KtqvwO5y6jgQ+1DE=";
+          presharedKeyFile = "/secrets/wg/phone.psk";
+          allowedIPs = [ "192.168.14.5/32" ];
+        }
       ];
     };
   };
