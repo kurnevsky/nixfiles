@@ -263,6 +263,7 @@
     udev.extraRules = ''
       ACTION=="add|change", KERNEL=="sd[a-z]", ATTRS{queue/rotational}=="1", RUN+="${pkgs.hdparm}/bin/hdparm -B 254 /dev/%k"
     '';
+    fwupd.enable = true;
     pipewire = {
       enable = true;
       alsa = {
