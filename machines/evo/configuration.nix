@@ -11,8 +11,11 @@
       };
     };
     initrd.luks.devices.root.allowDiscards = true;
-    extraModulePackages = with config.boot.kernelPackages; [ v4l2loopback ];
-    kernelModules = [ "v4l2loopback" ];
+    extraModulePackages = with config.boot.kernelPackages; [
+      acpi_call
+      v4l2loopback
+    ];
+    kernelModules = [ "v4l2loopback" "acpi_call" ];
   };
 
   fileSystems = {
@@ -51,11 +54,11 @@
     '';
   };
 
-  system.stateVersion = "21.05";
+  system.stateVersion = "21.11";
 
   home-manager.users = {
-    root.home.stateVersion = "21.05";
-    kurnevsky.home.stateVersion = "21.05";
-    ww.home.stateVersion = "21.05";
+    root.home.stateVersion = "21.11";
+    kurnevsky.home.stateVersion = "21.11";
+    ww.home.stateVersion = "21.11";
   };
 }

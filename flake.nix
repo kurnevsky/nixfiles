@@ -14,13 +14,6 @@
       ref = "nixos-unstable";
     };
 
-    nixos-hardware = {
-      type = "github";
-      owner = "NixOS";
-      repo = "nixos-hardware";
-      ref = "master";
-    };
-
     fenix = {
       type = "github";
       owner = "nix-community";
@@ -96,8 +89,6 @@
         evo = inputs.nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = desktopModules ++ [
-            inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t480
-            ./modules/validity.nix
             ./machines/evo/configuration.nix
             ./machines/evo/hardware-configuration.nix
           ];

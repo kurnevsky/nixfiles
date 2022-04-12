@@ -45,7 +45,7 @@
           allowedIPs = [ "192.168.14.2/32" ];
         }
         {
-          publicKey = "KTZl5SWnLkMCRAp/vq8McPCDPJqaWK3iMBlk8yME6x4=";
+          publicKey = "v69zSw9Ny+ym3DReKRh0gt+Ecc2rcTyKsieqnVZ/PwE=";
           presharedKeyFile = "/secrets/wg/work.psk";
           allowedIPs = [ "192.168.14.3/32" ];
         }

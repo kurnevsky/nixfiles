@@ -8,31 +8,32 @@
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" ];
+  boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/586fe225-09b5-4760-a094-fa2adcbe82e4";
+    { device = "/dev/disk/by-uuid/7770aedf-beac-48a9-a1f9-27c61c65768b";
       fsType = "btrfs";
       options = [ "subvol=root" ];
     };
 
-  boot.initrd.luks.devices."root".device = "/dev/disk/by-uuid/46b5b209-8103-474f-9343-c6a3efec44cf";
+  boot.initrd.luks.devices."root".device = "/dev/disk/by-uuid/149788f1-7814-4ad5-8938-0bfc5981cebe";
 
   fileSystems."/home" =
-    { device = "/dev/disk/by-uuid/586fe225-09b5-4760-a094-fa2adcbe82e4";
+    { device = "/dev/disk/by-uuid/7770aedf-beac-48a9-a1f9-27c61c65768b";
       fsType = "btrfs";
       options = [ "subvol=home" ];
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/FD0E-0FCE";
+    { device = "/dev/disk/by-uuid/AD96-4EE4";
       fsType = "vfat";
     };
 
   swapDevices = [ ];
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
+  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
