@@ -47,11 +47,14 @@
     ];
   };
 
-  services.xserver = {
-    videoDrivers = [ "intel" ];
-    deviceSection = ''
-      Option "TearFree" "true"
-    '';
+  services = {
+    throttled.enable = true;
+    xserver = {
+      videoDrivers = [ "intel" ];
+      deviceSection = ''
+        Option "TearFree" "true"
+      '';
+    };
   };
 
   system.stateVersion = "21.11";
