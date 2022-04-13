@@ -62,6 +62,7 @@ users:
           historyLimit = 10000;
           extraConfig = builtins.readFile ./tmux.conf;
         };
+        nix-index.enable = true;
       };
     };
   in {

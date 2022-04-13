@@ -99,6 +99,8 @@
       lessopen = "| ${pkgs.sourceHighlight}/bin/src-hilite-lesspipe.sh %s";
       envVariables.LESS = " -R ";
     };
+    # Replaced by nix-index
+    command-not-found.enable = false;
   };
 
   users = {
