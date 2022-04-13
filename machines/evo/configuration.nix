@@ -62,8 +62,8 @@
     sudo.fprintAuth = true;
     login.fprintAuth = true;
     # KDE and SDDM don't support it properly at the moment.
-    # sddm.fprintAuth = true;
-    # kde.fprintAuth = true;
+    sddm.fprintAuth = false;
+    kde.fprintAuth = false;
   };
 
   system.stateVersion = "21.11";
