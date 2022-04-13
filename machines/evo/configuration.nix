@@ -49,12 +49,21 @@
 
   services = {
     throttled.enable = true;
+    fprintd.enable = true;
     xserver = {
       videoDrivers = [ "intel" ];
       deviceSection = ''
         Option "TearFree" "true"
       '';
     };
+  };
+
+  security.pam.services = {
+    sudo.fprintAuth = true;
+    login.fprintAuth = true;
+    # KDE and SDDM don't support it properly at the moment.
+    # sddm.fprintAuth = true;
+    # kde.fprintAuth = true;
   };
 
   system.stateVersion = "21.11";
