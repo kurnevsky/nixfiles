@@ -59,8 +59,7 @@
   };
 
   security.pam.services = {
-    sudo.fprintAuth = true;
-    login.fprintAuth = true;
+    sshd.fprintAuth = false;
     # KDE and SDDM don't support it properly at the moment.
     sddm.fprintAuth = false;
     kde.fprintAuth = false;
