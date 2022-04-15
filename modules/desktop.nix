@@ -70,6 +70,7 @@
       cuetools
       davfs2
       deadbeef-with-plugins
+      dmidecode
       docker-compose
       dosbox
       dosfstools
@@ -129,6 +130,7 @@
       pandoc # TODO: it should depend on texlive
       parallel
       pavucontrol
+      pciutils
       pulseaudio # for pactl
       perl
       playerctl
