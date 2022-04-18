@@ -44,6 +44,30 @@
 
   environment = {
     systemPackages = with pkgs; [
+      (let
+        obs-wrapped =
+          (wrapOBS { plugins = with obs-studio-plugins; [ obs-gstreamer ]; });
+        obs-with-gstreamer = stdenv.mkDerivation {
+          name = "obs-with-gstreamer";
+          buildInputs = with gst_all_1; [
+            makeWrapper
+            gstreamer
+            gst-plugins-base
+            gst-plugins-good
+            gst-plugins-bad
+            gst-plugins-ugly
+            gst-libav
+          ];
+          buildCommand = ''
+            mkdir -p $out/bin
+            makeWrapper ${obs-wrapped}/bin/obs $out/bin/obs \
+              --prefix GST_PLUGIN_SYSTEM_PATH_1_0 ":" "$GST_PLUGIN_SYSTEM_PATH_1_0"
+          '';
+        };
+      in symlinkJoin {
+        name = "obs-with-gstreamer-joined";
+        paths = [ obs-with-gstreamer obs-wrapped ];
+      })
       (lutris.override { steamSupport = false; })
       (pass-wayland.withExtensions (ext: with ext; [ pass-otp pass-update ]))
       (pkgs.callPackage ./pan-globalprotect-okta.nix { })
