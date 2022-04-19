@@ -37,9 +37,39 @@
       ungoogled-chromium-wayland = super.ungoogled-chromium.override {
         commandLineArgs = "--ozone-platform-hint=auto";
       };
-      tor-browser-bundle-bin = nixpkgs-unstable.tor-browser-bundle-bin.override {
-        useHardenedMalloc = false;
+      tor-browser-bundle-bin =
+        nixpkgs-unstable.tor-browser-bundle-bin.override {
+          useHardenedMalloc = false;
+        };
+    })
+    # will be upstreamed eventually
+    (self: super: {
+      nsync = pkgs.callPackage (builtins.fetchurl {
+        url =
+          "https://raw.githubusercontent.com/NixOS/nixpkgs/91771f3b50f85c1d56401bca8faeca1c4b117a49/pkgs/development/libraries/nsync/default.nix";
+        sha256 = "sha256:01pj47vlqv7nspckrbmwcdwqkg3ybaqwcjpqmcp8a0dbdifhf0df";
+      }) { }; # TODO: remove after next nixos release
+      onnxruntime = (pkgs.callPackage (builtins.fetchurl {
+        url =
+          "https://raw.githubusercontent.com/NixOS/nixpkgs/708625f80a0ce815e8ee5f396621e89dd8edc53d/pkgs/development/libraries/onnxruntime/default.nix";
+        sha256 = "sha256:0w24fh2l4y5p9pg3ykjpnvz70k6qrrgrlah861nljjrc7n6g8j6l";
+      }) { }).override {
+        boost = nixpkgs-unstable.boost; # TODO: remove after next nixos release
       };
+      obs-backgroundremoval = (pkgs.callPackage (builtins.fetchurl {
+        url =
+          "https://raw.githubusercontent.com/puffnfresh/nixpkgs/6630869e12cfeba50e1e370e26255ed8c3f46832/pkgs/applications/video/obs-studio/plugins/obs-backgroundremoval.nix";
+        sha256 = "sha256:1cxld16p41vm5yvfrjnmsn2w9rvwfgl9jmjql302wi4wrvkyh2cc";
+      }) { }).overrideAttrs (old: {
+        patches = [
+          (builtins.fetchurl {
+            url =
+              "https://raw.githubusercontent.com/puffnfresh/nixpkgs/6630869e12cfeba50e1e370e26255ed8c3f46832/pkgs/applications/video/obs-studio/plugins/obs-backgroundremoval-includes.patch";
+            sha256 =
+              "sha256:1w31nbcdd3n801g1660dsbndmnbq2h1w4knbl5wdzbn7zqpyb8n1";
+          })
+        ];
+      });
     })
   ];
 }

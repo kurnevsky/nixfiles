@@ -45,8 +45,12 @@
   environment = {
     systemPackages = with pkgs; [
       (let
-        obs-wrapped =
-          (wrapOBS { plugins = with obs-studio-plugins; [ obs-gstreamer ]; });
+        obs-wrapped = (wrapOBS {
+          plugins = with obs-studio-plugins; [
+            obs-gstreamer
+            obs-backgroundremoval
+          ];
+        });
         obs-with-gstreamer = stdenv.mkDerivation {
           name = "obs-with-gstreamer";
           buildInputs = with gst_all_1; [
