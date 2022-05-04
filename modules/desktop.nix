@@ -75,7 +75,6 @@
       (lutris.override { steamSupport = false; })
       (pass-wayland.withExtensions (ext: with ext; [ pass-otp pass-update ]))
       (pkgs.callPackage ./pan-globalprotect-okta.nix { })
-      (pkgs.callPackage ./webcam-filters.nix { })
       aircrack-ng
       alacritty
       anki
@@ -183,6 +182,7 @@
       tmux
       torsocks
       usbutils
+      v4l-utils
       vdpauinfo
       viu
       vlc
