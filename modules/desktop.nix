@@ -355,7 +355,7 @@
       defaultEditor = true;
       package = (pkgs.emacsWithPackagesFromUsePackage {
         config = ./init.el;
-        package = pkgs.emacsGcc;
+        package = pkgs.emacsNativeComp;
         alwaysEnsure = true;
         extraEmacsPackages = epkgs: [
           (pkgs.stdenv.mkDerivation {
@@ -639,6 +639,7 @@
             push.default = "simple";
             merge.conflictstyle = "diff3";
             pull.ff = "only";
+            safe.directory = "/etc/nixos";
             github.user = "kurnevsky";
             gitlab.user = "kurnevsky";
             gitlab."gitlab.evolutiongaming.com/api/v4".user = "ykurneuski";
