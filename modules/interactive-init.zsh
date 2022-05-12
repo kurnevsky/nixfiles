@@ -40,6 +40,10 @@
   autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
   zle -N up-line-or-beginning-search
   zle -N down-line-or-beginning-search
+  # Edit current command in the editor
+  autoload -Uz edit-command-line
+  zle -N edit-command-line
+  bindkey '^E' edit-command-line
 
   # Many programs change the terminal state, and often do not restore terminal settings on exiting abnormally
   # This avoids the need to manually reset the terminal
