@@ -62,6 +62,10 @@ users:
           historyLimit = 10000;
           extraConfig = builtins.readFile ./tmux.conf;
         };
+        direnv = {
+          enable = true;
+          config.global.strict_env = true;
+        };
         nix-index.enable = true;
       };
     };
