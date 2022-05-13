@@ -1142,6 +1142,11 @@ ARGS is `kill-buffer' arguments."
   :config
   (editorconfig-mode 1))
 
+(use-package direnv
+  :demand t
+  :config
+  (direnv-mode))
+
 (use-package format-all)
 
 (use-package dumb-jump
