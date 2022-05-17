@@ -461,12 +461,13 @@
 
   users = {
     users = {
-      kurnevsky.extraGroups = [ "adbusers" "audio" "video" "vboxusers" ];
+      kurnevsky.extraGroups = [ "adbusers" "audio" "video" "vboxusers" "docker" ];
       ww = {
         uid = 1001;
         isNormalUser = true;
         shell = pkgs.zsh;
         passwordFile = "/secrets/ww";
+        extraGroups = [ "video" ];
       };
       hans.group = "hans";
     };
