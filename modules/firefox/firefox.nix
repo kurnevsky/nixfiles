@@ -15,6 +15,8 @@
   "browser.in-content.dark-mode" = true;
   # 0000: disable about:config warning
   "browser.aboutConfig.showWarning" = false;
+  # Disable tabs detaching to a new window
+  "browser.tabs.allowTabDetach" = false;
 
   # [SECTION 0100]: STARTUP
 
