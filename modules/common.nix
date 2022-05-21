@@ -134,6 +134,7 @@
       passwordAuthentication = false;
       # TODO: rename to kbdInteractiveAuthentication after new nixos release
       challengeResponseAuthentication = false;
+      extraConfig = "PermitTunnel yes";
     };
     timesyncd.enable = true;
   };
