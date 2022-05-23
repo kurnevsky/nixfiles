@@ -527,6 +527,23 @@ in {
             ];
           })
         ];
+        claws-mail = wrap super.claws-mail [
+          (withFonts {
+            name = "claws-mail";
+            extra-deps = with pkgs; [
+              qt5ct
+              gnome-themes-extra
+              gnome3.adwaita-icon-theme
+              hicolor-icon-theme
+            ];
+            resolv-conf = true;
+            graphics = true;
+            unsetenvs = [ "MAIL" "SHELL" ];
+            unshare-net = false;
+            ro-whitelist = [ "~/.config/gtk-3.0/" ];
+            whitelist = [ "~/.claws-mail/" ];
+          })
+        ];
         tor-browser-bundle-bin = wrap super.tor-browser-bundle-bin [{
           name = "tor-browser";
           graphics = true;
@@ -628,6 +645,7 @@ in {
         libreoffice-fresh
         wesnoth
         tor-browser-bundle-bin
+        claws-mail
       ];
     };
   in {

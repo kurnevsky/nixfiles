@@ -93,6 +93,7 @@
       btrfs-progs
       bubblewrap
       calibre
+      claws-mail
       clinfo
       cuetools
       davfs2
