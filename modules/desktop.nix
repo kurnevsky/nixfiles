@@ -334,6 +334,25 @@
         socksProxy.enable = true;
         i2cp.enable = true;
       };
+      outTunnels = {
+        SMTP = {
+          address = "127.0.0.1";
+          port = 7659;
+          destination = "smtp.postman.i2p";
+          destinationPort = 25;
+        };
+        POP3 = {
+          address = "127.0.0.1";
+          port = 7660;
+          destination = "pop.postman.i2p";
+          destinationPort = 110;
+        };
+        IRC = {
+          address = "127.0.0.1";
+          port = 6668;
+          destination = "irc.ilita.i2p";
+        };
+      };
       yggdrasil.enable = true;
     };
     monero.enable = true;
@@ -461,7 +480,8 @@
 
   users = {
     users = {
-      kurnevsky.extraGroups = [ "adbusers" "audio" "video" "vboxusers" "docker" ];
+      kurnevsky.extraGroups =
+        [ "adbusers" "audio" "video" "vboxusers" "docker" ];
       ww = {
         uid = 1001;
         isNormalUser = true;
