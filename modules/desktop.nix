@@ -105,7 +105,7 @@
       e2fsprogs
       eiskaltdcpp
       exa
-      exfat-utils
+      exfat
       extundelete
       fd
       fclones
@@ -217,7 +217,8 @@
       toxic
       # Games
       cataclysm-dda
-      hedgewars
+      # TODO: broken
+      # hedgewars
       minetest
       openmw
       wesnoth
@@ -375,7 +376,7 @@
       defaultEditor = true;
       package = (pkgs.emacsWithPackagesFromUsePackage {
         config = ./init.el;
-        package = pkgs.emacsNativeComp;
+        package = pkgs.emacs28NativeComp;
         alwaysEnsure = true;
         extraEmacsPackages = epkgs: [
           (pkgs.stdenv.mkDerivation {
@@ -428,7 +429,8 @@
       enable = true;
       enableOnBoot = false;
     };
-    virtualbox.host.enable = true;
+    # TODO: broken
+    # virtualbox.host.enable = true;
   };
 
   hardware = {

@@ -112,8 +112,7 @@
       in {
         enableACME = true;
         forceSSL = true;
-        # TODO: enable after new nixos release
-        # kTLS = true;
+        kTLS = true;
         root = "${root}";
         locations = {
           "= /tt-rss".return = "301 $request_uri/";

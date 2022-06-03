@@ -232,7 +232,7 @@ ARGS is `kill-buffer' arguments."
       (funcall (-applify 'color-rgb-to-hex))))
   (defun modify-theme (theme)
     (let* ((custom--inhibit-theme-enable nil)
-            (colors (symbol-value (intern (concat (symbol-name theme) "-colors"))))
+            (colors (symbol-value (intern (concat (symbol-name theme) "-theme-colors"))))
             (base00 (plist-get colors :base00))
             (base01 (plist-get colors :base01))
             (base08 (plist-get colors :base08))
@@ -242,7 +242,7 @@ ARGS is `kill-buffer' arguments."
             (base08-highlight (color-saturate-darken base08 20 10))
             (base0A-highlight (color-saturate-darken base0A 20 10))
             (base0B-highlight (color-saturate-darken base0B 20 10)))
-      (base16-set-faces theme (symbol-value (intern (concat (symbol-name theme) "-colors")))
+      (base16-theme-set-faces theme (symbol-value (intern (concat (symbol-name theme) "-theme-colors")))
         `( ;; Make it slightly different from highlighting
            (hl-line :background ,base005)
            ;; Ediff

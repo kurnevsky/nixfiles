@@ -134,8 +134,7 @@
     openssh = {
       enable = true;
       passwordAuthentication = false;
-      # TODO: rename to kbdInteractiveAuthentication after new nixos release
-      challengeResponseAuthentication = false;
+      kbdInteractiveAuthentication = false;
       extraConfig = "PermitTunnel yes";
     };
     timesyncd.enable = true;

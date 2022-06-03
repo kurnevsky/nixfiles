@@ -61,7 +61,7 @@ let
       export GNUPGHOME=$out
       gpg --no-default-keyring --keyring=$out/import-pubring.gpg --fingerprint
       gpg --no-default-keyring --keyring=$out/import-pubring.gpg --import <<< '${key}'
-      rm $out/S.gpg-agent $out/S.gpg-agent.*
+      rm $out/S.scdaemon $out/S.gpg-agent $out/S.gpg-agent.*
     '';
 in {
   environment.etc."systemd/import-pubring.gpg".source =
