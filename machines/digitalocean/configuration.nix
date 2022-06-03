@@ -65,7 +65,7 @@
 
   security.acme = {
     acceptTerms = true;
-    email = "kurnevsky@gmail.com";
+    defaults.email = "kurnevsky@gmail.com";
   };
 
   services = {
