@@ -46,11 +46,16 @@ in writeShellScriptBin target-name ''
   ${lib.optionalString resolv-conf ''
     mapfile -t resolvconf < <(
       echo '--ro-bind'
-      if [ -z "''${TORJAIL-}" ]
+      if [ -n "''${TORJAIL-}" ]
       then
-        echo '/etc/resolv.conf'
-      else
         echo '/etc/resolv-torjail.conf'
+      elif [ -n "''${DNS-}" ]
+      then
+        RESOLV_TMP=$(mktemp)
+        echo "nameserver $DNS" > "$RESOLV_TMP"
+        echo "$RESOLV_TMP"
+      else
+        echo '/etc/resolv.conf'
       fi
       echo '/etc/resolv.conf'
     )
