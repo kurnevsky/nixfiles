@@ -435,6 +435,7 @@ in {
               "~/.local/share/data/qBittorrent/"
               "~/.config/qBittorrent/"
               "~/.cache/qBittorrent/"
+              "~/Downloads/"
               "~/Torrents/"
               "~/movies/"
             ];
