@@ -993,7 +993,7 @@ ARGS is `kill-buffer' arguments."
   :demand t
   :after magit
   :config
-  (let ((host "gitlab.evolutiongaming.com"))
+  (let ((host "gitlab.evolution.com"))
     (add-to-list
       'forge-alist
       `(,host ,(concat host "/api/v4") ,host forge-gitlab-repository))))

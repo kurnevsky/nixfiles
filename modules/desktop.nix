@@ -666,7 +666,7 @@
             safe.directory = "/etc/nixos";
             github.user = "kurnevsky";
             gitlab.user = "kurnevsky";
-            gitlab."gitlab.evolutiongaming.com/api/v4".user = "ykurneuski";
+            gitlab."gitlab.evolution.com/api/v4".user = "ykurneuski";
           };
         };
         firefox = {
