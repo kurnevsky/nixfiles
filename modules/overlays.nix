@@ -7,16 +7,7 @@
       vaapiIntel = super.vaapiIntel.override { enableHybridCodec = true; };
       deadbeef = super.deadbeef.override { wavpackSupport = true; };
       deadbeef-with-plugins = super.deadbeef-with-plugins.override {
-        plugins = with super.deadbeefPlugins; [
-          mpris2
-          # TODO: upstream
-          (super.callPackage (builtins.fetchurl {
-            url =
-              "https://raw.githubusercontent.com/kurnevsky/nixpkgs/deadbeef-statusnotifier-plugin-libdbusmenu/pkgs/applications/audio/deadbeef/plugins/statusnotifier.nix";
-            sha256 =
-              "sha256:18780hbqhpv9v1kyhipz2kzd3avqjd9lv98ji7ip9qvafmr2c62k";
-          }) { })
-        ];
+        plugins = with super.deadbeefPlugins; [ mpris2 statusnotifier ];
       };
       zip-natspec = super.zip.override { enableNLS = true; };
       unzip-natspec = super.unzip.override { enableNLS = true; };
