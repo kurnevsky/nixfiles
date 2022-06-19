@@ -469,8 +469,9 @@
     sudo.extraRules = [{
       runAs = "root";
       users = [ "ww" ];
-      commands =
-        [ "/run/current-system/sw/bin/ip netns exec torjail sudo -u ww [!-]*" ];
+      commands = [
+        "/run/current-system/sw/bin/ip ^netns exec [[:alnum:]]+ sudo -u ww [^-].*$"
+      ];
     }];
   };
 
