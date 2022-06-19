@@ -80,6 +80,7 @@
       anki
       ansible
       ansible-lint
+      appimage-run
       aspell
       aspellDicts.en
       aspellDicts.ru
