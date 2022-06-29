@@ -229,7 +229,6 @@
       gcc
       mono
       nodePackages.bash-language-server
-      openjdk
       python3
       shellcheck
       ## Haskell
@@ -288,6 +287,7 @@
     dconf.enable = true;
     gnupg.agent.enable = true;
     adb.enable = true;
+    java.enable = true;
   };
 
   gtk.iconCache.enable = true;
