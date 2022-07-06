@@ -74,7 +74,6 @@
       })
       (lutris.override { steamSupport = false; })
       (pass-wayland.withExtensions (ext: with ext; [ pass-otp pass-update ]))
-      (pkgs.callPackage ./pan-globalprotect-okta.nix { })
       (pkgs.callPackage ./bergamot.nix { })
       aircrack-ng
       alacritty
@@ -116,6 +115,7 @@
       fuseiso
       gdb
       gimp-with-plugins
+      globalprotect-openconnect
       gnome-themes-extra
       gnome3.adwaita-icon-theme
       google-authenticator
@@ -155,7 +155,6 @@
       ncmpc
       nmap
       nodePackages.prettier
-      openconnect
       openssl
       pandoc # TODO: it should depend on texlive
       parallel
@@ -424,6 +423,7 @@
         }
       '';
     };
+    globalprotect.enable = true;
   };
 
   virtualisation = {
