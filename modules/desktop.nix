@@ -75,6 +75,7 @@
       (lutris.override { steamSupport = false; })
       (pass-wayland.withExtensions (ext: with ext; [ pass-otp pass-update ]))
       (pkgs.callPackage ./bergamot.nix { })
+      (pkgs.callPackage ./marian.nix { })
       aircrack-ng
       alacritty
       anki
