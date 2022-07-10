@@ -14,12 +14,7 @@
     desktopManager.plasma5.enable = true;
   };
 
-  environment.systemPackages = with pkgs; [
-    ark
-    kcalc
-    krfb
-    krdc
-  ];
+  environment.systemPackages = with pkgs; [ ark kcalc krfb krdc wl-clipboard ];
 
   xdg.portal = {
     enable = true;
@@ -288,6 +283,27 @@
               Key = "Meta+Alt+Esc";
               Type = "SHORTCUT";
               Uuid = "{7c6b0e9c-46af-4839-bb1f-5a805d8b4b3c}";
+            };
+            Data_7 = {
+              Comment = "Translate google";
+              Enabled = true;
+              Name = "Translate google";
+              Type = "SIMPLE_ACTION_DATA";
+            };
+            Data_7Actions.ActionsCount = 1;
+            Data_7Actions0 = {
+              CommandURL =
+                "wl-paste --primary | trans -brief -t russian | xargs -0 notify-send 'google'";
+              Type = "COMMAND_URL";
+            };
+            Data_7Triggers = {
+              Comment = "Simple_action";
+              TriggersCount = 1;
+            };
+            Data_7Triggers0 = {
+              Key = "Meta+Shift+T";
+              Type = "SHORTCUT";
+              Uuid = "{f53dc769-7376-46f2-ac13-b1170dea1f93}";
             };
           };
         };

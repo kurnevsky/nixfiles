@@ -138,6 +138,7 @@
       kafkacat
       kubectl
       languagetool
+      libnotify
       libreoffice-fresh
       libva-utils
       libxml2 # for xmllint
@@ -183,6 +184,7 @@
       tinc
       tmux
       torsocks
+      translate-shell
       usbutils
       v4l-utils
       vdpauinfo
