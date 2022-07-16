@@ -219,7 +219,7 @@
           ksmserverrc = { General.loginMode = "emptySession"; };
           kcminputrc = { Keyboard.NumLock = 0; };
           khotkeysrc = {
-            Data.DataCount = 6;
+            Data.DataCount = 7;
             # First 3 are set by KDE by default
             Data_4 = {
               Comment = "Set brightness to 10%";
