@@ -8,6 +8,7 @@
 
   networking = {
     hostName = "digitalocean";
+    useNetworkd = true;
     nat = {
       enable = true;
       internalInterfaces = [ "wg0" "icmp" "dns0" ];
@@ -34,33 +35,7 @@
       ];
       trustedInterfaces = [ "wg0" "icmp" "dns0" ];
     };
-    wireguard.interfaces.wg0 = {
-      ips = [ "192.168.14.1/32" ];
-      listenPort = 51871;
-      privateKeyFile = "/secrets/wg/private.key";
-      peers = [
-        {
-          publicKey = "aRD0dqodCPyqTklk0KinKiTXYTnIBXZ0WFKy/q0dhQo=";
-          presharedKeyFile = "/secrets/wg/home.psk";
-          allowedIPs = [ "192.168.14.2/32" ];
-        }
-        {
-          publicKey = "v69zSw9Ny+ym3DReKRh0gt+Ecc2rcTyKsieqnVZ/PwE=";
-          presharedKeyFile = "/secrets/wg/work.psk";
-          allowedIPs = [ "192.168.14.3/32" ];
-        }
-        {
-          publicKey = "7Do1rDKMm8dZLgChf8pkS57Cg2A/jEj0JhNEfu0YTHM=";
-          presharedKeyFile = "/secrets/wg/parents.psk";
-          allowedIPs = [ "192.168.14.4/32" ];
-        }
-        {
-          publicKey = "79Eup4goIfcp2Iv2TuLDhxZVfK4KtqvwO5y6jgQ+1DE=";
-          presharedKeyFile = "/secrets/wg/phone.psk";
-          allowedIPs = [ "192.168.14.5/32" ];
-        }
-      ];
-    };
+    wireguard.enable = true;
   };
 
   security.acme = {
@@ -183,6 +158,63 @@
   users = {
     users.hans.group = "hans";
     groups.hans = { };
+  };
+
+  systemd.network = {
+    enable = true;
+    netdevs = {
+      "99-wg0" = {
+        netdevConfig = {
+          Name = "wg0";
+          Kind = "wireguard";
+          Description = "WireGuard tunnel wg0";
+        };
+        wireguardConfig = {
+          PrivateKeyFile = "/secrets/wg/private.key";
+          ListenPort = 51871;
+        };
+        wireguardPeers = [
+          {
+            wireguardPeerConfig = {
+              PublicKey = "aRD0dqodCPyqTklk0KinKiTXYTnIBXZ0WFKy/q0dhQo=";
+              PresharedKeyFile = "/secrets/wg/home.psk";
+              AllowedIPs = "192.168.14.2/32";
+            };
+          }
+          {
+            wireguardPeerConfig = {
+              PublicKey = "v69zSw9Ny+ym3DReKRh0gt+Ecc2rcTyKsieqnVZ/PwE=";
+              PresharedKeyFile = "/secrets/wg/work.psk";
+              AllowedIPs = "192.168.14.3/32";
+            };
+          }
+          {
+            wireguardPeerConfig = {
+              PublicKey = "7Do1rDKMm8dZLgChf8pkS57Cg2A/jEj0JhNEfu0YTHM=";
+              PresharedKeyFile = "/secrets/wg/parents.psk";
+              AllowedIPs = "192.168.14.4/32";
+            };
+          }
+          {
+            wireguardPeerConfig = {
+              PublicKey = "79Eup4goIfcp2Iv2TuLDhxZVfK4KtqvwO5y6jgQ+1DE=";
+              PresharedKeyFile = "/secrets/wg/phone.psk";
+              AllowedIPs = "192.168.14.5/32";
+            };
+          }
+        ];
+      };
+    };
+    networks."99-wg0" = {
+      name = "wg0";
+      address = [ "192.168.14.1/32" ];
+      routes = [{
+        routeConfig = {
+          Destination = "192.168.14.0/24";
+          Scope = "link";
+        };
+      }];
+    };
   };
 
   system.stateVersion = "21.11";

@@ -19,6 +19,7 @@
   networking = {
     hostName = "acer";
     useDHCP = false;
+    useNetworkd = true;
     networkmanager.enable = true;
     firewall = {
       enable = true;
@@ -32,19 +33,7 @@
       ];
       trustedInterfaces = [ "wg0" "icmp" "dns0" ];
     };
-    wireguard.interfaces.wg0 = {
-      listenPort = 51871;
-      privateKeyFile = "/secrets/wg/private.key";
-      peers = [{
-        endpoint = "kurnevsky.net:51871";
-        publicKey = "5JHCxIYeZ50k7YJM+kLAbqGW4LAXpI5lycYEWSVxkBE=";
-        presharedKeyFile = "/secrets/wg/preshared.psk";
-        allowedIPs = [ "192.168.14.0/24" ];
-        persistentKeepalive = 25;
-        dynamicEndpointRefreshSeconds = 30;
-      }];
-      ips = [ "192.168.14.4/32" ];
-    };
+    wireguard.enable = true;
   };
 
   console = {
@@ -180,25 +169,57 @@
     groups.hans = { };
   };
 
-  systemd.services = {
-    iodine-digitalocean.wantedBy = pkgs.lib.mkForce [ ];
-    hans-digitalocean.wantedBy = pkgs.lib.mkForce [ ];
-    eurodollar = {
-      description = "Setkeycodes for € and $ keys";
-      wantedBy = [ "multi-user.target" ];
-      serviceConfig = {
-        Type = "oneshot";
-        ExecStart = [
-          "${pkgs.kbd}/bin/setkeycodes b3 183"
-          "${pkgs.kbd}/bin/setkeycodes b4 184"
-        ];
+  systemd = {
+    services = {
+      iodine-digitalocean.wantedBy = pkgs.lib.mkForce [ ];
+      hans-digitalocean.wantedBy = pkgs.lib.mkForce [ ];
+      eurodollar = {
+        description = "Setkeycodes for € and $ keys";
+        wantedBy = [ "multi-user.target" ];
+        serviceConfig = {
+          Type = "oneshot";
+          ExecStart = [
+            "${pkgs.kbd}/bin/setkeycodes b3 183"
+            "${pkgs.kbd}/bin/setkeycodes b4 184"
+          ];
+        };
       };
     };
-    "wireguard-wg0-peer-5JHCxIYeZ50k7YJM\\x2bkLAbqGW4LAXpI5lycYEWSVxkBE\\x3d-refresh".serviceConfig =
-      {
-        Restart = "always";
-        RestartSec = "30";
+    network = {
+      enable = true;
+      netdevs = {
+        "99-wg0" = {
+          netdevConfig = {
+            Name = "wg0";
+            Kind = "wireguard";
+            Description = "WireGuard tunnel wg0";
+          };
+          wireguardConfig = {
+            PrivateKeyFile = "/secrets/wg/private.key";
+            ListenPort = 51871;
+          };
+          wireguardPeers = [{
+            wireguardPeerConfig = {
+              PublicKey = "5JHCxIYeZ50k7YJM+kLAbqGW4LAXpI5lycYEWSVxkBE=";
+              PresharedKeyFile = "/secrets/wg/preshared.psk";
+              AllowedIPs = "192.168.14.0/24";
+              Endpoint = "kurnevsky.net:51871";
+              PersistentKeepalive = 25;
+            };
+          }];
+        };
       };
+      networks."99-wg0" = {
+        name = "wg0";
+        address = [ "192.168.14.4/32" ];
+        routes = [{
+          routeConfig = {
+            Destination = "192.168.14.0/24";
+            Scope = "link";
+          };
+        }];
+      };
+    };
   };
 
   system.stateVersion = "21.11";

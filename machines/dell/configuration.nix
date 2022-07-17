@@ -38,10 +38,9 @@
     discardPolicy = "both";
   }];
 
-  networking = {
-    hostName = "dell";
-    wireguard.interfaces.wg0.ips = [ "192.168.14.2/32" ];
-  };
+  networking.hostName = "dell";
+
+  systemd.network.networks."99-wg0".address = [ "192.168.14.2/32" ];
 
   hardware = {
     cpu.intel.updateMicrocode = true;

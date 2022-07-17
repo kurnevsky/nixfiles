@@ -32,10 +32,9 @@
     discardPolicy = "both";
   }];
 
-  networking = {
-    hostName = "evo";
-    wireguard.interfaces.wg0.ips = [ "192.168.14.3/32" ];
-  };
+  networking.hostName = "evo";
+
+  systemd.network.networks."99-wg0".address = [ "192.168.14.3/32" ];
 
   hardware = {
     cpu.intel.updateMicrocode = true;
