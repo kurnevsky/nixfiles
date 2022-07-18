@@ -128,6 +128,7 @@
         openssh.authorizedKeys.keys = keys;
       };
     };
+    groups.secrets = { };
   };
 
   services = {

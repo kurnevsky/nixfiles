@@ -44,6 +44,7 @@ in {
       Type = "simple";
       Restart = "on-failure";
       User = "motion";
+      SupplementaryGroups = "secrets";
       WorkingDirectory = homeDir;
       PrivateTmp = true;
       ProtectSystem = "strict";

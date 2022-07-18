@@ -25,6 +25,7 @@ in {
     serviceConfig = {
       DynamicUser = true;
       PrivateTmp = true;
+      SupplementaryGroups = "secrets";
     };
     script = ''
       cat ${shadowsocksConfigFile} | jq --arg password "$(cat /secrets/shadowsocks)" '. + { password: $password }' > /tmp/shadowsocks.json
