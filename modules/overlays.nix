@@ -42,6 +42,31 @@
         nixpkgs-unstable.tor-browser-bundle-bin.override {
           useHardenedMalloc = false;
         };
+      isync = let
+        cyrus_sasl_xoauth2 = pkgs.stdenv.mkDerivation {
+          pname = "cyrus-sasl-xoauth2";
+          version = "1";
+
+          src = pkgs.fetchFromGitHub {
+            owner = "robn";
+            repo = "sasl2-oauth";
+            rev = "4236b6fb904d836b85b55ba32128b843fd8c2362";
+            sha256 = "sha256-IaH8tNUhM0lUOmFiG4G9cGzsuM9mTWfQrzoQ78MIgZ0=";
+          };
+
+          nativeBuildInputs = [ pkgs.autoreconfHook ];
+          buildInputs = [ pkgs.cyrus_sasl ];
+        };
+      in pkgs.symlinkJoin {
+        name = "isync";
+        paths = [
+          (pkgs.writeShellScriptBin "mbsync" ''
+            export SASL_PATH=${super.cyrus_sasl}/lib/sasl2:${cyrus_sasl_xoauth2}/lib/sasl2
+            exec ${super.isync}/bin/mbsync "$@"
+          '')
+          super.isync
+        ];
+      };
     })
     # will be upstreamed eventually
     (self: super: {
