@@ -25,6 +25,7 @@
       type = "github";
       owner = "nix-community";
       repo = "emacs-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     home-manager = {
@@ -32,12 +33,14 @@
       owner = "nix-community";
       repo = "home-manager";
       ref = "release-22.05";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nur = {
       type = "github";
       owner = "nix-community";
       repo = "nur";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
