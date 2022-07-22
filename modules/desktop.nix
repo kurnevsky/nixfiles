@@ -414,6 +414,7 @@
       '';
     };
     globalprotect.enable = true;
+    bloop.install = true;
   };
 
   virtualisation = {
