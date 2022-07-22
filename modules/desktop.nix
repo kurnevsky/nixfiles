@@ -464,7 +464,7 @@
             wireguardPeerConfig = {
               PublicKey = "5JHCxIYeZ50k7YJM+kLAbqGW4LAXpI5lycYEWSVxkBE=";
               PresharedKeyFile = "/secrets/wg/preshared.psk";
-              AllowedIPs = "192.168.14.0/24";
+              AllowedIPs = "0.0.0.0/0, ::/0";
               Endpoint = "kurnevsky.net:51871";
               PersistentKeepalive = 25;
             };
