@@ -38,10 +38,7 @@
       ungoogled-chromium-wayland = super.ungoogled-chromium.override {
         commandLineArgs = "--ozone-platform-hint=auto";
       };
-      tor-browser-bundle-bin =
-        nixpkgs-unstable.tor-browser-bundle-bin.override {
-          useHardenedMalloc = false;
-        };
+      tor-browser-bundle-bin = nixpkgs-unstable.tor-browser-bundle-bin;
       isync = let
         cyrus_sasl_xoauth2 = pkgs.stdenv.mkDerivation {
           pname = "cyrus-sasl-xoauth2";
