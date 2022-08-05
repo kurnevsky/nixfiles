@@ -720,6 +720,7 @@
             patterns = [ "*" "![Gmail]/All Mail" ];
             create = "both";
             expunge = "both";
+            extraConfig.account.AuthMech = "PLAIN";
           };
           primary = true;
           maildir.path = "gmail";
@@ -733,6 +734,7 @@
             enable = true;
             create = "both";
             expunge = "both";
+            extraConfig.account.AuthMech = "PLAIN";
           };
           maildir.path = "yandex";
           userName = "kurnevsky";

@@ -58,7 +58,7 @@
         name = "isync";
         paths = [
           (pkgs.writeShellScriptBin "mbsync" ''
-            export SASL_PATH=${super.cyrus_sasl}/lib/sasl2:${cyrus_sasl_xoauth2}/lib/sasl2
+            export SASL_PATH=${super.cyrus_sasl.out}/lib/sasl2:${cyrus_sasl_xoauth2}/lib/sasl2
             exec ${super.isync}/bin/mbsync "$@"
           '')
           super.isync
