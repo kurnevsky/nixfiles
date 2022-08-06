@@ -45,11 +45,22 @@
           version = "1";
 
           src = pkgs.fetchFromGitHub {
-            owner = "robn";
-            repo = "sasl2-oauth";
-            rev = "4236b6fb904d836b85b55ba32128b843fd8c2362";
-            sha256 = "sha256-IaH8tNUhM0lUOmFiG4G9cGzsuM9mTWfQrzoQ78MIgZ0=";
+            owner = "moriyoshi";
+            repo = "cyrus-sasl-xoauth2";
+            rev = "36aabca54fd65c8fa7a707cb4936751599967904";
+            sha256 = "sha256-OlmHuME9idC0fWMzT4kY+YQ43GGch53snDq3w5v/cgk=";
           };
+
+          postPatch = ''
+            touch AUTHORS
+            touch ChangeLog
+            touch NEWS
+          '';
+
+          installPhase = ''
+            mkdir -p $out/lib/sasl2
+            cp .libs/libxoauth2.so $out/lib/sasl2
+          '';
 
           nativeBuildInputs = [ pkgs.autoreconfHook ];
           buildInputs = [ pkgs.cyrus_sasl ];
