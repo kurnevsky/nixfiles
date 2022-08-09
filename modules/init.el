@@ -1212,6 +1212,10 @@ ARGS is `kill-buffer' arguments."
   (lsp-rust-analyzer-cargo-watch-command "clippy")
   (lsp-rust-analyzer-cargo-watch-args ["--all"]))
 
+(use-package lsp-java
+  :after lsp-mode
+  :demand t)
+
 (use-package lsp-metals
   :after lsp-mode
   :demand t
