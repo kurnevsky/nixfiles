@@ -76,7 +76,7 @@
     };
     yggdrasil = {
       enable = true;
-      config = {
+      settings = {
         Peers = [
           "tls://yggno.de:18227"
           "tls://box.paulll.cc:13338"

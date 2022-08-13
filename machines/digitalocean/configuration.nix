@@ -159,7 +159,7 @@
     };
     yggdrasil = {
       enable = true;
-      config = {
+      settings = {
         Peers = [
           "tls://45.147.198.155:6010"
           "tls://94.103.82.150:8080"
