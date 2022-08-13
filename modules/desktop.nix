@@ -25,6 +25,8 @@
     wireguard.enable = true;
   };
 
+  i18n.supportedLocales = [ "en_US.UTF-8/UTF-8" "ru_RU.UTF-8/UTF-8" ];
+
   console = {
     font = "cyr-sun16";
     keyMap = "ru";
@@ -65,7 +67,6 @@
       (lutris.override { steamSupport = false; })
       (pass-wayland.withExtensions (ext: with ext; [ pass-otp pass-update ]))
       aircrack-ng
-      alacritty
       anki
       ansible
       ansible-lint
@@ -297,7 +298,7 @@
     };
     yggdrasil = {
       enable = true;
-      config = {
+      settings = {
         Peers = [
           "tls://yggno.de:18227"
           "tls://box.paulll.cc:13338"

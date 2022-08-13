@@ -1,4 +1,4 @@
-{ pkgs, nixpkgs-unstable, ... }:
+{ pkgs, nixpkgs-stable, ... }:
 
 {
   # system.replaceRuntimeDependencies can be used to make fast fixes
@@ -38,7 +38,6 @@
       ungoogled-chromium-wayland = super.ungoogled-chromium.override {
         commandLineArgs = "--ozone-platform-hint=auto";
       };
-      tor-browser-bundle-bin = nixpkgs-unstable.tor-browser-bundle-bin;
       isync = let
         cyrus_sasl_xoauth2 = pkgs.stdenv.mkDerivation {
           pname = "cyrus-sasl-xoauth2";
@@ -76,9 +75,10 @@
         ];
       };
     })
-    # will be upstreamed eventually
+    # will be upstreamed eventually, hopefully
+    # doesn't build with latest nixos
     (self: super: {
-      onnxruntime = pkgs.callPackage (builtins.fetchurl {
+      onnxruntime = nixpkgs-stable.callPackage (builtins.fetchurl {
         url =
           "https://raw.githubusercontent.com/NixOS/nixpkgs/708625f80a0ce815e8ee5f396621e89dd8edc53d/pkgs/development/libraries/onnxruntime/default.nix";
         sha256 = "sha256:0w24fh2l4y5p9pg3ykjpnvz70k6qrrgrlah861nljjrc7n6g8j6l";

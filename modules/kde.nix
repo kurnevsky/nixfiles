@@ -1,24 +1,28 @@
 { lib, pkgs, ... }:
 
 {
-  services.xserver = {
-    enable = true;
-    displayManager = {
-      defaultSession = "plasmawayland";
-      sddm = {
-        enable = true;
-        autoNumlock = true;
-        settings.Users.HideUsers = "ww";
+  services = {
+    # Enabled by default in plasma.
+    # TLP is used instead.
+    power-profiles-daemon.enable = false;
+    xserver = {
+      enable = true;
+      displayManager = {
+        defaultSession = "plasmawayland";
+        sddm = {
+          enable = true;
+          autoNumlock = true;
+          settings.Users.HideUsers = "ww";
+        };
       };
+      desktopManager.plasma5.enable = true;
     };
-    desktopManager.plasma5.enable = true;
   };
 
   environment.systemPackages = with pkgs; [ ark kcalc krfb krdc wl-clipboard ];
 
   xdg.portal = {
     enable = true;
-    gtkUsePortal = true;
     # Add the GTK portal which seems to be always needed for GTK applications
     extraPortals = with pkgs; [ xdg-desktop-portal-wlr xdg-desktop-portal-gtk ];
   };
@@ -63,13 +67,12 @@
               Number = 9;
               Rows = 3;
             };
-            Effect-DesktopGrid.BorderActivate = 5;
-            Effect-PresentWindows = {
+            Effect-desktopgrid.BorderActivate = 5;
+            Effect-windowview = {
               BorderActivate = 7;
               BorderActivateAll = 9;
               MiddleButtonWindow = 6;
             };
-            Effect-Slide.Duration = 300;
             Plugins.invertEnabled = true;
             TabBox.LayoutName = "thumbnail_grid";
             Windows = {

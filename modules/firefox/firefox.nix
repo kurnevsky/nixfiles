@@ -17,6 +17,8 @@
   "browser.aboutConfig.showWarning" = false;
   # Disable tabs detaching to a new window
   "browser.tabs.allowTabDetach" = false;
+  # Use system file picker
+  "widget.use-xdg-desktop-portal.file-picker" = 1;
 
   # [SECTION 0100]: STARTUP
 

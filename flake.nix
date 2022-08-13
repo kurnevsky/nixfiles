@@ -4,14 +4,14 @@
       type = "github";
       owner = "NixOS";
       repo = "nixpkgs";
-      ref = "nixos-22.05";
+      ref = "nixos-unstable";
     };
 
-    nixpkgs-unstable = {
+    nixpkgs-stable = {
       type = "github";
       owner = "NixOS";
       repo = "nixpkgs";
-      ref = "nixos-unstable";
+      ref = "nixos-22.05";
     };
 
     fenix = {
@@ -50,7 +50,7 @@
         ({ pkgs, ... }: {
           _module.args =
             let platform = { inherit (pkgs.stdenv.targetPlatform) system; };
-            in { nixpkgs-unstable = import inputs.nixpkgs-unstable platform; };
+            in { nixpkgs-stable = import inputs.nixpkgs-stable platform; };
         })
         inputs.home-manager.nixosModules.home-manager
         ./modules/common.nix
