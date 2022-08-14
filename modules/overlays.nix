@@ -78,8 +78,15 @@
     (self: super: {
       plasma5Packages = super.plasma5Packages.overrideScope' (self: super: {
         plasma5 = super.plasma5 // {
-          kwin = super.plasma5.kwin.overrideAttrs
-            (old: { patches = old.patches ++ [ ./caps.patch ]; });
+          kwin = super.plasma5.kwin.overrideAttrs (old: {
+            patches = old.patches ++ [ ./caps.patch ];
+            postPatch = old.postPatch + ''
+              substituteInPlace src/effects/slide/slide.cpp \
+                --replace \
+                  'const qreal springConstant = 200.0 / effects->animationTimeFactor();' \
+                  'const qreal springConstant = 500.0 / effects->animationTimeFactor();'
+            '';
+          });
         };
       });
     })
