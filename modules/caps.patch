@@ -1,203 +1,39 @@
---- b/src/CMakeLists.txt
-+++ a/src/CMakeLists.txt
-@@ -302,6 +302,9 @@
-     KWinXwaylandServerModule
- )
- kcoreaddons_target_static_plugins(kwin_wayland "kwin/effects/plugins")
-+if (HAVE_LIBCAP)
-+    target_link_libraries(kwin_wayland ${Libcap_LIBRARIES})
-+endif()
- 
- install(TARGETS kwin_wayland ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
- if (HAVE_LIBCAP)
---- b/src/backends/libinput/connection.cpp
-+++ a/src/backends/libinput/connection.cpp
-@@ -24,7 +24,6 @@
- #include "libinput_logging.h"
- #include "session.h"
- #include "udev.h"
--#include "utils/realtime.h"
- 
- #include <QDBusConnection>
- #include <QMutexLocker>
-@@ -151,9 +150,6 @@
- void Connection::doSetup()
- {
-     Q_ASSERT(!m_notifier);
--
--    gainRealTime();
--
-     m_notifier = new QSocketNotifier(m_input->fileDescriptor(), QSocketNotifier::Read, this);
-     connect(m_notifier, &QSocketNotifier::activated, this, &Connection::handleEvent);
- 
---- b/src/config-kwin.h.cmake
-+++ a/src/config-kwin.h.cmake
-@@ -17,6 +17,7 @@
- #cmakedefine01 HAVE_GBM_BO_GET_FD_FOR_PLANE
- #cmakedefine01 HAVE_WAYLAND_EGL
- #cmakedefine01 HAVE_BREEZE_DECO
-+#cmakedefine01 HAVE_LIBCAP
- #cmakedefine01 HAVE_SCHED_RESET_ON_FORK
- #cmakedefine01 HAVE_ACCESSIBILITY
- #if HAVE_BREEZE_DECO
---- b/src/main_wayland.cpp
-+++ a/src/main_wayland.cpp
-@@ -15,7 +15,6 @@
- #include "inputmethod.h"
- #include "platform.h"
- #include "tabletmodemanager.h"
--#include "utils/realtime.h"
- #include "wayland/display.h"
- #include "wayland/seat_interface.h"
- #include "wayland_server.h"
-@@ -39,6 +38,10 @@
+From 232e480ab1303f37d37d295b57fdcbb6b6648bca Mon Sep 17 00:00:00 2001
+From: Alois Wohlschlager <alois1@gmx-topmail.de>
+Date: Sun, 7 Aug 2022 16:12:31 +0200
+Subject: [PATCH] Lower CAP_SYS_NICE from the ambient set
+
+The capabilities wrapper raises CAP_SYS_NICE into the ambient set so it
+is inherited by the wrapped program. However, we don't want it to leak
+into the entire desktop environment.
+
+Lower the capability again at startup so that the kernel will clear it
+on exec.
+---
+ src/main_wayland.cpp | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/src/main_wayland.cpp b/src/main_wayland.cpp
+index 1720e14e7..f2bb446b0 100644
+--- a/src/main_wayland.cpp
++++ b/src/main_wayland.cpp
+@@ -39,7 +39,9 @@
  #include <QWindow>
  #include <qplatformdefs.h>
  
-+#if HAVE_LIBCAP
-+#include <sys/capability.h>
-+#endif
-+
++#include <linux/capability.h>
  #include <sched.h>
++#include <sys/prctl.h>
  #include <sys/resource.h>
  
-@@ -99,6 +102,30 @@
- // that would enable drkonqi
- Q_CONSTRUCTOR_FUNCTION(disableDrKonqi)
- 
-+enum class RealTimeFlags {
-+    DontReset,
-+    ResetOnFork
-+};
-+
-+namespace
-+{
-+void gainRealTime(RealTimeFlags flags = RealTimeFlags::DontReset)
-+{
-+#if HAVE_SCHED_RESET_ON_FORK
-+    const int minPriority = sched_get_priority_min(SCHED_RR);
-+    struct sched_param sp;
-+    sp.sched_priority = minPriority;
-+    int policy = SCHED_RR;
-+    if (flags == RealTimeFlags::ResetOnFork) {
-+        policy |= SCHED_RESET_ON_FORK;
-+    }
-+    sched_setscheduler(0, policy, &sp);
-+#else
-+    Q_UNUSED(flags);
-+#endif
-+}
-+}
-+
- //************************************
- // ApplicationWayland
- //************************************
-@@ -143,7 +170,11 @@
-     waylandServer()->initPlatform();
-     createColorManager();
- 
-+    // try creating the Wayland Backend
-     createInput();
-+    // now libinput thread has been created, adjust scheduler to not leak into other processes
-+    gainRealTime(RealTimeFlags::ResetOnFork);
-+
-     createInputMethod();
-     TabletModeManager::create(this);
-     createPlugins();
-@@ -281,6 +312,27 @@
-     return s_drmPlugin;
- }
- 
-+void dropNiceCapability()
-+{
-+#if HAVE_LIBCAP
-+    cap_t caps = cap_get_proc();
-+    if (!caps) {
-+        return;
-+    }
-+    cap_value_t capList[] = {CAP_SYS_NICE};
-+    if (cap_set_flag(caps, CAP_PERMITTED, 1, capList, CAP_CLEAR) == -1) {
-+        cap_free(caps);
-+        return;
-+    }
-+    if (cap_set_flag(caps, CAP_EFFECTIVE, 1, capList, CAP_CLEAR) == -1) {
-+        cap_free(caps);
-+        return;
-+    }
-+    cap_set_proc(caps);
-+    cap_free(caps);
-+#endif
-+}
-+
- } // namespace
+ #include <iomanip>
+@@ -285,6 +287,7 @@ static QString automaticBackendSelection()
  
  int main(int argc, char *argv[])
-@@ -288,6 +340,7 @@
+ {
++    prctl(PR_CAP_AMBIENT, PR_CAP_AMBIENT_LOWER, CAP_SYS_NICE, 0, 0);
      KWin::Application::setupMalloc();
      KWin::Application::setupLocalizedString();
      KWin::gainRealTime();
-+    KWin::dropNiceCapability();
- 
-     if (signal(SIGTERM, KWin::sighandler) == SIG_IGN) {
-         signal(SIGTERM, SIG_IGN);
---- b/src/utils/CMakeLists.txt
-+++ a/src/utils/CMakeLists.txt
-@@ -2,7 +2,6 @@
-     abstract_opengl_context_attribute_builder.cpp
-     common.cpp
-     egl_context_attribute_builder.cpp
--    realtime.cpp
-     subsurfacemonitor.cpp
-     xcbutils.cpp
- )
---- b/src/utils/realtime.cpp
-+++ /dev/null
-@@ -1,26 +0,0 @@
--/*
--    SPDX-FileCopyrightText: 2022 Vlad Zahorodnii <vlad.zahorodnii@kde.org>
--
--    SPDX-License-Identifier: GPL-2.0-or-later
--*/
--
--#include "realtime.h"
--
--#include "config-kwin.h"
--
--#include <sched.h>
--
--namespace KWin
--{
--
--void gainRealTime()
--{
--#if HAVE_SCHED_RESET_ON_FORK
--    const int minPriority = sched_get_priority_min(SCHED_RR);
--    sched_param sp;
--    sp.sched_priority = minPriority;
--    sched_setscheduler(0, SCHED_RR | SCHED_RESET_ON_FORK, &sp);
--#endif
--}
--
--} // namespace KWin
---- b/src/utils/realtime.h
-+++ /dev/null
-@@ -1,19 +0,0 @@
--/*
--    SPDX-FileCopyrightText: 2022 Vlad Zahorodnii <vlad.zahorodnii@kde.org>
--
--    SPDX-License-Identifier: GPL-2.0-or-later
--*/
--
--#pragma once
--
--#include "kwin_export.h"
--
--namespace KWin
--{
--
--/**
-- * Makes the calling thread to use realtime scheduling.
-- */
--KWIN_EXPORT void gainRealTime();
--
--} // namespace KWin
+-- 
+2.37.1
