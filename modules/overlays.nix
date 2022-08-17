@@ -89,6 +89,15 @@
           });
         };
       });
+      claws-mail = super.claws-mail.overrideAttrs (old: {
+        patches = old.patches ++ [
+          (super.fetchpatch {
+            url =
+              "https://git.claws-mail.org/?p=claws.git;a=patch;h=5fee50c54a370fdfb5241bd4c4c16281a741762e";
+            hash = "sha256-dO8g77IvnT1cB3kbCk/F1SgiQkZneqHQuwTTAZ1q8KY=";
+          })
+        ];
+      });
     })
     # will be upstreamed eventually, hopefully
     # doesn't build with latest nixos
@@ -114,16 +123,17 @@
       });
     })
     (self: super: {
-      globalprotect-openconnect = super.globalprotect-openconnect.overrideAttrs (old: rec {
-        version = "1.4.7";
-        src = super.fetchFromGitHub {
-          owner = "yuezk";
-          repo = "GlobalProtect-openconnect";
-          fetchSubmodules = true;
-          rev = "v${version}";
-          sha256 = "sha256-MNH6zizPX3tcFsEPC5w0lr48KlV578kYe+f5v8Qc5FY=";
-        };
-      });
+      globalprotect-openconnect = super.globalprotect-openconnect.overrideAttrs
+        (old: rec {
+          version = "1.4.7";
+          src = super.fetchFromGitHub {
+            owner = "yuezk";
+            repo = "GlobalProtect-openconnect";
+            fetchSubmodules = true;
+            rev = "v${version}";
+            sha256 = "sha256-MNH6zizPX3tcFsEPC5w0lr48KlV578kYe+f5v8Qc5FY=";
+          };
+        });
     })
   ];
 }
