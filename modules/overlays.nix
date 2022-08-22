@@ -99,14 +99,8 @@
         ];
       });
     })
-    # will be upstreamed eventually, hopefully
-    # doesn't build with latest nixos
+    # will be upstreamed eventually
     (self: super: {
-      onnxruntime = nixpkgs-stable.callPackage (builtins.fetchurl {
-        url =
-          "https://raw.githubusercontent.com/NixOS/nixpkgs/708625f80a0ce815e8ee5f396621e89dd8edc53d/pkgs/development/libraries/onnxruntime/default.nix";
-        sha256 = "sha256:0w24fh2l4y5p9pg3ykjpnvz70k6qrrgrlah861nljjrc7n6g8j6l";
-      }) { };
       obs-backgroundremoval = (pkgs.callPackage (builtins.fetchurl {
         url =
           "https://raw.githubusercontent.com/puffnfresh/nixpkgs/6630869e12cfeba50e1e370e26255ed8c3f46832/pkgs/applications/video/obs-studio/plugins/obs-backgroundremoval.nix";
