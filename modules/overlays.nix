@@ -30,8 +30,7 @@
           purple-lurch
           purple-plugin-pack
           purple-slack
-          # TODO: hash mismatch
-          # telegram-purple
+          tdlib-purple
           (pkgs.callPackage ./pidgin-indicator.nix { })
         ];
       };
@@ -88,32 +87,6 @@
             '';
           });
         };
-      });
-      claws-mail = super.claws-mail.overrideAttrs (old: {
-        patches = old.patches ++ [
-          (super.fetchpatch {
-            url =
-              "https://git.claws-mail.org/?p=claws.git;a=patch;h=5fee50c54a370fdfb5241bd4c4c16281a741762e";
-            hash = "sha256-dO8g77IvnT1cB3kbCk/F1SgiQkZneqHQuwTTAZ1q8KY=";
-          })
-        ];
-      });
-    })
-    # will be upstreamed eventually
-    (self: super: {
-      obs-backgroundremoval = (pkgs.callPackage (builtins.fetchurl {
-        url =
-          "https://raw.githubusercontent.com/puffnfresh/nixpkgs/6630869e12cfeba50e1e370e26255ed8c3f46832/pkgs/applications/video/obs-studio/plugins/obs-backgroundremoval.nix";
-        sha256 = "sha256:1cxld16p41vm5yvfrjnmsn2w9rvwfgl9jmjql302wi4wrvkyh2cc";
-      }) { }).overrideAttrs (old: {
-        patches = [
-          (builtins.fetchurl {
-            url =
-              "https://raw.githubusercontent.com/puffnfresh/nixpkgs/6630869e12cfeba50e1e370e26255ed8c3f46832/pkgs/applications/video/obs-studio/plugins/obs-backgroundremoval-includes.patch";
-            sha256 =
-              "sha256:1w31nbcdd3n801g1660dsbndmnbq2h1w4knbl5wdzbn7zqpyb8n1";
-          })
-        ];
       });
     })
     (self: super: {

@@ -423,8 +423,7 @@
       enable = true;
       enableOnBoot = false;
     };
-    # TODO: broken
-    # virtualbox.host.enable = true;
+    virtualbox.host.enable = true;
   };
 
   hardware = {
