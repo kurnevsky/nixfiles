@@ -240,6 +240,7 @@
       coursier
       sbt
       scala
+      metals
       ## Math
       maxima
       wxmaxima
