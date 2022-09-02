@@ -86,6 +86,7 @@
       calibre
       claws-mail
       clinfo
+      cloud-mdir-sync
       cuetools
       davfs2
       deadbeef-with-plugins
@@ -754,7 +755,7 @@
           userName = user;
           imap.host = "outlook.office365.com";
           passwordCommand =
-            "~/cloud_mdir_sync/cms-oauth --cms_sock=/var/run/user/$UID/cms.sock --proto=IMAP --user ${user} --output=token";
+            "${pkgs.cloud-mdir-sync}/bin/cms-oauth --cms_sock=/var/run/user/$UID/cms.sock --proto=IMAP --user ${user} --output=token";
         };
       };
       services = {

@@ -73,6 +73,7 @@
           super.isync
         ];
       };
+      cloud-mdir-sync = (pkgs.callPackage ./cloud-mdir-sync.nix { });
     })
     (self: super: {
       plasma5Packages = super.plasma5Packages.overrideScope' (self: super: {
