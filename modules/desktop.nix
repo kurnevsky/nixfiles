@@ -421,9 +421,9 @@
   };
 
   virtualisation = {
-    docker = {
+    docker.rootless = {
       enable = true;
-      enableOnBoot = false;
+      setSocketVariable = true;
     };
     virtualbox.host.enable = true;
   };
@@ -441,7 +441,10 @@
   };
 
   systemd = {
-    user.services.dbus.wantedBy = [ "default.target" ];
+    user.services = {
+      dbus.wantedBy = [ "default.target" ];
+      docker.wantedBy = pkgs.lib.mkForce [ ];
+    };
     services = {
       iodine-digitalocean.wantedBy = pkgs.lib.mkForce [ ];
       hans-digitalocean.wantedBy = pkgs.lib.mkForce [ ];
