@@ -1077,6 +1077,16 @@ ARGS is `kill-buffer' arguments."
 
 (use-package poly-rst)
 
+(use-package tree-sitter
+  :demand t
+  :hook (tree-sitter-after-on . tree-sitter-hl-mode)
+  :config
+  (global-tree-sitter-mode))
+
+(use-package tree-sitter-langs
+  :demand t
+  :after yasnippet)
+
 (use-package conf-mode
   :ensure nil
   :mode ("/Cargo.lock\\'" . conf-toml-mode))
