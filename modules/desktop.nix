@@ -370,7 +370,7 @@
       defaultEditor = true;
       package = (pkgs.emacsWithPackagesFromUsePackage {
         config = ./init.el;
-        package = pkgs.emacs28NativeComp;
+        package = pkgs.emacs-gtk;
         alwaysEnsure = true;
         extraEmacsPackages = epkgs: [
           (pkgs.stdenv.mkDerivation {
