@@ -198,7 +198,7 @@
             "org.kde.dolphin.desktop" = {
               "_launch" = "Meta+E,Meta+E,Dolphin";
             };
-            "Alacritty.desktop" = { "_launch" = "Meta+R,,Alacritty"; };
+            "Alacritty.desktop" = { "_launch" = "Meta+Shift+R,,Alacritty"; };
           };
           kxkbrc = {
             Layout = {
