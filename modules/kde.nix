@@ -19,7 +19,15 @@
     };
   };
 
-  environment.systemPackages = with pkgs; [ ark kcalc krfb krdc wl-clipboard ];
+  environment.systemPackages = with pkgs;
+    with plasma5Packages; [
+      ark
+      kcalc
+      krfb
+      krdc
+      kamoso
+      wl-clipboard
+    ];
 
   xdg.portal = {
     enable = true;
