@@ -1138,6 +1138,8 @@ ARGS is `kill-buffer' arguments."
 
 (use-package dhall-mode)
 
+(use-package mermaid-mode)
+
 (when (executable-find "agda-mode")
   (use-package agda2-mode
     :ensure nil

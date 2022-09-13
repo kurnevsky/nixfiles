@@ -146,6 +146,7 @@
       nixfmt
       ncmpc
       nmap
+      nodePackages.mermaid-cli
       nodePackages.prettier
       openssl
       pandoc # TODO: it should depend on texlive
