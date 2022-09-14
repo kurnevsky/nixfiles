@@ -111,7 +111,6 @@
       gnome3.adwaita-icon-theme
       google-authenticator
       gparted
-      grafana-loki # for logcli
       graphicsmagick
       graphicsmagick-imagemagick-compat
       hdparm
@@ -126,7 +125,6 @@
       iotop
       isync
       jq
-      kafkacat
       kubectl
       languagetool
       libnotify
@@ -216,6 +214,10 @@
       minetest
       openmw
       wesnoth
+      # Databases
+      cassandra
+      grafana-loki
+      kcat
       # Languages
       (agda.withPackages (pkgs: with pkgs; [ standard-library ]))
       astyle
