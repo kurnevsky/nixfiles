@@ -221,6 +221,11 @@
       # Wallets
       electrum
       # TODO: feather-wallet
+      # Audio
+      easyeffects
+      helvum
+      qpwgraph
+      sox
       # Languages
       (agda.withPackages (pkgs: with pkgs; [ standard-library ]))
       astyle
