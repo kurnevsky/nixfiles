@@ -324,9 +324,18 @@
               "test -f ~/.config/'${file}' && ${pkgs.libsForQt5.kconfig}/bin/kwriteconfig5 --file ~/.config/'${file}' --group '${group}' --key '${key}' ${
                 toValue value
               }") keys) groups) configs);
+        konsole-theme = "base16-onedark.colorscheme";
       in {
-        home.activation.kdeConfigs = lib.hm.dag.entryAfter [ "writeBoundary" ]
-          (builtins.concatStringsSep "\n" lines);
+        home = {
+          activation.kdeConfigs = lib.hm.dag.entryAfter [ "writeBoundary" ]
+            (builtins.concatStringsSep "\n" lines);
+
+          file.".local/share/konsole/${konsole-theme}".source = pkgs.fetchurl {
+            url =
+              "https://raw.githubusercontent.com/cskeeters/base16-konsole/b30e0b26e766cf8a3d12afb18ac2773f53af5a87/colorscheme/${konsole-theme}";
+            sha256 = "sha256-+CLYvxMJUkHV1dmBWDbqkNGA4OoS5t+JQsKKAzYNDOI=";
+          };
+        };
       };
   in {
     kurnevsky = home;
