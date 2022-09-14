@@ -1,4 +1,4 @@
-{ pkgs, nixpkgs-stable, ... }:
+{ pkgs, ... }:
 
 {
   # system.replaceRuntimeDependencies can be used to make fast fixes
