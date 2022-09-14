@@ -218,6 +218,9 @@
       cassandra
       grafana-loki
       kcat
+      # Wallets
+      electrum
+      # TODO: feather-wallet
       # Languages
       (agda.withPackages (pkgs: with pkgs; [ standard-library ]))
       astyle
