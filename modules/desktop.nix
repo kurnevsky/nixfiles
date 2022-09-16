@@ -209,8 +209,7 @@
       toxic
       # Games
       cataclysm-dda
-      # TODO: broken
-      # hedgewars
+      hedgewars
       minetest
       openmw
       wesnoth
