@@ -141,7 +141,6 @@
       nettools
       newsboat
       nix-diff
-      nixfmt
       ncmpc
       nmap
       nodePackages.mermaid-cli
@@ -247,11 +246,16 @@
         "rustfmt"
       ])
       rust-analyzer
+      ## Java
+      jdt-language-server
+      maven
       ## Scala
       coursier
       sbt
       scala
       metals
+      ## Nix
+      nixfmt
       ## Math
       maxima
       wxmaxima
