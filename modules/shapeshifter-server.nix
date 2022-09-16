@@ -25,7 +25,7 @@ in {
     wantedBy = [ "multi-user.target" ];
     serviceConfig = {
       ExecStart =
-        "${pkg}/bin/shapeshifter-dispatcher -server -transparent -transports obfs4 -state ${homeDir} -orport 127.0.0.1:22 -bindaddr obfs4-0.0.0.0:${
+        "${pkg}/bin/shapeshifter-dispatcher -server -transparent -transports obfs4 -state ${homeDir} -target 127.0.0.1:22 -bindaddr obfs4-0.0.0.0:${
           builtins.toString port
         } -logLevel INFO -enableLogging";
       User = "shapeshifter";
