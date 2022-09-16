@@ -72,7 +72,6 @@
         ./modules/kde.nix
         ./modules/sandbox.nix
         ./modules/shadowsocks.nix
-        ./modules/shapeshifter-client.nix
         ./modules/motion.nix
         ./modules/rnnoise.nix
         ./modules/torjail.nix
@@ -107,7 +106,6 @@
           system = "x86_64-linux";
           modules = commonModules ++ [
             ./modules/shadowsocks-server.nix
-            ./modules/shapeshifter-server.nix
             ./machines/digitalocean/configuration.nix
             ./machines/digitalocean/hardware-configuration.nix
             ./machines/digitalocean/networking.nix
