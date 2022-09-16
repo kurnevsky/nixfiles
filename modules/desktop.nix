@@ -207,7 +207,8 @@
       qtox
       toxic
       # Games
-      cataclysm-dda
+      # TODO: build error
+      # cataclysm-dda
       hedgewars
       minetest
       openmw
