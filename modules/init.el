@@ -1179,13 +1179,11 @@ ARGS is `kill-buffer' arguments."
   (lsp-headerline-breadcrumb-segments '(symbols))
   :config
   (lsp-enable-which-key-integration)
-  (defun lsp-activate-if-already-activated (server-id)
-    (when (lsp-find-workspace server-id (buffer-file-name))
-      (lsp)))
-  (add-hook 'rust-mode-hook (lambda ()
-                              (lsp-activate-if-already-activated 'rust-analyzer)))
-  (add-hook 'scala-mode-hook (lambda ()
-                               (lsp-activate-if-already-activated 'metals))))
+  (defun lsp-activate-if-already-activated ()
+    (let ((session (lsp-session)))
+      (when (gethash (lsp-find-session-folder session (buffer-file-name)) (lsp-session-folder->servers session))
+        (lsp))))
+  (add-hook 'prog-mode-hook #'lsp-activate-if-already-activated))
 
 (use-package lsp-ui
   :custom
