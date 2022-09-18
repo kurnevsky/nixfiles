@@ -1226,7 +1226,13 @@ ARGS is `kill-buffer' arguments."
 
 (use-package lsp-java
   :after lsp-mode
-  :demand t)
+  :demand t
+  :config
+  (defun lsp-java--ls-command ()
+    (lsp-java--ensure-dir lsp-java-workspace-dir)
+    `("jdt-language-server" "-data" ,(lsp-file-local-name lsp-java-workspace-dir)))
+  (defun lsp-java--locate-server-jar ()
+    t))
 
 (use-package lsp-metals
   :after lsp-mode
