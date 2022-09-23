@@ -79,7 +79,6 @@
       plasma5Packages = super.plasma5Packages.overrideScope' (self: super: {
         plasma5 = super.plasma5 // {
           kwin = super.plasma5.kwin.overrideAttrs (old: {
-            patches = old.patches ++ [ ./caps.patch ];
             postPatch = old.postPatch + ''
               substituteInPlace src/effects/slide/slide.cpp \
                 --replace \
