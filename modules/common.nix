@@ -5,7 +5,6 @@
     builtins.elem (lib.getName pkg) [ "symbola" "unrar" "p7zip" ];
 
   nix = {
-    package = pkgs.nixFlakes;
     settings = {
       auto-optimise-store = true;
       substituters =

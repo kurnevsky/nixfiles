@@ -108,7 +108,7 @@
       gimp-with-plugins
       globalprotect-openconnect
       gnome-themes-extra
-      gnome3.adwaita-icon-theme
+      gnome.adwaita-icon-theme
       google-authenticator
       gparted
       graphicsmagick
@@ -445,7 +445,7 @@
   hardware = {
     bluetooth = {
       enable = true;
-      package = pkgs.bluezFull;
+      package = pkgs.bluez;
     };
     usbWwan.enable = true;
     opengl = {

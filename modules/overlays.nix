@@ -17,7 +17,7 @@
       firefox-wayland = super.firefox-wayland.override {
         extraNativeMessagingHosts = [ super.passff-host ];
       };
-      mpv-with-scripts = super.mpv-with-scripts.override {
+      mpv = super.mpv.override {
         scripts = with pkgs.mpvScripts; [ mpris ];
       };
       p7zip = super.p7zip.override { enableUnfree = true; };

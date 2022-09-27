@@ -108,7 +108,7 @@ let
     extra-deps = with pkgs; [
       qt5ct
       gnome-themes-extra
-      gnome3.adwaita-icon-theme
+      gnome.adwaita-icon-theme
       hicolor-icon-theme
     ];
     devs = [ "dri" ];
@@ -140,7 +140,7 @@ let
     extra-deps = with pkgs; [
       qt5ct
       gnome-themes-extra
-      gnome3.adwaita-icon-theme
+      gnome.adwaita-icon-theme
       hicolor-icon-theme
       plasma-integration
     ];
@@ -227,7 +227,7 @@ in {
             name = "deadbeef";
             extra-deps = with pkgs; [
               gnome-themes-extra
-              gnome3.adwaita-icon-theme
+              gnome.adwaita-icon-theme
               hicolor-icon-theme
               plasma-integration
             ];
@@ -249,7 +249,7 @@ in {
         unrar = wrap super.unrar [ (archiver-cfg "unrar") ];
         zip-natspec = wrap super.zip-natspec [ (archiver-cfg "zip") ];
         unzip-natspec = wrap super.unzip-natspec [ (archiver-cfg "unzip") ];
-        mpv = wrap super.mpv-with-scripts [
+        mpv = wrap super.mpv [
           (lib.pipe {
             name = "mpv";
             bin-sh = true;
@@ -315,7 +315,7 @@ in {
             name = "pidgin";
             extra-deps = with pkgs; [
               gnome-themes-extra
-              gnome3.adwaita-icon-theme
+              gnome.adwaita-icon-theme
               hicolor-icon-theme
               plasma-integration
             ];
@@ -336,7 +336,7 @@ in {
             extra-deps = with pkgs; [
               qt5ct
               gnome-themes-extra
-              gnome3.adwaita-icon-theme
+              gnome.adwaita-icon-theme
               hicolor-icon-theme
               plasma-integration
             ];
@@ -380,7 +380,7 @@ in {
             extra-deps = with pkgs; [
               qt5ct
               gnome-themes-extra
-              gnome3.adwaita-icon-theme
+              gnome.adwaita-icon-theme
               hicolor-icon-theme
               plasma-integration
             ];
@@ -412,7 +412,7 @@ in {
             extra-deps = with pkgs; [
               qt5ct
               gnome-themes-extra
-              gnome3.adwaita-icon-theme
+              gnome.adwaita-icon-theme
               hicolor-icon-theme
               plasma-integration
             ];
@@ -534,7 +534,7 @@ in {
             extra-deps = with pkgs; [
               qt5ct
               gnome-themes-extra
-              gnome3.adwaita-icon-theme
+              gnome.adwaita-icon-theme
               hicolor-icon-theme
             ];
             resolv-conf = true;
