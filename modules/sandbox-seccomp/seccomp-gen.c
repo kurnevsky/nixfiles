@@ -40,7 +40,6 @@ int main(int argc, char *argv[])
   DENY_RULE(fanotify_init);
   DENY_RULE(finit_module);
   DENY_RULE(get_kernel_syms);
-  DENY_RULE(get_mempolicy);
   DENY_RULE(init_module);
   DENY_RULE(io_cancel);
   DENY_RULE(io_destroy);
@@ -67,7 +66,6 @@ int main(int argc, char *argv[])
   DENY_RULE(reboot);
   DENY_RULE(remap_file_pages);
   DENY_RULE(request_key);
-  DENY_RULE(set_mempolicy);
   DENY_RULE(swapoff);
   DENY_RULE(swapon);
   DENY_RULE(sysfs);
