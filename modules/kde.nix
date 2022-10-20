@@ -82,7 +82,7 @@
               MiddleButtonWindow = 6;
             };
             Plugins.invertEnabled = true;
-            TabBox.LayoutName = "thumbnail_grid";
+            TabBox.LayoutName = "thumbnails";
             Windows = {
               FocusPolicy = "FocusFollowsMouse";
               NextFocusPrefersMouse = true;
