@@ -76,20 +76,6 @@
       cloud-mdir-sync = (pkgs.callPackage ./cloud-mdir-sync.nix { });
     })
     (self: super: {
-      plasma5Packages = super.plasma5Packages.overrideScope' (self: super: {
-        plasma5 = super.plasma5 // {
-          kwin = super.plasma5.kwin.overrideAttrs (old: {
-            postPatch = old.postPatch + ''
-              substituteInPlace src/effects/slide/slide.cpp \
-                --replace \
-                  'const qreal springConstant = 200.0 / effects->animationTimeFactor();' \
-                  'const qreal springConstant = 500.0 / effects->animationTimeFactor();'
-            '';
-          });
-        };
-      });
-    })
-    (self: super: {
       globalprotect-openconnect = super.globalprotect-openconnect.overrideAttrs
         (old: rec {
           version = "1.4.7";
