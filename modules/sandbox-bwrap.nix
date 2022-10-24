@@ -1,4 +1,4 @@
-{ bubblewrap, callPackage, lib, writeShellScriptBin, closureInfo }:
+{ bubblewrap, gnused, callPackage, lib, writeShellScriptBin, closureInfo }:
 
 drv:
 
@@ -79,19 +79,19 @@ in writeShellScriptBin target-name ''
         echo -n "$CAMERA"
       else
         find /dev -maxdepth 1 -type c -regex '/dev/video[0-9]+'
-      fi | sed 's/.*/--dev-bind\n&\n&/'
+      fi | ${gnused}/bin/sed 's/.*/--dev-bind\n&\n&/'
     )
   ''}
 
-  mapfile -t ro_whitelist < <(echo -n "''${RO_WHITELIST-}" | sed 's/.*/--ro-bind\n&\n&/')
-  mapfile -t whitelist < <(echo -n "''${WHITELIST-}" | sed 's/.*/--bind\n&\n&/')
-  mapfile -t blacklist < <(echo -n "''${BLACKLIST-}" | sed 's/.*/--tmpfs\n&/')
+  mapfile -t ro_whitelist < <(echo -n "''${RO_WHITELIST-}" | ${gnused}/bin/sed 's/.*/--ro-bind\n&\n&/')
+  mapfile -t whitelist < <(echo -n "''${WHITELIST-}" | ${gnused}/bin/sed 's/.*/--bind\n&\n&/')
+  mapfile -t blacklist < <(echo -n "''${BLACKLIST-}" | ${gnused}/bin/sed 's/.*/--tmpfs\n&/')
 
   ${lib.optionalString graphics ''
-    mapfile -t xauthority < <(echo -n "''${XAUTHORITY-}" | sed 's/.*/--ro-bind\n&\n&/')
+    mapfile -t xauthority < <(echo -n "''${XAUTHORITY-}" | ${gnused}/bin/sed 's/.*/--ro-bind\n&\n&/')
   ''}
 
-  mapfile -t deps < <(sed 's/.*/--ro-bind\n&\n&/' ${cinfo}/store-paths)
+  mapfile -t deps < <(${gnused}/bin/sed 's/.*/--ro-bind\n&\n&/' ${cinfo}/store-paths)
 
   exec ${bubblewrap}/bin/bwrap \
        "''${deps[@]}" \
