@@ -34,6 +34,8 @@
 (setq native-comp-deferred-compilation nil)
 ;; Don't do backup files.
 (setq make-backup-files nil)
+;; Don't create lock files.
+(setq create-lockfiles nil)
 ;; Don't save discarded files.
 (setq auto-save-default nil)
 ;; Inhibit startup/splash screen.
