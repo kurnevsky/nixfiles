@@ -30,7 +30,6 @@
           purple-lurch
           purple-plugin-pack
           purple-slack
-          tdlib-purple
           (pkgs.callPackage ./pidgin-indicator.nix { })
         ];
       };
