@@ -133,7 +133,6 @@ let
       "~/.cache/fontconfig/"
       "~/.config/pulse/"
     ];
-    args = [ "--no-sandbox" ];
   } [ withFonts withOpengl ];
   element-desktop-cfg = withFonts {
     name = "element-desktop";
