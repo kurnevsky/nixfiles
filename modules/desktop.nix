@@ -131,6 +131,7 @@
       libreoffice-fresh
       libva-utils
       libxml2 # for xmllint
+      lm_sensors
       lsd
       lshw
       maim
