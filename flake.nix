@@ -68,7 +68,6 @@
         })
         (import ./modules/common-home.nix [ "ww" ])
         ./modules/desktop.nix
-        ./modules/wayland.nix
         ./modules/kde.nix
         ./modules/sandbox.nix
         ./modules/shadowsocks.nix

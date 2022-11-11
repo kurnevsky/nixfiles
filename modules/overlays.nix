@@ -33,9 +33,6 @@
           (pkgs.callPackage ./pidgin-indicator.nix { })
         ];
       };
-      ungoogled-chromium-wayland = super.ungoogled-chromium.override {
-        commandLineArgs = "--ozone-platform-hint=auto";
-      };
       isync = let
         cyrus_sasl_xoauth2 = pkgs.stdenv.mkDerivation {
           pname = "cyrus-sasl-xoauth2";

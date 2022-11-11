@@ -10,7 +10,6 @@
     xdotool
     xsel
     xterm
-    element-desktop
   ];
 
   services.xserver = {

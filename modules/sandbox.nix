@@ -103,69 +103,6 @@ let
       "~/.gnupg/"
     ];
   } [ withFonts withOpengl (withHomeManager [ ".mozilla" ]) ];
-  chromium-cfg = lib.pipe {
-    name = "chromium";
-    extra-deps = with pkgs; [
-      qt5ct
-      gnome-themes-extra
-      gnome.adwaita-icon-theme
-      hicolor-icon-theme
-    ];
-    devs = [ "dri" ];
-    camera = true;
-    syses = [
-      # Necessary for hardware acceleration
-      "dev"
-      "devices"
-    ];
-    graphics = true;
-    system-bus-socket = true;
-    pams = [ "bus" "gnupg" "pulse" ];
-    etcs = [ "pulse" "ssl/certs/ca-certificates.crt" ];
-    localtime = true;
-    resolv-conf = true;
-    unsetenvs = [ "MAIL" "SHELL" ];
-    unshare-net = false;
-    whitelist = [
-      "~/.config/chromium/"
-      "~/.cache/chromium/"
-      "~/Downloads/"
-      "~/.cache/fontconfig/"
-      "~/.config/pulse/"
-    ];
-  } [ withFonts withOpengl ];
-  element-desktop-cfg = withFonts {
-    name = "element-desktop";
-    extra-deps = with pkgs; [
-      qt5ct
-      gnome-themes-extra
-      gnome.adwaita-icon-theme
-      hicolor-icon-theme
-      plasma-integration
-    ];
-    devs = [
-      "dri"
-      # Necessary for audio
-      "snd"
-    ];
-    camera = true;
-    syses = [
-      # Necessary for hardware acceleration
-      "dev"
-      "devices"
-    ];
-    graphics = true;
-    pams = [ "bus" "pulse" ];
-    etcs = [ "pulse" "ssl/certs/ca-certificates.crt" ];
-    # Tray icon is stored in /tmp
-    shared-tmp = true;
-    localtime = true;
-    resolv-conf = true;
-    unsetenvs = [ "MAIL" "SHELL" ];
-    unshare-net = false;
-    ro-whitelist = [ "~/.config/gtk-3.0/" ];
-    whitelist = [ "~/.config/Element/" "~/.config/pulse/" ];
-  };
   wine-cfg = name:
     lib.pipe {
       inherit name;
@@ -306,9 +243,39 @@ in {
         ];
         firefox = wrap super.firefox [ firefox-cfg ];
         firefox-wayland = wrap super.firefox-wayland [ firefox-cfg ];
-        chromium = wrap super.ungoogled-chromium [ chromium-cfg ];
-        chromium-wayland =
-          wrap super.ungoogled-chromium-wayland [ chromium-cfg ];
+        chromium = wrap super.ungoogled-chromium [
+          (lib.pipe {
+            name = "chromium";
+            extra-deps = with pkgs; [
+              qt5ct
+              gnome-themes-extra
+              gnome.adwaita-icon-theme
+              hicolor-icon-theme
+            ];
+            devs = [ "dri" ];
+            camera = true;
+            syses = [
+              # Necessary for hardware acceleration
+              "dev"
+              "devices"
+            ];
+            graphics = true;
+            system-bus-socket = true;
+            pams = [ "bus" "gnupg" "pulse" ];
+            etcs = [ "pulse" "ssl/certs/ca-certificates.crt" ];
+            localtime = true;
+            resolv-conf = true;
+            unsetenvs = [ "MAIL" "SHELL" ];
+            unshare-net = false;
+            whitelist = [
+              "~/.config/chromium/"
+              "~/.cache/chromium/"
+              "~/Downloads/"
+              "~/.cache/fontconfig/"
+              "~/.config/pulse/"
+            ];
+          } [ withFonts withOpengl ])
+        ];
         pidgin = wrap super.pidgin-with-plugins [
           (withFonts {
             name = "pidgin";
@@ -402,9 +369,40 @@ in {
               [ "~/.local/share/TelegramDesktop/" "~/.config/pulse/" ];
           } [ withFonts withOpengl ])
         ];
-        element-desktop = wrap super.element-desktop [ element-desktop-cfg ];
-        element-desktop-wayland =
-          wrap super.element-desktop-wayland [ element-desktop-cfg ];
+        element-desktop = wrap super.element-desktop [
+          (withFonts {
+            name = "element-desktop";
+            extra-deps = with pkgs; [
+              qt5ct
+              gnome-themes-extra
+              gnome.adwaita-icon-theme
+              hicolor-icon-theme
+              plasma-integration
+            ];
+            devs = [
+              "dri"
+              # Necessary for audio
+              "snd"
+            ];
+            camera = true;
+            syses = [
+              # Necessary for hardware acceleration
+              "dev"
+              "devices"
+            ];
+            graphics = true;
+            pams = [ "bus" "pulse" ];
+            etcs = [ "pulse" "ssl/certs/ca-certificates.crt" ];
+            # Tray icon is stored in /tmp
+            shared-tmp = true;
+            localtime = true;
+            resolv-conf = true;
+            unsetenvs = [ "MAIL" "SHELL" ];
+            unshare-net = false;
+            ro-whitelist = [ "~/.config/gtk-3.0/" ];
+            whitelist = [ "~/.config/Element/" "~/.config/pulse/" ];
+          })
+        ];
         qbittorrent = wrap (pid-hack super.qbittorrent "qbittorrent") [
           (lib.pipe {
             name = "qbittorrent";
@@ -629,13 +627,12 @@ in {
         mpv
         vlc
         firefox-wayland
-        chromium-wayland
+        chromium
         pidgin
         qtox
         toxic
         tdesktop
-        # element-desktop
-        element-desktop-wayland
+        element-desktop
         qbittorrent
         feh
         imv

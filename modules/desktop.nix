@@ -199,9 +199,10 @@
       unrar
       unzip-natspec
       # Browsers
-      ungoogled-chromium-wayland
+      ungoogled-chromium
       tor-browser-bundle-bin
       # Messengers
+      element-desktop
       pidgin-with-plugins
       tdesktop
       ## Tox
@@ -280,7 +281,10 @@
       MAGICK_OCL_DEVICE = "OFF";
     };
 
-    sessionVariables.MOZ_USE_XINPUT2 = "1";
+    sessionVariables = {
+      NIXOS_OZONE_WL = "1";
+      MOZ_USE_XINPUT2 = "1";
+    };
   };
 
   fonts.fonts = with pkgs; [
