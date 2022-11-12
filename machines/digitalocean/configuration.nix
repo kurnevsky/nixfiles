@@ -84,6 +84,26 @@
       enable = true;
       settings.global.server_name = "kurnevsky.net";
     };
+    mautrix-telegram = {
+      enable = true;
+      settings = {
+        homeserver = {
+          address = "http://localhost:6167";
+          domain = "kurnevsky.net";
+        };
+        appservice = rec {
+          hostname = "localhost";
+          port = 29317;
+          address = "http://${hostname}:${toString port}";
+        };
+        bridge.permissions = {
+          "@me:kurnevsky.net" = "full";
+          "@admin:kurnevsky.net" = "admin";
+        };
+      };
+      environmentFile = "/secrets/mautrix-telegram";
+      serviceDependencies = [ "conduit.service" ];
+    };
     tt-rss = {
       enable = true;
       virtualHost = null;

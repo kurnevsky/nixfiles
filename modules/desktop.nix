@@ -205,6 +205,7 @@
       element-desktop
       pidgin-with-plugins
       tdesktop
+      nheko
       ## Tox
       qtox
       toxic
