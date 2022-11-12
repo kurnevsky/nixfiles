@@ -1,4 +1,4 @@
-{ pkgs, config, ... }: {
+{ lib, pkgs, config, ... }: {
   boot.cleanTmpDir = true;
 
   swapDevices = [{
@@ -19,6 +19,8 @@
         80
         # HTTPS
         443
+        # Matrix federation
+        8448
         # Tox
         33445
         # Yggdrasil
@@ -78,6 +80,10 @@
         ensurePermissions = { "DATABASE \"tt_rss\"" = "ALL PRIVILEGES"; };
       }];
     };
+    matrix-conduit = {
+      enable = true;
+      settings.global.server_name = "kurnevsky.net";
+    };
     tt-rss = {
       enable = true;
       virtualHost = null;
@@ -99,47 +105,74 @@
       recommendedGzipSettings = true;
       recommendedProxySettings = true;
       proxyTimeout = "300s";
-      virtualHosts."kurnevsky.net" = let
-        index = pkgs.writeTextDir "index.html" (builtins.readFile ./index.html);
-        robots = pkgs.writeTextDir "robots.txt" ''
-          User-agent: *
-          Disallow: /
-        '';
-        root = pkgs.symlinkJoin {
-          name = "root";
-          paths = [ index robots ];
+      virtualHosts = {
+        "kurnevsky.net" = let
+          index =
+            pkgs.writeTextDir "index.html" (builtins.readFile ./index.html);
+          robots = pkgs.writeTextDir "robots.txt" ''
+            User-agent: *
+            Disallow: /
+          '';
+          root = pkgs.symlinkJoin {
+            name = "root";
+            paths = [ index robots ];
+          };
+        in {
+          default = true;
+          enableACME = true;
+          forceSSL = true;
+          kTLS = true;
+          root = "${root}";
+          locations = {
+            "= /tt-rss".return = "301 $request_uri/";
+            "/tt-rss/" = {
+              alias = "${config.services.tt-rss.root}/www/";
+              index = "index.php";
+            };
+            "^~ /tt-rss/feed-icons/".alias =
+              "${config.services.tt-rss.root}/feed-icons/";
+            "~ /tt-rss/.+\\.php$" = {
+              alias = "${config.services.tt-rss.root}/www/";
+              extraConfig = ''
+                fastcgi_split_path_info ^/tt-rss/(.+\.php)(.*)$;
+                fastcgi_pass unix:${
+                  config.services.phpfpm.pools.${config.services.tt-rss.pool}.socket
+                };
+                fastcgi_index index.php;
+              '';
+            };
+            "/_matrix" = {
+              proxyPass = "http://localhost:6167";
+              proxyWebsockets = true;
+            };
+            "/ss" = {
+              proxyPass = "http://localhost:8388";
+              proxyWebsockets = true;
+            };
+            "/static/" = {
+              alias = "/srv/www/";
+              tryFiles = "$uri =404";
+              extraConfig = "expires 24h;";
+            };
+          };
         };
-      in {
-        enableACME = true;
-        forceSSL = true;
-        kTLS = true;
-        root = "${root}";
-        locations = {
-          "= /tt-rss".return = "301 $request_uri/";
-          "/tt-rss/" = {
-            alias = "${config.services.tt-rss.root}/www/";
-            index = "index.php";
+        matrix-federation = {
+          serverName = "kurnevsky.net";
+          onlySSL = true;
+          sslCertificate = "${
+              config.security.acme.certs."kurnevsky.net".directory
+            }/fullchain.pem";
+          sslCertificateKey =
+            "${config.security.acme.certs."kurnevsky.net".directory}/key.pem";
+          kTLS = true;
+          listen = lib.cartesianProductOfSets {
+            addr = [ "0.0.0.0" "[::0]" ];
+            port = [ 8448 ];
+            ssl = [ true ];
           };
-          "^~ /tt-rss/feed-icons/".alias =
-            "${config.services.tt-rss.root}/feed-icons/";
-          "~ /tt-rss/.+\\.php$" = {
-            alias = "${config.services.tt-rss.root}/www/";
-            extraConfig = ''
-              fastcgi_split_path_info ^/tt-rss/(.+\.php)(.*)$;
-              fastcgi_pass unix:${
-                config.services.phpfpm.pools.${config.services.tt-rss.pool}.socket
-              };
-              fastcgi_index index.php;
-            '';
-          };
-          "/ss" = {
-            proxyPass = "http://localhost:8388";
+          locations."/_matrix" = {
+            proxyPass = "http://localhost:6167";
             proxyWebsockets = true;
-          };
-          "/static/" = {
-            alias = "/srv/www/";
-            tryFiles = "$uri =404";
-            extraConfig = "expires 24h;";
           };
         };
       };
