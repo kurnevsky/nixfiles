@@ -203,6 +203,7 @@
       tor-browser-bundle-bin
       # Messengers
       element-desktop
+      gajim
       pidgin-with-plugins
       tdesktop
       nheko
