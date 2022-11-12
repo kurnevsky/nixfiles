@@ -96,9 +96,14 @@
           port = 29317;
           address = "http://${hostname}:${toString port}";
         };
-        bridge.permissions = {
-          "@me:kurnevsky.net" = "full";
-          "@admin:kurnevsky.net" = "admin";
+        bridge = {
+          startup_sync = true;
+          sync_direct_chats = true;
+          sync_create_limit = 0;
+          permissions = {
+            "@me:kurnevsky.net" = "full";
+            "@admin:kurnevsky.net" = "admin";
+          };
         };
       };
       environmentFile = "/secrets/mautrix-telegram";
