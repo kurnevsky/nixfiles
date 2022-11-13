@@ -109,6 +109,21 @@
       environmentFile = "/secrets/mautrix-telegram";
       serviceDependencies = [ "conduit.service" ];
     };
+    heisenbridge = {
+      enable = true;
+      homeserver = "http://localhost:6167";
+      owner = "@me:kurnevsky.net";
+      namespaces.users = [
+        {
+          regex = "@irc_.*";
+          exclusive = true;
+        }
+        {
+          regex = "@heisenbridge:.*";
+          exclusive = true;
+        }
+      ];
+    };
     tt-rss = {
       enable = true;
       virtualHost = null;
