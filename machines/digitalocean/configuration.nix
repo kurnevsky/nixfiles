@@ -104,6 +104,8 @@
             "@me:kurnevsky.net" = "full";
             "@admin:kurnevsky.net" = "admin";
           };
+          mute_bridging = true;
+          tag_only_on_create = false;
         };
       };
       environmentFile = "/secrets/mautrix-telegram";
