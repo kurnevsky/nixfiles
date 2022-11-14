@@ -62,7 +62,7 @@
         (args: {
           nixpkgs.overlays = [
             inputs.emacs-overlay.overlay
-            inputs.fenix.overlay
+            inputs.fenix.overlays.default
             inputs.nur.overlay
           ];
         })
