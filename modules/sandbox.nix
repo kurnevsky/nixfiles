@@ -62,7 +62,7 @@ let
       "MAIL"
       "SHELL"
     ];
-    whitelist = [ "~/" ];
+    whitelist = [ "~/" "/run/media/\"$(whoami)\"" ];
     blacklist = [ "~/.gnupg/" "~/.ssh/" ];
   };
   viewer-cfg = name:
@@ -70,7 +70,7 @@ let
       inherit name;
       graphics = true;
       unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" "SHELL" ];
-      ro-whitelist = [ "~/" ];
+      ro-whitelist = [ "~/" "/run/media/\"$(whoami)\"" ];
       blacklist = [ "~/.gnupg/" "~/.ssh/" ];
     };
   firefox-cfg = lib.pipe {
@@ -151,7 +151,7 @@ let
       localtime = true;
       pams = [ "bus" "pulse" ];
       unsetenvs = [ "MAIL" "SHELL" ];
-      whitelist = [ "~/" ];
+      whitelist = [ "~/" "/run/media/\"$(whoami)\"" ];
       blacklist = [ "~/.gnupg/" "~/.ssh/" ];
     };
 in {
@@ -175,7 +175,7 @@ in {
             etcs = [ "pulse" ];
             graphics = true;
             unsetenvs = [ "MAIL" "SHELL" ];
-            ro-whitelist = [ "~/" ];
+            ro-whitelist = [ "~/" "/run/media/\"$(whoami)\"" ];
             whitelist = [ "~/.config/pulse/" "~/.config/deadbeef/" ];
             blacklist = [ "~/.gnupg/" "~/.ssh/" ];
           })
@@ -209,7 +209,7 @@ in {
               name = "SHELL";
               value = "/run/current-system/sw/bin/bash";
             }];
-            ro-whitelist = [ "~/" ];
+            ro-whitelist = [ "~/" "/run/media/\"$(whoami)\"" ];
             whitelist = [ "~/.cache/fontconfig/" "~/.config/pulse/" ];
             blacklist = [ "~/.gnupg/" "~/.ssh/" ];
           } [ withFonts withOpengl (withHomeManager [ ".config/mpv" ]) ])
@@ -232,7 +232,7 @@ in {
               name = "SHELL";
               value = "/run/current-system/sw/bin/bash";
             }];
-            ro-whitelist = [ "~/" ];
+            ro-whitelist = [ "~/" "/run/media/\"$(whoami)\"" ];
             whitelist = [
               "~/.local/share/vlc/"
               "~/.cache/fontconfig/"
@@ -465,7 +465,7 @@ in {
               "dev"
               "devices"
             ];
-            whitelist = [ "~/" ];
+            whitelist = [ "~/" "/run/media/\"$(whoami)\"" ];
             blacklist = [ "~/.gnupg/" "~/.ssh/" ];
             unsetenvs = [
               "DBUS_SESSION_BUS_ADDRESS"
@@ -483,7 +483,7 @@ in {
               "dev"
               "devices"
             ];
-            ro-whitelist = [ "~/" ];
+            ro-whitelist = [ "~/" "/run/media/\"$(whoami)\"" ];
             blacklist = [ "~/.gnupg/" "~/.ssh/" ];
             unsetenvs = [
               "DBUS_SESSION_BUS_ADDRESS"
