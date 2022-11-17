@@ -62,7 +62,8 @@ let
       "MAIL"
       "SHELL"
     ];
-    whitelist = [ "~/" "/run/media/\"$(whoami)\"" ];
+    media = true;
+    whitelist = [ "~/" ];
     blacklist = [ "~/.gnupg/" "~/.ssh/" ];
   };
   viewer-cfg = name:
@@ -70,7 +71,8 @@ let
       inherit name;
       graphics = true;
       unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" "SHELL" ];
-      ro-whitelist = [ "~/" "/run/media/\"$(whoami)\"" ];
+      ro-media = true;
+      ro-whitelist = [ "~/" ];
       blacklist = [ "~/.gnupg/" "~/.ssh/" ];
     };
   firefox-cfg = lib.pipe {
@@ -83,7 +85,7 @@ let
       "devices"
     ];
     graphics = true;
-    pams = [ "bus" "gnupg" "pulse" ];
+    pams = [ "bus" "gnupg" "pulse" "pipewire-0" ];
     etcs = [ "pulse" "ssl/certs/ca-certificates.crt" ];
     localtime = true;
     resolv-conf = true;
@@ -117,7 +119,7 @@ let
       ];
       graphics = true;
       etcs = [ "ssl/certs/ca-certificates.crt" ];
-      pams = [ "bus" "pulse" ];
+      pams = [ "bus" "pulse" "pipewire-0" ];
       localtime = true;
       unsetenvs = [ "MAIL" ];
       setenvs = [{
@@ -149,9 +151,10 @@ let
       graphics = true;
       etcs = [ "pulse" "passwd" ];
       localtime = true;
-      pams = [ "bus" "pulse" ];
+      pams = [ "bus" "pulse" "pipewire-0" ];
       unsetenvs = [ "MAIL" "SHELL" ];
-      whitelist = [ "~/" "/run/media/\"$(whoami)\"" ];
+      media = true;
+      whitelist = [ "~/" ];
       blacklist = [ "~/.gnupg/" "~/.ssh/" ];
     };
 in {
@@ -171,11 +174,13 @@ in {
               # Necessary for MPRIS2
               "bus"
               "pulse"
+              "pipewire-0"
             ];
             etcs = [ "pulse" ];
             graphics = true;
             unsetenvs = [ "MAIL" "SHELL" ];
-            ro-whitelist = [ "~/" "/run/media/\"$(whoami)\"" ];
+            ro-media = true;
+            ro-whitelist = [ "~/" ];
             whitelist = [ "~/.config/pulse/" "~/.config/deadbeef/" ];
             blacklist = [ "~/.gnupg/" "~/.ssh/" ];
           })
@@ -200,7 +205,7 @@ in {
               "devices"
             ];
             graphics = true;
-            pams = [ "bus" "pulse" ];
+            pams = [ "bus" "pulse" "pipewire-0" ];
             etcs = [ "pulse" ];
             # xdg-screensaver creates a lockfile in /tmp
             shared-tmp = true;
@@ -209,7 +214,8 @@ in {
               name = "SHELL";
               value = "/run/current-system/sw/bin/bash";
             }];
-            ro-whitelist = [ "~/" "/run/media/\"$(whoami)\"" ];
+            ro-media = true;
+            ro-whitelist = [ "~/" ];
             whitelist = [ "~/.cache/fontconfig/" "~/.config/pulse/" ];
             blacklist = [ "~/.gnupg/" "~/.ssh/" ];
           } [ withFonts withOpengl (withHomeManager [ ".config/mpv" ]) ])
@@ -225,14 +231,15 @@ in {
               "devices"
             ];
             graphics = true;
-            pams = [ "bus" "pulse" ];
+            pams = [ "bus" "pulse" "pipewire-0" ];
             etcs = [ "pulse" ];
             unsetenvs = [ "MAIL" ];
             setenvs = [{
               name = "SHELL";
               value = "/run/current-system/sw/bin/bash";
             }];
-            ro-whitelist = [ "~/" "/run/media/\"$(whoami)\"" ];
+            ro-media = true;
+            ro-whitelist = [ "~/" ];
             whitelist = [
               "~/.local/share/vlc/"
               "~/.cache/fontconfig/"
@@ -261,7 +268,7 @@ in {
             ];
             graphics = true;
             system-bus-socket = true;
-            pams = [ "bus" "gnupg" "pulse" ];
+            pams = [ "bus" "gnupg" "pulse" "pipewire-0" ];
             etcs = [ "pulse" "ssl/certs/ca-certificates.crt" ];
             localtime = true;
             resolv-conf = true;
@@ -289,7 +296,7 @@ in {
             etcs = [ "pulse" "ssl/certs/ca-certificates.crt" ];
             localtime = true;
             resolv-conf = true;
-            pams = [ "bus" "pulse" ];
+            pams = [ "bus" "pulse" "pipewire-0" ];
             unshare-net = false;
             unsetenvs = [ "MAIL" "SHELL" ];
             ro-whitelist = [ "~/.gtkrc-2.0" ];
@@ -314,7 +321,7 @@ in {
               "devices"
             ];
             graphics = true;
-            pams = [ "bus" "pulse" ];
+            pams = [ "bus" "pulse" "pipewire-0" ];
             etcs = [ "pulse" ];
             localtime = true;
             resolv-conf = true;
@@ -331,7 +338,7 @@ in {
             devs = [ "dri" ];
             camera = true;
             graphics = true;
-            pams = [ "pulse" ];
+            pams = [ "pulse" "pipewire-0" ];
             etcs = [ "pulse" ];
             localtime = true;
             resolv-conf = true;
@@ -358,7 +365,7 @@ in {
               "devices"
             ];
             graphics = true;
-            pams = [ "bus" "pulse" ];
+            pams = [ "bus" "pulse" "pipewire-0" ];
             etcs = [ "pulse" ];
             localtime = true;
             resolv-conf = true;
@@ -391,7 +398,7 @@ in {
               "devices"
             ];
             graphics = true;
-            pams = [ "bus" "pulse" ];
+            pams = [ "bus" "pulse" "pipewire-0" ];
             etcs = [ "pulse" "ssl/certs/ca-certificates.crt" ];
             # Tray icon is stored in /tmp
             shared-tmp = true;
@@ -465,7 +472,8 @@ in {
               "dev"
               "devices"
             ];
-            whitelist = [ "~/" "/run/media/\"$(whoami)\"" ];
+            media = true;
+            whitelist = [ "~/" ];
             blacklist = [ "~/.gnupg/" "~/.ssh/" ];
             unsetenvs = [
               "DBUS_SESSION_BUS_ADDRESS"
@@ -483,7 +491,8 @@ in {
               "dev"
               "devices"
             ];
-            ro-whitelist = [ "~/" "/run/media/\"$(whoami)\"" ];
+            ro-media = true;
+            ro-whitelist = [ "~/" ];
             blacklist = [ "~/.gnupg/" "~/.ssh/" ];
             unsetenvs = [
               "DBUS_SESSION_BUS_ADDRESS"
@@ -510,7 +519,7 @@ in {
         wesnoth = wrap super.wesnoth [
           (withFonts {
             name = "wesnoth";
-            pams = [ "pulse" ];
+            pams = [ "pulse" "pipewire-0" ];
             etcs = [ "pulse" "ssl/certs/ca-certificates.crt" ];
             localtime = true;
             resolv-conf = true;
@@ -564,7 +573,7 @@ in {
             etcs = [ "pulse" ];
             localtime = true;
             resolv-conf = true;
-            pams = [ "bus" "pulse" ];
+            pams = [ "bus" "pulse" "pipewire-0" ];
             unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" ];
             setenvs = [{
               name = "SHELL";
@@ -594,7 +603,7 @@ in {
               "devices"
             ];
             graphics = true;
-            pams = [ "pulse" ];
+            pams = [ "pulse" "pipewire-0" ];
             etcs = [ "pulse" "ssl/certs/ca-certificates.crt" ];
             localtime = true;
             resolv-conf = true;
