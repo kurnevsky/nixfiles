@@ -9,7 +9,9 @@ drv:
 , devs ? [ ], syses ? [ ], shared-tmp ? false, camera ? false, args ? [ ]
 , system-bus-socket ? false, extra-deps ? [ ], extra-deps-no-transitive ? [ ]
 , opengl ? false, opengl32 ? false, seccomp ? true, bin-sh ? false
-, localtime ? false, resolv-conf ? false }:
+, localtime ? false, resolv-conf ? false, ro-media ? false, media ? false }:
+
+assert !(ro-media && media);
 
 let
   sandbox-seccomp = callPackage ./sandbox-seccomp.nix { };
@@ -149,6 +151,15 @@ in writeShellScriptBin target-name ''
        ${
          lib.optionalString (graphics && !shared-tmp)
          "--bind /tmp/.X11-unix /tmp/.X11-unix"
+       } \
+       \
+       ${
+         lib.optionalString ro-media
+         ''--ro-bind-try /run/media/"$(whoami)" /run/media/"$(whoami)"''
+       } \
+       ${
+         lib.optionalString media
+         ''--bind-try /run/media/"$(whoami)" /run/media/"$(whoami)"''
        } \
        \
        ${lib.concatMapStringsSep " " (x: "--ro-bind ${x} ${x}") ro-whitelist} \
