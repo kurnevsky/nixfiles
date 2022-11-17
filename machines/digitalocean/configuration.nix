@@ -85,7 +85,7 @@
       settings.global.server_name = "kurnevsky.net";
     };
     mautrix-telegram = {
-      enable = true;
+      enable = false;
       settings = {
         homeserver = {
           address = "http://localhost:6167";
@@ -100,10 +100,7 @@
           startup_sync = true;
           sync_direct_chats = true;
           sync_create_limit = 0;
-          permissions = {
-            "@me:kurnevsky.net" = "full";
-            "@admin:kurnevsky.net" = "admin";
-          };
+          permissions."@evgeny:kurnevsky.net" = "admin";
           mute_bridging = true;
           tag_only_on_create = false;
         };
@@ -112,9 +109,9 @@
       serviceDependencies = [ "conduit.service" ];
     };
     heisenbridge = {
-      enable = true;
+      enable = false;
       homeserver = "http://localhost:6167";
-      owner = "@me:kurnevsky.net";
+      owner = "@evgeny:kurnevsky.net";
       namespaces.users = [
         {
           regex = "@irc_.*";
