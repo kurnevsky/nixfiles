@@ -2,6 +2,13 @@
 
 let
   json = pkgs.formats.json { };
+  rnnoise = {
+    type = "ladspa";
+    name = "rnnoise";
+    plugin = "librnnoise_ladspa";
+    label = "noise_suppressor_stereo";
+    control = { "VAD Threshold (%)" = 50.0; };
+  };
   pw_rnnoise_config = {
     "context.properties" = { "log.level" = 0; };
     "context.spa-libs" = {
@@ -43,15 +50,7 @@ let
           "node.name" = "effect_input.rnnoise";
           "node.description" = "Noise Cancellation Source";
           "media.name" = "Noise Cancellation Source";
-          "filter.graph" = {
-            nodes = [{
-              type = "ladspa";
-              name = "rnnoise";
-              plugin = "librnnoise_ladspa";
-              label = "noise_suppressor_stereo";
-              control = { "VAD Threshold (%)" = 50.0; };
-            }];
-          };
+          "filter.graph" = { nodes = [ rnnoise ]; };
           "capture.props" = {
             "node.passive" = true;
             # module-echo-cancel ignores node.target property
@@ -60,6 +59,18 @@ let
             # "node.target" = "effect_output.echo";
           };
           "playback.props" = { "media.class" = "Audio/Source"; };
+        };
+      }
+
+      {
+        name = "libpipewire-module-filter-chain";
+        args = {
+          "node.name" = "effect_output.rnnoise";
+          "node.description" = "Noise Cancellation Sink";
+          "media.name" = "Noise Cancellation Sink";
+          "filter.graph" = { nodes = [ rnnoise ]; };
+          "capture.props" = { "media.class" = "Audio/Sink"; };
+          "playback.props" = { "node.passive" = true; };
         };
       }
     ];
