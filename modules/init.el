@@ -1143,7 +1143,7 @@ ARGS is `kill-buffer' arguments."
 (use-package mermaid-mode)
 
 (when (executable-find "agda-mode")
-  (use-package agda2-mode
+  (use-package agda2
     :ensure nil
     :load-path (lambda ()
                  (let ((coding-system-for-read 'utf-8))
