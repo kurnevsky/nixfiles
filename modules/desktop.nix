@@ -142,6 +142,7 @@
       nettools
       newsboat
       nix-diff
+      nixpkgs-review
       ncmpc
       nmap
       nodePackages.mermaid-cli
