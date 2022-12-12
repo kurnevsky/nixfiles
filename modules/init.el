@@ -1169,6 +1169,7 @@ ARGS is `kill-buffer' arguments."
 
 (use-package lsp-mode
   :init
+  (setenv "LSP_USE_PLISTS" "true")
   (setq lsp-keymap-prefix "C-l")
   :custom
   (lsp-auto-guess-root t)
