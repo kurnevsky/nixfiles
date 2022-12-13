@@ -1193,7 +1193,6 @@ ARGS is `kill-buffer' arguments."
 (use-package lsp-ui
   :custom
   (lsp-ui-doc-alignment 'window)
-  (lsp-ui-sideline-show-hover t)
   (lsp-ui-sideline-update-mode 'line)
   (lsp-ui-doc-position 'top)
   (lsp-ui-sideline-wait-for-all-symbols nil)
