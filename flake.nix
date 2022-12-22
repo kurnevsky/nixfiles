@@ -7,13 +7,6 @@
       ref = "nixos-unstable";
     };
 
-    nixpkgs-stable = {
-      type = "github";
-      owner = "NixOS";
-      repo = "nixpkgs";
-      ref = "nixos-22.05";
-    };
-
     fenix = {
       type = "github";
       owner = "nix-community";
@@ -46,11 +39,6 @@
   outputs = { self, ... }@inputs:
     let
       commonModules = [
-        ({ pkgs, ... }: {
-          _module.args =
-            let platform = { inherit (pkgs.stdenv.targetPlatform) system; };
-            in { nixpkgs-stable = import inputs.nixpkgs-stable platform; };
-        })
         inputs.home-manager.nixosModules.home-manager
         ./modules/common.nix
         ./modules/bfq.nix
