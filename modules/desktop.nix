@@ -127,6 +127,7 @@
       jq
       kubectl
       languagetool
+      lapce
       libnotify
       libreoffice-fresh
       libva-utils
@@ -205,6 +206,7 @@
       # Messengers
       element-desktop
       gajim
+      konversation
       pidgin-with-plugins
       tdesktop
       nheko
