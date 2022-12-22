@@ -79,9 +79,16 @@ in {
   environment.etc."pipewire/source-rnnoise.conf" = {
     source = json.generate "source-rnnoise.conf" pw_rnnoise_config;
   };
-  systemd.user.services."pipewire-source-rnnoise" = {
+  systemd.services."pipewire-source-rnnoise" = {
     environment.LADSPA_PATH = "${pkgs.rnnoise-plugin}/lib/ladspa";
     description = "Noise canceling source for pipewire";
+    requires = [ "pipewire.service" ];
+    after = [ "pipewire.service" ];
     script = "${pkgs.pipewire}/bin/pipewire -c source-rnnoise.conf";
+    serviceConfig = {
+      DynamicUser = true;
+      PrivateTmp = true;
+      SupplementaryGroups = "pipewire";
+    };
   };
 }
