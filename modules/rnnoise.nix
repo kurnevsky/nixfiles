@@ -82,8 +82,6 @@ in {
   systemd.user.services."pipewire-source-rnnoise" = {
     environment.LADSPA_PATH = "${pkgs.rnnoise-plugin}/lib/ladspa";
     description = "Noise canceling source for pipewire";
-    requires = [ "pipewire.service" ];
-    after = [ "pipewire.service" ];
     script = "${pkgs.pipewire}/bin/pipewire -c source-rnnoise.conf";
   };
 }

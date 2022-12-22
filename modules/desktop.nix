@@ -316,6 +316,7 @@
     fwupd.enable = true;
     pipewire = {
       enable = true;
+      systemWide = true;
       alsa = {
         enable = true;
         support32Bit = true;
@@ -551,13 +552,13 @@
   users = {
     users = {
       kurnevsky.extraGroups =
-        [ "adbusers" "audio" "video" "vboxusers" "docker" ];
+        [ "adbusers" "video" "pipewire" "vboxusers" "docker" ];
       ww = {
         uid = 1001;
         isNormalUser = true;
         shell = pkgs.zsh;
         passwordFile = "/secrets/ww";
-        extraGroups = [ "video" ];
+        extraGroups = [ "video" "pipewire" ];
       };
       hans.group = "hans";
     };
