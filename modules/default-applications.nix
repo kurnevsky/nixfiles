@@ -1,35 +1,35 @@
 {
-  # org.pwmt.zathura-ps
-  "application/postscript" = [ "org.pwmt.zathura-ps.desktop" ];
-  "application/eps" = [ "org.pwmt.zathura-ps.desktop" ];
-  "application/x-eps" = [ "org.pwmt.zathura-ps.desktop" ];
-  "image/eps" = [ "org.pwmt.zathura-ps.desktop" ];
-  "image/x-eps" = [ "org.pwmt.zathura-ps.desktop" ];
-  # org.pwmt.zathura-djvu
-  "image/vnd.djvu" = [ "org.pwmt.zathura-djvu.desktop" ];
-  "image/vnd.djvu+multipage" = [ "org.pwmt.zathura-djvu.desktop" ];
-  # org.pwmt.zathura-pdf-mupdf
-  "application/pdf" = [ "org.pwmt.zathura-pdf-mupdf.desktop" ];
-  "application/oxps" = [ "org.pwmt.zathura-pdf-mupdf.desktop" ];
-  "application/epub+zip" = [ "org.pwmt.zathura-pdf-mupdf.desktop" ];
-  # feh
-  "image/bmp" = [ "feh.desktop" ];
-  "image/gif" = [ "feh.desktop" ];
-  "image/jpeg" = [ "feh.desktop" ];
-  "image/jpg" = [ "feh.desktop" ];
-  "image/pjpeg" = [ "feh.desktop" ];
-  "image/png" = [ "feh.desktop" ];
-  "image/tiff" = [ "feh.desktop" ];
-  "image/x-bmp" = [ "feh.desktop" ];
-  "image/x-pcx" = [ "feh.desktop" ];
-  "image/x-png" = [ "feh.desktop" ];
-  "image/x-portable-anymap" = [ "feh.desktop" ];
-  "image/x-portable-bitmap" = [ "feh.desktop" ];
-  "image/x-portable-graymap" = [ "feh.desktop" ];
-  "image/x-portable-pixmap" = [ "feh.desktop" ];
-  "image/x-tga" = [ "feh.desktop" ];
-  "image/x-xbitmap" = [ "feh.desktop" ];
-  # mpv
+  # Postscript
+  "application/postscript" = [ "org.kde.okular.desktop" ];
+  "application/eps" = [ "org.kde.okular.desktop" ];
+  "application/x-eps" = [ "org.kde.okular.desktop" ];
+  "image/eps" = [ "org.kde.okular.desktop" ];
+  "image/x-eps" = [ "org.kde.okular.desktop" ];
+  # Djvu
+  "image/vnd.djvu" = [ "org.kde.okular.desktop" ];
+  "image/vnd.djvu+multipage" = [ "org.kde.okular.desktop" ];
+  # Pdf
+  "application/pdf" = [ "org.kde.okular.desktop" ];
+  "application/oxps" = [ "org.kde.okular.desktop" ];
+  "application/epub+zip" = [ "org.kde.okular.desktop" ];
+  # Image
+  "image/bmp" = [ "org.kde.gwenview.desktop" ];
+  "image/gif" = [ "org.kde.gwenview.desktop" ];
+  "image/jpeg" = [ "org.kde.gwenview.desktop" ];
+  "image/jpg" = [ "org.kde.gwenview.desktop" ];
+  "image/pjpeg" = [ "org.kde.gwenview.desktop" ];
+  "image/png" = [ "org.kde.gwenview.desktop" ];
+  "image/tiff" = [ "org.kde.gwenview.desktop" ];
+  "image/x-bmp" = [ "org.kde.gwenview.desktop" ];
+  "image/x-pcx" = [ "org.kde.gwenview.desktop" ];
+  "image/x-png" = [ "org.kde.gwenview.desktop" ];
+  "image/x-portable-anymap" = [ "org.kde.gwenview.desktop" ];
+  "image/x-portable-bitmap" = [ "org.kde.gwenview.desktop" ];
+  "image/x-portable-graymap" = [ "org.kde.gwenview.desktop" ];
+  "image/x-portable-pixmap" = [ "org.kde.gwenview.desktop" ];
+  "image/x-tga" = [ "org.kde.gwenview.desktop" ];
+  "image/x-xbitmap" = [ "org.kde.gwenview.desktop" ];
+  # Video
   "application/ogg" = [ "mpv.desktop" ];
   "application/x-ogg" = [ "mpv.desktop" ];
   "application/mxf" = [ "mpv.desktop" ];
@@ -150,10 +150,10 @@
   "audio/x-adpcm" = [ "mpv.desktop" ];
   "application/x-cue" = [ "mpv.desktop" ];
   "audio/m3u" = [ "mpv.desktop" ];
-  # org.qbittorrent.qBittorrent
+  # Torrent
   "application/x-bittorrent" = [ "org.qbittorrent.qBittorrent.desktop" ];
   "x-scheme-handler/magnet" = [ "org.qbittorrent.qBittorrent.desktop" ];
-  # firefox
+  # Web
   "text/html" = [ "firefox.desktop" ];
   "text/xml" = [ "firefox.desktop" ];
   "application/xhtml+xml" = [ "firefox.desktop" ];
