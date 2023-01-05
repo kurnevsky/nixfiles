@@ -283,26 +283,6 @@ in {
             ];
           } [ withFonts withOpengl ])
         ];
-        pidgin = wrap super.pidgin-with-plugins [
-          (withFonts {
-            name = "pidgin";
-            extra-deps = with pkgs; [
-              gnome-themes-extra
-              gnome.adwaita-icon-theme
-              hicolor-icon-theme
-              plasma-integration
-            ];
-            graphics = true;
-            etcs = [ "pulse" "ssl/certs/ca-certificates.crt" ];
-            localtime = true;
-            resolv-conf = true;
-            pams = [ "bus" "pulse" "pipewire-0" ];
-            unshare-net = false;
-            unsetenvs = [ "MAIL" "SHELL" ];
-            ro-whitelist = [ "~/.gtkrc-2.0" ];
-            whitelist = [ "~/.purple/" "~/.config/pulse/" ];
-          })
-        ];
         qtox = wrap (pid-hack super.qtox "qtox") [
           (lib.pipe {
             name = "qtox";
@@ -637,7 +617,6 @@ in {
         vlc
         firefox-wayland
         chromium
-        pidgin
         qtox
         toxic
         tdesktop

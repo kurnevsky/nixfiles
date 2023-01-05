@@ -207,7 +207,6 @@
       element-desktop
       gajim
       konversation
-      pidgin-with-plugins
       tdesktop
       nheko
       ## Tox

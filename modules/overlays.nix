@@ -21,18 +21,6 @@
         scripts = with pkgs.mpvScripts; [ mpris ];
       };
       p7zip = super.p7zip.override { enableUnfree = true; };
-      pidgin-with-plugins = super.pidgin.override {
-        plugins = with pkgs; [
-          pidgin-otr
-          pidgin-xmpp-receipts
-          pidgin-skypeweb
-          pidgin-carbons
-          purple-lurch
-          purple-plugin-pack
-          purple-slack
-          (pkgs.callPackage ./pidgin-indicator.nix { })
-        ];
-      };
       isync = let
         cyrus_sasl_xoauth2 = pkgs.stdenv.mkDerivation {
           pname = "cyrus-sasl-xoauth2";
