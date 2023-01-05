@@ -62,6 +62,7 @@ in {
       '';
       serviceConfig = { Type = "oneshot"; };
       restartIfChanged = false;
+      stopIfChanged = false;
     };
     tor.requires = [ "torjail-ns.service" ];
   };
