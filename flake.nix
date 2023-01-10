@@ -41,6 +41,13 @@
       owner = "nix-community";
       repo = "nur";
     };
+
+    mobile-nixos = {
+      type = "github";
+      owner = "nixos";
+      repo = "mobile-nixos";
+      flake = false;
+    };
   };
 
   outputs = { self, ... }@inputs:
@@ -49,7 +56,10 @@
         ({ pkgs, ... }: {
           _module.args =
             let platform = { inherit (pkgs.stdenv.targetPlatform) system; };
-            in { nixpkgs-obs-backgroundremoval = import inputs.nixpkgs-obs-backgroundremoval platform; };
+            in {
+              nixpkgs-obs-backgroundremoval =
+                import inputs.nixpkgs-obs-backgroundremoval platform;
+            };
         })
         inputs.home-manager.nixosModules.home-manager
         ./modules/common.nix
@@ -110,6 +120,19 @@
             ./machines/digitalocean/networking.nix
           ];
         };
+        phone-vm = inputs.nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = commonModules ++ [
+            { _module.args = { inherit inputs; }; }
+            (import "${inputs.mobile-nixos}/lib/configuration.nix" {
+              device = "uefi-x86_64";
+            })
+            ./modules/phone.nix
+            ./machines/phone/configuration.nix
+          ];
+        };
       };
+      packages.x86_64-linux.phone-vm =
+        inputs.self.nixosConfigurations.phone-vm.config.mobile.outputs.uefi.vm;
     };
 }

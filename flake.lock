@@ -79,6 +79,22 @@
         "type": "github"
       }
     },
+    "mobile-nixos": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1670131242,
+        "narHash": "sha256-T/o1/3gffr010fsqgNshs1NJJjsnUYvQnUZgm6hilsY=",
+        "owner": "nixos",
+        "repo": "mobile-nixos",
+        "rev": "5ee45cc1f8e43f4af14ee17ccef9156b0db8cd77",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "repo": "mobile-nixos",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1672791794,
@@ -131,6 +147,7 @@
         "emacs-overlay": "emacs-overlay",
         "fenix": "fenix",
         "home-manager": "home-manager",
+        "mobile-nixos": "mobile-nixos",
         "nixpkgs": "nixpkgs",
         "nixpkgs-obs-backgroundremoval": "nixpkgs-obs-backgroundremoval",
         "nur": "nur"
