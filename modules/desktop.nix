@@ -219,7 +219,8 @@
       openmw
       wesnoth
       # Databases
-      cassandra
+      # TODO: depends on python2
+      # cassandra
       grafana-loki
       kcat
       # Wallets
