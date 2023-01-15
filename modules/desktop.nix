@@ -272,11 +272,6 @@
       mercurial
       pijul
       subversion
-      # TODO
-      # findimagedupes
-      # veloren
-      # tensorflow
-      # sane xsane
     ];
 
     variables = {
