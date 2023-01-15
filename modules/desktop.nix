@@ -379,7 +379,6 @@
     monero.enable = true;
     printing.enable = true;
     resolved.enable = true;
-    tlp.enable = true;
     tor = {
       enable = true;
       client = {

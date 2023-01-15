@@ -48,6 +48,7 @@
   };
 
   services = {
+    tlp.enable = true;
     throttled.enable = true;
     fprintd.enable = true;
     xserver = {

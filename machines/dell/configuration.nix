@@ -53,6 +53,7 @@
   };
 
   services = {
+    tlp.enable = true;
     udev.extraRules = ''
       ACTION=="add|change", SUBSYSTEM=="usb", TEST=="power/control", ATTR{idVendor}=="0cf3", ATTR{idProduct}=="0036", ATTR{power/control}="on"
     '';
