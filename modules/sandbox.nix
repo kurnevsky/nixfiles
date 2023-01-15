@@ -2,11 +2,6 @@
 
 let
   sandbox = pkgs.callPackage ./sandbox-bwrap.nix { };
-  pid-hack = drv: name:
-    pkgs.symlinkJoin {
-      inherit name;
-      paths = [ (pkgs.callPackage ./sandbox-pid-hack.nix { } drv name) drv ];
-    };
   wrap = drv: bins:
     # Don't join with original drv because only bins will be used
     if lib.length bins == 1 then
@@ -161,7 +156,7 @@ in {
   nixpkgs.overlays = [
     (self: super: {
       sandboxed = {
-        deadbeef = wrap (pid-hack super.deadbeef-with-plugins "deadbeef") [
+        deadbeef = wrap super.deadbeef-with-plugins [
           (withFonts {
             name = "deadbeef";
             extra-deps = with pkgs; [
@@ -283,7 +278,7 @@ in {
             ];
           } [ withFonts withOpengl ])
         ];
-        qtox = wrap (pid-hack super.qtox "qtox") [
+        qtox = wrap super.qtox [
           (lib.pipe {
             name = "qtox";
             extra-deps = with pkgs; [
@@ -390,7 +385,7 @@ in {
             whitelist = [ "~/.config/Element/" "~/.config/pulse/" ];
           })
         ];
-        qbittorrent = wrap (pid-hack super.qbittorrent "qbittorrent") [
+        qbittorrent = wrap super.qbittorrent [
           (lib.pipe {
             name = "qbittorrent";
             extra-deps = with pkgs; [
