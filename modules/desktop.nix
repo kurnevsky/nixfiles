@@ -507,6 +507,11 @@
     groups.hans = { };
   };
 
+  xdg.mime = {
+    enable = true;
+    defaultApplications = import ./default-applications.nix;
+  };
+
   home-manager = let
     home-config = {
       home.file.".config/tox/toxic.conf".source = ./toxic.conf;
@@ -744,10 +749,8 @@
           pinentryFlavor = "gnome3";
         };
       };
-      xdg.mimeApps = {
-        enable = true;
-        defaultApplications = import ./default-applications.nix;
-      };
+      # To make sure that it's not overrided by WM
+      xdg.mimeApps.enable = true;
     };
   in {
     users = {
