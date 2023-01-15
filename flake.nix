@@ -52,6 +52,12 @@
 
   outputs = { self, ... }@inputs:
     let
+      users = {
+        root = "root";
+        kurnevsky = "kurnevsky";
+        ww = "ww";
+        parents = "parents";
+      };
       commonModules = [
         ({ pkgs, ... }: {
           _module.args =
@@ -66,7 +72,7 @@
         ./modules/bfq.nix
         ./modules/zswap.nix
         ./modules/patches.nix
-        (import ./modules/common-home.nix [ "root" "kurnevsky" ])
+        (import ./modules/common-home.nix (with users; [ root kurnevsky ]))
       ];
       desktopModules = commonModules ++ [
         (args: {
@@ -76,8 +82,8 @@
             inputs.nur.overlay
           ];
         })
-        (import ./modules/common-home.nix [ "ww" ])
-        (import ./modules/emacs.nix [ "kurnevsky" "ww" ])
+        (import ./modules/common-home.nix (with users; [ ww ]))
+        (import ./modules/emacs.nix (with users; [ kurnevsky ww ]))
         ./modules/desktop.nix
         ./modules/kde.nix
         ./modules/sandbox.nix
@@ -107,7 +113,7 @@
         acer = inputs.nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = commonModules ++ [
-            (import ./modules/common-home.nix [ "parents" ])
+            (import ./modules/common-home.nix (with users; [ parents ]))
             ./machines/acer/hardware-configuration.nix
             ./machines/acer/configuration.nix
           ];
