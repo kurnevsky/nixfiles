@@ -418,10 +418,7 @@
   };
 
   hardware = {
-    bluetooth = {
-      enable = true;
-      package = pkgs.bluez;
-    };
+    bluetooth.enable = true;
     usbWwan.enable = true;
     opengl = {
       enable = true;
