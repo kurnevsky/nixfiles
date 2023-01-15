@@ -435,7 +435,7 @@
       docker.wantedBy = pkgs.lib.mkForce [ ];
       # It caches java path there.
       bloop.serviceConfig.ExecStartPre =
-        "${pkgs.coreutils}/bin/rm -r %h/.bloop/";
+        "${pkgs.coreutils}/bin/rm -rf %h/.bloop/";
     };
     services = {
       iodine-digitalocean.wantedBy = pkgs.lib.mkForce [ ];
