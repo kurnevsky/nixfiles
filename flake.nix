@@ -77,6 +77,7 @@
           ];
         })
         (import ./modules/common-home.nix [ "ww" ])
+        (import ./modules/emacs.nix [ "kurnevsky" "ww" ])
         ./modules/desktop.nix
         ./modules/kde.nix
         ./modules/sandbox.nix
