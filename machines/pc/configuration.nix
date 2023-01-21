@@ -54,7 +54,7 @@
   };
 
   services.xserver = {
-    videoDrivers = [ "intel" ];
+    videoDrivers = [ "intel" "amdgpu" ];
     deviceSection = ''
       Option "TearFree" "true"
     '';
