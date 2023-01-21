@@ -33,7 +33,7 @@
     discardPolicy = "both";
   }];
 
-  networking.hostName = "evo";
+  networking.hostName = "pc";
 
   systemd.network.networks."99-wg0".address = [ "192.168.14.3/32" ];
 
