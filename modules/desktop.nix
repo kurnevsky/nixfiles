@@ -137,7 +137,8 @@
       lshw
       maim
       mesa-demos
-      metasploit
+      # TODO: broken
+      # metasploit
       mpc_cli
       mu
       nettools
@@ -228,7 +229,8 @@
       # TODO: feather-wallet
       # Audio
       easyeffects
-      helvum
+      # TODO: broken
+      # helvum
       qpwgraph
       sox
       # Languages
