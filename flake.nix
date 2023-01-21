@@ -110,6 +110,13 @@
             ./machines/evo/hardware-configuration.nix
           ];
         };
+        pc = inputs.nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = desktopModules ++ [
+            ./machines/pc/configuration.nix
+            ./machines/pc/hardware-configuration.nix
+          ];
+        };
         acer = inputs.nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = commonModules ++ [
