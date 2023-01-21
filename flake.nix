@@ -7,6 +7,13 @@
       ref = "nixos-unstable";
     };
 
+    nixpkgs-llvm-15 = {
+      type = "github";
+      owner = "Et7f3";
+      repo = "nixpkgs";
+      ref = "add_llvmPackages_15";
+    };
+
     nixpkgs-obs-backgroundremoval = {
       type = "github";
       owner = "NixOS";
@@ -65,6 +72,7 @@
             in {
               nixpkgs-obs-backgroundremoval =
                 import inputs.nixpkgs-obs-backgroundremoval platform;
+              nixpkgs-llvm-15 = import inputs.nixpkgs-llvm-15 platform;
             };
         })
         inputs.home-manager.nixosModules.home-manager

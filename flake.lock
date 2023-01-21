@@ -111,6 +111,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-llvm-15": {
+      "locked": {
+        "lastModified": 1673302540,
+        "narHash": "sha256-XjyzmA78584EK58v3iOkQyKENM1aTWHXjT4deRqFMn0=",
+        "owner": "Et7f3",
+        "repo": "nixpkgs",
+        "rev": "6f96c69f63f84b656ebf8ed07a8525d2c6659c59",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Et7f3",
+        "ref": "add_llvmPackages_15",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs-obs-backgroundremoval": {
       "locked": {
         "lastModified": 1671359686,
@@ -149,6 +165,7 @@
         "home-manager": "home-manager",
         "mobile-nixos": "mobile-nixos",
         "nixpkgs": "nixpkgs",
+        "nixpkgs-llvm-15": "nixpkgs-llvm-15",
         "nixpkgs-obs-backgroundremoval": "nixpkgs-obs-backgroundremoval",
         "nur": "nur"
       }
