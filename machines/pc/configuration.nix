@@ -38,7 +38,7 @@
   systemd.network.networks."99-wg0".address = [ "192.168.14.5/32" ];
 
   hardware = {
-    # cpu.intel.updateMicrocode = true;
+    cpu.intel.updateMicrocode = true;
     opengl.extraPackages = with pkgs; [
       vaapiIntel
       intel-media-driver
