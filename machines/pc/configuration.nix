@@ -16,7 +16,7 @@
       v4l2loopback
     ];
     kernelModules = [ "v4l2loopback" "acpi_call" ];
-    tmpOnTmpfsSize = "75%";
+    tmpOnTmpfsSize = "87.5%";
   };
 
   fileSystems = {
@@ -35,7 +35,7 @@
 
   networking.hostName = "pc";
 
-  systemd.network.networks."99-wg0".address = [ "192.168.14.3/32" ];
+  systemd.network.networks."99-wg0".address = [ "192.168.14.5/32" ];
 
   hardware = {
     # cpu.intel.updateMicrocode = true;
