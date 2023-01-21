@@ -206,6 +206,9 @@
             "org.kde.krunner.desktop" = {
               "_launch" = "Meta+F2	Search,Alt+Space	Alt+F2	Search,KRunner";
             };
+            "org.kde.konsole.desktop" = {
+              "_launch" = "Ctrl+Alt+T	Meta+R,Ctrl+Alt+T,Konsole";
+            };
             "org.kde.dolphin.desktop" = {
               "_launch" = "Meta+E,Meta+E,Dolphin";
             };
