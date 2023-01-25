@@ -513,7 +513,11 @@
 
   home-manager = let
     home-config = {
-      home.file.".config/tox/toxic.conf".source = ./toxic.conf;
+      home.file = {
+        ".face.icon".source = ../resources/face.icon;
+        ".wallpaper.jpg".source = ../resources/wallpaper.jpg;
+        ".config/tox/toxic.conf".source = ./toxic.conf;
+      };
       programs = {
         feh = {
           enable = true;
