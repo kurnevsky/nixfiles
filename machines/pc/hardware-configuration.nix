@@ -4,33 +4,42 @@
 { config, lib, pkgs, modulesPath, ... }:
 
 {
-  imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix")
-    ];
+  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" ];
+  boot.initrd.availableKernelModules =
+    [ "vmd" "xhci_pci" "ahci" "nvme" "usbhid" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
-  fileSystems."/" =
-    { device = "/dev/disk/by-uuid/4f507c95-5a17-4004-8451-2c1ce0a7e836";
-      fsType = "btrfs";
-      options = [ "subvol=root" ];
-    };
+  fileSystems."/" = {
+    device = "/dev/disk/by-uuid/4f507c95-5a17-4004-8451-2c1ce0a7e836";
+    fsType = "btrfs";
+    options = [ "subvol=root" ];
+  };
 
-  boot.initrd.luks.devices."root".device = "/dev/disk/by-uuid/ff379d89-c2c8-4324-9310-3a7150e312ae";
+  boot.initrd.luks.devices."root".device =
+    "/dev/disk/by-uuid/ff379d89-c2c8-4324-9310-3a7150e312ae";
 
-  fileSystems."/home" =
-    { device = "/dev/disk/by-uuid/4f507c95-5a17-4004-8451-2c1ce0a7e836";
-      fsType = "btrfs";
-      options = [ "subvol=home" ];
-    };
+  fileSystems."/home" = {
+    device = "/dev/disk/by-uuid/4f507c95-5a17-4004-8451-2c1ce0a7e836";
+    fsType = "btrfs";
+    options = [ "subvol=home" ];
+  };
 
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/D7D5-8A08";
-      fsType = "vfat";
-    };
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-uuid/D7D5-8A08";
+    fsType = "vfat";
+  };
+
+  fileSystems."/home/kurnevsky/data" = {
+    device = "/dev/disk/by-uuid/4f9640ad-6ab5-48c3-b0cd-9da35665a459";
+    fsType = "btrfs";
+    options = [ "subvol=data" ];
+  };
+
+  boot.initrd.luks.devices."data".device =
+    "/dev/disk/by-uuid/7aca7b7d-c44f-4944-8c83-62d9de9c9aaa";
 
   swapDevices = [ ];
 
@@ -44,5 +53,8 @@
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
-  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.cpu.intel.updateMicrocode =
+    lib.mkDefault config.hardware.enableRedistributableFirmware;
+  # high-resolution display
+  hardware.video.hidpi.enable = lib.mkDefault true;
 }

@@ -10,7 +10,10 @@
         device = "nodev";
       };
     };
-    initrd.luks.devices.root.allowDiscards = true;
+    initrd.luks = {
+      reusePassphrases = true;
+      devices.root.allowDiscards = true;
+    };
     extraModulePackages = with config.boot.kernelPackages; [
       acpi_call
       v4l2loopback
@@ -22,6 +25,8 @@
   fileSystems = {
     "/".options = [ "noatime" "nodiratime" "compress=zstd:3" ];
     "/home".options = [ "noatime" "nodiratime" "compress=zstd:3" ];
+    "/home/kurnevsky/data".options =
+      [ "noatime" "nodiratime" "compress=zstd:3" ];
   };
 
   swapDevices = [{
