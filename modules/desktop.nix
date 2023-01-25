@@ -105,7 +105,8 @@
       flac
       fuseiso
       gdb
-      gimp-with-plugins
+      # TODO: broken
+      # gimp-with-plugins
       globalprotect-openconnect
       openconnect
       (callPackage ./pan-globalprotect-okta.nix {})
@@ -139,8 +140,7 @@
       lshw
       maim
       mesa-demos
-      # TODO: broken
-      # metasploit
+      metasploit
       mpc_cli
       mu
       nettools
@@ -232,8 +232,7 @@
       # TODO: feather-wallet
       # Audio
       easyeffects
-      # TODO: broken
-      # helvum
+      helvum
       qpwgraph
       sox
       # Languages
