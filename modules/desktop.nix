@@ -192,6 +192,7 @@
       wget
       wineWowPackages.stagingFull
       winetricks
+      dxvk.out
       wirelesstools
       xmlstarlet
       you-get
