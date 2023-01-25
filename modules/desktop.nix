@@ -107,6 +107,8 @@
       gdb
       gimp-with-plugins
       globalprotect-openconnect
+      openconnect
+      (callPackage ./pan-globalprotect-okta.nix {})
       gnome-themes-extra
       gnome.adwaita-icon-theme
       google-authenticator
