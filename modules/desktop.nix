@@ -132,7 +132,8 @@
       languagetool
       lapce
       libnotify
-      libreoffice-fresh
+      # TODO: broken
+      # libreoffice-fresh
       libva-utils
       libxml2 # for xmllint
       lm_sensors
@@ -193,6 +194,8 @@
       wineWowPackages.stagingFull
       winetricks
       dxvk.out
+      (pkgs.pkgsCross.mingw32.callPackage ./vkd3d-proton.nix {})
+      (pkgs.pkgsCross.mingwW64.callPackage ./vkd3d-proton.nix {})
       wirelesstools
       xmlstarlet
       you-get
@@ -288,6 +291,8 @@
     sessionVariables = {
       NIXOS_OZONE_WL = "1";
       MOZ_USE_XINPUT2 = "1";
+      # https://docs.mesa3d.org/envvars.html#envvar-RADV_PERFTEST
+      RADV_PERFTEST = "gpl,rt";
     };
   };
 

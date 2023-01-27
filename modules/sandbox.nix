@@ -622,7 +622,8 @@ in {
         zathura
         ffmpeg-full
         wine-staging-full
-        libreoffice-fresh
+        # TODO: broken
+        # libreoffice-fresh
         wesnoth
         tor-browser-bundle-bin
         claws-mail

@@ -17,9 +17,7 @@
       firefox-wayland = super.firefox-wayland.override {
         extraNativeMessagingHosts = [ super.passff-host ];
       };
-      mpv = super.mpv.override {
-        scripts = with pkgs.mpvScripts; [ mpris ];
-      };
+      mpv = super.mpv.override { scripts = with pkgs.mpvScripts; [ mpris ]; };
       p7zip = super.p7zip.override { enableUnfree = true; };
       isync = let
         cyrus_sasl_xoauth2 = pkgs.stdenv.mkDerivation {
