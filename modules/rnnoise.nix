@@ -31,38 +31,6 @@ let
       { name = "libpipewire-module-adapter"; }
 
       {
-        name = "libpipewire-module-echo-cancel";
-        args = {
-          "source.props" = {
-            "node.name" = "effect_output.echo";
-            "node.description" = "Echo Cancellation Source";
-          };
-          "sink.props" = {
-            "node.name" = "effect_input.echo";
-            "node.description" = "Echo Cancellation Sink";
-          };
-        };
-      }
-
-      {
-        name = "libpipewire-module-filter-chain";
-        args = {
-          "node.name" = "effect_input.rnnoise";
-          "node.description" = "Noise Cancellation Source";
-          "media.name" = "Noise Cancellation Source";
-          "filter.graph" = { nodes = [ rnnoise ]; };
-          "capture.props" = {
-            "node.passive" = true;
-            # module-echo-cancel ignores node.target property
-            # so specifying it here causes a loop when rnnoise
-            # source is the default
-            # "node.target" = "effect_output.echo";
-          };
-          "playback.props" = { "media.class" = "Audio/Source"; };
-        };
-      }
-
-      {
         name = "libpipewire-module-filter-chain";
         args = {
           "node.name" = "effect_output.rnnoise";
