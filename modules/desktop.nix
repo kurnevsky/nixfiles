@@ -109,7 +109,7 @@
       # gimp-with-plugins
       globalprotect-openconnect
       openconnect
-      (callPackage ./pan-globalprotect-okta.nix {})
+      (callPackage ./pan-globalprotect-okta.nix { })
       gnome-themes-extra
       gnome.adwaita-icon-theme
       google-authenticator
@@ -194,8 +194,8 @@
       wineWowPackages.stagingFull
       winetricks
       dxvk.out
-      (pkgs.pkgsCross.mingw32.callPackage ./vkd3d-proton.nix {})
-      (pkgs.pkgsCross.mingwW64.callPackage ./vkd3d-proton.nix {})
+      (pkgs.pkgsCross.mingw32.callPackage ./vkd3d-proton.nix { })
+      (pkgs.pkgsCross.mingwW64.callPackage ./vkd3d-proton.nix { })
       wirelesstools
       xmlstarlet
       you-get
@@ -244,7 +244,16 @@
       gcc
       mono
       nodePackages.bash-language-server
-      python3
+      (python3.withPackages (pkgs:
+        with pkgs; [
+          transformers
+          pytorch
+          sentencepiece
+          sacremoses
+          torchvision
+          (callPackage ./python-diffusers.nix { })
+          (callPackage ./python-accelerate.nix { })
+        ]))
       shellcheck
       ## Haskell
       cabal-install
