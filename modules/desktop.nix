@@ -132,8 +132,7 @@
       languagetool
       lapce
       libnotify
-      # TODO: broken
-      # libreoffice-fresh
+      libreoffice-fresh
       libva-utils
       libxml2 # for xmllint
       lm_sensors
@@ -235,7 +234,8 @@
       # TODO: feather-wallet
       # Audio
       easyeffects
-      helvum
+      # TODO: broken
+      # helvum
       qpwgraph
       sox
       # Languages

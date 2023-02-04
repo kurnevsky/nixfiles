@@ -23,10 +23,7 @@
     with plasma5Packages; [
       ark
       kcalc
-      (krfb.overrideAttrs (old: {
-        buildInputs = old.buildInputs
-          ++ [ pipewire plasma-wayland-protocols wayland ];
-      }))
+      krfb
       krdc
       kamoso
       wl-clipboard

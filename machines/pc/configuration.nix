@@ -1,4 +1,4 @@
-{ config, pkgs, nixpkgs-llvm-15, ... }:
+{ config, pkgs, ... }:
 
 {
   boot = {
@@ -44,18 +44,12 @@
 
   hardware = {
     cpu.intel.updateMicrocode = true;
-    opengl = {
-      package = (pkgs.mesa.override {
-        llvmPackages = nixpkgs-llvm-15.llvmPackages_15;
-        enableOpenCL = false;
-      }).drivers;
-      extraPackages = with pkgs; [
-        vaapiIntel
-        intel-media-driver
-        libvdpau-va-gl
-        intel-compute-runtime
-      ];
-    };
+    opengl.extraPackages = with pkgs; [
+      vaapiIntel
+      intel-media-driver
+      libvdpau-va-gl
+      intel-compute-runtime
+    ];
   };
 
   services.xserver = {
