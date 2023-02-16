@@ -10,9 +10,12 @@
         device = "nodev";
       };
     };
-    initrd.luks = {
-      reusePassphrases = true;
-      devices.root.allowDiscards = true;
+    initrd = {
+      kernelModules = [ "amdgpu" ];
+      luks = {
+        reusePassphrases = true;
+        devices.root.allowDiscards = true;
+      };
     };
     extraModulePackages = with config.boot.kernelPackages; [
       acpi_call
