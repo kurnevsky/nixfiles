@@ -1,4 +1,4 @@
-{ lib, pkgs, nixpkgs-obs-backgroundremoval, ... }:
+{ lib, pkgs, nixpkgs-obs-backgroundremoval, nixpkgs-blender, nixpkgs-gimp, ... }:
 
 {
   boot = {
@@ -79,7 +79,7 @@
       bind
       bindfs
       binutils
-      blender
+      nixpkgs-blender.blender
       brightnessctl
       btrfs-progs
       bubblewrap
@@ -105,8 +105,7 @@
       flac
       fuseiso
       gdb
-      # TODO: broken
-      # gimp-with-plugins
+      nixpkgs-gimp.gimp-with-plugins
       globalprotect-openconnect
       openconnect
       (callPackage ./pan-globalprotect-okta.nix { })
@@ -697,18 +696,18 @@
           profiles.default = {
             settings = import ./firefox/firefox.nix;
             userChrome = builtins.readFile ./firefox/userChrome.css;
+            extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+              darkreader
+              decentraleyes
+              plasma-integration
+              privacy-badger
+              sponsorblock
+              ublock-origin
+              # Not in NUR:
+              # find+
+              # passff
+            ];
           };
-          extensions = with pkgs.nur.repos.rycee.firefox-addons; [
-            darkreader
-            decentraleyes
-            plasma-integration
-            privacy-badger
-            sponsorblock
-            ublock-origin
-            # Not in NUR:
-            # find+
-            # passff
-          ];
         };
         mbsync = { enable = true; };
       };
