@@ -138,7 +138,6 @@
       lm_sensors
       lsd
       lshw
-      maim
       mesa-demos
       metasploit
       mpc_cli
