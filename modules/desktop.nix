@@ -149,6 +149,7 @@
       nmap
       nodePackages.mermaid-cli
       nodePackages.prettier
+      openai-whisper-cpp
       openssl
       pandoc # TODO: it should depend on texlive
       parallel
