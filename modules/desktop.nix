@@ -233,8 +233,7 @@
       # TODO: feather-wallet
       # Audio
       easyeffects
-      # TODO: broken
-      # helvum
+      helvum
       qpwgraph
       sox
       # Languages
