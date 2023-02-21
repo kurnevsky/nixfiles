@@ -70,36 +70,6 @@ let
       ro-whitelist = [ "~/" ];
       blacklist = [ "~/.gnupg/" "~/.ssh/" ];
     };
-  firefox-cfg = lib.pipe {
-    name = "firefox";
-    devs = [ "dri" ];
-    camera = true;
-    syses = [
-      # Necessary for hardware acceleration
-      "dev"
-      "devices"
-    ];
-    graphics = true;
-    pams = [ "bus" "gnupg" "pulse" "pipewire-0" ];
-    etcs = [ "pulse" "ssl/certs/ca-certificates.crt" ];
-    localtime = true;
-    resolv-conf = true;
-    unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" ];
-    setenvs = [{
-      name = "SHELL";
-      value = "/run/current-system/sw/bin/bash";
-    }];
-    unshare-net = false;
-    ro-whitelist = [ "~/.password-store/" "~/.config/gtk-3.0/" ];
-    whitelist = [
-      "~/.mozilla/"
-      "~/.cache/mozilla/firefox/"
-      "~/Downloads/"
-      "~/.cache/fontconfig/"
-      "~/.config/pulse/"
-      "~/.gnupg/"
-    ];
-  } [ withFonts withOpengl (withHomeManager [ ".mozilla" ]) ];
   wine-cfg = name:
     lib.pipe {
       inherit name;
@@ -152,11 +122,11 @@ let
       whitelist = [ "~/" ];
       blacklist = [ "~/.gnupg/" "~/.ssh/" ];
     };
-in {
-  nixpkgs.overlays = [
-    (self: super: {
-      sandboxed = {
-        deadbeef = wrap super.deadbeef-with-plugins [
+  wrappers = [
+    {
+      predicate = lib.hasPrefix "deadbeef-";
+      config = drv:
+        wrap drv [
           (withFonts {
             name = "deadbeef";
             extra-deps = with pkgs; [
@@ -180,12 +150,31 @@ in {
             blacklist = [ "~/.gnupg/" "~/.ssh/" ];
           })
         ];
-        p7zip = wrap super.p7zip (map archiver-cfg [ "7z" "7za" "7zr" ]);
-        _7zz = wrap super._7zz [ (archiver-cfg "7zz") ];
-        unrar = wrap super.unrar [ (archiver-cfg "unrar") ];
-        zip-natspec = wrap super.zip-natspec [ (archiver-cfg "zip") ];
-        unzip-natspec = wrap super.unzip-natspec [ (archiver-cfg "unzip") ];
-        mpv = wrap super.mpv [
+    }
+    {
+      predicate = lib.hasPrefix "p7zip-";
+      config = drv: wrap drv (map archiver-cfg [ "7z" "7za" "7zr" ]);
+    }
+    {
+      predicate = lib.hasPrefix "7zz-";
+      config = drv: wrap drv [ (archiver-cfg "7zz") ];
+    }
+    {
+      predicate = lib.hasPrefix "unrar-";
+      config = drv: wrap drv [ (archiver-cfg "unrar") ];
+    }
+    {
+      predicate = lib.hasPrefix "zip-";
+      config = drv: wrap drv [ (archiver-cfg "zip") ];
+    }
+    {
+      predicate = lib.hasPrefix "unzip-";
+      config = drv: wrap drv [ (archiver-cfg "unzip") ];
+    }
+    {
+      predicate = lib.hasPrefix "mpv-";
+      config = drv:
+        wrap drv [
           (lib.pipe {
             name = "mpv";
             bin-sh = true;
@@ -215,7 +204,11 @@ in {
             blacklist = [ "~/.gnupg/" "~/.ssh/" ];
           } [ withFonts withOpengl (withHomeManager [ ".config/mpv" ]) ])
         ];
-        vlc = wrap super.vlc [
+    }
+    {
+      predicate = lib.hasPrefix "vlc-";
+      config = drv:
+        wrap drv [
           (lib.pipe {
             name = "vlc";
             extra-deps = with pkgs; [ plasma-integration ];
@@ -243,9 +236,49 @@ in {
             blacklist = [ "~/.gnupg/" "~/.ssh/" ];
           } [ withFonts withOpengl ])
         ];
-        firefox = wrap super.firefox [ firefox-cfg ];
-        firefox-wayland = wrap super.firefox-wayland [ firefox-cfg ];
-        chromium = wrap super.ungoogled-chromium [
+    }
+    {
+      predicate = lib.hasPrefix "firefox-";
+      config = drv:
+        wrap drv [
+          (lib.pipe {
+            name = "firefox";
+            devs = [ "dri" ];
+            camera = true;
+            syses = [
+              # Necessary for hardware acceleration
+              "dev"
+              "devices"
+            ];
+            graphics = true;
+            pams = [ "bus" "gnupg" "pulse" "pipewire-0" ];
+            etcs = [ "pulse" "ssl/certs/ca-certificates.crt" ];
+            localtime = true;
+            resolv-conf = true;
+            unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" ];
+            setenvs = [{
+              name = "SHELL";
+              value = "/run/current-system/sw/bin/bash";
+            }];
+            unshare-net = false;
+            ro-whitelist = [ "~/.password-store/" "~/.config/gtk-3.0/" ];
+            whitelist = [
+              "~/.mozilla/"
+              "~/.cache/mozilla/firefox/"
+              "~/Downloads/"
+              "~/.cache/fontconfig/"
+              "~/.config/pulse/"
+              "~/.gnupg/"
+            ];
+          } [ withFonts withOpengl (withHomeManager [ ".mozilla" ]) ])
+        ];
+    }
+    {
+      predicate = name:
+        lib.hasPrefix "chromium-" name
+        || lib.hasPrefix "ungoogled-chromium-" name;
+      config = drv:
+        wrap drv [
           (lib.pipe {
             name = "chromium";
             extra-deps = with pkgs; [
@@ -278,7 +311,11 @@ in {
             ];
           } [ withFonts withOpengl ])
         ];
-        qtox = wrap super.qtox [
+    }
+    {
+      predicate = lib.hasPrefix "qtox-";
+      config = drv:
+        wrap drv [
           (lib.pipe {
             name = "qtox";
             extra-deps = with pkgs; [
@@ -306,7 +343,11 @@ in {
             whitelist = [ "~/.config/tox/" "~/.cache/Tox/" "~/.config/pulse/" ];
           } [ withFonts withOpengl ])
         ];
-        toxic = wrap super.toxic [
+    }
+    {
+      predicate = lib.hasPrefix "toxic-";
+      config = drv:
+        wrap drv [
           (withHomeManager [ ".config/tox" ] {
             name = "toxic";
             extra-deps = with pkgs; [ glibcLocales ];
@@ -322,7 +363,11 @@ in {
             whitelist = [ "~/.config/tox/" "~/.config/pulse/" ];
           })
         ];
-        tdesktop = wrap super.tdesktop [
+    }
+    {
+      predicate = lib.hasPrefix "telegram-desktop-";
+      config = drv:
+        wrap drv [
           (lib.pipe {
             name = "telegram-desktop";
             extra-deps = with pkgs; [
@@ -351,7 +396,11 @@ in {
               [ "~/.local/share/TelegramDesktop/" "~/.config/pulse/" ];
           } [ withFonts withOpengl ])
         ];
-        element-desktop = wrap super.element-desktop [
+    }
+    {
+      predicate = lib.hasPrefix "element-desktop-";
+      config = drv:
+        wrap drv [
           (withFonts {
             name = "element-desktop";
             extra-deps = with pkgs; [
@@ -385,7 +434,11 @@ in {
             whitelist = [ "~/.config/Element/" "~/.config/pulse/" ];
           })
         ];
-        qbittorrent = wrap super.qbittorrent [
+    }
+    {
+      predicate = lib.hasPrefix "qbittorrent-";
+      config = drv:
+        wrap drv [
           (lib.pipe {
             name = "qbittorrent";
             extra-deps = with pkgs; [
@@ -420,9 +473,16 @@ in {
             ];
           } [ withFonts withOpengl ])
         ];
-        feh = wrap super.feh
-          [ (withHomeManager [ ".config/feh" ] (viewer-cfg "feh")) ];
-        imv = wrap super.imv [
+    }
+    {
+      predicate = lib.hasPrefix "feh-";
+      config = drv:
+        wrap drv [ (withHomeManager [ ".config/feh" ] (viewer-cfg "feh")) ];
+    }
+    {
+      predicate = lib.hasPrefix "imv-";
+      config = drv:
+        wrap drv [
           (withOpengl (viewer-cfg "imv" // {
             devs = [ "dri" ];
             syses = [
@@ -432,12 +492,20 @@ in {
             ];
           }))
         ];
-        zathura = wrap super.zathura [
+    }
+    {
+      predicate = lib.hasPrefix "zathura-";
+      config = drv:
+        wrap drv [
           ((viewer-cfg "zathura") // {
             whitelist = [ "~/.local/share/zathura/" "~/Print/" ];
           })
         ];
-        ffmpeg-full = wrap super.ffmpeg-full [
+    }
+    {
+      predicate = lib.hasPrefix "ffmpeg-";
+      config = drv:
+        wrap drv [
           {
             name = "ffmpeg";
             devs = [ "dri" ];
@@ -478,9 +546,15 @@ in {
             ];
           }
         ];
-        wine-staging-full = wrap super.wineWowPackages.stagingFull
-          (map wine-cfg [ "wine" "winecfg" ]);
-        libreoffice-fresh = wrap super.libreoffice-fresh (map libreoffice-cfg [
+    }
+    {
+      predicate = lib.hasPrefix "wine-";
+      config = drv: wrap drv (map wine-cfg [ "wine" "winecfg" ]);
+    }
+    {
+      predicate = lib.hasPrefix "libreoffice-";
+      config = drv:
+        wrap drv (map libreoffice-cfg [
           "libreoffice"
           "sbase"
           "scalc"
@@ -491,7 +565,11 @@ in {
           "swriter"
           "unopkg"
         ]);
-        wesnoth = wrap super.wesnoth [
+    }
+    {
+      predicate = lib.hasPrefix "wesnoth-";
+      config = drv:
+        wrap drv [
           (withFonts {
             name = "wesnoth";
             pams = [ "pulse" "pipewire-0" ];
@@ -509,7 +587,22 @@ in {
             ];
           })
         ];
-        claws-mail = wrap super.claws-mail [
+    }
+    {
+      predicate = lib.hasPrefix "tor-browser-";
+      config = drv:
+        wrap drv [{
+          name = "tor-browser";
+          graphics = true;
+          unsetenvs = [ "MAIL" "SHELL" ];
+          unshare-net = false;
+          whitelist = [ "~/.local/share/tor-browser/" ];
+        }];
+    }
+    {
+      predicate = lib.hasPrefix "claws-mail-";
+      config = drv:
+        wrap drv [
           (withFonts {
             name = "claws-mail";
             extra-deps = with pkgs; [
@@ -526,14 +619,11 @@ in {
             whitelist = [ "~/.claws-mail/" ];
           })
         ];
-        tor-browser-bundle-bin = wrap super.tor-browser-bundle-bin [{
-          name = "tor-browser";
-          graphics = true;
-          unsetenvs = [ "MAIL" "SHELL" ];
-          unshare-net = false;
-          whitelist = [ "~/.local/share/tor-browser/" ];
-        }];
-        zoom-us = wrap super.zoom-us [
+    }
+    {
+      predicate = lib.hasPrefix "zoom-";
+      config = drv:
+        wrap drv [
           (lib.pipe {
             name = "zoom";
             devs = [ "dri" ];
@@ -563,7 +653,11 @@ in {
             ];
           } [ withFonts withOpengl ])
         ];
-        skypeforlinux = wrap super.skypeforlinux [
+    }
+    {
+      predicate = lib.hasPrefix "skypeforlinux-";
+      config = drv:
+        wrap drv [
           (withFonts {
             name = "skypeforlinux";
             devs = [
@@ -588,12 +682,14 @@ in {
             whitelist = [ "~/.config/skypeforlinux/" "~/.config/pulse/" ];
           })
         ];
-      };
-    })
+    }
+  ];
+in {
+  nixpkgs.overlays = [
     (self: super: {
       mc = super.mc.override {
-        zip = super.sandboxed.zip-natspec;
-        unzip = super.sandboxed.unzip-natspec;
+        zip = wrap super.zip-natspec [ (archiver-cfg "zip") ];
+        unzip = wrap super.unzip-natspec [ (archiver-cfg "unzip") ];
       };
     })
   ];
@@ -601,32 +697,13 @@ in {
   environment = let
     env = pkgs.symlinkJoin {
       name = "sandboxed";
-      paths = with pkgs.sandboxed; [
-        deadbeef
-        p7zip
-        _7zz
-        unrar
-        zip-natspec
-        unzip-natspec
-        mpv
-        vlc
-        firefox-wayland
-        chromium
-        qtox
-        toxic
-        tdesktop
-        element-desktop
-        qbittorrent
-        feh
-        imv
-        zathura
-        ffmpeg-full
-        wine-staging-full
-        libreoffice-fresh
-        wesnoth
-        tor-browser-bundle-bin
-        claws-mail
-      ];
+      paths = with pkgs.sandboxed;
+        lib.concatMap (drv:
+          lib.concatMap (wrapper:
+            if wrapper.predicate drv.name then
+              [ (wrapper.config drv) ]
+            else
+              [ ]) wrappers) config.environment.systemPackages;
     };
   in {
     extraInit = ''

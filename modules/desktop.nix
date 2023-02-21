@@ -101,6 +101,7 @@
       extundelete
       fd
       fclones
+      feh
       ffmpeg-full
       flac
       fuseiso
@@ -140,6 +141,7 @@
       mesa-demos
       metasploit
       mpc_cli
+      mpv
       mu
       nettools
       newsboat
@@ -206,6 +208,7 @@
       unrar
       unzip-natspec
       # Browsers
+      firefox-wayland
       ungoogled-chromium
       tor-browser-bundle-bin
       # Messengers
