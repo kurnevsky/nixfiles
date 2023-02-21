@@ -1,4 +1,4 @@
-{ lib, pkgs, nixpkgs-obs-backgroundremoval, nixpkgs-blender, nixpkgs-gimp, ... }:
+{ lib, pkgs, nixpkgs-obs-backgroundremoval, nixpkgs-gimp, ... }:
 
 {
   boot = {
@@ -79,7 +79,7 @@
       bind
       bindfs
       binutils
-      nixpkgs-blender.blender
+      blender
       brightnessctl
       btrfs-progs
       bubblewrap

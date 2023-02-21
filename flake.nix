@@ -14,13 +14,6 @@
       ref = "04f574a1c0fde90b51bf68198e2297ca4e7cccf4";
     };
 
-    nixpkgs-blender = {
-      type = "github";
-      owner = "NixOS";
-      repo = "nixpkgs";
-      ref = "06999209d7a0043d4372e38f57cffae00223d592";
-    };
-
     nixpkgs-gimp = {
       type = "github";
       owner = "NixOS";
@@ -79,7 +72,6 @@
             in {
               nixpkgs-obs-backgroundremoval =
                 import inputs.nixpkgs-obs-backgroundremoval platform;
-              nixpkgs-blender = import inputs.nixpkgs-blender platform;
               nixpkgs-gimp = import inputs.nixpkgs-gimp platform;
             };
         })
