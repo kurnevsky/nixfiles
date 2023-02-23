@@ -57,8 +57,8 @@
           allowedIPs = [ "192.168.14.4/32" ];
         }
         {
-          publicKey = "79Eup4goIfcp2Iv2TuLDhxZVfK4KtqvwO5y6jgQ+1DE=";
-          presharedKeyFile = "/secrets/wg/phone.psk";
+          publicKey = "il0KQKwE2+clYFXJT/2mLoC3sRudP3B4g/GR45vlP2E=";
+          presharedKeyFile = "/secrets/wg/pc.psk";
           allowedIPs = [ "192.168.14.5/32" ];
         }
       ];
