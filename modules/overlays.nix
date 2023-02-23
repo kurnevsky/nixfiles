@@ -70,5 +70,6 @@
           };
         });
     })
+    (self: super: { wine-ge = pkgs.callPackage ./wine-ge.nix { }; })
   ];
 }
