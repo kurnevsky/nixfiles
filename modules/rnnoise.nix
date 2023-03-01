@@ -33,6 +33,18 @@ let
       {
         name = "libpipewire-module-filter-chain";
         args = {
+          "node.name" = "effect_input.rnnoise";
+          "node.description" = "Noise Cancellation Source";
+          "media.name" = "Noise Cancellation Source";
+          "filter.graph" = { nodes = [ rnnoise ]; };
+          "capture.props" = { "node.passive" = true; };
+          "playback.props" = { "media.class" = "Audio/Source"; };
+        };
+      }
+
+      {
+        name = "libpipewire-module-filter-chain";
+        args = {
           "node.name" = "effect_output.rnnoise";
           "node.description" = "Noise Cancellation Sink";
           "media.name" = "Noise Cancellation Sink";
