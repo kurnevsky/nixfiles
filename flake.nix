@@ -14,13 +14,6 @@
       ref = "04f574a1c0fde90b51bf68198e2297ca4e7cccf4";
     };
 
-    nixpkgs-gimp = {
-      type = "github";
-      owner = "NixOS";
-      repo = "nixpkgs";
-      ref = "e5e43ea1e3d158714bd93e315ca01ee9a1d28234";
-    };
-
     fenix = {
       type = "github";
       owner = "nix-community";
@@ -72,7 +65,6 @@
             in {
               nixpkgs-obs-backgroundremoval =
                 import inputs.nixpkgs-obs-backgroundremoval platform;
-              nixpkgs-gimp = import inputs.nixpkgs-gimp platform;
             };
         })
         inputs.home-manager.nixosModules.home-manager

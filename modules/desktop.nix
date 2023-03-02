@@ -1,4 +1,4 @@
-{ lib, pkgs, nixpkgs-obs-backgroundremoval, nixpkgs-gimp, ... }:
+{ lib, pkgs, nixpkgs-obs-backgroundremoval, ... }:
 
 {
   boot = {
@@ -106,7 +106,7 @@
       flac
       fuseiso
       gdb
-      nixpkgs-gimp.gimp-with-plugins
+      gimp-with-plugins
       globalprotect-openconnect
       openconnect
       (callPackage ./pan-globalprotect-okta.nix { })
