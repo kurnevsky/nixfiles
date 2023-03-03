@@ -127,6 +127,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-shadowsocks": {
+      "locked": {
+        "lastModified": 1677063315,
+        "narHash": "sha256-qiB4ajTeAOVnVSAwCNEEkoybrAlA+cpeiBxLobHndE8=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "988cc958c57ce4350ec248d2d53087777f9e1949",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "988cc958c57ce4350ec248d2d53087777f9e1949",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nur": {
       "locked": {
         "lastModified": 1677837380,
@@ -150,6 +166,7 @@
         "mobile-nixos": "mobile-nixos",
         "nixpkgs": "nixpkgs",
         "nixpkgs-obs-backgroundremoval": "nixpkgs-obs-backgroundremoval",
+        "nixpkgs-shadowsocks": "nixpkgs-shadowsocks",
         "nur": "nur"
       }
     },
