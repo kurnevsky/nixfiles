@@ -64,7 +64,6 @@
         name = "obs-with-gstreamer-joined";
         paths = [ obs-with-gstreamer obs-wrapped ];
       })
-      (lutris.override { steamSupport = false; })
       (pass-wayland.withExtensions (ext: with ext; [ pass-otp pass-update ]))
       aircrack-ng
       anki
