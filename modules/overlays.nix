@@ -9,8 +9,6 @@
       deadbeef-with-plugins = super.deadbeef-with-plugins.override {
         plugins = with super.deadbeefPlugins; [ mpris2 statusnotifier ];
       };
-      zip-natspec = super.zip.override { enableNLS = true; };
-      unzip-natspec = super.unzip.override { enableNLS = true; };
       firefox = super.firefox.override {
         extraNativeMessagingHosts = [ super.passff-host ];
       };

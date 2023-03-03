@@ -688,8 +688,10 @@ in {
   nixpkgs.overlays = [
     (self: super: {
       mc = super.mc.override {
-        zip = wrap super.zip-natspec [ (archiver-cfg "zip") ];
-        unzip = wrap super.unzip-natspec [ (archiver-cfg "unzip") ];
+        zip = wrap (super.zip.override { enableNLS = true; })
+          [ (archiver-cfg "zip") ];
+        unzip = wrap (super.unzip.override { enableNLS = true; })
+          [ (archiver-cfg "unzip") ];
       };
     })
   ];

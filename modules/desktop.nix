@@ -206,7 +206,7 @@
       _7zz
       p7zip
       unrar
-      unzip-natspec
+      (unzip.override { enableNLS = true; })
       # Browsers
       firefox-wayland
       ungoogled-chromium

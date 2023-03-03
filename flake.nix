@@ -80,6 +80,7 @@
         ./modules/bfq.nix
         ./modules/zswap.nix
         ./modules/patches.nix
+        ./modules/overlays.nix
         (import ./modules/common-home.nix (with users; [ root kurnevsky ]))
       ];
       desktopModules = commonModules ++ [
@@ -100,7 +101,6 @@
         ./modules/rnnoise.nix
         ./modules/torjail.nix
         ./modules/nspawn.nix
-        ./modules/overlays.nix
       ];
     in {
       nixosConfigurations = {
