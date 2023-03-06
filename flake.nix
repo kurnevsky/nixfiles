@@ -146,6 +146,8 @@
           ];
         };
       };
+      # Execute to use:
+      # nix build -L '/etc/nixos#phone-vm' && ./result -enable-kvm -smp 2
       packages.x86_64-linux.phone-vm =
         inputs.self.nixosConfigurations.phone-vm.config.mobile.outputs.uefi.vm;
     };
