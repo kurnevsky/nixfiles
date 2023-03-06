@@ -1,4 +1,4 @@
-{ pkgs, nixpkgs-shadowsocks, ... }:
+{ pkgs, ... }:
 
 {
   # system.replaceRuntimeDependencies can be used to make fast fixes
@@ -69,8 +69,5 @@
         });
     })
     (self: super: { wine-ge = pkgs.callPackage ./wine-ge.nix { }; })
-    (self: super: {
-      shadowsocks-v2ray-plugin = nixpkgs-shadowsocks.shadowsocks-v2ray-plugin;
-    })
   ];
 }

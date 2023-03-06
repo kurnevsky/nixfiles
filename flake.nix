@@ -14,13 +14,6 @@
       ref = "04f574a1c0fde90b51bf68198e2297ca4e7cccf4";
     };
 
-    nixpkgs-shadowsocks = {
-      type = "github";
-      owner = "NixOS";
-      repo = "nixpkgs";
-      ref = "988cc958c57ce4350ec248d2d53087777f9e1949";
-    };
-
     fenix = {
       type = "github";
       owner = "nix-community";
@@ -72,7 +65,6 @@
             in {
               nixpkgs-obs-backgroundremoval =
                 import inputs.nixpkgs-obs-backgroundremoval platform;
-              nixpkgs-shadowsocks = import inputs.nixpkgs-shadowsocks platform;
             };
         })
         inputs.home-manager.nixosModules.home-manager
