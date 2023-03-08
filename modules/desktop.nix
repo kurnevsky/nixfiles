@@ -152,7 +152,7 @@
       nodePackages.prettier
       openai-whisper-cpp
       openssl
-      pandoc # TODO: it should depend on texlive
+      pandoc
       parallel
       pavucontrol
       pciutils
