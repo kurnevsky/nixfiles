@@ -3,19 +3,20 @@
 
 python3Packages.buildPythonPackage rec {
   pname = "diffusers";
-  version = "0.12.1";
+  version = "0.14.0";
   format = "setuptools";
 
   src = fetchFromGitHub {
     owner = "huggingface";
     repo = "diffusers";
     rev = "refs/tags/v${version}";
-    hash = "sha256-1yQ98M9YeLOPa5pnTujo0I+RwhA/agJQLYJGPFR23Rc=";
+    hash = "sha256-2Su4TWsUwAyWxtIJwTAZf36u/k5HRM4dc0WQUyTPlTM=";
   };
 
   propagatedBuildInputs = [ ftfy scipy ];
 
   buildInputs = [ pytorch huggingface-hub regex importlib-metadata ];
 
+  # Many tests require internet access.
   doCheck = false;
 }
