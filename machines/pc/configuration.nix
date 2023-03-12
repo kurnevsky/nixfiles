@@ -52,6 +52,8 @@
       intel-media-driver
       libvdpau-va-gl
       intel-compute-runtime
+      rocm-opencl-icd
+      rocm-opencl-runtime
     ];
   };
 
