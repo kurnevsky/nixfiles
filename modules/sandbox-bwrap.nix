@@ -22,7 +22,7 @@ in writeShellScriptBin target-name ''
 
   if [ -n "''${UNSANDBOXED-}" ]
   then
-    echo "Running in unsandboxed mode!"
+    echo "Running in unsandboxed mode!" >&2
     exec ${drv}/bin/${name} "$@"
   fi
 
