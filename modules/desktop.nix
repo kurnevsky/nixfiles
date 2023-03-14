@@ -162,6 +162,7 @@
       psmisc # for killall
       qbittorrent
       qemu
+      qflipper
       qrencode
       radare2
       rclone
