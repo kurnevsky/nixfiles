@@ -41,12 +41,6 @@
   boot.initrd.luks.devices."data".device =
     "/dev/disk/by-uuid/7aca7b7d-c44f-4944-8c83-62d9de9c9aaa";
 
-  fileSystems."/var/lib/monero" = {
-    device = "/dev/disk/by-uuid/4f9640ad-6ab5-48c3-b0cd-9da35665a459";
-    fsType = "btrfs";
-    options = [ "subvol=monero" ];
-  };
-
   swapDevices = [ ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking

@@ -30,8 +30,6 @@
     "/home".options = [ "noatime" "nodiratime" "compress=zstd:3" ];
     "/home/kurnevsky/data".options =
       [ "noatime" "nodiratime" "compress=zstd:3" ];
-    "/var/lib/monero".options =
-      [ "noatime" "nodiratime" "compress=zstd:3" ];
   };
 
   swapDevices = [{
