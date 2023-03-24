@@ -392,7 +392,13 @@
       };
       yggdrasil.enable = true;
     };
-    monero.enable = true;
+    monero = {
+      enable = true;
+      extraConfig = ''
+        prune-blockchain=1
+        tx-proxy=i2p,127.0.0.1:4447
+      '';
+    };
     printing.enable = true;
     resolved.enable = true;
     tor = {
@@ -454,7 +460,10 @@
       iodine-digitalocean.wantedBy = pkgs.lib.mkForce [ ];
       hans-digitalocean.wantedBy = pkgs.lib.mkForce [ ];
       i2pd.wantedBy = pkgs.lib.mkForce [ ];
-      monero.wantedBy = pkgs.lib.mkForce [ ];
+      monero = {
+        wantedBy = pkgs.lib.mkForce [ ];
+        requires = [ "i2pd.service" ];
+      };
       tor.wantedBy = pkgs.lib.mkForce [ ];
     };
     network = {
