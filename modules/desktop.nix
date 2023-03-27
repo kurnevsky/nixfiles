@@ -70,6 +70,7 @@
       ansible
       ansible-lint
       appimage-run
+      aria2
       aspell
       aspellDicts.en
       aspellDicts.ru
