@@ -92,6 +92,7 @@
         ./modules/motion.nix
         ./modules/rnnoise.nix
         ./modules/torjail.nix
+        ./modules/torbrowser.nix
         ./modules/nspawn.nix
       ];
     in {
