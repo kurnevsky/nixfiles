@@ -71,8 +71,8 @@
         ./modules/common.nix
         ./modules/bfq.nix
         ./modules/zswap.nix
-        ./modules/patches.nix
         ./modules/overlays.nix
+        ./modules/patches.nix
         (import ./modules/common-home.nix (with users; [ root kurnevsky ]))
       ];
       desktopModules = commonModules ++ [
