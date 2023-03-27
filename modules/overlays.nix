@@ -56,6 +56,17 @@
       cloud-mdir-sync = (pkgs.callPackage ./cloud-mdir-sync.nix { });
     })
     (self: super: {
+      tor-browser-bundle-bin = super.symlinkJoin {
+        name = super.tor-browser-bundle-bin.name;
+        paths = [ super.tor-browser-bundle-bin ];
+        buildInputs = [ super.makeWrapper ];
+        postBuild = ''
+          wrapProgram "$out/bin/tor-browser" \
+            --set MOZ_ENABLE_WAYLAND 1
+        '';
+      };
+    })
+    (self: super: {
       globalprotect-openconnect = super.globalprotect-openconnect.overrideAttrs
         (old: rec {
           version = "1.4.7";
