@@ -339,15 +339,6 @@ ARGS is `kill-buffer' arguments."
     (edmacro-finish-edit))
   (advice-add 'kmacro-end-macro :around #'cua-macro-fix))
 
-(use-package unicode-fonts
-  :ensure t
-  :ensure persistent-soft
-  :demand t
-  :custom
-  (unicode-fonts-skip-font-groups '(decorative low-quality-glyphs))
-  :config
-  (unicode-fonts-setup))
-
 (use-package time
   :ensure nil
   :demand t
