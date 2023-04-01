@@ -1182,7 +1182,15 @@ ARGS is `kill-buffer' arguments."
   (add-hook 'rust-mode-hook (lambda ()
                               (lsp-activate-if-already-activated 'rust-analyzer)))
   (add-hook 'scala-mode-hook (lambda ()
-                               (lsp-activate-if-already-activated 'metals))))
+                               (lsp-activate-if-already-activated 'metals)))
+  ;; Hack for metals to send ranges in hover request.
+  (defun lsp--text-document-position-params (&optional identifier position range)
+    "Make TextDocumentPositionParams for the current point in the current document.
+If IDENTIFIER, POSITION and RANGE are non-nil, they will be used as the document
+identifier and the position respectively."
+    (list :textDocument (or identifier (lsp--text-document-identifier))
+      :position (or position (lsp--cur-position))
+      :range (or range (when (use-region-p) (lsp--region-to-range (region-beginning) (region-end)))))))
 
 (use-package lsp-ui
   :custom
