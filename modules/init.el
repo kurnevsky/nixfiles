@@ -1229,9 +1229,10 @@ ARGS is `kill-buffer' arguments."
 (use-package lsp-metals
   :after lsp-mode
   :demand t
+  :init
+  (setq lsp-metals-server-command "env")
   :custom
-  (lsp-metals-server-args '("-J-Dmetals.allow-multiline-string-formatting=off"
-                             "-J-Dmetals.icons=unicode"))
+  (lsp-metals-server-args '("JAVA_TOOL_OPTIONS=-Dmetals.allow-multiline-string-formatting=off -Dmetals.icons=unicode" "metals"))
   (lsp-metals-super-method-lenses-enabled t))
 
 (use-package lsp-haskell
