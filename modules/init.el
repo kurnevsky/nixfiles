@@ -614,6 +614,10 @@ ARGS is `kill-buffer' arguments."
               (define-key map (kbd "C-k") #'kill-target-buffer)
               map)))
 
+(use-package embark-consult
+  :hook
+  (embark-collect-mode . consult-preview-at-point-mode))
+
 (use-package helpful
   :bind (([remap describe-key] . helpful-key))
   :custom
