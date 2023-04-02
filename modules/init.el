@@ -1075,7 +1075,7 @@ ARGS is `kill-buffer' arguments."
 
 (use-package tree-sitter
   :demand t
-  :hook (tree-sitter-after-on . tree-sitter-hl-mode)
+  :hook (tree-sitter-after-on . (lambda () (tree-sitter-hl-mode 1)))
   :config
   (global-tree-sitter-mode))
 
@@ -1182,8 +1182,10 @@ ARGS is `kill-buffer' arguments."
     (when (lsp-find-workspace server-id (buffer-file-name))
       (lsp)))
   (add-hook 'rust-mode-hook (lambda ()
+                              (tree-sitter-hl-mode 1)
                               (lsp-activate-if-already-activated 'rust-analyzer)))
   (add-hook 'scala-mode-hook (lambda ()
+                               (tree-sitter-hl-mode 1)
                                (lsp-activate-if-already-activated 'metals)))
   ;; Hack for metals to send ranges in hover request.
   (defun lsp--text-document-position-params (&optional identifier position range)
