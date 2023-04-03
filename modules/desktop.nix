@@ -36,6 +36,7 @@
 
   environment = {
     systemPackages = with pkgs; [
+      (pkgs.libsForQt5.callPackage ./ubpm.nix { })
       (let
         obs-wrapped = (wrapOBS {
           plugins = with obs-studio-plugins; [
