@@ -164,7 +164,6 @@
       psmisc # for killall
       qbittorrent
       qemu
-      qflipper
       qrencode
       radare2
       rclone
@@ -325,12 +324,9 @@
   gtk.iconCache.enable = true;
 
   services = {
-    udev = {
-      packages = with pkgs; [ qFlipper ];
-      extraRules = ''
-        ACTION=="add|change", KERNEL=="sd[a-z]", ATTRS{queue/rotational}=="1", RUN+="${pkgs.hdparm}/bin/hdparm -B 254 /dev/%k"
-      '';
-    };
+    udev.extraRules = ''
+      ACTION=="add|change", KERNEL=="sd[a-z]", ATTRS{queue/rotational}=="1", RUN+="${pkgs.hdparm}/bin/hdparm -B 254 /dev/%k"
+    '';
     fwupd.enable = true;
     pipewire = {
       enable = true;
@@ -448,6 +444,7 @@
       enable = true;
       driSupport32Bit = true;
     };
+    flipperzero.enable = true;
   };
 
   systemd = {
