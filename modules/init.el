@@ -1176,6 +1176,7 @@ ARGS is `kill-buffer' arguments."
   (lsp-headerline-breadcrumb-segments '(symbols))
   (lsp-semantic-tokens-enable t)
   (lsp-semantic-tokens-honor-refresh-requests t)
+  (lsp-semantic-tokens-apply-modifiers nil)
   :config
   (lsp-enable-which-key-integration)
   (defun lsp-activate-if-already-activated (server-id)
