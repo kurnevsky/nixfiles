@@ -86,8 +86,6 @@
 (setq completion-ignore-case t)
 (setq read-buffer-completion-ignore-case t)
 (setq read-file-name-completion-ignore-case t)
-;; Use fuzzy matching in completion.
-(setq completion-styles '(basic flex))
 ;; Don't allow cursor in the read only minibuffer text.
 (setq minibuffer-prompt-properties
   '(read-only t cursor-intangible t face minibuffer-prompt))
@@ -492,6 +490,17 @@ ARGS is `kill-buffer' arguments."
   :commands minimap-mode
   :custom
   (minimap-window-location 'right))
+
+(use-package fussy
+  :demand t
+  :config
+  (setq fussy-score-fn 'fussy-fzf-native-score)
+  (setq completion-styles '(basic fussy)))
+
+(use-package fzf-native
+  :autoload fussy-fzf-native-score
+  :config
+  (fzf-native-load-dyn))
 
 (use-package ido
   :ensure nil

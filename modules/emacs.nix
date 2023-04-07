@@ -28,6 +28,7 @@ users:
       override = epkgs:
         epkgs.overrideScope' (self: super:
           {
+            fzf-native = pkgs.emacs.pkgs.callPackage ./fzf-native.nix { };
             origami = super.origami.overrideAttrs (old: {
               src = pkgs.fetchFromGitHub {
                 owner = "elp-revive";
