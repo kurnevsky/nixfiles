@@ -493,8 +493,10 @@ ARGS is `kill-buffer' arguments."
 
 (use-package fussy
   :demand t
+  :custom
+  (fussy-use-cache t)
+  (fussy-score-fn 'fussy-fzf-native-score)
   :config
-  (setq fussy-score-fn 'fussy-fzf-native-score)
   (setq completion-styles '(basic fussy)))
 
 (use-package fzf-native
