@@ -186,7 +186,6 @@ in writeShellScriptBin target-name ''
        ${lib.optionalString unshare-cgroup "--unshare-cgroup"} \
        \
        --new-session \
-       --die-with-parent \
        \
        --cap-drop ALL \
        \
