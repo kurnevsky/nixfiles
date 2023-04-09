@@ -495,9 +495,17 @@ ARGS is `kill-buffer' arguments."
   :demand t
   :custom
   (fussy-use-cache t)
-  (fussy-score-fn 'fussy-fzf-native-score)
+  (fussy-score-fn #'fussy-fuzzy-matcher-score)
   :config
-  (setq completion-styles '(basic fussy)))
+  (defun fussy-fuzzy-matcher-score (str query &rest _args)
+    (let ((str (funcall fussy-remove-bad-char-fn str))
+           (query (fussy-encode-coding-string query)))
+      (fuzzy-matcher-skim-fuzzy-indices query str)))
+  (setq completion-styles '(fussy)))
+
+(use-package fuzzy-matcher
+  :init
+  (load-library "libfuzzy_matcher_el.so"))
 
 (use-package fzf-native
   :autoload fussy-fzf-native-score

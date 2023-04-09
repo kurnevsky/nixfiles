@@ -29,6 +29,7 @@ users:
         epkgs.overrideScope' (self: super:
           {
             fzf-native = pkgs.emacs.pkgs.callPackage ./fzf-native.nix { };
+            fuzzy-matcher = pkgs.emacs.pkgs.callPackage ./fuzzy-matcher.nix { };
             origami = super.origami.overrideAttrs (old: {
               src = pkgs.fetchFromGitHub {
                 owner = "elp-revive";
