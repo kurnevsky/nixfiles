@@ -19,26 +19,29 @@ in {
     }];
   };
 
-  systemd.services.torbrowser-ns = with pkgs; {
-    script = ''
-      # Create a new network namespace named torbrowser
-      ${iproute2}/bin/ip netns add torbrowser
+  systemd.services = {
+    torbrowser-ns = with pkgs; {
+      script = ''
+        # Create a new network namespace named torbrowser
+        ${iproute2}/bin/ip netns add torbrowser
 
-      # Create two virtual ethernet interfaces
-      ${iproute2}/bin/ip link add out-torbrowser type veth peer name in-torbrowser
+        # Create two virtual ethernet interfaces
+        ${iproute2}/bin/ip link add out-torbrowser type veth peer name in-torbrowser
 
-      # Bind one interface to torbrowser network namespace
-      ${iproute2}/bin/ip link set in-torbrowser netns torbrowser
+        # Bind one interface to torbrowser network namespace
+        ${iproute2}/bin/ip link set in-torbrowser netns torbrowser
 
-      # Set interfaces ip and default routing
-      ${iproute2}/bin/ip addr add ${subnet}.1/24 dev out-torbrowser
-      ${iproute2}/bin/ip link set out-torbrowser up
-      ${iproute2}/bin/ip netns exec torbrowser ${iproute2}/bin/ip addr add ${subnet}.2/24 dev in-torbrowser
-      ${iproute2}/bin/ip netns exec torbrowser ${iproute2}/bin/ip link set in-torbrowser up
-    '';
-    serviceConfig = { Type = "oneshot"; };
-    restartIfChanged = false;
-    stopIfChanged = false;
+        # Set interfaces ip and default routing
+        ${iproute2}/bin/ip addr add ${subnet}.1/24 dev out-torbrowser
+        ${iproute2}/bin/ip link set out-torbrowser up
+        ${iproute2}/bin/ip netns exec torbrowser ${iproute2}/bin/ip addr add ${subnet}.2/24 dev in-torbrowser
+        ${iproute2}/bin/ip netns exec torbrowser ${iproute2}/bin/ip link set in-torbrowser up
+      '';
+      serviceConfig = { Type = "oneshot"; };
+      restartIfChanged = false;
+      stopIfChanged = false;
+    };
+    tor.requires = [ "torbrowser-ns.service" ];
   };
 
   networking.firewall.allowedTCPPorts = [ controlPort socksPort ];
