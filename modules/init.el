@@ -501,7 +501,7 @@ ARGS is `kill-buffer' arguments."
     (let ((str (funcall fussy-remove-bad-char-fn str))
            (query (fussy-encode-coding-string query)))
       (fuzzy-matcher-skim-fuzzy-indices query str)))
-  (setq completion-styles '(fussy)))
+  (setq completion-styles '(basic fussy)))
 
 (use-package fuzzy-matcher
   :init
