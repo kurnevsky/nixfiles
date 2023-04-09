@@ -499,7 +499,9 @@ ARGS is `kill-buffer' arguments."
   (load-library "libfuzzy_matcher_el.so")
   :config
   (defun fuzzy-matcher-without-tofu-char (string)
-    (if (consult--tofu-p (aref string (- (length string) 1)))
+    (if (and
+          (fboundp 'consult--tofu-p)
+          (consult--tofu-p (aref string (- (length string) 1))))
       (substring string 0 (- (length string) 1))
       string))
   (defun fuzzy-matcher-propertize(pattern candidate)
@@ -638,7 +640,6 @@ ARGS is `kill-buffer' arguments."
 (use-package consult
   :bind (("<f2>" . consult-buffer)
           ([remap goto-line] . consult-goto-line))
-  :autoload consult--tofu-p
   :init
   (setq
     register-preview-function #'consult-register-format
