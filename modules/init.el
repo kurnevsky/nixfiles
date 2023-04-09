@@ -514,26 +514,21 @@ ARGS is `kill-buffer' arguments."
           (add-face-text-property (1+ char) (+ 2 char) 'completions-first-difference nil candidate)))
       candidate))
   (defun fuzzy-matcher-all-completions (string table pred point)
-    (pcase
-      (while-no-input
-        (let* ((beforepoint (substring string 0 point))
-                (afterpoint (substring string point))
-                (bounds (completion-boundaries beforepoint table pred afterpoint))
-                (infix (concat
-                         (substring beforepoint (car bounds))
-                         (substring afterpoint 0 (cdr bounds)))))
-          (pcase-let ((`(,all ,pattern ,prefix ,suffix ,_carbounds)
-                        (completion-substring--all-completions string table pred point #'completion-flex--make-flex-pattern)))
-            (when all
-              (nconc (mapcar (-partial #'fuzzy-matcher-propertize infix) all) (length prefix))))))
-      ('nil nil)
-      ('t nil)
-      (`,result result)))
+    (let* ((beforepoint (substring string 0 point))
+            (afterpoint (substring string point))
+            (bounds (completion-boundaries beforepoint table pred afterpoint))
+            (infix (concat
+                     (substring beforepoint (car bounds))
+                     (substring afterpoint 0 (cdr bounds)))))
+      (pcase-let ((`(,all ,pattern ,prefix ,suffix ,_carbounds)
+                    (completion-substring--all-completions string table pred point #'completion-flex--make-flex-pattern)))
+        (when all
+          (nconc (mapcar (-partial #'fuzzy-matcher-propertize infix) all) (length prefix))))))
   (add-to-list 'completion-styles-alist '(fuzzy
                                            completion-flex-try-completion
                                            fuzzy-matcher-all-completions
                                            "Fuzzy completion with scoring."))
-  (setq completion-styles '(basic fuzzy)))
+  (setq completion-styles '(fuzzy)))
 
 (use-package ido
   :ensure nil
