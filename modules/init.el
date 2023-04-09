@@ -528,6 +528,7 @@ ARGS is `kill-buffer' arguments."
                                            completion-flex-try-completion
                                            fuzzy-matcher-all-completions
                                            "Fuzzy completion with scoring."))
+  (put 'fuzzy 'completion--adjust-metadata #'completion--flex-adjust-metadata)
   (setq completion-styles '(fuzzy)))
 
 (use-package ido
