@@ -493,26 +493,47 @@ ARGS is `kill-buffer' arguments."
   :custom
   (minimap-window-location 'right))
 
-(use-package fussy
-  :demand t
-  :custom
-  (fussy-use-cache t)
-  (fussy-score-fn #'fussy-fuzzy-matcher-score)
-  :config
-  (defun fussy-fuzzy-matcher-score (str query &rest _args)
-    (let ((str (funcall fussy-remove-bad-char-fn str))
-           (query (fussy-encode-coding-string query)))
-      (fuzzy-matcher-skim-fuzzy-indices query str)))
-  (setq completion-styles '(basic fussy)))
-
 (use-package fuzzy-matcher
+  :demand t
   :init
-  (load-library "libfuzzy_matcher_el.so"))
-
-(use-package fzf-native
-  :autoload fussy-fzf-native-score
+  (load-library "libfuzzy_matcher_el.so")
   :config
-  (fzf-native-load-dyn))
+  (defun fuzzy-matcher-without-tofu-char (string)
+    (if (consult--tofu-p (aref string (- (length string) 1)))
+      (substring string 0 (- (length string) 1))
+      string))
+  (defun fuzzy-matcher-propertize(pattern candidate)
+    (let* ((score (fuzzy-matcher-skim-fuzzy-indices (encode-coding-string pattern 'utf-8 t) (fuzzy-matcher-without-tofu-char candidate)))
+            (candidate (copy-sequence candidate)))
+      (put-text-property 0 1 'completion-score (car score) candidate)
+      (dolist (char (cdr score))
+        (add-face-text-property char (1+ char) 'completions-common-part nil candidate))
+      (when-let* ((char (last (cdr score)))
+                   (char (car char)))
+        (when (length> candidate (1+ char))
+          (add-face-text-property (1+ char) (+ 2 char) 'completions-first-difference nil candidate)))
+      candidate))
+  (defun fuzzy-matcher-all-completions (string table pred point)
+    (pcase
+      (while-no-input
+        (let* ((beforepoint (substring string 0 point))
+                (afterpoint (substring string point))
+                (bounds (completion-boundaries beforepoint table pred afterpoint))
+                (infix (concat
+                         (substring beforepoint (car bounds))
+                         (substring afterpoint 0 (cdr bounds)))))
+          (pcase-let ((`(,all ,pattern ,prefix ,suffix ,_carbounds)
+                        (completion-substring--all-completions string table pred point #'completion-flex--make-flex-pattern)))
+            (when all
+              (nconc (mapcar (-partial #'fuzzy-matcher-propertize infix) all) (length prefix))))))
+      ('nil nil)
+      ('t nil)
+      (`,result result)))
+  (add-to-list 'completion-styles-alist '(fuzzy
+                                           completion-flex-try-completion
+                                           fuzzy-matcher-all-completions
+                                           "Fuzzy completion with scoring."))
+  (setq completion-styles '(basic fuzzy)))
 
 (use-package ido
   :ensure nil
@@ -621,6 +642,7 @@ ARGS is `kill-buffer' arguments."
 (use-package consult
   :bind (("<f2>" . consult-buffer)
           ([remap goto-line] . consult-goto-line))
+  :autoload consult--tofu-p
   :init
   (setq
     register-preview-function #'consult-register-format
