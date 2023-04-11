@@ -1296,7 +1296,6 @@ identifier and the position respectively."
   (lsp-metals-treeview-views '("metalsPackages" "metalsBuild")))
 
 (use-package lsp-haskell
-  :disabled
   :after lsp-mode
   :demand t)
 
