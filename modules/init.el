@@ -738,6 +738,7 @@ ARGS is `kill-buffer' arguments."
   :custom
   (company-tooltip-align-annotations t)
   (company-require-match nil)
+  (company-tooltip-maximum-width 140)
   :config
   (global-company-mode 1))
 
