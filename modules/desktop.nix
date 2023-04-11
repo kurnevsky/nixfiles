@@ -146,8 +146,6 @@
       mu
       nettools
       newsboat
-      nix-diff
-      nixpkgs-review
       ncmpc
       nmap
       nodePackages.mermaid-cli
@@ -284,6 +282,8 @@
       nixfmt
       nixpkgs-fmt
       nil
+      nix-diff
+      nixpkgs-review
       ## Math
       maxima
       wxmaxima
