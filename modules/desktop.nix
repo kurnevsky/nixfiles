@@ -1,4 +1,4 @@
-{ lib, pkgs, nixpkgs-obs-backgroundremoval, ... }:
+{ pkgs, nixpkgs-obs-backgroundremoval, ... }:
 
 {
   boot = {
@@ -244,7 +244,6 @@
       astyle
       gcc
       mono
-      nodePackages.bash-language-server
       (python3.withPackages (pkgs:
         with pkgs; [
           transformers
@@ -255,6 +254,8 @@
           (callPackage ./python-diffusers.nix { })
           (callPackage ./python-accelerate.nix { })
         ]))
+      ## Shell
+      nodePackages.bash-language-server
       shellcheck
       ## Haskell
       cabal-install
@@ -279,7 +280,10 @@
       scala
       metals
       ## Nix
+      alejandra
       nixfmt
+      nixpkgs-fmt
+      nil
       ## Math
       maxima
       wxmaxima
