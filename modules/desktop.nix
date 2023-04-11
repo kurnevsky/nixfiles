@@ -285,6 +285,9 @@
       wxmaxima
       octave
       (rWrapper.override { packages = with rPackages; [ ggplot2 ]; })
+      ## Markdown
+      nodePackages.markdownlint-cli
+      marksman
       # VCS
       mercurial
       pijul
