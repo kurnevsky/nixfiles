@@ -292,6 +292,8 @@
       ## Markdown
       nodePackages.markdownlint-cli
       marksman
+      ## TypeScript
+      nodePackages.typescript-language-server
       # VCS
       mercurial
       pijul
