@@ -1,4 +1,4 @@
-{ pkgs, nixpkgs-obs-backgroundremoval, ... }:
+{ pkgs, ... }:
 
 {
   boot = {
@@ -41,7 +41,7 @@
         obs-wrapped = (wrapOBS {
           plugins = with obs-studio-plugins; [
             obs-gstreamer
-            nixpkgs-obs-backgroundremoval.obs-studio-plugins.obs-backgroundremoval
+            obs-backgroundremoval
           ];
         });
         obs-with-gstreamer = stdenv.mkDerivation {

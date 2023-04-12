@@ -7,13 +7,6 @@
       ref = "nixos-unstable";
     };
 
-    nixpkgs-obs-backgroundremoval = {
-      type = "github";
-      owner = "NixOS";
-      repo = "nixpkgs";
-      ref = "04f574a1c0fde90b51bf68198e2297ca4e7cccf4";
-    };
-
     fenix = {
       type = "github";
       owner = "nix-community";
@@ -59,14 +52,6 @@
         parents = "parents";
       };
       commonModules = [
-        ({ pkgs, ... }: {
-          _module.args =
-            let platform = { inherit (pkgs.stdenv.targetPlatform) system; };
-            in {
-              nixpkgs-obs-backgroundremoval =
-                import inputs.nixpkgs-obs-backgroundremoval platform;
-            };
-        })
         inputs.home-manager.nixosModules.home-manager
         ./modules/common.nix
         ./modules/bfq.nix
