@@ -291,9 +291,13 @@ ARGS is `kill-buffer' arguments."
   (defun set-theme (theme)
     (load-theme theme t)
     (modify-theme theme))
+  (defvar themes '(base16-onedark base16-one-light))
   (if (or (daemonp) (display-graphic-p))
-    (set-theme 'base16-onedark)
-    (add-hook 'tty-setup-hook (lambda () (set-theme 'base16-onedark)) t)))
+    (set-theme (car themes))
+    (add-hook 'tty-setup-hook (lambda () (set-theme (car themes))) t))
+  (defun toggle-theme ()
+    (interactive)
+    (set-theme (if (eq (car themes) (car custom-enabled-themes)) (cadr themes) (car themes)))))
 
 (use-package cl-macs
   :ensure nil
