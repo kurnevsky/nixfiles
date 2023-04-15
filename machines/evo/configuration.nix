@@ -16,7 +16,7 @@
       v4l2loopback
     ];
     kernelModules = [ "v4l2loopback" "acpi_call" ];
-    tmpOnTmpfsSize = "75%";
+    tmp.tmpfsSize = "75%";
   };
 
   fileSystems = {

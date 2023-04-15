@@ -4,7 +4,7 @@
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
     kernel.sysctl."kernel.sysrq" = 1;
-    tmpOnTmpfs = true;
+    tmp.useTmpfs = true;
     supportedFilesystems = [ "ntfs" ];
   };
 
