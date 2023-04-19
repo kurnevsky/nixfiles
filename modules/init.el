@@ -133,19 +133,12 @@ ARGS is `kill-buffer' arguments."
 (dolist (key '("C-a" "C-b" "C-d" "C-e" "C-f" "C-j" "C-k" "C-n" "C-o" "C-p" "C-r"
                 "C-s" "C-t" "C-w" "C-y" "C-z" "M-w"))
   (global-unset-key (kbd key)))
-;; Disable bell on scroll.
-(setq ring-bell-function (lambda ()
-                           (unless (memq this-command
-                                     '(mwheel-scroll
-                                        down
-                                        up
-                                        next-line
-                                        previous-line
-                                        backward-char
-                                        left-char
-                                        right-char
-                                        forward-char))
-                             (ding))))
+;; Disable bell.
+(defun flash-mode-line ()
+  "Flash the modeline on error or warning instead of the bell."
+  (invert-face 'mode-line)
+  (run-with-timer 0.1 nil #'invert-face 'mode-line))
+(setq ring-bell-function #'flash-mode-line)
 ;; Enable mouse support in terminal.
 (unless (display-graphic-p)
   (xterm-mouse-mode t))
