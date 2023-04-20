@@ -700,6 +700,8 @@ ARGS is `kill-buffer' arguments."
 
 (use-package centaur-tabs
   :demand
+  :custom
+  (centaur-tabs-set-icons t)
   :config
   (centaur-tabs-mode t)
   (centaur-tabs-headline-match)
