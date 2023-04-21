@@ -25,29 +25,28 @@ users:
         })
         epkgs.fringe-helper # for revive origami
       ];
-      override = epkgs:
-        epkgs.overrideScope' (self: super:
-          {
-            fuzzy-matcher = pkgs.emacs.pkgs.callPackage ./fuzzy-matcher.nix { };
-            origami = super.origami.overrideAttrs (old: {
-              src = pkgs.fetchFromGitHub {
-                owner = "elp-revive";
-                repo = "origami.el";
-                rev = "7b53c4c993d499b39d75a20326f52b63437bfa20";
-                sha256 = "sha256-b58mv0wR/1lmuQtMwoP/AwhETJi2giCJYGUJxxL+3vc=";
-              };
-            });
-          } // lib.genAttrs [
-            "lsp-mode"
-            "lsp-treemacs"
-            "lsp-ui"
-            "lsp-origami"
-            "dap-mode"
-            "lsp-java"
-            "lsp-metals"
-            "lsp-haskell"
-          ] (name:
-            super.${name}.overrideAttrs (super: { LSP_USE_PLISTS = true; })));
+      override = (self: super:
+        {
+          fuzzy-matcher = pkgs.emacs.pkgs.callPackage ./fuzzy-matcher.nix { };
+          origami = super.origami.overrideAttrs (old: {
+            src = pkgs.fetchFromGitHub {
+              owner = "elp-revive";
+              repo = "origami.el";
+              rev = "7b53c4c993d499b39d75a20326f52b63437bfa20";
+              sha256 = "sha256-b58mv0wR/1lmuQtMwoP/AwhETJi2giCJYGUJxxL+3vc=";
+            };
+          });
+        } // lib.genAttrs [
+          "lsp-mode"
+          "lsp-treemacs"
+          "lsp-ui"
+          "lsp-origami"
+          "dap-mode"
+          "lsp-java"
+          "lsp-metals"
+          "lsp-haskell"
+        ] (name:
+          super.${name}.overrideAttrs (super: { LSP_USE_PLISTS = true; })));
     });
   };
 
