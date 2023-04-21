@@ -292,6 +292,26 @@ ARGS is `kill-buffer' arguments."
     (interactive)
     (set-theme (if (eq (car themes) (car custom-enabled-themes)) (cadr themes) (car themes)))))
 
+(use-package ligature
+  :demand t
+  :config
+  (ligature-set-ligatures 'scala-mode '("<-" ;; for comprehension
+                                         "=>" ;; pattern matching
+                                         "???" ;; not implemented
+                                         "##" ;; hashCode
+                                         "=:=" ;; type equality
+                                         "->" ;; tuple
+                                         "==" "!=" "||" "&&" ">=" "<=" ;; boolean operators
+                                         "++" "--" "::" ":::" "+++" ;; collections
+                                         "//" "/*" "*/" "/**" ;; comments
+                                         "<->" ;; cats IsEq
+                                         "<*>" "*>" "<*" ;; cats Applicative
+                                         ">>" ">>=" ;; cats FlatMap
+                                         "***" ;; cats Arrow
+                                         ":=" ;; scalatags attr
+                                         ))
+  (global-ligature-mode t))
+
 (use-package cl-macs
   :ensure nil
   :demand t
