@@ -312,7 +312,7 @@
       NIXOS_OZONE_WL = "1";
       MOZ_USE_XINPUT2 = "1";
       # https://docs.mesa3d.org/envvars.html#envvar-RADV_PERFTEST
-      RADV_PERFTEST = "gpl,rt";
+      RADV_PERFTEST = "rt";
     };
   };
 
