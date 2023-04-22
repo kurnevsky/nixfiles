@@ -22,8 +22,6 @@
       (garbage-collect))))
 ;; Remove gap in maximized window mode.
 (setq frame-resize-pixelwise t)
-;; Start in maximized window mode.
-(toggle-frame-maximized)
 ;; Disable tool bar.
 (when (fboundp 'tool-bar-mode)
   (tool-bar-mode -1))
