@@ -231,6 +231,7 @@
       kcat
       # Wallets
       electrum
+      monero-cli
       # TODO: feather-wallet
       # Audio
       easyeffects
