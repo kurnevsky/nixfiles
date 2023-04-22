@@ -425,6 +425,12 @@ ARGS is `kill-buffer' arguments."
   :config
   (global-hl-line-mode 1))
 
+(use-package pixel-scroll
+  :ensure nil
+  :demand t
+  :config
+  (pixel-scroll-precision-mode))
+
 (use-package highlight-thing
   :demand t
   :custom
