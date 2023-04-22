@@ -403,6 +403,7 @@
       enable = true;
       extraConfig = ''
         prune-blockchain=1
+        pad-transactions=1
         tx-proxy=i2p,127.0.0.1:4447
       '';
     };
