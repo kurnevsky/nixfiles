@@ -8,7 +8,7 @@ users:
     defaultEditor = true;
     package = (pkgs.emacsWithPackagesFromUsePackage {
       config = ./init.el;
-      package = pkgs.emacs-gtk;
+      package = pkgs.emacsUnstablePgtk;
       alwaysEnsure = true;
       extraEmacsPackages = epkgs: [
         (pkgs.stdenv.mkDerivation {

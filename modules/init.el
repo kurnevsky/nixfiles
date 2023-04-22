@@ -31,7 +31,7 @@
 (set-face-attribute 'default nil :font "Hack Nerd Font Mono:size=15")
 (add-to-list 'default-frame-alist '(font . "Hack Nerd Font Mono:size=15"))
 ;; Disable deferred compilation.
-(setq native-comp-deferred-compilation nil)
+(setq native-comp-jit-compilation nil)
 ;; Don't do backup files.
 (setq make-backup-files nil)
 ;; Don't create lock files.
@@ -163,8 +163,7 @@ ARGS is `kill-buffer' arguments."
 (use-package el-patch
   :demand t
   :config
-  (eval-when-compile
-    (el-patch-use-package-mode)))
+  (el-patch-use-package-mode))
 
 (use-package hexrgb
   :ensure nil
