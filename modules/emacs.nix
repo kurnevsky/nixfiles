@@ -62,6 +62,8 @@ in {
           export EMACSNATIVELOADPATH=${pkgs.mu}/share/emacs/native-lisp:
           rm -fv ~/.config/emacs/init.elc
           ${emacs}/bin/emacs -Q -nw -l ~/.config/emacs/init.el -batch -f batch-byte-compile ~/.config/emacs/init.el
+          rm -rfv ~/.config/emacs/eln-cache/
+          ${emacs}/bin/emacs -Q -nw -l ~/.config/emacs/init.el -batch -f batch-native-compile ~/.config/emacs/init.el
         '';
       };
     };
