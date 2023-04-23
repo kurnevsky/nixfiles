@@ -1331,7 +1331,6 @@ identifier and the position respectively."
 
 (use-package mu4e
   :ensure nil
-  :load-path "/usr/share/emacs/site-lisp/mu4e"
   :commands mu4e
   :custom
   (mu4e-view-show-addresses t)
