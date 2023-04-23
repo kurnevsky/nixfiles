@@ -603,8 +603,18 @@ ARGS is `kill-buffer' arguments."
     (setq files (vertico-sort-history-length-alpha files))
     (nconc (seq-filter (-partial #'string-suffix-p "/") files)
       (seq-remove (-partial #'string-suffix-p "/") files)))
-  (vertico-mode)
-  (vertico-multiform-mode)
+  (vertico-mode))
+
+(use-package vertico-multiform
+  :ensure vertico
+  :after vertico
+  :config
+  (vertico-multiform-mode))
+
+(use-package vertico-mouse
+  :ensure vertico
+  :after vertico
+  :config
   (vertico-mouse-mode))
 
 (use-package savehist
