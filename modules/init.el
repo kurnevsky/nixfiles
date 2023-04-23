@@ -1440,7 +1440,7 @@ If it's already there move it to the beginning of this line."
   "Move point to the end of this line ignoring comments.
 If it's already there move it to the end of this line.
 With argument ARG not nil or 1, move forward ARG - 1 lines first.
-Comments are recognized in any mode that sets 'syntax-ppss'
+Comments are recognized in any mode that sets `syntax-ppss'
 properly."
   (interactive "^P")
   (let* ((start (point))

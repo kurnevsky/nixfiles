@@ -58,6 +58,8 @@ in {
         source = ./init.el;
         onChange = ''
           export PATH=${pkgs.git}/bin:"$PATH"
+          export EMACSLOADPATH=${pkgs.mu}/share/emacs/site-lisp/mu4e:
+          export EMACSNATIVELOADPATH=${pkgs.mu}/share/emacs/native-lisp:
           rm -fv ~/.config/emacs/init.elc
           ${emacs}/bin/emacs -Q -nw -l ~/.config/emacs/init.el -batch -f batch-byte-compile ~/.config/emacs/init.el
         '';
