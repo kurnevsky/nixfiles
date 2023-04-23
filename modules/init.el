@@ -514,6 +514,7 @@ ARGS is `kill-buffer' arguments."
   (minimap-window-location 'right))
 
 (use-package fuzzy-matcher
+  :ensure nil
   :demand t
   :init
   (load-library "libfuzzy_matcher_el.so")

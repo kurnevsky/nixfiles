@@ -21,10 +21,10 @@ let
           "mkdir -p $out/share/emacs/site-lisp && install *.el* $out/share/emacs/site-lisp";
       })
       epkgs.fringe-helper # for revive origami
+      (pkgs.emacs.pkgs.callPackage ./fuzzy-matcher.nix { })
     ];
     override = (self: super:
       {
-        fuzzy-matcher = pkgs.emacs.pkgs.callPackage ./fuzzy-matcher.nix { };
         origami = super.origami.overrideAttrs (old: {
           src = pkgs.fetchFromGitHub {
             owner = "elp-revive";
