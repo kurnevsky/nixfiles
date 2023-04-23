@@ -1091,8 +1091,13 @@ ARGS is `kill-buffer' arguments."
   :demand t
   :config
   (global-diff-hl-mode)
-  (diff-hl-flydiff-mode)
   (add-hook 'magit-post-refresh-hook #'diff-hl-magit-post-refresh))
+
+(use-package diff-hl-flydiff
+  :ensure diff-hl
+  :after diff-hl
+  :config
+  (diff-hl-flydiff-mode))
 
 (use-package magit-delta
   :demand t
@@ -1199,8 +1204,6 @@ ARGS is `kill-buffer' arguments."
 (use-package go-mode)
 
 (use-package typescript-mode)
-
-(use-package csharp-mode)
 
 (use-package fsharp-mode)
 
