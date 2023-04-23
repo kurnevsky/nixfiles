@@ -542,7 +542,7 @@ ARGS is `kill-buffer' arguments."
             (infix (concat
                      (substring beforepoint (car bounds))
                      (substring afterpoint 0 (cdr bounds)))))
-      (pcase-let ((`(,all ,pattern ,prefix ,suffix ,_carbounds)
+      (pcase-let ((`(,all ,_pattern ,prefix ,_suffix ,_carbounds)
                     (completion-substring--all-completions string table pred point #'completion-flex--make-flex-pattern)))
         (when all
           (nconc (mapcar (-partial #'fuzzy-matcher-propertize infix) all) (length prefix))))))
