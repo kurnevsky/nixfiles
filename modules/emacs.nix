@@ -57,7 +57,7 @@ in {
       home.file.".config/emacs/init.el" = {
         source = ./init.el;
         onChange = ''
-          export PATH=${pkgs.git}/bin:"$PATH"
+          export PATH=${pkgs.git}/bin:${pkgs.agda}/bin:"$PATH"
           export EMACSLOADPATH=${pkgs.mu}/share/emacs/site-lisp/mu4e:
           export EMACSNATIVELOADPATH=${pkgs.mu}/share/emacs/native-lisp:
           rm -fv ~/.config/emacs/init.elc
