@@ -1342,7 +1342,12 @@ identifier and the position respectively."
   :ensure posframe
   :config
   (delete 'tooltip dap-auto-configure-features)
-  (dap-mode t)
+  (dap-mode t))
+
+(use-package dap-ui
+  :ensure dap-mode
+  :after dap-mode
+  :config
   (dap-ui-mode t))
 
 (use-package mu4e
