@@ -107,7 +107,7 @@
 (defvar new-untitled nil)
 (put 'new-untitled 'permanent-local t)
 (defun kill-buffer-ask-first (orig-fun &rest args)
-  "Prompts before killing buffer if it isn't associated with a file.
+  "Prompt before killing buffer if it isn't associated with a file.
 ORIG-FUN is original `kill-buffer' function.
 ARGS is `kill-buffer' arguments."
   (let ((buffer (get-buffer (if (and args (car args)) (car args) (buffer-name)))))
@@ -278,16 +278,18 @@ ARGS is `kill-buffer' arguments."
            (font-lock-comment-face :foreground base03 :slant italic)
            ;; Apply string foreground for docstring and make it italic
            (font-lock-doc-face :foreground base0B :slant italic)))))
-  (defun set-theme (theme)
+  (defun set-base16-theme (theme)
     (load-theme theme t)
     (modify-theme theme))
-  (defvar themes '(base16-onedark base16-one-light))
+  (defvar base16-theme-chosen-themes '(base16-onedark base16-one-light))
   (if (or (daemonp) (display-graphic-p))
-    (set-theme (car themes))
-    (add-hook 'tty-setup-hook (lambda () (set-theme (car themes))) t))
-  (defun toggle-theme ()
+    (set-base16-theme (car base16-theme-chosen-themes))
+    (add-hook 'tty-setup-hook (lambda () (set-base16-theme (car base16-theme-chosen-themes))) t))
+  (defun toggle-base16-theme ()
     (interactive)
-    (set-theme (if (eq (car themes) (car custom-enabled-themes)) (cadr themes) (car themes)))))
+    (set-base16-theme (if (eq (car base16-theme-chosen-themes) (car custom-enabled-themes))
+                        (cadr base16-theme-chosen-themes)
+                        (car base16-theme-chosen-themes)))))
 
 (use-package ligature
   :demand t
