@@ -57,6 +57,7 @@ in {
       home.file.".config/emacs/init.el" = {
         source = ./init.el;
         onChange = ''
+          export PATH=${pkgs.git}/bin:"$PATH"
           rm -fv ~/.config/emacs/init.elc
           ${emacs}/bin/emacs -Q -nw -l ~/.config/emacs/init.el -batch -f batch-byte-compile ~/.config/emacs/init.el
         '';
