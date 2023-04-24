@@ -161,7 +161,8 @@ ARGS is `kill-buffer' arguments."
 (use-package el-patch
   :demand t
   :config
-  (el-patch-use-package-mode))
+  (eval-when-compile
+    (setq el-patch-validate-during-compile t)))
 
 (use-package hexrgb
   :ensure nil
