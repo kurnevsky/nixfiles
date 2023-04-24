@@ -1,6 +1,3 @@
-# Based on https://github.com/ghacksuserjs/ghacks-user.js/blob/bd384622db70eaf6893d32a0c1c4b99d5516fa5b/user.js
-# Compare with master using https://github.com/ghacksuserjs/ghacks-user.js/compare/HASH1...HASH2
-
 {
   # Enable webrender
   "gfx.webrender.all" = true;
@@ -19,43 +16,34 @@
   "browser.tabs.allowTabDetach" = false;
   # Use system file picker
   "widget.use-xdg-desktop-portal.file-picker" = 1;
+  # Disable default browser check
+  "browser.shell.checkDefaultBrowser" = false;
+  # Disable auto-installing Firefox updates
+  "app.update.auto" = false;
+  # Disable extension metadata
+  "extensions.getAddons.cache.enabled" = false;
 
   # [SECTION 0100]: STARTUP
 
-  # 0101: disable default browser check
-  "browser.shell.checkDefaultBrowser" = false;
   # 0102: set START page (0=blank, 1=home, 2=last visited page, 3=resume previous session)
   "browser.startup.page" = 0;
   # 0103: set HOME+NEWWINDOW page
   "browser.startup.homepage" = "about:blank";
   # 0104: set NEWTAB page
   "browser.newtabpage.enabled" = false;
-  "browser.newtab.preload" = false;
   # 0105a: disable Activity Stream telemetry
   "browser.newtabpage.activity-stream.feeds.telemetry" = false;
   "browser.newtabpage.activity-stream.telemetry" = false;
-  # 0105b: disable Activity Stream Snippets
-  "browser.newtabpage.activity-stream.feeds.snippets" = false;
-  "browser.newtabpage.activity-stream.asrouter.providers.snippets" = "";
   # 0105c: disable Activity Stream Top Stories, Pocket-based and/or sponsored content
-  "browser.newtabpage.activity-stream.feeds.section.topstories" = false;
-  "browser.newtabpage.activity-stream.section.highlights.includePocket" = false;
   "browser.newtabpage.activity-stream.showSponsored" = false;
-  "browser.newtabpage.activity-stream.feeds.discoverystreamfeed" = false;
   "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
   # 0106: clear default topsites
   "browser.newtabpage.activity-stream.default.sites" = "";
 
   # [SECTION 0300]: QUIET FOX
 
-  # 0302a: disable auto-INSTALLING Firefox updates
-  "app.update.auto" = false;
-  # 0306: disable extension metadata
-  "extensions.getAddons.cache.enabled" = false;
   # 0310: disable sending the URL of the website where a plugin crashed
   "dom.ipc.plugins.reportCrashURL" = false;
-  # 0320: disable about:addons' Recommendations pane (uses Google Analytics)
-  "extensions.getAddons.showPane" = false;
   # 0321: disable recommendations in about:addons' Extensions and Themes panes
   "extensions.htmlaboutaddons.recommendations.enabled" = false;
   # 0330: disable telemetry
@@ -69,8 +57,6 @@
   "toolkit.telemetry.bhrPing.enabled" = false;
   "toolkit.telemetry.firstShutdownPing.enabled" = false;
   # 0331: disable Telemetry Coverage
-  "toolkit.telemetry.coverage.opt-out" = true;
-  "toolkit.coverage.opt-out" = true;
   "toolkit.coverage.endpoint.base" = "";
   # 0340: disable Health Reports
   "datareporting.healthreport.uploadEnabled" = false;
@@ -91,8 +77,6 @@
 
   # 0401: enforce Firefox blocklist, but sanitize blocklist url
   "extensions.blocklist.enabled" = true;
-  "extensions.blocklist.url" =
-    "https://blocklists.settings.services.mozilla.com/v1/blocklist/3/%APP_ID%/%APP_VERSION%/";
   # 0412: disable SB checks for downloads (remote)
   "browser.safebrowsing.downloads.remote.enabled" = false;
   "browser.safebrowsing.downloads.remote.url" = "";
@@ -128,10 +112,6 @@
   # 0807: disable live search suggestions
   "browser.search.suggest.enabled" = false;
   "browser.urlbar.suggest.searches" = false;
-  # 0809: disable location bar suggesting "preloaded" top websites
-  "browser.urlbar.usepreloadedtopurls.enabled" = false;
-  # 0850e: disable location bar one-off searches
-  "browser.urlbar.oneOffSearches" = false;
   # 0860: disable search and form history
   "browser.formfill.enable" = false;
 
@@ -139,8 +119,6 @@
 
   # 0901: disable saving passwords
   "signon.rememberSignons" = false;
-  # 0912: limit (or disable) HTTP authentication credentials dialogs triggered by sub-resources
-  "network.auth.subresource-http-auth-allow" = 1;
 
   # [SECTION 1200]: HTTPS (SSL/TLS / OCSP / CERTS / HPKP / CIPHERS)
 
@@ -148,18 +126,10 @@
   "security.ssl.require_safe_negotiation" = true;
   # 1204: disable SSL session tracking
   "security.ssl.disable_session_identifiers" = true;
-  # 1205: disable SSL Error Reporting
-  "security.ssl.errorReporting.automatic" = false;
-  "security.ssl.errorReporting.enabled" = false;
-  "security.ssl.errorReporting.url" = "";
   # 1206: disable TLS1.3 0-RTT (round-trip time)
   "security.tls.enable_0rtt_data" = false;
   # 1210: enable OCSP Stapling
   "security.ssl.enable_ocsp_stapling" = true;
-  # 1211: control when to use OCSP fetching (to confirm current validity of certificates)
-  "security.OCSP.enabled" = 1;
-  # 1220: disable or limit SHA-1 certificates
-  "security.pki.sha1_enforcement_level" = 1;
   # 1223: enforce strict pinning
   "security.cert_pinning.enforcement_level" = 2;
   # 1270: display warning on the padlock for "broken security" (if 1201 is false)
@@ -202,21 +172,9 @@
   "media.peerconnection.ice.proxy_only_if_behind_proxy" = true;
   # 2030: disable autoplay of HTML5 media
   "media.autoplay.default" = 5;
-  # 2031: disable autoplay of HTML5 media if you interacted with the site
-  "media.autoplay.enabled.user-gestures-needed" = false;
 
   # [SECTION 2200]: WINDOW MEDDLING & LEAKS / POPUPS
 
-  # 2201: prevent websites from disabling new window features
-  "dom.disable_window_open_feature.close" = true;
-  "dom.disable_window_open_feature.location" = true;
-  "dom.disable_window_open_feature.menubar" = true;
-  "dom.disable_window_open_feature.minimizable" = true;
-  "dom.disable_window_open_feature.personalbar" = true;
-  "dom.disable_window_open_feature.resizable" = true;
-  "dom.disable_window_open_feature.status" = true;
-  "dom.disable_window_open_feature.titlebar" = true;
-  "dom.disable_window_open_feature.toolbar" = true;
   # 2202: prevent scripts from moving and resizing open windows
   "dom.disable_window_move_resize" = true;
   # 2203: open links targeting new windows in a new tab instead
@@ -251,15 +209,11 @@
   "beacon.enabled" = false;
   # 2603: remove temp files opened with an external application
   "browser.helperApps.deleteTempFileOnExit" = true;
-  # 2605: block web content in file processes
-  "browser.tabs.remote.allowLinkedWebInFileUriProcess" = false;
   # 2606: disable UITour backend so there is no chance that a remote page can use it
   "browser.uitour.enabled" = false;
   "browser.uitour.url" = "";
   # 2611: disable middle mouse click opening links from clipboard
   "middlemouse.contentLoadURL" = false;
-  # 2614: limit HTTP redirects (this does not control redirects with HTML meta tags or JS)
-  "network.http.redirection-limit" = 10;
   # 2616: remove special permissions for certain mozilla domains
   "permissions.manager.defaultsUrl" = "";
   # 2617: remove webchannel whitelist
@@ -273,15 +227,8 @@
   "browser.download.useDownloadDir" = false;
   # 2652: disable adding downloads to the system's "recent documents" list
   "browser.download.manager.addToRecentDocs" = false;
-  # 2653: disable hiding mime types (Options>General>Applications) not associated with a plugin
-  "browser.download.hide_plugins_without_extensions" = false;
   # 2654: disable "open with" in download dialog
   "browser.download.forbid_open_with" = true;
-
-  # SECURITY
-
-  # 2680: enforce CSP (Content Security Policy)
-  "security.csp.enable" = true;
 
   # [SECTION 2700]: PERSISTENT STORAGE
 
