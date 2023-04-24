@@ -5,3 +5,7 @@
 #tabbrowser-tabpanels {
   background: var(--dark-color) !important;
 }
+
+#webrtcIndicator {
+  display: none;
+}
