@@ -26,8 +26,8 @@
 (when (fboundp 'tool-bar-mode)
   (tool-bar-mode -1))
 ;; Set font.
-(set-face-attribute 'default nil :font "Hack Nerd Font Mono:size=15")
-(add-to-list 'default-frame-alist '(font . "Hack Nerd Font Mono:size=15"))
+(set-face-attribute 'default nil :font "JetBrains Mono Nerd Font:size=15")
+(add-to-list 'default-frame-alist '(font . "JetBrains Mono Nerd Font:size=15"))
 ;; Disable deferred compilation.
 (setq native-comp-jit-compilation nil)
 ;; Don't do backup files.

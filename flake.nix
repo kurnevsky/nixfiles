@@ -70,6 +70,7 @@
         })
         (import ./modules/common-home.nix (with users; [ ww ]))
         (import ./modules/emacs.nix (with users; [ kurnevsky ww ]))
+        ./modules/font-freezing.nix
         ./modules/desktop.nix
         ./modules/kde.nix
         ./modules/sandbox.nix
