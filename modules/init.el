@@ -527,6 +527,8 @@ ARGS is `kill-buffer' arguments."
 (use-package minimap
   :commands minimap-mode
   :custom
+  (minimap-width-fraction 0.1)
+  (minimap-minimum-width 20)
   (minimap-window-location 'right))
 
 (use-package fuzzy-matcher
