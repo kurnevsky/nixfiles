@@ -302,14 +302,23 @@ ARGS is `kill-buffer' arguments."
                                          "=:=" ;; type equality
                                          "->" ;; tuple
                                          "==" "!=" "||" "&&" ">=" "<=" ;; boolean operators
+                                         "<<" ">>" ;; binary operators
+                                         "+=" "-=" "*=" "/=" "%=" "&=" "|=" "^=" "<<=" ">>=" "++=" "--=" "::=" ":::=" "+++=" ;; assign operators
                                          "++" "--" "::" ":::" "+++" ;; collections
                                          "//" "/*" "*/" "/**" ;; comments
                                          "<->" ;; cats IsEq
+                                         "===" "=!=" ;; cats Eq
                                          "<*>" "*>" "<*" ;; cats Applicative
                                          ">>" ">>=" ;; cats FlatMap
                                          "***" ;; cats Arrow
                                          ":=" ;; scalatags attr
                                          ))
+  (ligature-set-ligatures 'rust-mode '("->" ;; function
+                                        "=>" ;; pattern matching
+                                        "==" "!=" "||" "&&" ">=" "<=" ;; boolean operators
+                                        "+=" "-=" "*=" "/=" "%=" "&=" "|=" "^=" "<<=" ">>=" ;; assign operators
+                                        ".." "..=" ;; range operators
+                                        ))
   (global-ligature-mode t))
 
 (use-package cl-macs
