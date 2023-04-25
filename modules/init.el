@@ -437,6 +437,10 @@ ARGS is `kill-buffer' arguments."
 
 (use-package pixel-scroll
   :ensure nil
+  ;; overrides vertico
+  :bind (:map pixel-scroll-precision-mode-map
+          ("<prior>")
+          ("<next>"))
   :demand t
   :config
   (pixel-scroll-precision-mode))
