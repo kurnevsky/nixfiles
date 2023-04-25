@@ -17,7 +17,7 @@ in {
       postBuild = ''
         export PYTHONPATH=:"${font-freezer}/src/:''${PYTHONPATH}"
         find ''${out}/share/fonts/truetype/NerdFonts/ -name 'JetBrains Mono*' -exec \
-          ${python}/bin/python ${font-freezer}/src/opentype_feature_freezer/cli.py -f 'cv12' {} \;
+          ${python}/bin/python ${font-freezer}/src/opentype_feature_freezer/cli.py -f 'cv12,zero' {} \;
       '';
     })
   ];
