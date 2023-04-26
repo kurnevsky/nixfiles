@@ -1,5 +1,5 @@
 { lib, pkgs, config, ... }: {
-  boot.cleanTmpDir = true;
+  boot.tmp.cleanOnBoot = true;
 
   swapDevices = [{
     device = "/swap";
