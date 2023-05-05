@@ -41,6 +41,8 @@
     discardPolicy = "both";
   }];
 
+  environment.systemPackages = with pkgs; [ radeontop ];
+
   networking.hostName = "pc";
 
   systemd.network.networks."99-wg0".address = [ "192.168.14.5/32" ];
