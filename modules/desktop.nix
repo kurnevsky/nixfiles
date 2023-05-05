@@ -530,7 +530,7 @@
   users = {
     users = {
       kurnevsky.extraGroups =
-        [ "adbusers" "video" "pipewire" "vboxusers" "docker" ];
+        [ "adbusers" "video" "pipewire" "vboxusers" ];
       ww = {
         uid = 1001;
         isNormalUser = true;
