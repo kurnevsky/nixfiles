@@ -315,6 +315,7 @@ ARGS is `kill-buffer' arguments."
                                          ))
   (ligature-set-ligatures 'rust-mode '("->" ;; function
                                         "=>" ;; pattern matching
+                                        "::" ;; path
                                         "==" "!=" "||" "&&" ">=" "<=" ;; boolean operators
                                         "+=" "-=" "*=" "/=" "%=" "&=" "|=" "^=" "<<=" ">>=" ;; assign operators
                                         ".." "..=" ;; range operators
