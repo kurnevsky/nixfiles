@@ -67,6 +67,31 @@
       };
     })
     (self: super: {
+      telegram-desktop = super.telegram-desktop.overrideAttrs (old: {
+        patches = let
+          baseUrl =
+            "https://raw.githubusercontent.com/Layerex/telegram-desktop-patches/cfcced0bf6226fe273eb4fee0aaa625082ab041a/";
+        in (old.patches or [ ]) ++ [
+          (super.fetchpatch {
+            url = baseUrl + "0001-Disable-sponsored-messages.patch";
+            sha256 = "sha256-ZHdLxiRfRIFU2RU0v03DpCjW/ZZDTicJ2zRCGWz+dBc=";
+          })
+          (super.fetchpatch {
+            url = baseUrl + "0002-Disable-saving-restrictions.patch";
+            sha256 = "sha256-lKO8FVIlXjvPC+xdVgWw6DeSRkQ5VGp/Yf6ByjScJjk=";
+          })
+          (super.fetchpatch {
+            url = baseUrl + "0003-Disable-invite-peeking-restrictions.patch";
+            sha256 = "sha256-8mJD6LOjz11yfAdY4QPK/AUz9o5W3XdupXxy7kRrbC8=";
+          })
+          (super.fetchpatch {
+            url = baseUrl + "0004-Disable-accounts-limit.patch";
+            sha256 = "sha256-PZWCFdGE/TTJ1auG1JXNpnTUko2rCWla6dYKaQNzreg=";
+          })
+        ];
+      });
+    })
+    (self: super: {
       globalprotect-openconnect = super.globalprotect-openconnect.overrideAttrs
         (old: rec {
           version = "1.4.7";
