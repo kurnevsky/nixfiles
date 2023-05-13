@@ -66,6 +66,7 @@
         paths = [ obs-with-gstreamer obs-wrapped ];
       })
       (pass-wayland.withExtensions (ext: with ext; [ pass-otp pass-update ]))
+      (callPackage ./llama-cpp.nix { })
       aircrack-ng
       anki
       ansible
