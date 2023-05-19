@@ -5,7 +5,10 @@ users:
 let
   emacs = (pkgs.emacsWithPackagesFromUsePackage {
     config = ./init.el;
-    package = pkgs.emacsUnstablePgtk;
+    package = pkgs.emacsUnstablePgtk.override {
+      treeSitterPlugins =
+        lib.filter lib.isDerivation (lib.attrValues pkgs.tree-sitter-grammars);
+    };
     alwaysEnsure = true;
     extraEmacsPackages = epkgs: [
       (pkgs.stdenv.mkDerivation {
@@ -20,19 +23,34 @@ let
         installPhase =
           "mkdir -p $out/share/emacs/site-lisp && install *.el* $out/share/emacs/site-lisp";
       })
-      epkgs.fringe-helper # for revive origami
       (pkgs.emacs.pkgs.callPackage ./fuzzy-matcher.nix { })
     ];
-    override = (self: super:
-      {
-        origami = super.origami.overrideAttrs (old: {
-          src = pkgs.fetchFromGitHub {
-            owner = "elp-revive";
-            repo = "origami.el";
-            rev = "7b53c4c993d499b39d75a20326f52b63437bfa20";
-            sha256 = "sha256-b58mv0wR/1lmuQtMwoP/AwhETJi2giCJYGUJxxL+3vc=";
-          };
+    override = let
+      # https://github.com/NixOS/nixpkgs/blob/e6e389917a8c778be636e67a67ec958f511cc55d/pkgs/build-support/emacs/generic.nix#L48-L50
+      withDependency = d: p:
+        p.overrideAttrs (old: {
+          buildInputs = old.buildInputs ++ [ d ];
+          propagatedBuildInputs = old.propagatedBuildInputs ++ [ d ];
+          propagatedUserEnvPkgs = old.propagatedUserEnvPkgs ++ [ d ];
         });
+      withoutDependency = d: p:
+        p.overrideAttrs (old: {
+          buildInputs = lib.lists.remove d old.buildInputs;
+          propagatedBuildInputs = lib.lists.remove d old.propagatedBuildInputs;
+          propagatedUserEnvPkgs = lib.lists.remove d old.propagatedUserEnvPkgs;
+        });
+    in (self: super:
+      {
+        org-roam = withoutDependency super.org super.org-roam;
+        origami = withDependency super.fringe-helper
+          (super.origami.overrideAttrs (old: {
+            src = pkgs.fetchFromGitHub {
+              owner = "elp-revive";
+              repo = "origami.el";
+              rev = "7b53c4c993d499b39d75a20326f52b63437bfa20";
+              sha256 = "sha256-b58mv0wR/1lmuQtMwoP/AwhETJi2giCJYGUJxxL+3vc=";
+            };
+          }));
       } // lib.genAttrs [
         "lsp-mode"
         "lsp-treemacs"

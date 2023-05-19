@@ -1046,8 +1046,25 @@ ARGS is `kill-buffer' arguments."
 
 (use-package org
   :ensure nil
+  :bind (:map org-mode-map
+          ("M-TAB" . org-cycle))
   :custom
   (org-support-shift-select t))
+
+(use-package org-roam
+  :custom
+  (org-roam-directory (expand-file-name "~/roam/"))
+  :config
+  (org-roam-db-autosync-mode))
+
+(use-package org-roam-capture
+  :ensure org-roam
+  :after org-roam
+  :custom
+  (org-roam-capture-templates '(("d" "default" plain "%?"
+                                  :target (file+head "${slug}.org.gpg"
+                                            "#+title: ${title}\n")
+                                  :unnarrowed t))))
 
 (use-package yasnippet
   :hook (prog-mode . yas-minor-mode)
