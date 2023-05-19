@@ -165,6 +165,7 @@
       qemu
       qrencode
       radare2
+      rage
       rclone
       ripgrep
       ripgrep-all
@@ -530,8 +531,7 @@
 
   users = {
     users = {
-      kurnevsky.extraGroups =
-        [ "adbusers" "video" "pipewire" "vboxusers" ];
+      kurnevsky.extraGroups = [ "adbusers" "video" "pipewire" "vboxusers" ];
       ww = {
         uid = 1001;
         isNormalUser = true;
