@@ -1119,6 +1119,13 @@ ARGS is `kill-buffer' arguments."
   :config
   (auth-source-pass-enable))
 
+(use-package age
+  :demand t
+  :custom
+  (age-program "rage")
+  :config
+  (age-file-enable))
+
 (use-package git-modes)
 
 (use-package diff-hl
