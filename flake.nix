@@ -43,7 +43,7 @@
     };
   };
 
-  outputs = { self, ... }@inputs:
+  outputs = inputs:
     let
       users = {
         root = "root";
