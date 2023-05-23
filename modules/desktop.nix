@@ -110,6 +110,7 @@
       gdb
       gimp-with-plugins
       globalprotect-openconnect
+      gnupg
       openconnect
       (callPackage ./pan-globalprotect-okta.nix { })
       gnome-themes-extra
@@ -327,7 +328,6 @@
 
   programs = {
     dconf.enable = true;
-    gnupg.agent.enable = true;
     adb.enable = true;
     java.enable = true;
   };
@@ -782,12 +782,13 @@
       };
       services = {
         gnome-keyring.enable = true;
-        # Enable together with programs.gnupg because it handles pinentry
         gpg-agent = {
           enable = true;
+          enableSshSupport = true;
           defaultCacheTtl = 14400;
           maxCacheTtl = 14400;
-          pinentryFlavor = "gnome3";
+          pinentryFlavor = "qt";
+          extraConfig = "allow-loopback-pinentry";
         };
       };
       # To make sure that it's not overrided by WM
