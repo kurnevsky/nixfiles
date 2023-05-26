@@ -151,7 +151,9 @@
       ncmpc
       nmap
       nodePackages.mermaid-cli
-      nodePackages.prettier
+      (pkgs.writeShellScriptBin "prettier" ''
+        ${pkgs.nodePackages.prettier}/bin/prettier --plugin-search-dir "${pkgs.nodePackages.prettier-plugin-toml}/lib" "$@"
+      '')
       openai-whisper-cpp
       openssl
       pandoc
