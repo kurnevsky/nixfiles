@@ -789,6 +789,8 @@
           enableSshSupport = true;
           defaultCacheTtl = 14400;
           maxCacheTtl = 14400;
+          defaultCacheTtlSsh = 14400;
+          maxCacheTtlSsh = 14400;
           pinentryFlavor = "qt";
           extraConfig = "allow-loopback-pinentry";
         };
