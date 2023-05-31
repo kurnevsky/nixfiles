@@ -5,10 +5,7 @@ users:
 let
   emacs = (pkgs.emacsWithPackagesFromUsePackage {
     config = ./init.el;
-    package = pkgs.emacsUnstablePgtk.override {
-      treeSitterPlugins =
-        lib.filter lib.isDerivation (lib.attrValues pkgs.tree-sitter-grammars);
-    };
+    package = pkgs.emacsUnstablePgtk;
     alwaysEnsure = true;
     extraEmacsPackages = epkgs: [
       (pkgs.stdenv.mkDerivation {
