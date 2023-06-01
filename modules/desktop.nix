@@ -177,6 +177,7 @@
       skim
       smartmontools
       sourceHighlight
+      sshfs-fuse
       tealdeer
       tesseract
       texlive.combined.scheme-basic
@@ -332,6 +333,7 @@
     dconf.enable = true;
     adb.enable = true;
     java.enable = true;
+    fuse.userAllowOther = true;
   };
 
   gtk.iconCache.enable = true;
