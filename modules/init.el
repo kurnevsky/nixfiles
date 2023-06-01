@@ -1063,7 +1063,7 @@ ARGS is `kill-buffer' arguments."
   :custom
   (org-roam-capture-templates '(("d" "default" plain "%?"
                                   :target (file+head "${slug}.org.gpg"
-                                            "#+title: ${title}\n")
+                                            "# -*- mode:org; epa-file-encrypt-to: (\"kurnevsky@gmail.com\") -*-\n#+title: ${title}\n")
                                   :unnarrowed t))))
 
 (use-package yasnippet
