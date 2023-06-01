@@ -41,7 +41,7 @@
     discardPolicy = "both";
   }];
 
-  environment.systemPackages = with pkgs; [ radeontop ];
+  environment.systemPackages = with pkgs; [ radeontop wine-ge ];
 
   networking.hostName = "pc";
 
