@@ -1195,16 +1195,6 @@ ARGS is `kill-buffer' arguments."
 
 (use-package poly-rst)
 
-(use-package tree-sitter
-  :demand t
-  :hook (tree-sitter-after-on . (lambda () (tree-sitter-hl-mode 1)))
-  :config
-  (global-tree-sitter-mode))
-
-(use-package tree-sitter-langs
-  :demand t
-  :after yasnippet)
-
 (use-package conf-mode
   :ensure nil
   :mode ("/Cargo.lock\\'" . conf-toml-mode))
@@ -1302,12 +1292,8 @@ ARGS is `kill-buffer' arguments."
   (defun lsp-activate-if-already-activated (server-id)
     (when (lsp-find-workspace server-id (buffer-file-name))
       (lsp)))
-  (add-hook 'rust-mode-hook (lambda ()
-                              (tree-sitter-hl-mode 1)
-                              (lsp-activate-if-already-activated 'rust-analyzer)))
-  (add-hook 'scala-mode-hook (lambda ()
-                               (tree-sitter-hl-mode 1)
-                               (lsp-activate-if-already-activated 'metals)))
+  (add-hook 'rust-mode-hook (-partial #'lsp-activate-if-already-activated 'rust-analyzer))
+  (add-hook 'scala-mode-hook (-partial #'lsp-activate-if-already-activated 'metals))
   ;; Hack for metals to send ranges in hover request.
   (el-patch-defun lsp--text-document-position-params (&optional identifier position)
     "Make TextDocumentPositionParams for the current point in the current document.
