@@ -1048,6 +1048,10 @@ ARGS is `kill-buffer' arguments."
   :ensure nil
   :bind (:map org-mode-map
           ("M-TAB" . org-cycle)
+          ("S-<down>")
+          ("S-<up>")
+          ("S-<left>")
+          ("S-<right>")
           ("C-S-<down>")
           ("C-S-<up>")
           ("C-S-<left>")
