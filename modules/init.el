@@ -1047,7 +1047,11 @@ ARGS is `kill-buffer' arguments."
 (use-package org
   :ensure nil
   :bind (:map org-mode-map
-          ("M-TAB" . org-cycle))
+          ("M-TAB" . org-cycle)
+          ("C-S-<down>")
+          ("C-S-<up>")
+          ("C-S-<left>")
+          ("C-S-<right>"))
   :custom
   (org-support-shift-select t))
 
