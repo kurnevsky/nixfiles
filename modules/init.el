@@ -1211,6 +1211,11 @@ ARGS is `kill-buffer' arguments."
 
 (use-package poly-rst)
 
+(use-package treesit-auto
+  :demand t
+  :config
+  (global-treesit-auto-mode))
+
 (use-package conf-mode
   :ensure nil
   :mode ("/Cargo.lock\\'" . conf-toml-mode))

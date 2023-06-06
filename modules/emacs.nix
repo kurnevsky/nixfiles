@@ -5,7 +5,8 @@ users:
 let
   emacs = (pkgs.emacsWithPackagesFromUsePackage {
     config = ./init.el;
-    package = pkgs.emacsUnstablePgtk;
+    package = pkgs.emacsUnstablePgtk.overrideAttrs
+      (old: { passthru = old.passthru // { treeSitter = true; }; });
     alwaysEnsure = true;
     extraEmacsPackages = epkgs: [
       (pkgs.stdenv.mkDerivation {
@@ -21,6 +22,7 @@ let
           "mkdir -p $out/share/emacs/site-lisp && install *.el* $out/share/emacs/site-lisp";
       })
       (pkgs.emacs.pkgs.callPackage ./fuzzy-matcher.nix { })
+      epkgs.treesit-grammars.with-all-grammars
     ];
     override = let
       # https://github.com/NixOS/nixpkgs/blob/e6e389917a8c778be636e67a67ec958f511cc55d/pkgs/build-support/emacs/generic.nix#L48-L50
