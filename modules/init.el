@@ -1044,14 +1044,6 @@ ARGS is `kill-buffer' arguments."
     (lambda ()
       (hs-minor-mode -1))))
 
-(use-package calc
-  :ensure nil
-  :config
-  (defmath lookupfst (val s-list r-list)
-    (org-lookup-first val s-list r-list))
-  (defmath lookuplst (val s-list r-list)
-    (org-lookup-last val s-list r-list)))
-
 (use-package org
   :ensure nil
   :bind (:map org-mode-map
@@ -1065,7 +1057,12 @@ ARGS is `kill-buffer' arguments."
           ("C-S-<left>")
           ("C-S-<right>"))
   :custom
-  (org-support-shift-select t))
+  (org-support-shift-select t)
+  :config
+  (defmath lookupfst (val s-list r-list)
+    (org-lookup-first val s-list r-list))
+  (defmath lookuplst (val s-list r-list)
+    (org-lookup-last val s-list r-list)))
 
 (use-package org-roam
   :custom
