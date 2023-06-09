@@ -1079,6 +1079,8 @@ ARGS is `kill-buffer' arguments."
                                             "# -*- mode:org; epa-file-encrypt-to: (\"kurnevsky@gmail.com\") -*-\n#+title: ${title}\n")
                                   :unnarrowed t))))
 
+(use-package org-ql)
+
 (use-package yasnippet
   :hook (prog-mode . yas-minor-mode)
   :bind (:map yas-keymap

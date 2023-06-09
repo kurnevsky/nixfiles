@@ -41,6 +41,8 @@ let
     in (self: super:
       {
         org-roam = withoutDependency super.org super.org-roam;
+        org-ql = withoutDependency super.org super.org-ql;
+        org-super-agenda = withoutDependency super.org super.org-super-agenda;
         origami = withDependency super.fringe-helper
           (super.origami.overrideAttrs (old: {
             src = pkgs.fetchFromGitHub {
