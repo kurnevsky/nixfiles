@@ -1602,6 +1602,10 @@ properly."
 (global-set-key (kbd "S-<f4>") (lambda ()
                                  (interactive)
                                  (kmacro-call-macro 0)))
+(global-set-key (kbd "<f12>") (lambda ()
+                                (interactive)
+                                (when-let (value (completing-read "Kill ring: " kill-ring))
+                                  (kill-new value))))
 
 (provide 'init)
 ;;; init.el ends here
