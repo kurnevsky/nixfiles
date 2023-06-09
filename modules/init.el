@@ -1606,7 +1606,10 @@ properly."
                                  (kmacro-call-macro 0)))
 (global-set-key (kbd "<f12>") (lambda ()
                                 (interactive)
-                                (when-let (value (completing-read "Kill ring: " kill-ring))
+                                (when-let (value (completing-read "Kill ring: " (lambda (string pred action)
+                                                                                  (if (eq action 'metadata)
+                                                                                    `(metadata (display-sort-function . ,#'identity))
+                                                                                    (complete-with-action action kill-ring string pred)))))
                                   (kill-new value))))
 
 (provide 'init)
