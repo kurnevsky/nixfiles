@@ -44,8 +44,8 @@
   environment.systemPackages = with pkgs; [
     radeontop
     wine-ge
-    (pkgs.pkgsCross.mingw32.callPackage ./vkd3d-proton.nix { })
-    (pkgs.pkgsCross.mingwW64.callPackage ./vkd3d-proton.nix { })
+    (pkgs.pkgsCross.mingw32.callPackage ./../../modules/vkd3d-proton.nix { })
+    (pkgs.pkgsCross.mingwW64.callPackage ./../../modules/vkd3d-proton.nix { })
   ];
 
   networking.hostName = "pc";
