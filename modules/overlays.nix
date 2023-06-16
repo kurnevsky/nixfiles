@@ -66,6 +66,29 @@
         '';
       };
     })
+    (self: super:
+      let
+        javaPath = "/tmp/java";
+        wrap = drv: name:
+          super.symlinkJoin {
+            name = drv.name;
+            paths = [
+              (super.writeShellScriptBin name ''
+                ${super.bubblewrap}/bin/bwrap \
+                  --bind / / \
+                  --dev-bind /dev /dev \
+                  --proc /proc \
+                  --ro-bind ${super.jdk}/lib/openjdk ${javaPath} \
+                  --setenv JAVA_HOME ${javaPath} \
+                  ${drv}/bin/${name} "$@"
+              '')
+              drv
+            ];
+          };
+      in {
+        metals = wrap super.metals "metals";
+        bloop = wrap super.bloop "bloop";
+      })
     (self: super: {
       telegram-desktop = super.telegram-desktop.overrideAttrs (old: {
         patches = let
