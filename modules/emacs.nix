@@ -5,7 +5,7 @@ users:
 let
   emacs = (pkgs.emacsWithPackagesFromUsePackage {
     config = ./init.el;
-    package = pkgs.emacsUnstablePgtk.overrideAttrs
+    package = pkgs.emacs-unstable-pgtk.overrideAttrs
       (old: { passthru = old.passthru // { treeSitter = true; }; });
     alwaysEnsure = true;
     extraEmacsPackages = epkgs: [
