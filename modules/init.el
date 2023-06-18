@@ -893,7 +893,8 @@ ARGS is `kill-buffer' arguments."
                                mc/paste-across-cursors))
   (setq mc/cmds-to-run-for-all '(back-to-indentation-or-beginning
                                   end-of-code-or-line
-                                  indent-for-tab-command)))
+                                  indent-for-tab-command
+                                  org-self-insert-command)))
 
 (use-package mc-mark-more
   :ensure multiple-cursors
