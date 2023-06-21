@@ -451,8 +451,8 @@
       enable = true;
       setSocketVariable = true;
     };
-    # TODO: broken
-    # virtualbox.host.enable = true;
+    virtualbox.host.enable = true;
+    waydroid.enable = true;
   };
 
   hardware = {
@@ -482,6 +482,7 @@
         requires = [ "i2pd.service" "tor.service" ];
       };
       tor.wantedBy = pkgs.lib.mkForce [ ];
+      waydroid-container.wantedBy = pkgs.lib.mkForce [ ];
     };
     network = {
       enable = true;
