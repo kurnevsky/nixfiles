@@ -217,10 +217,12 @@
       ungoogled-chromium
       tor-browser-bundle-bin
       # Messengers
-      element-desktop
       gajim
       konversation
       tdesktop
+      ## Matrix
+      element-desktop
+      fractal-next
       nheko
       ## Tox
       qtox
