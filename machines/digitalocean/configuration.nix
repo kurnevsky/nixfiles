@@ -82,7 +82,10 @@
     };
     matrix-conduit = {
       enable = true;
-      settings.global.server_name = "kurnevsky.net";
+      settings.global = {
+        database_backend = "rocksdb";
+        server_name = "kurnevsky.net";
+      };
     };
     mautrix-telegram = {
       enable = false;
