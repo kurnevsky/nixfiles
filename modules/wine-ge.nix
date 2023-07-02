@@ -7,12 +7,12 @@ let
     }).unstable;
 in callPackage "${pkgs.path}/pkgs/applications/emulators/wine/base.nix" rec {
   pname = "wine-ge";
-  version = "Proton8-8";
+  version = "Proton8-9";
   src = fetchFromGitHub {
     owner = "GloriousEggroll";
     repo = "proton-wine";
     rev = version;
-    hash = "sha256-VtLO9L0cb4WAqw9QXfttKOVE8cRtXunayYzKWXVIs4o=";
+    hash = "sha256-ajn2eUTvFmvv9D7DkbGxDc23/2JrgUAaVdNZQjCwNdU=";
   };
   moltenvk = pkgs.moltenvk;
   patches = [ ];
