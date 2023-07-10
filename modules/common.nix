@@ -23,6 +23,7 @@ in {
         "evo:aBUuIOLObUPUBWBIW0XGyMZW2Wor5z3ZNtaRynZ35UY="
         "digitalocean:jFnutzjWmSNY5q/frkSkijlCh8GfdNa1Mpm5Y0N15sQ="
       ];
+      trusted-users = [ "nix-ssh" ];
     };
     extraOptions = ''
       experimental-features = nix-command flakes
@@ -32,6 +33,7 @@ in {
     '';
     sshServe = {
       enable = true;
+      write = true;
       inherit keys;
     };
   };
