@@ -1,10 +1,10 @@
-{ pkgs, ... }:
+{ ... }:
 
 {
-  system.stateVersion = "22.11";
+  system.stateVersion = "23.05";
 
   home-manager.users = {
-    root.home.stateVersion = "22.11";
-    kurnevsky.home.stateVersion = "22.11";
+    root.home.stateVersion = "23.05";
+    kurnevsky.home.stateVersion = "23.05";
   };
 }

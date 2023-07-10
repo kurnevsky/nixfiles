@@ -41,6 +41,14 @@
       repo = "mobile-nixos";
       flake = false;
     };
+
+    nix-on-droid = {
+      type = "github";
+      owner = "t184256";
+      repo = "nix-on-droid";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+    };
   };
 
   outputs = inputs:
@@ -133,6 +141,12 @@
           ];
         };
       };
+      nixOnDroidConfigurations.default =
+        inputs.nix-on-droid.lib.nixOnDroidConfiguration {
+          modules = [
+            ./machines/android/configuration.nix
+          ];
+        };
       # Execute to use:
       # nix build -L '/etc/nixos#phone-vm' && ./result -enable-kvm -smp 2
       packages.x86_64-linux.phone-vm =
