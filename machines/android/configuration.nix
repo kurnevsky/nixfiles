@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 {
-  environment.packages = with pkgs; [ git mc nano ];
+  environment.packages = with pkgs; [ git lsof mc nano openssh gnupg ];
 
   system.stateVersion = "23.05";
 
