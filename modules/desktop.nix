@@ -297,7 +297,7 @@
       maxima
       wxmaxima
       octave
-      (rWrapper.override { packages = with rPackages; [ ggplot2 ]; })
+      (rWrapper.override { packages = with rPackages; [ styler ggplot2 ]; })
       ## Markdown
       nodePackages.markdownlint-cli
       marksman
