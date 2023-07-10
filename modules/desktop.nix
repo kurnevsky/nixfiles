@@ -36,7 +36,6 @@
 
   environment = {
     systemPackages = with pkgs; [
-      (pkgs.libsForQt5.callPackage ./ubpm.nix { })
       (let
         obs-wrapped = (wrapOBS {
           plugins = with obs-studio-plugins; [
@@ -82,8 +81,7 @@
       bind
       bindfs
       binutils
-      # TODO: broken
-      # blender
+      blender
       brightnessctl
       btrfs-progs
       bubblewrap
@@ -188,6 +186,7 @@
       tmux
       torsocks
       translate-shell
+      ubpm
       usbutils
       v4l-utils
       vdpauinfo
