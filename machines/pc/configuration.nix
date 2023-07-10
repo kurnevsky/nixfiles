@@ -78,6 +78,17 @@
     kde.fprintAuth = false;
   };
 
+  nixpkgs.overlays = [
+    (self: super: {
+      python3 = super.python3.override {
+        packageOverrides = python-self: python-super: {
+          torchWithRocm =
+            python-super.torchWithRocm.override { gpuTargets = [ "gfx1100" ]; };
+        };
+      };
+    })
+  ];
+
   system.stateVersion = "22.11";
 
   home-manager.users = {
