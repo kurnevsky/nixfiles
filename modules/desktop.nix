@@ -258,6 +258,7 @@
           sentencepiece
           sacremoses
           torchvision
+          ctranslate2
           (callPackage ./python-diffusers.nix { })
           (callPackage ./python-accelerate.nix { })
         ]))
