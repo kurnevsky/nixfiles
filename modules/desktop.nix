@@ -788,7 +788,6 @@
         };
       };
       services = {
-        gnome-keyring.enable = true;
         gpg-agent = {
           enable = true;
           enableSshSupport = true;
