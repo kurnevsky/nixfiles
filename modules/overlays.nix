@@ -17,37 +17,11 @@
       };
       mpv = super.mpv.override { scripts = with pkgs.mpvScripts; [ mpris ]; };
       p7zip = super.p7zip.override { enableUnfree = true; };
-      isync = let
-        cyrus_sasl_xoauth2 = pkgs.stdenv.mkDerivation {
-          pname = "cyrus-sasl-xoauth2";
-          version = "1";
-
-          src = pkgs.fetchFromGitHub {
-            owner = "moriyoshi";
-            repo = "cyrus-sasl-xoauth2";
-            rev = "36aabca54fd65c8fa7a707cb4936751599967904";
-            sha256 = "sha256-OlmHuME9idC0fWMzT4kY+YQ43GGch53snDq3w5v/cgk=";
-          };
-
-          postPatch = ''
-            touch AUTHORS
-            touch ChangeLog
-            touch NEWS
-          '';
-
-          installPhase = ''
-            mkdir -p $out/lib/sasl2
-            cp .libs/libxoauth2.so $out/lib/sasl2
-          '';
-
-          nativeBuildInputs = [ pkgs.autoreconfHook ];
-          buildInputs = [ pkgs.cyrus_sasl ];
-        };
-      in pkgs.symlinkJoin {
+      isync = pkgs.symlinkJoin {
         name = "isync";
         paths = [
           (pkgs.writeShellScriptBin "mbsync" ''
-            export SASL_PATH=${super.cyrus_sasl.out}/lib/sasl2:${cyrus_sasl_xoauth2}/lib/sasl2
+            export SASL_PATH=${super.cyrus_sasl.out}/lib/sasl2:${pkgs.cyrus-sasl-xoauth2}/lib/sasl2
             exec ${super.isync}/bin/mbsync "$@"
           '')
           super.isync
