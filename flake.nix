@@ -145,7 +145,12 @@
       };
       nixOnDroidConfigurations.default =
         inputs.nix-on-droid.lib.nixOnDroidConfiguration {
-          modules = [ ./machines/android/configuration.nix ];
+          modules = [
+            ./machines/android/configuration.nix
+            ({ pkgs, ... }: {
+              _module.args.emacs-overlay = inputs.emacs-overlay.overlay;
+            })
+          ];
         };
       # Execute to use:
       # nix build -L '/etc/nixos#phone-vm' && ./result -enable-kvm -smp 2
