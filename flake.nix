@@ -59,6 +59,8 @@
         ww = "ww";
         parents = "parents";
       };
+      for-all-home-users = import ./modules/for-all-home-users.nix;
+      common-home = import ./modules/common-home.nix;
       commonModules = [
         inputs.home-manager.nixosModules.home-manager
         ./modules/common.nix
@@ -66,7 +68,7 @@
         ./modules/zswap.nix
         ./modules/overlays.nix
         ./modules/patches.nix
-        (import ./modules/common-home.nix (with users; [ root kurnevsky ]))
+        (for-all-home-users (with users; [ root kurnevsky ]) common-home)
       ];
       desktopModules = commonModules ++ [
         (args: {
@@ -76,7 +78,7 @@
             inputs.nur.overlay
           ];
         })
-        (import ./modules/common-home.nix (with users; [ ww ]))
+        (for-all-home-users (with users; [ ww ]) common-home)
         (import ./modules/emacs.nix (with users; [ kurnevsky ww ]))
         ./modules/font-freezing.nix
         ./modules/desktop.nix
@@ -115,7 +117,7 @@
         acer = inputs.nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = commonModules ++ [
-            (import ./modules/common-home.nix (with users; [ parents ]))
+            (for-all-home-users (with users; [ parents ]) common-home)
             ./machines/acer/hardware-configuration.nix
             ./machines/acer/configuration.nix
           ];
