@@ -157,4 +157,9 @@ in {
     };
     timesyncd.enable = true;
   };
+
+  home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
+  };
 }
