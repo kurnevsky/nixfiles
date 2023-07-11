@@ -4,8 +4,12 @@ users:
 
 {
   home-manager = let
-    home-config = {
-      home.file.".config/mc/ini".source = ./mc.ini;
+    home-config = { lib, ... }: {
+      home = {
+        activation.checkLinkTargets =
+          lib.mkForce (lib.hm.dag.entryAfter [ "writeBoundary" ] "true");
+        file.".config/mc/ini".source = ./mc.ini;
+      };
       programs = {
         bash = {
           enable = true;
