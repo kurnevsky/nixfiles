@@ -2,7 +2,10 @@ users:
 
 { pkgs, ... }:
 
-let emacs = pkgs.callPackage ./emacs-package.nix { } pkgs.emacs-unstable-pgtk;
+let
+  emacs = pkgs.callPackage ./emacs-package.nix {
+    emacsPackage = pkgs.emacs-unstable-pgtk;
+  };
 in {
   services.emacs = {
     enable = true;

@@ -2,8 +2,9 @@
 
 let
   emacsPkgs = pkgs.extend emacs-overlay;
-  emacsWithPackages = emacsPkgs.callPackage ../../modules/emacs-package.nix { }
-    emacsPkgs.emacs-unstable-nox;
+  emacsWithPackages = emacsPkgs.callPackage ../../modules/emacs-package.nix {
+    emacsPackage = emacsPkgs.emacs-unstable-nox;
+  };
 in {
   nix = {
     substituters =

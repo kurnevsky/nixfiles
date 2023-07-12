@@ -1,6 +1,4 @@
-{ pkgs, lib, ... }:
-
-emacsPackage:
+{ pkgs, lib, emacsPackage, ... }:
 
 pkgs.emacsWithPackagesFromUsePackage {
   config = ./init.el;
