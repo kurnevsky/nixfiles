@@ -6,7 +6,6 @@
     kernel.sysctl."kernel.sysrq" = 1;
     tmp.useTmpfs = true;
     supportedFilesystems = [ "ntfs" ];
-    binfmt.emulatedSystems = [ "aarch64-linux" ];
   };
 
   networking = {

@@ -23,6 +23,7 @@
     ];
     kernelModules = [ "v4l2loopback" "acpi_call" ];
     tmp.tmpfsSize = "87%";
+    binfmt.emulatedSystems = [ "aarch64-linux" ];
   };
 
   fileSystems = {
