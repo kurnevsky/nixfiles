@@ -3,7 +3,7 @@
 let
   emacsPkgs = pkgs.extend emacs-overlay;
   emacsWithPackages = emacsPkgs.callPackage ../../modules/emacs-package.nix {
-    emacsPackage = emacsPkgs.emacs-unstable-nox;
+    emacs = emacsPkgs.emacs-unstable-nox;
   };
 in {
   nix = {
