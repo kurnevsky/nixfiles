@@ -46,6 +46,7 @@ in {
     which
     ripgrep
     emacsWithPackages
+    pinentry.curses
   ];
 
   user.shell = "${pkgs.zsh}/bin/zsh";
