@@ -68,7 +68,8 @@
         ./modules/zswap.nix
         ./modules/overlays.nix
         ./modules/patches.nix
-        (for-all-home-users (with users; [ root kurnevsky ]) common-home)
+        ({ ... }:
+          for-all-home-users (with users; [ root kurnevsky ]) common-home)
       ];
       desktopModules = commonModules ++ [
         (args: {
@@ -78,7 +79,7 @@
             inputs.nur.overlay
           ];
         })
-        (for-all-home-users (with users; [ ww ]) common-home)
+        ({ ... }: for-all-home-users (with users; [ ww ]) common-home)
         (import ./modules/emacs.nix (with users; [ kurnevsky ww ]))
         ./modules/font-freezing.nix
         ./modules/desktop.nix
@@ -117,7 +118,7 @@
         acer = inputs.nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = commonModules ++ [
-            (for-all-home-users (with users; [ parents ]) common-home)
+            ({ ... }: for-all-home-users (with users; [ parents ]) common-home)
             ./machines/acer/hardware-configuration.nix
             ./machines/acer/configuration.nix
           ];

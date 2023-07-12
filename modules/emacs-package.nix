@@ -1,8 +1,8 @@
-{ pkgs, lib, emacsPackage, ... }:
+{ pkgs, lib, emacs, ... }:
 
 pkgs.emacsWithPackagesFromUsePackage {
   config = ./init.el;
-  package = emacsPackage.overrideAttrs
+  package = emacs.overrideAttrs
     (old: { passthru = old.passthru // { treeSitter = true; }; });
   alwaysEnsure = true;
   extraEmacsPackages = epkgs: [
@@ -14,11 +14,11 @@ pkgs.emacsWithPackagesFromUsePackage {
       };
       unpackCmd = "mkdir el && cp $curSrc el/hexrgb.el";
       buildPhase =
-        "${pkgs.emacs}/bin/emacs -Q -nw -batch -f batch-byte-compile hexrgb.el";
+        "${emacs}/bin/emacs -Q -nw -batch -f batch-byte-compile hexrgb.el";
       installPhase =
         "mkdir -p $out/share/emacs/site-lisp && install *.el* $out/share/emacs/site-lisp";
     })
-    (pkgs.emacs.pkgs.callPackage ./fuzzy-matcher.nix { })
+    (emacs.pkgs.callPackage ./fuzzy-matcher.nix { })
     epkgs.treesit-grammars.with-all-grammars
   ];
   override = let

@@ -1,4 +1,4 @@
-{ pkgs, emacs-overlay, ... }:
+{ lib, pkgs, emacs-overlay, ... }:
 
 let
   emacsPkgs = pkgs.extend emacs-overlay;
@@ -53,7 +53,9 @@ in {
   system.stateVersion = "23.05";
 
   home-manager.config = args@{ pkgs, ... }:
-    (import ../../modules/common-home.nix args) // {
-      home.stateVersion = "23.05";
-    };
+    lib.mkMerge [
+      (import ../../modules/common-home.nix args)
+      (import ../../modules/emacs-home.nix emacsWithPackages args)
+      { home.stateVersion = "23.05"; }
+    ];
 }
