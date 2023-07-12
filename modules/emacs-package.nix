@@ -1,8 +1,10 @@
 { pkgs, lib, ... }:
 
+emacsPackage:
+
 pkgs.emacsWithPackagesFromUsePackage {
   config = ./init.el;
-  package = pkgs.emacs-unstable-pgtk.overrideAttrs
+  package = emacsPackage.overrideAttrs
     (old: { passthru = old.passthru // { treeSitter = true; }; });
   alwaysEnsure = true;
   extraEmacsPackages = epkgs: [

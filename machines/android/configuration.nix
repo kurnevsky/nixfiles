@@ -1,8 +1,9 @@
 { pkgs, emacs-overlay, ... }:
 
 let
-  emacsWithPackages =
-    (pkgs.extend emacs-overlay).callPackage ../../modules/emacs-package.nix { };
+  emacsPkgs = pkgs.extend emacs-overlay;
+  emacsWithPackages = emacsPkgs.callPackage ../../modules/emacs-package.nix { }
+    emacsPkgs.emacs-unstable-nox;
 in {
   environment.packages = with pkgs; [
     git
