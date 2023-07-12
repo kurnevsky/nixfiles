@@ -6,6 +6,7 @@ emacsPackage:
   home.file.".config/emacs/init.el" = {
     source = ./init.el;
     onChange = ''
+      mkdir -p ~/roam
       export PATH=${pkgs.git}/bin:${pkgs.agda}/bin:"$PATH"
       export EMACSLOADPATH=${pkgs.mu}/share/emacs/site-lisp/mu4e:
       export EMACSNATIVELOADPATH=${pkgs.mu}/share/emacs/native-lisp:
