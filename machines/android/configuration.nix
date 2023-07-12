@@ -30,6 +30,20 @@ in {
     nano
     openssh
     gnupg
+    procps
+    gnugrep
+    gnused
+    gnutar
+    bzip2
+    gzip
+    xz
+    zip
+    unzip
+    diffutils
+    findutils
+    utillinux
+    which
+    ripgrep
     emacsWithPackages
   ];
 
