@@ -621,12 +621,14 @@ ARGS is `kill-buffer' arguments."
   (vertico-mode))
 
 (use-package vertico-multiform
+  :demand t
   :ensure vertico
   :after vertico
   :config
   (vertico-multiform-mode))
 
 (use-package vertico-mouse
+  :demand t
   :ensure vertico
   :after vertico
   :config
@@ -1146,6 +1148,7 @@ ARGS is `kill-buffer' arguments."
   (add-hook 'magit-post-refresh-hook #'diff-hl-magit-post-refresh))
 
 (use-package diff-hl-flydiff
+  :demand t
   :ensure diff-hl
   :after diff-hl
   :config
@@ -1388,6 +1391,7 @@ identifier and the position respectively."
   (dap-mode t))
 
 (use-package dap-ui
+  :demand t
   :ensure dap-mode
   :after dap-mode
   :config
