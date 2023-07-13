@@ -61,6 +61,13 @@ in {
 
   home-manager.config = args@{ pkgs, ... }:
     lib.mkMerge [
+      {
+        # Override default prompt as it doesn't work good in Midnigt Commander
+        # This has to be done before common-home.nix
+        programs.zsh.initExtra = ''
+          PROMPT='[%n@%m %~]$ '
+        '';
+      }
       (import ../../modules/common-home.nix args)
       (import ../../modules/emacs-home.nix emacsWithPackages args)
       {
@@ -79,8 +86,28 @@ in {
           bash.initExtra = ''
             # Set cursor type to steady bar
             echo -e -n "\x1b[\x36 q"
+
+            alias -- ls='ls --color=auto'
+            alias -- grep='grep --color=auto'
           '';
-          zsh.initExtra = builtins.readFile ../../modules/interactive-init.zsh;
+          zsh = {
+            syntaxHighlighting.enable = true;
+            enableAutosuggestions = true;
+            initExtra = ''
+              setopt ${
+                lib.concatStringsSep " " (import ../../modules/zsh-options.nix)
+              }
+
+              ${builtins.readFile ../../modules/interactive-init.zsh}
+
+              export ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=10
+
+              alias -- calc='noglob zcalc -e'
+              alias -- zmv='noglob zmv -W'c
+              alias -- ls='ls --color=auto'
+              alias -- grep='grep --color=auto'
+            '';
+          };
         };
       }
     ];
