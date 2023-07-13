@@ -592,16 +592,11 @@ ARGS is `kill-buffer' arguments."
       ((and (not (ends-with-/ a)) (ends-with-/ b)) nil)
       (t (string-lessp a b)))))
 
-(use-package all-the-icons
-  :commands (all-the-icons-icon-for-file
-              all-the-icons-icon-for-mode
-              all-the-icons-icon-for-url
-              all-the-icons-icon-for-weather
-              all-the-icons-install-fonts)
-  :init
-  (when (display-graphic-p)
-    (unless (member "all-the-icons" (font-family-list))
-      (all-the-icons-install-fonts t))))
+(use-package all-the-icons-nerd-fonts
+  :demand t
+  :after all-the-icons
+  :config
+  (all-the-icons-nerd-fonts-prefer))
 
 (use-package vertico
   :demand t

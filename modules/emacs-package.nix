@@ -49,6 +49,26 @@ pkgs.emacsWithPackagesFromUsePackage {
             sha256 = "sha256-Ysb1PTTvaM6Jig8JidMeNynnXyiG/YQ14ZRVqxGWyAU=";
           };
         }));
+      all-the-icons-nerd-fonts = super.melpaBuild rec {
+        pname = "all-the-icons-nerd-fonts";
+        version = "1";
+        commit = "5ec7163d27a1bf2a7adf0801c91ae94f169e85eb";
+
+        src = pkgs.fetchFromGitHub {
+          owner = "mohkale";
+          repo = pname;
+          rev = commit;
+          hash = "sha256-GUaZHmqbsmN5lIsne4fpCPbMpg9G16PZ5RYi0edZ6l0=";
+        };
+
+        buildInputs = with super; [ all-the-icons nerd-icons ];
+
+        recipe = pkgs.writeText "recipe" ''
+          (all-the-icons-nerd-fonts :fetcher github
+                                    :repo "mohkale/all-the-icons-nerd-fonts"
+                                    :files ("all-the-icons-nerd-fonts.el"))
+        '';
+      };
     } // lib.genAttrs [
       "lsp-mode"
       "lsp-treemacs"
