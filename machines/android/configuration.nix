@@ -46,7 +46,6 @@ in {
     which
     ripgrep
     emacsWithPackages
-    pinentry.curses
   ];
 
   user.shell = "${pkgs.zsh}/bin/zsh";
@@ -57,6 +56,20 @@ in {
     lib.mkMerge [
       (import ../../modules/common-home.nix args)
       (import ../../modules/emacs-home.nix emacsWithPackages args)
-      { home.stateVersion = "23.05"; }
+      {
+        home.stateVersion = "23.05";
+        services = {
+          gpg-agent = {
+            enable = true;
+            enableSshSupport = true;
+            defaultCacheTtl = 14400;
+            maxCacheTtl = 14400;
+            defaultCacheTtlSsh = 14400;
+            maxCacheTtlSsh = 14400;
+            pinentryFlavor = "curses";
+            extraConfig = "allow-loopback-pinentry";
+          };
+        };
+      }
     ];
 }
