@@ -51,6 +51,10 @@ in {
     ];
   };
 
+  terminal.font = "${
+      pkgs.nerdfonts.override { fonts = [ "Hack" ]; }
+    }/share/fonts/truetype/NerdFonts/HackNerdFontMono-Regular.ttf";
+
   user.shell = "${pkgs.zsh}/bin/zsh";
 
   system.stateVersion = "23.05";
