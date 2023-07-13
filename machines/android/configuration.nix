@@ -65,18 +65,20 @@ in {
       (import ../../modules/emacs-home.nix emacsWithPackages args)
       {
         home.stateVersion = "23.05";
-        services = {
-          gpg-agent = {
-            enable = true;
-            enableSshSupport = true;
-            defaultCacheTtl = 14400;
-            maxCacheTtl = 14400;
-            defaultCacheTtlSsh = 14400;
-            maxCacheTtlSsh = 14400;
-            pinentryFlavor = "curses";
-            extraConfig = "allow-loopback-pinentry";
-          };
+        services.gpg-agent = {
+          enable = true;
+          enableSshSupport = true;
+          defaultCacheTtl = 14400;
+          maxCacheTtl = 14400;
+          defaultCacheTtlSsh = 14400;
+          maxCacheTtlSsh = 14400;
+          pinentryFlavor = "curses";
+          extraConfig = "allow-loopback-pinentry";
         };
+        programs.bash.initExtra = ''
+          # Set cursor type to steady bar
+          echo -e -n "\x1b[\x36 q"
+        '';
       }
     ];
 }
