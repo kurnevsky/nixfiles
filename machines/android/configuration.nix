@@ -75,10 +75,13 @@ in {
           pinentryFlavor = "curses";
           extraConfig = "allow-loopback-pinentry";
         };
-        programs.bash.initExtra = ''
-          # Set cursor type to steady bar
-          echo -e -n "\x1b[\x36 q"
-        '';
+        programs = {
+          bash.initExtra = ''
+            # Set cursor type to steady bar
+            echo -e -n "\x1b[\x36 q"
+          '';
+          zsh.initExtra = builtins.readFile ../../modules/interactive-init.zsh;
+        };
       }
     ];
 }
