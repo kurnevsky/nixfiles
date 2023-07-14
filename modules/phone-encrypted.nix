@@ -23,17 +23,21 @@ let
     rm /tmp/slack.img
 
     ${pkgs.bubblewrap}/bin/bwrap \
-      --bind ${pkgs.cryptsetup} ${pkgs.cryptsetup} \
-      --tmpfs /run/cryptsetup \
+      --ro-bind /nix/store /nix/store \
       --dev-bind /dev/random /dev/random \
+      --dev-bind /dev/urandom /dev/urandom \
+      --tmpfs /run/cryptsetup \
+      --bind /tmp/encrypted.img /tmp/encrypted.img \
       ${pkgs.bash}/bin/bash -c '
-        echo ${
+        ${pkgs.coreutils}/bin/echo ${
           builtins.toJSON passphrase
         } | ${pkgs.cryptsetup}/bin/cryptsetup reencrypt \
           --encrypt /tmp/encrypted.img \
           --reduce-device-size $((slack*1024*1024))
 
-        cryptsetup luksUUID --uuid=${builtins.toJSON uuid} /tmp/encrypted.img
+        ${pkgs.cryptsetup}/bin/cryptsetup luksUUID \
+          --uuid=${builtins.toJSON uuid} \
+          /tmp/encrypted.img
       '
 
     mv /tmp/encrypted.img $out/
