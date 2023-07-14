@@ -43,8 +43,10 @@ let
     mv /tmp/encrypted.img $out/
   '';
 in {
-  boot.initrd.luks.devices.LUKS-MOBILE-ROOTFS.device =
-    "/dev/disk/by-uuid/${uuid}";
+  boot.initrd.luks.devices.LUKS-MOBILE-ROOTFS = {
+    allowDiscards = true;
+    device = "/dev/disk/by-uuid/${uuid}";
+  };
 
   fileSystems."/" = {
     device = "/dev/mapper/LUKS-MOBILE-ROOTFS";
