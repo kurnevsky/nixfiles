@@ -135,12 +135,24 @@
         phone-vm = inputs.nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = commonModules ++ [
-            { _module.args = { inherit inputs; }; }
             (import "${inputs.mobile-nixos}/lib/configuration.nix" {
               device = "uefi-x86_64";
             })
             ./modules/phone.nix
             ./machines/phone/configuration.nix
+          ];
+        };
+        phone-vm-encrypted = inputs.nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            ({ ... }: {
+              _module.args.rootfs =
+                inputs.self.nixosConfigurations.phone-vm.config.mobile.outputs.rootfs;
+            })
+            (import "${inputs.mobile-nixos}/lib/configuration.nix" {
+              device = "uefi-x86_64";
+            })
+            ./modules/phone-encrypted.nix
           ];
         };
       };
@@ -153,9 +165,13 @@
             })
           ];
         };
-      # Execute to use:
-      # nix build -L '/etc/nixos#phone-vm' && ./result -enable-kvm -smp 2
-      packages.x86_64-linux.phone-vm =
-        inputs.self.nixosConfigurations.phone-vm.config.mobile.outputs.uefi.vm;
+      packages.x86_64-linux = {
+        # nix build -L '/etc/nixos#phone-vm' && ./result -enable-kvm -smp 2
+        phone-vm =
+          inputs.self.nixosConfigurations.phone-vm.config.mobile.outputs.uefi.vm;
+        # nix build -L '/etc/nixos#phone-vm-encrypted' && ./result -enable-kvm -smp 2
+        phone-vm-encrypted =
+          inputs.self.nixosConfigurations.phone-vm-encrypted.config.mobile.outputs.uefi.vm;
+      };
     };
 }
