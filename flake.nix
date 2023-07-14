@@ -153,6 +153,7 @@
               device = "uefi-x86_64";
             })
             ./modules/phone-encrypted.nix
+            ./modules/phone.nix
           ];
         };
       };

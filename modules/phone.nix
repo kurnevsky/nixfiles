@@ -1,6 +1,9 @@
 { pkgs, lib, ... }:
 
 {
+  # breaks encryption
+  mobile.quirks.supportsStage-0 = lib.mkForce false;
+
   users = {
     mutableUsers = lib.mkForce true;
     users.kurnevsky = {
