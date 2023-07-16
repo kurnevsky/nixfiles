@@ -4,7 +4,7 @@ users:
 
 let
   emacs =
-    pkgs.callPackage ./emacs-package.nix { emacs = pkgs.emacs-unstable-pgtk; };
+    pkgs.callPackage ./emacs/package.nix { emacs = pkgs.emacs-unstable-pgtk; };
 in lib.mkMerge [
   {
     services.emacs = {
@@ -13,5 +13,5 @@ in lib.mkMerge [
       package = emacs;
     };
   }
-  (import ./for-all-home-users.nix users (import ./emacs-home.nix emacs))
+  (import ./for-all-home-users.nix users (import ./emacs/home.nix emacs))
 ]

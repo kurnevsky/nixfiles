@@ -2,7 +2,7 @@
 
 let
   emacsPkgs = pkgs.extend emacs-overlay;
-  emacsWithPackages = emacsPkgs.callPackage ../../modules/emacs-package.nix {
+  emacsWithPackages = emacsPkgs.callPackage ../../modules/emacs/package.nix {
     emacs = emacsPkgs.emacs-unstable-nox;
   };
 in {
@@ -70,7 +70,7 @@ in {
         '';
       }
       (import ../../modules/common-home.nix args)
-      (import ../../modules/emacs-home.nix emacsWithPackages args)
+      (import ../../modules/emacs/home.nix emacsWithPackages args)
       {
         home.stateVersion = "23.05";
         services.gpg-agent = {
