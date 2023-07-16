@@ -1,7 +1,9 @@
 { pkgs, lib, ... }:
 
 {
-  environment.systemPackages = with pkgs; [ gnupg ];
+  environment.systemPackages = with pkgs;
+    [ gnupg firefox-wayland telegram-desktop wesnoth ]
+    ++ (with pkgs.plasma5Packages; [ index qmlkonsole okular ]);
 
   users.users.kurnevsky.extraGroups =
     [ "dialout" "networkmanager" "video" "pipewire" ];
