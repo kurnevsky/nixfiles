@@ -151,8 +151,8 @@
             (import "${inputs.mobile-nixos}/lib/configuration.nix" {
               device = "uefi-x86_64";
             })
-            ./modules/pinephone-encrypted.nix
             ./modules/pinephone.nix
+            ./machines/pinephone-vm-encrypted/configuration.nix
           ];
         };
       };

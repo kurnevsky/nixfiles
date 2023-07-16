@@ -43,6 +43,9 @@ let
     mv /tmp/encrypted.img $out/
   '';
 in {
+  # breaks encryption
+  mobile.quirks.supportsStage-0 = lib.mkForce false;
+
   boot.initrd.luks.devices.root-luks = {
     allowDiscards = true;
     device = "/dev/disk/by-uuid/${uuid}";
