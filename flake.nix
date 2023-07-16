@@ -131,28 +131,28 @@
             ./machines/digitalocean/networking.nix
           ];
         };
-        phone-vm = inputs.nixpkgs.lib.nixosSystem {
+        pinephone-vm = inputs.nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = commonModules ++ [
             (import "${inputs.mobile-nixos}/lib/configuration.nix" {
               device = "uefi-x86_64";
             })
-            ./modules/phone.nix
-            ./machines/phone/configuration.nix
+            ./modules/pinephone.nix
+            ./machines/pinephone-vm/configuration.nix
           ];
         };
-        phone-vm-encrypted = inputs.nixpkgs.lib.nixosSystem {
+        pinephone-vm-encrypted = inputs.nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
             ({ ... }: {
               _module.args.rootfs =
-                inputs.self.nixosConfigurations.phone-vm.config.mobile.outputs.rootfs;
+                inputs.self.nixosConfigurations.pinephone-vm.config.mobile.outputs.rootfs;
             })
             (import "${inputs.mobile-nixos}/lib/configuration.nix" {
               device = "uefi-x86_64";
             })
-            ./modules/phone-encrypted.nix
-            ./modules/phone.nix
+            ./modules/pinephone-encrypted.nix
+            ./modules/pinephone.nix
           ];
         };
       };
@@ -168,10 +168,10 @@
       packages.x86_64-linux = {
         # nix build -L '/etc/nixos#phone-vm' && ./result -enable-kvm -smp 2
         phone-vm =
-          inputs.self.nixosConfigurations.phone-vm.config.mobile.outputs.uefi.vm;
+          inputs.self.nixosConfigurations.pinephone-vm.config.mobile.outputs.uefi.vm;
         # nix build -L '/etc/nixos#phone-vm-encrypted' && ./result -enable-kvm -smp 2
         phone-vm-encrypted =
-          inputs.self.nixosConfigurations.phone-vm-encrypted.config.mobile.outputs.uefi.vm;
+          inputs.self.nixosConfigurations.pinephone-vm-encrypted.config.mobile.outputs.uefi.vm;
       };
     };
 }
