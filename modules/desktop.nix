@@ -539,7 +539,8 @@
 
   users = {
     users = {
-      kurnevsky.extraGroups = [ "adbusers" "video" "pipewire" "vboxusers" ];
+      kurnevsky.extraGroups =
+        [ "adbusers" "video" "pipewire" "vboxusers" "networkmanager" ];
       ww = {
         uid = 1001;
         isNormalUser = true;
