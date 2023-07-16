@@ -11,9 +11,10 @@ in {
   };
 
   fileSystems."/" = {
+    device = "/dev/disk/by-uuid/${uuid}";
+    fsType = "ext4";
     # fsType = "btrfs";
     # options = [ "noatime" "nodiratime" "compress=zstd:3" ];
-    device = "/dev/disk/by-uuid/${uuid}";
   };
 
   # mobile.boot.stage-1.kernel.additionalModules = [ "btrfs" ];
