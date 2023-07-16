@@ -109,6 +109,7 @@ in {
       };
       kurnevsky = {
         uid = 1000;
+        description = "Evgeny Kurnevsky";
         isNormalUser = true;
         extraGroups = [ "wheel" ];
         shell = pkgs.zsh;

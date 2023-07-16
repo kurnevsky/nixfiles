@@ -65,7 +65,6 @@
         inputs.home-manager.nixosModules.home-manager
         ./modules/common.nix
         ./modules/bfq.nix
-        ./modules/zswap.nix
         ./modules/overlays.nix
         ./modules/patches.nix
         (for-all-home-users (with users; [ root kurnevsky ]) common-home)
@@ -90,6 +89,7 @@
         ./modules/torjail.nix
         ./modules/torbrowser.nix
         ./modules/nspawn.nix
+        ./modules/zswap.nix
       ];
     in {
       nixosConfigurations = {
@@ -118,6 +118,7 @@
           system = "x86_64-linux";
           modules = commonModules ++ [
             (for-all-home-users (with users; [ parents ]) common-home)
+            ./modules/zswap.nix
             ./machines/acer/hardware-configuration.nix
             ./machines/acer/configuration.nix
           ];
@@ -126,6 +127,7 @@
           system = "x86_64-linux";
           modules = commonModules ++ [
             ./modules/shadowsocks-server.nix
+            ./modules/zswap.nix
             ./machines/digitalocean/configuration.nix
             ./machines/digitalocean/hardware-configuration.nix
             ./machines/digitalocean/networking.nix
@@ -153,6 +155,17 @@
             })
             ./modules/pinephone.nix
             ./machines/pinephone-vm-encrypted/configuration.nix
+          ];
+        };
+        pinephone = inputs.nixpkgs.lib.nixosSystem {
+          system = "aarch64-linux";
+          modules = commonModules ++ [
+            (import "${inputs.mobile-nixos}/lib/configuration.nix" {
+              device = "pine64-pinephone";
+            })
+            ./modules/pinephone.nix
+            ./machines/pinephone/configuration.nix
+            ./machines/pinephone/hardware-configuration.nix
           ];
         };
       };
