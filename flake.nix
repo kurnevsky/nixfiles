@@ -65,7 +65,6 @@
         inputs.home-manager.nixosModules.home-manager
         ./modules/common.nix
         ./modules/bfq.nix
-        ./modules/overlays.nix
         ./modules/patches.nix
         (for-all-home-users (with users; [ root kurnevsky ]) common-home)
       ];
@@ -90,6 +89,7 @@
         ./modules/torbrowser.nix
         ./modules/nspawn.nix
         ./modules/zswap.nix
+        ./modules/overlays.nix
       ];
     in {
       nixosConfigurations = {
@@ -119,6 +119,7 @@
           modules = commonModules ++ [
             (for-all-home-users (with users; [ parents ]) common-home)
             ./modules/zswap.nix
+            ./modules/overlays.nix
             ./machines/acer/hardware-configuration.nix
             ./machines/acer/configuration.nix
           ];
