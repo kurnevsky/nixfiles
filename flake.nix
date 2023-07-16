@@ -71,13 +71,13 @@
         (for-all-home-users (with users; [ root kurnevsky ]) common-home)
       ];
       desktopModules = commonModules ++ [
-        (args: {
+        {
           nixpkgs.overlays = [
             inputs.emacs-overlay.overlay
             inputs.fenix.overlays.default
             inputs.nur.overlay
           ];
-        })
+        }
         (for-all-home-users (with users; [ ww ]) common-home)
         (import ./modules/emacs.nix (with users; [ kurnevsky ww ]))
         ./modules/font-freezing.nix
