@@ -144,10 +144,10 @@
         pinephone-vm-encrypted = inputs.nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
-            ({ ... }: {
+            {
               _module.args.rootfs =
                 inputs.self.nixosConfigurations.pinephone-vm.config.mobile.outputs.rootfs;
-            })
+            }
             (import "${inputs.mobile-nixos}/lib/configuration.nix" {
               device = "uefi-x86_64";
             })
