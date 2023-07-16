@@ -1,14 +1,6 @@
 { pkgs, lib, ... }:
 
 {
-  users = {
-    mutableUsers = lib.mkForce true;
-    users.kurnevsky = {
-      passwordFile = lib.mkForce null;
-      password = "1234";
-    };
-  };
-
   mobile.beautification.splash = true;
 
   networking = {
