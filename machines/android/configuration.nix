@@ -60,57 +60,62 @@ in {
 
   system.stateVersion = "23.05";
 
-  home-manager.config = args@{ pkgs, ... }:
-    lib.mkMerge [
-      {
-        # Override default prompt as it doesn't work good in Midnigt Commander
-        # This has to be done before common-home.nix
-        programs.zsh.initExtra = ''
-          PROMPT='[%n@%m %~]$ '
-        '';
-      }
-      (import ../../modules/common-home.nix args)
-      (import ../../modules/emacs/home.nix emacsWithPackages args)
-      {
-        home.stateVersion = "23.05";
-        services.gpg-agent = {
-          enable = true;
-          enableSshSupport = true;
-          sshKeys = [ "53D3B2AAF43FA184A31ACEC71295A713D5B9A123" ];
-          defaultCacheTtl = 14400;
-          maxCacheTtl = 14400;
-          defaultCacheTtlSsh = 14400;
-          maxCacheTtlSsh = 14400;
-          pinentryFlavor = "curses";
-          extraConfig = "allow-loopback-pinentry";
-        };
-        programs = {
-          bash.initExtra = ''
-            # Set cursor type to steady bar
-            echo -e -n "\x1b[\x36 q"
-
-            alias -- ls='ls --color=auto'
-            alias -- grep='grep --color=auto'
+  home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
+    config = args@{ pkgs, ... }:
+      lib.mkMerge [
+        {
+          # Override default prompt as it doesn't work good in Midnigt Commander
+          # This has to be done before common-home.nix
+          programs.zsh.initExtra = ''
+            PROMPT='[%n@%m %~]$ '
           '';
-          zsh = {
-            syntaxHighlighting.enable = true;
-            enableAutosuggestions = true;
-            initExtra = ''
-              setopt ${
-                lib.concatStringsSep " " (import ../../modules/zsh-options.nix)
-              }
+        }
+        (import ../../modules/common-home.nix args)
+        (import ../../modules/emacs/home.nix emacsWithPackages args)
+        {
+          home.stateVersion = "23.05";
+          services.gpg-agent = {
+            enable = true;
+            enableSshSupport = true;
+            sshKeys = [ "53D3B2AAF43FA184A31ACEC71295A713D5B9A123" ];
+            defaultCacheTtl = 14400;
+            maxCacheTtl = 14400;
+            defaultCacheTtlSsh = 14400;
+            maxCacheTtlSsh = 14400;
+            pinentryFlavor = "curses";
+            extraConfig = "allow-loopback-pinentry";
+          };
+          programs = {
+            bash.initExtra = ''
+              # Set cursor type to steady bar
+              echo -e -n "\x1b[\x36 q"
 
-              ${builtins.readFile ../../modules/interactive-init.zsh}
-
-              export ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=10
-
-              alias -- calc='noglob zcalc -e'
-              alias -- zmv='noglob zmv -W'c
               alias -- ls='ls --color=auto'
               alias -- grep='grep --color=auto'
             '';
+            zsh = {
+              syntaxHighlighting.enable = true;
+              enableAutosuggestions = true;
+              initExtra = ''
+                setopt ${
+                  lib.concatStringsSep " "
+                  (import ../../modules/zsh-options.nix)
+                }
+
+                ${builtins.readFile ../../modules/interactive-init.zsh}
+
+                export ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=10
+
+                alias -- calc='noglob zcalc -e'
+                alias -- zmv='noglob zmv -W'c
+                alias -- ls='ls --color=auto'
+                alias -- grep='grep --color=auto'
+              '';
+            };
           };
-        };
-      }
-    ];
+        }
+      ];
+  };
 }
