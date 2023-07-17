@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 let
-  sandbox = pkgs.callPackage ./sandbox-bwrap.nix { };
+  sandbox = pkgs.callPackage ./sandbox/bwrap.nix { };
   wrap = drv: bins:
     # Don't join with original drv because only bins will be used
     if lib.length bins == 1 then

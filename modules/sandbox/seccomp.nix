@@ -2,7 +2,7 @@
 
 stdenv.mkDerivation {
   name = "sandbox-seccomp";
-  src = ./sandbox-seccomp;
+  src = ./seccomp;
   buildInputs = [ libseccomp ];
   buildPhase =
     "gcc seccomp-gen.c -lseccomp -Wall -pedantic -o seccomp-gen && ./seccomp-gen";

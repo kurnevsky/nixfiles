@@ -14,7 +14,7 @@ drv:
 assert !(ro-media && media);
 
 let
-  sandbox-seccomp = callPackage ./sandbox-seccomp.nix { };
+  sandbox-seccomp = callPackage ./seccomp.nix { };
   cinfo = closureInfo { rootPaths = [ drv ] ++ extra-deps; };
 in writeShellScriptBin target-name ''
   set -euETo pipefail
