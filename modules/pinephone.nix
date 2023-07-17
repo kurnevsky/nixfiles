@@ -8,7 +8,7 @@
   i18n.supportedLocales = [ "en_US.UTF-8/UTF-8" "ru_RU.UTF-8/UTF-8" ];
 
   users.users.kurnevsky.extraGroups =
-    [ "dialout" "networkmanager" "video" "pipewire" ];
+    [ "dialout" "networkmanager" "video" "pipewire" "audio" ];
 
   mobile = {
     beautification.splash = true;
@@ -28,38 +28,27 @@
     };
   };
 
+  security.rtkit.enable = true;
+
   hardware = {
     bluetooth.enable = true;
-    # Enabled in plasma mobile by default.
-    pulseaudio.enable = lib.mkForce false;
     sensor.iio.enable = true;
   };
 
-  services = {
-    pipewire = {
-      enable = true;
-      systemWide = true;
-      alsa = {
+  services.xserver = {
+    enable = true;
+    desktopManager.plasma5.mobile.enable = true;
+    displayManager = {
+      lightdm = {
         enable = true;
-        support32Bit = true;
+        extraSeatDefaults = ''
+          session-cleanup-script=${pkgs.procps}/bin/pkill -P1 -fx ${pkgs.lightdm}/sbin/lightdm
+        '';
       };
-      pulse.enable = true;
-    };
-    xserver = {
-      enable = true;
-      desktopManager.plasma5.mobile.enable = true;
-      displayManager = {
-        lightdm = {
-          enable = true;
-          extraSeatDefaults = ''
-            session-cleanup-script=${pkgs.procps}/bin/pkill -P1 -fx ${pkgs.lightdm}/sbin/lightdm
-          '';
-        };
-        defaultSession = "plasma-mobile";
-        autoLogin = {
-          enable = true;
-          user = "kurnevsky";
-        };
+      defaultSession = "plasma-mobile";
+      autoLogin = {
+        enable = true;
+        user = "kurnevsky";
       };
     };
   };
