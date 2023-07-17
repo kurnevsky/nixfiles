@@ -39,6 +39,7 @@
       type = "github";
       owner = "nixos";
       repo = "mobile-nixos";
+      ref = "fc91af7676161097079e5b3a91f7bde739173ba6";
       flake = false;
     };
 
