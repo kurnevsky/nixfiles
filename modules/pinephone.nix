@@ -2,7 +2,7 @@
 
 {
   environment.systemPackages = with pkgs;
-    [ gnupg firefox-wayland telegram-desktop wesnoth ]
+    [ gnupg firefox-wayland telegram-desktop wesnoth megapixels ]
     ++ (with pkgs.plasma5Packages; [ index qmlkonsole okular ]);
 
   users.users.kurnevsky.extraGroups =
