@@ -5,6 +5,8 @@
     [ gnupg firefox-wayland telegram-desktop wesnoth megapixels ]
     ++ (with pkgs.plasma5Packages; [ index qmlkonsole okular ]);
 
+  i18n.supportedLocales = [ "en_US.UTF-8/UTF-8" "ru_RU.UTF-8/UTF-8" ];
+
   users.users.kurnevsky.extraGroups =
     [ "dialout" "networkmanager" "video" "pipewire" ];
 
