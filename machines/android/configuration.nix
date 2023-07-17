@@ -76,6 +76,7 @@ in {
         (import ../../modules/emacs/home.nix emacsWithPackages args)
         {
           home.stateVersion = "23.05";
+          home.file.".termux/termux.properties".source = ./termux.properties;
           services.gpg-agent = {
             enable = true;
             enableSshSupport = true;
