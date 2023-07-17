@@ -1,4 +1,4 @@
-{ lib, pkgs, emacs-overlay, ... }:
+{ config, lib, pkgs, emacs-overlay, ... }:
 
 let
   emacsPkgs = pkgs.extend emacs-overlay;
@@ -58,6 +58,14 @@ in {
 
   user.shell = "${pkgs.zsh}/bin/zsh";
 
+  build.activation.termux = ''
+    mkdir -p ~/.termux/
+    rm -rf ~/.termux/termux.properties
+    cp ${config.build.installationDir}/${
+      ./termux.properties
+    } ~/.termux/termux.properties
+  '';
+
   system.stateVersion = "23.05";
 
   home-manager = {
@@ -76,7 +84,6 @@ in {
         (import ../../modules/emacs/home.nix emacsWithPackages args)
         {
           home.stateVersion = "23.05";
-          home.file.".termux/termux.properties".source = ./termux.properties;
           services.gpg-agent = {
             enable = true;
             enableSshSupport = true;
