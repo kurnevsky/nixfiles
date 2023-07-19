@@ -212,7 +212,7 @@
       unrar
       (unzip.override { enableNLS = true; })
       # Browsers
-      firefox-wayland
+      firefox
       ungoogled-chromium
       tor-browser-bundle-bin
       # Messengers
@@ -727,7 +727,7 @@
         };
         firefox = {
           enable = true;
-          package = pkgs.firefox-wayland;
+          package = pkgs.firefox;
           profiles.default = {
             settings = import ./firefox/firefox.nix;
             userChrome = builtins.readFile ./firefox/userChrome.css;

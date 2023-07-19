@@ -45,7 +45,7 @@
 
   environment.systemPackages = with pkgs; [
     mc
-    firefox-wayland
+    firefox
     vlc
     qtox
     tdesktop
