@@ -1,9 +1,12 @@
 { pkgs, lib, ... }:
 
 {
-  environment.systemPackages = with pkgs;
-    [ gnupg firefox-mobile telegram-desktop wesnoth megapixels ]
-    ++ (with pkgs.plasma5Packages; [ index qmlkonsole okular ]);
+  environment = {
+    systemPackages = with pkgs;
+      [ gnupg firefox-mobile telegram-desktop wesnoth megapixels ]
+      ++ (with pkgs.plasma5Packages; [ index qmlkonsole okular ]);
+    plasma5.excludePackages = with pkgs.plasma5Packages; [ konsole ];
+  };
 
   i18n.supportedLocales = [ "en_US.UTF-8/UTF-8" "ru_RU.UTF-8/UTF-8" ];
 
