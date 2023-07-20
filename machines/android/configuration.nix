@@ -56,7 +56,12 @@ in {
       pkgs.nerdfonts.override { fonts = [ "Hack" ]; }
     }/share/fonts/truetype/NerdFonts/HackNerdFontMono-Regular.ttf";
 
-  user.shell = "${pkgs.zsh}/bin/zsh";
+  user = let id = 10162;
+  in {
+    uid = id;
+    gid = id;
+    shell = "${pkgs.zsh}/bin/zsh";
+  };
 
   build.activation.termux = ''
     mkdir -p ~/.termux/
