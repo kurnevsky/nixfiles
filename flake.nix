@@ -45,8 +45,9 @@
 
     nix-on-droid = {
       type = "github";
-      owner = "t184256";
+      owner = "kurnevsky";
       repo = "nix-on-droid";
+      ref = "c18d9cfd3efc0784d5718c9f60375ea97b3d6dab";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
