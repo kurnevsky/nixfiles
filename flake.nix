@@ -174,6 +174,7 @@
       nixOnDroidConfigurations.default =
         inputs.nix-on-droid.lib.nixOnDroidConfiguration {
           modules = [
+            ./modules/android.nix
             ./machines/android/configuration.nix
             ({ pkgs, ... }: {
               _module.args.emacs-overlay = inputs.emacs-overlay.overlay;
