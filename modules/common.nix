@@ -49,17 +49,17 @@ in {
     };
   };
 
-  networking.extraHosts = ''
-    192.168.14.2 home
-    192.168.14.3 work
-    192.168.14.4 parents
-    192.168.14.5 pc
-    200:3b5c:7981:d112:f1e2:7b3f:218f:e7ea home-ygg
-    200:d196:9226:6955:4190:dc33:bac7:17c7 work-ygg
-    201:613a:44c6:38ad:a0f2:d452:dd0a:94c7 parents-ygg
-    200:6381:a789:fbbe:3411:2135:e3b:b4a9 digitalocean-ygg
-    201:b5cd:a295:d34c:a75f:b369:6002:c676 pc-ygg
-  '';
+  networking.hosts = {
+    "192.168.14.2" = [ "home" ];
+    "192.168.14.3" = [ "work" ];
+    "192.168.14.4" = [ "parents" ];
+    "192.168.14.5" = [ "pc" ];
+    "200:3b5c:7981:d112:f1e2:7b3f:218f:e7ea" = [ "home-ygg" ];
+    "200:d196:9226:6955:4190:dc33:bac7:17c7" = [ "work-ygg" ];
+    "201:613a:44c6:38ad:a0f2:d452:dd0a:94c7" = [ "parents-ygg" ];
+    "200:6381:a789:fbbe:3411:2135:e3b:b4a9" = [ "digitalocean-ygg" ];
+    "201:b5cd:a295:d34c:a75f:b369:6002:c676" = [ "pc-ygg" ];
+  };
 
   programs = {
     bash.interactiveShellInit = ''
