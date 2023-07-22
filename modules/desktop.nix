@@ -789,20 +789,11 @@
             "${pkgs.cloud-mdir-sync}/bin/cms-oauth --cms_sock=/var/run/user/$UID/cms.sock --proto=IMAP --user ${user} --output=token";
         };
       };
-      services = {
-        gpg-agent = {
-          enable = true;
-          enableSshSupport = true;
-          sshKeys = [ "53D3B2AAF43FA184A31ACEC71295A713D5B9A123" ];
-          defaultCacheTtl = 14400;
-          maxCacheTtl = 14400;
-          defaultCacheTtlSsh = 14400;
-          maxCacheTtlSsh = 14400;
-          pinentryFlavor = "qt";
-          extraConfig = "allow-loopback-pinentry";
-        };
+      services.gpg-agent = {
+        enable = true;
+        pinentryFlavor = "qt";
       };
-      # To make sure that it's not overrided by WM
+      # To make sure that it's not overridden by WM
       xdg.mimeApps.enable = true;
     };
   in {

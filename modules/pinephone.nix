@@ -86,14 +86,7 @@
     services = {
       gpg-agent = {
         enable = true;
-        enableSshSupport = true;
-        sshKeys = [ "53D3B2AAF43FA184A31ACEC71295A713D5B9A123" ];
-        defaultCacheTtl = 14400;
-        maxCacheTtl = 14400;
-        defaultCacheTtlSsh = 14400;
-        maxCacheTtlSsh = 14400;
         pinentryFlavor = "qt";
-        extraConfig = "allow-loopback-pinentry";
       };
     };
   };
