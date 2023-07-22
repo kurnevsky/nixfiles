@@ -135,5 +135,7 @@ in {
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
+    users.root.programs.ssh.extraOptionOverrides.IdentityAgent =
+      "/run/user/1000/gnupg/S.gpg-agent.ssh";
   };
 }

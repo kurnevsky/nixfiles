@@ -66,6 +66,12 @@
       enable = true;
       config.global.strict_env = true;
     };
+    ssh = {
+      enable = true;
+      compression = true;
+      controlMaster = "auto";
+      hashKnownHosts = true;
+    };
     nix-index.enable = true;
   };
 }
