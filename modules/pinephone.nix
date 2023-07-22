@@ -1,6 +1,8 @@
 { pkgs, lib, ... }:
 
 {
+  boot.tmp.cleanOnBoot = true;
+
   environment = {
     systemPackages = with pkgs;
       [ gnupg firefox-mobile telegram-desktop wesnoth megapixels ]
