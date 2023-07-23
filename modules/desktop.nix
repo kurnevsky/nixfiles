@@ -701,30 +701,7 @@
             ];
           };
         };
-        git = {
-          enable = true;
-          userName = "Evgeny Kurnevsky";
-          userEmail = "kurnevsky@gmail.com";
-          signing = {
-            key = null;
-            signByDefault = true;
-          };
-          aliases = {
-            lol =
-              "log --graph --decorate --pretty=oneline --abbrev-commit --all";
-          };
-          delta.enable = true;
-          lfs.enable = true;
-          extraConfig = {
-            push.default = "simple";
-            merge.conflictstyle = "diff3";
-            pull.ff = "only";
-            safe.directory = "/etc/nixos";
-            github.user = "kurnevsky";
-            gitlab.user = "kurnevsky";
-            gitlab."gitlab.evolution.com/api/v4".user = "ykurneuski";
-          };
-        };
+        git.enable = true;
         firefox = {
           enable = true;
           package = pkgs.firefox;
