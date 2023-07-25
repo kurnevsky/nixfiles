@@ -10,7 +10,8 @@
     plasma5.excludePackages = with pkgs.plasma5Packages; [ konsole ];
   };
 
-  i18n.supportedLocales = [ "en_US.UTF-8/UTF-8" "ru_RU.UTF-8/UTF-8" ];
+  i18n.supportedLocales =
+    [ "C.UTF-8/UTF-8" "en_US.UTF-8/UTF-8" "ru_RU.UTF-8/UTF-8" ];
 
   users.users.kurnevsky.extraGroups =
     [ "dialout" "networkmanager" "video" "pipewire" "audio" ];
