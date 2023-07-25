@@ -3,15 +3,9 @@
 {
   networking.hostName = "pinephone";
 
-  services = {
-    btrfs.autoScrub = {
-      enable = true;
-      fileSystems = [ "/" ];
-    };
-    udev.extraRules = ''
-      SUBSYSTEM=="leds", ACTION=="add", RUN+="${pkgs.coreutils}/bin/chgrp -R users /sys%p", RUN+="${pkgs.coreutils}/bin/chmod -R g=u /sys%p"
-    '';
-  };
+  services.udev.extraRules = ''
+    SUBSYSTEM=="leds", ACTION=="add", RUN+="${pkgs.coreutils}/bin/chgrp -R users /sys%p", RUN+="${pkgs.coreutils}/bin/chmod -R g=u /sys%p"
+  '';
 
   system.stateVersion = "23.05";
 
