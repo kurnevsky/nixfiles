@@ -65,11 +65,17 @@
     ];
   };
 
-  services.xserver = {
-    videoDrivers = [ "intel" "amdgpu" ];
-    deviceSection = ''
-      Option "TearFree" "true"
-    '';
+  services = {
+    btrfs.autoScrub = {
+      enable = true;
+      fileSystems = [ "/" "/home/kurnevsky/data" ];
+    };
+    xserver = {
+      videoDrivers = [ "intel" "amdgpu" ];
+      deviceSection = ''
+        Option "TearFree" "true"
+      '';
+    };
   };
 
   security.pam.services = {

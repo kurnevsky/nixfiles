@@ -48,6 +48,10 @@
   };
 
   services = {
+    btrfs.autoScrub = {
+      enable = true;
+      fileSystems = [ "/" ];
+    };
     tlp.enable = true;
     throttled.enable = true;
     fprintd.enable = true;
