@@ -266,6 +266,7 @@
       ## Shell
       nodePackages.bash-language-server
       shellcheck
+      shfmt
       ## Haskell
       cabal-install
       ghc
