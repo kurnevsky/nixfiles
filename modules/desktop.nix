@@ -568,6 +568,7 @@
       };
       programs = {
         gpg.package = pkgs.gnupg_patched;
+        ssh.controlMaster = "auto";
         feh = {
           enable = true;
           buttons = {

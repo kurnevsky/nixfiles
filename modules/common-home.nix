@@ -69,7 +69,6 @@
     ssh = {
       enable = true;
       compression = true;
-      controlMaster = "auto";
       hashKnownHosts = true;
     };
     git = {
