@@ -9,11 +9,11 @@
         "nixpkgs-stable": "nixpkgs-stable"
       },
       "locked": {
-        "lastModified": 1690308994,
-        "narHash": "sha256-Mq3SJzCtDdblx08kdNyjcAAdudMXEK8ep4AZMjdAdz8=",
+        "lastModified": 1690342477,
+        "narHash": "sha256-yUivW1rWlTvzicmKvJdtdDxfyuO7hA1wFSIyyBPRgcI=",
         "owner": "nix-community",
         "repo": "emacs-overlay",
-        "rev": "a8d06a3438ef4d32167ccb256c4b42441e841dc4",
+        "rev": "8557a967260b6f6fca567dcf6d1dee47aa71871f",
         "type": "github"
       },
       "original": {
@@ -30,11 +30,11 @@
         "rust-analyzer-src": "rust-analyzer-src"
       },
       "locked": {
-        "lastModified": 1690266117,
-        "narHash": "sha256-pRbAwdul/fpcP6JJizRUoZ7tF9OmZsIAAfpbulFHvZY=",
+        "lastModified": 1690352427,
+        "narHash": "sha256-xCH8mt9eSikYb2P1ePYK6ygk/CExDdl7skgVv4RCWf8=",
         "owner": "nix-community",
         "repo": "fenix",
-        "rev": "a1d16c1eeb4009bb86b4082b7c99419aef8bdd65",
+        "rev": "5980b17ea7de165699f76be5f1a20a7306fc6970",
         "type": "github"
       },
       "original": {
@@ -85,11 +85,11 @@
     "mobile-nixos": {
       "flake": false,
       "locked": {
-        "lastModified": 1689845072,
-        "narHash": "sha256-Li3tbDGzKC1BZboia6pFkb6UIneHQ5ubL0ZJwjv+CN0=",
+        "lastModified": 1690356435,
+        "narHash": "sha256-WUY2g49UZR/ycr+vpLqrj61bsT4hIjGSjNCo1DUYNWk=",
         "owner": "kurnevsky",
         "repo": "mobile-nixos",
-        "rev": "182d428fe397bce4b53aaed229c65caeefc03d2d",
+        "rev": "9fc5cadf1563419adc66e42874a10e9f3f98d42b",
         "type": "github"
       },
       "original": {
@@ -135,15 +135,15 @@
         "nmd": "nmd_2"
       },
       "locked": {
-        "lastModified": 1688144254,
-        "narHash": "sha256-8KL1l/7eP2Zm1aJjdVaSOk0W5kTnJo9kcgW03gqWuiI=",
-        "owner": "t184256",
+        "lastModified": 1689871585,
+        "narHash": "sha256-VAmUeTnkknUqnTH7s2apWO9ABxsoYRW+klki3QgTh70=",
+        "owner": "kurnevsky",
         "repo": "nix-on-droid",
-        "rev": "2301e01d48c90b60751005317de7a84a51a87eb6",
+        "rev": "252899e3090378a823e2d531a8223857f41aab64",
         "type": "github"
       },
       "original": {
-        "owner": "t184256",
+        "owner": "kurnevsky",
         "repo": "nix-on-droid",
         "type": "github"
       }
@@ -246,11 +246,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1690313182,
-        "narHash": "sha256-1m1Focmo7lV2M1mHRL78ylioByaVGTA7e1w3gGFiKnw=",
+        "lastModified": 1690356007,
+        "narHash": "sha256-LRnFuCATqJMyDe4K9S2IMk/irTJuck5hSUcus4l098g=",
         "owner": "nix-community",
         "repo": "nur",
-        "rev": "5b4114232231badd5092b77e0fde64bf8c8a6c3a",
+        "rev": "ef9e9148b115692712da285525b2cc0eed4dde07",
         "type": "github"
       },
       "original": {
