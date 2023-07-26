@@ -1265,6 +1265,8 @@ ARGS is `kill-buffer' arguments."
 
 (use-package mermaid-mode)
 
+(use-package bats-mode)
+
 (when (executable-find "agda-mode")
   (use-package agda2
     :ensure nil
