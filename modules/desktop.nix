@@ -111,7 +111,7 @@
       gdb
       gimp-with-plugins
       globalprotect-openconnect
-      gnupg
+      gnupg_patched
       openconnect
       (callPackage ./pan-globalprotect-okta.nix { })
       gnome-themes-extra
@@ -567,6 +567,7 @@
         ".config/tox/toxic.conf".source = ./toxic.conf;
       };
       programs = {
+        gpg.package = pkgs.gnupg_patched;
         feh = {
           enable = true;
           buttons = {

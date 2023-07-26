@@ -99,5 +99,17 @@
         });
     })
     (self: super: { wine-ge = pkgs.callPackage ./wine-ge.nix { }; })
+    (self: super: {
+      gnupg_patched = super.gnupg.overrideAttrs (old: {
+        patches = old.patches ++ [
+          (super.fetchpatch {
+            # https://dev.gnupg.org/T6481
+            url =
+              "https://files.gnupg.net/file/data/iapdg4omgofpqs5c6gd5/PHID-FILE-pym22ajak2knrci6sc2h/file";
+            sha256 = "sha256-irxxBBO0MqHaUj0a0qZ8yfhKp4wXRdQErj3eD/ZF66I=";
+          })
+        ];
+      });
+    })
   ];
 }
