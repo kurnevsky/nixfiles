@@ -718,9 +718,8 @@
               privacy-badger
               sponsorblock
               ublock-origin
-              # Not in NUR:
-              # find+
-              # passff
+              brandon1024-find
+              passff
             ];
           };
         };
