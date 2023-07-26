@@ -1,5 +1,3 @@
-{ pkgs, ... }:
-
 {
   # system.replaceRuntimeDependencies can be used to make fast fixes
   nixpkgs.overlays = [
@@ -12,19 +10,19 @@
       firefox = super.firefox.override {
         extraNativeMessagingHosts = [ super.passff-host ];
       };
-      mpv = super.mpv.override { scripts = with pkgs.mpvScripts; [ mpris ]; };
+      mpv = super.mpv.override { scripts = with super.mpvScripts; [ mpris ]; };
       p7zip = super.p7zip.override { enableUnfree = true; };
-      isync = pkgs.symlinkJoin {
+      isync = super.symlinkJoin {
         name = "isync";
         paths = [
-          (pkgs.writeShellScriptBin "mbsync" ''
-            export SASL_PATH=${super.cyrus_sasl.out}/lib/sasl2:${pkgs.cyrus-sasl-xoauth2}/lib/sasl2
+          (super.writeShellScriptBin "mbsync" ''
+            export SASL_PATH=${super.cyrus_sasl.out}/lib/sasl2:${super.cyrus-sasl-xoauth2}/lib/sasl2
             exec ${super.isync}/bin/mbsync "$@"
           '')
           super.isync
         ];
       };
-      cloud-mdir-sync = (pkgs.callPackage ./cloud-mdir-sync.nix { });
+      cloud-mdir-sync = (super.callPackage ./cloud-mdir-sync.nix { });
     })
     (self: super: {
       tor-browser-bundle-bin = super.symlinkJoin {
@@ -98,7 +96,7 @@
           };
         });
     })
-    (self: super: { wine-ge = pkgs.callPackage ./wine-ge.nix { }; })
+    (self: super: { wine-ge = super.callPackage ./wine-ge.nix { }; })
     (self: super: {
       gnupg_patched = super.gnupg.overrideAttrs (old: {
         patches = old.patches ++ [

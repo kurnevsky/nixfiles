@@ -1,7 +1,8 @@
 { config, lib, pkgs, emacs-overlay, ... }:
 
 let
-  emacsPkgs = pkgs.extend emacs-overlay;
+  patchedPkgs = lib.foldl (pkg: pkg.extend) pkgs (import ./overlays.nix).nixpkgs.overlays;
+  emacsPkgs = patchedPkgs.extend emacs-overlay;
   emacsWithPackages = emacsPkgs.callPackage ./emacs/package.nix {
     emacs = emacsPkgs.emacs-unstable-nox;
   };
@@ -26,7 +27,7 @@ in {
 
   environment = {
     motd = "Abandon all hope, ye who enter here.";
-    packages = with pkgs; [
+    packages = with patchedPkgs; [
       git
       lsof
       mc
@@ -53,10 +54,10 @@ in {
   };
 
   terminal.font = "${
-      pkgs.nerdfonts.override { fonts = [ "Hack" ]; }
+      patchedPkgs.nerdfonts.override { fonts = [ "Hack" ]; }
     }/share/fonts/truetype/NerdFonts/HackNerdFontMono-Regular.ttf";
 
-  user.shell = "${pkgs.zsh}/bin/zsh";
+  user.shell = "${patchedPkgs.zsh}/bin/zsh";
 
   build.activation.termux = ''
     mkdir -p ~/.termux/
