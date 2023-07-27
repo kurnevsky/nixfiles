@@ -69,6 +69,24 @@ pkgs.emacsWithPackagesFromUsePackage {
                                     :files ("all-the-icons-nerd-fonts.el"))
         '';
       };
+      scala-ts-mode = super.melpaBuild rec {
+        pname = "scala-ts-mode";
+        version = "1";
+        commit = "771ae55a2bbb1c9a58ade68ee704d2b8d7097a73";
+
+        src = pkgs.fetchFromGitHub {
+          owner = "KaranAhlawat";
+          repo = pname;
+          rev = commit;
+          hash = "sha256-1OLJ95hTYL7A3WDu0bN3UI7fWEouPK76xoEpyHr/CBQ=";
+        };
+
+        recipe = pkgs.writeText "recipe" ''
+          (scala-ts-mode :fetcher github
+                         :repo "KaranAhlawat/scala-ts-mode"
+                         :files ("scala-ts-mode.el"))
+        '';
+      };
     } // lib.genAttrs [
       "lsp-mode"
       "lsp-treemacs"

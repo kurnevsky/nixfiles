@@ -1212,6 +1212,13 @@ ARGS is `kill-buffer' arguments."
 (use-package treesit-auto
   :demand t
   :config
+  (push
+    (make-treesit-auto-recipe
+      :lang 'scala
+      :ts-mode 'scala-ts-mode
+      :remap 'scala-mode
+      :url "https://github.com/KaranAhlawat/scala-ts-mode")
+    treesit-auto-recipe-list)
   (global-treesit-auto-mode))
 
 (use-package conf-mode
@@ -1225,6 +1232,8 @@ ARGS is `kill-buffer' arguments."
 (use-package scala-mode
   :mode ("\\.sc\\'" . scala-mode)
   :interpreter ("scala" . scala-mode))
+
+(use-package scala-ts-mode)
 
 (use-package haskell-mode)
 
