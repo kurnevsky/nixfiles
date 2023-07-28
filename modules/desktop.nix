@@ -327,7 +327,7 @@
     };
   };
 
-  fonts.fonts = with pkgs; [
+  fonts.packages = with pkgs; [
     noto-fonts
     noto-fonts-extra
     noto-fonts-emoji
@@ -462,7 +462,7 @@
 
   hardware = {
     bluetooth.enable = true;
-    usbWwan.enable = true;
+    usb-modeswitch.enable = true;
     opengl = {
       enable = true;
       driSupport32Bit = true;

@@ -10,7 +10,7 @@ let
   };
   font = pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" "Hack" ]; };
 in {
-  fonts.fonts = [
+  fonts.packages = [
     (pkgs.symlinkJoin {
       name = font.name;
       paths = [ font ];
