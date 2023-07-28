@@ -30,6 +30,8 @@
 (add-to-list 'default-frame-alist '(font . "JetBrains Mono Nerd Font:size=15"))
 ;; Disable deferred compilation.
 (setq native-comp-jit-compilation nil)
+;; It causes compilation call at startup.
+(setq comp--delayed-sources nil)
 ;; Don't do backup files.
 (setq make-backup-files nil)
 ;; Don't create lock files.
