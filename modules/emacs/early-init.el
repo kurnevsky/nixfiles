@@ -30,24 +30,24 @@
            (setq allow (or allow
                          (eq func 'ispell-start-process)
                          (eq func 'flycheck-start-command-checker)))))
-       (if (or allow (yes-or-no-p (format "Allow make process call?\nName: %.512s\nCommand: %.512s\n" name command)))
+       (if (or allow (yes-or-no-p (format "Name: %.512s\nCommand: %.512s\nAllow make process call?" name command)))
          (apply orig args)
-         (throw 'make-process-wrapper nil)))))
+         (signal 'error nil)))))
 
 (sec-wrap-function 'make-serial-process
   '(lambda (orig &rest args)
      (let ((name (plist-get args :name))
             (port (plist-get args :port)))
-       (if (yes-or-no-p (format "Allow make serial process call?\nName: %.512s\nPort: %.512s\n" name port))
+       (if (yes-or-no-p (format "Name: %.512s\nPort: %.512s\nAllow make serial process call?" name port))
          (apply orig args)
-         (throw 'make-process-wrapper nil)))))
+         (signal 'error nil)))))
 
 (sec-wrap-function 'make-network-process
   '(lambda (orig &rest args)
      (let ((name (plist-get args :name)))
-       (if (yes-or-no-p (format "Allow make network process call?\nName: %.512s\n" name))
+       (if (yes-or-no-p (format "Name: %.512s\nAllow make network process call?" name))
          (apply orig args)
-         (throw 'make-process-wrapper nil)))))
+         (signal 'error nil)))))
 ;;; early-init.el ends here
 
 ;; Local Variables:
