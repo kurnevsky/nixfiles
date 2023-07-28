@@ -41,6 +41,7 @@ let
   '';
 in {
   home.file = {
+    ".config/emacs/early-init.el".source = ./early-init.el;
     ".config/emacs/init.el".source = ./init.el;
     ".config/emacs/init.elc" = {
       source = elc-config;
