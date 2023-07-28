@@ -5,8 +5,14 @@
 
   environment = {
     systemPackages = with pkgs;
-      [ gnupg firefox-mobile telegram-desktop wesnoth megapixels ]
-      ++ (with pkgs.plasma5Packages; [ index qmlkonsole okular ]);
+      [
+        (pass-wayland.withExtensions (ext: with ext; [ pass-otp pass-update ]))
+        gnupg
+        firefox-mobile
+        telegram-desktop
+        wesnoth
+        megapixels
+      ] ++ (with pkgs.plasma5Packages; [ index qmlkonsole okular ]);
     plasma5.excludePackages = with pkgs.plasma5Packages; [ konsole ];
   };
 
