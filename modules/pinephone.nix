@@ -60,10 +60,7 @@
   };
 
   home-manager.users.kurnevsky = {
-    programs = {
-      ssh.controlMaster = "auto";
-      git.enable = true;
-    };
+    programs.git.enable = true;
     services = {
       gpg-agent = {
         enable = true;
