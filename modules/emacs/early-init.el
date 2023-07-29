@@ -30,7 +30,7 @@
            (setq allow (or allow
                          (eq func 'ispell-start-process)
                          (eq func 'flycheck-start-command-checker)))))
-       (if (or allow (yes-or-no-p (format "Name: %.512s\nCommand: %.512s\nAllow make process call?" name command)))
+       (if (or allow (yes-or-no-p (format "Name: %.512s\nCommand: %.512s\nAllow `make-process' call?" name command)))
          (apply orig args)
          (signal 'error nil)))))
 
@@ -38,14 +38,14 @@
   '(lambda (orig &rest args)
      (let ((name (plist-get args :name))
             (port (plist-get args :port)))
-       (if (yes-or-no-p (format "Name: %.512s\nPort: %.512s\nAllow make serial process call?" name port))
+       (if (yes-or-no-p (format "Name: %.512s\nPort: %.512s\nAllow `make-serial-process' call?" name port))
          (apply orig args)
          (signal 'error nil)))))
 
 (sec-wrap-function 'make-network-process
   '(lambda (orig &rest args)
      (let ((name (plist-get args :name)))
-       (if (yes-or-no-p (format "Name: %.512s\nAllow make network process call?" name))
+       (if (yes-or-no-p (format "Name: %.512s\nAllow `make-network-process' call?" name))
          (apply orig args)
          (signal 'error nil)))))
 ;;; early-init.el ends here
