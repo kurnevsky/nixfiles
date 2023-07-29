@@ -39,9 +39,19 @@ let
 
     cp "$file" "$out"
   '';
+  elc-early-config = pkgs.runCommand "emacs-elc-config" { } ''
+    cp ${./early-init.el} ./early-init.el
+
+    ${emacsPackage}/bin/emacs -Q \
+      --batch \
+      -f 'batch-byte-compile' ./early-init.el
+
+    cp ./early-init.elc "$out"
+  '';
 in {
   home.file = {
     ".config/emacs/early-init.el".source = ./early-init.el;
+    ".config/emacs/early-init.elc".source = elc-early-config;
     ".config/emacs/init.el".source = ./init.el;
     ".config/emacs/init.elc" = {
       source = elc-config;
