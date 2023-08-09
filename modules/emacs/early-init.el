@@ -44,8 +44,15 @@
 
 (sec-wrap-function 'make-network-process
   '(lambda (orig &rest args)
-     (let ((name (plist-get args :name)))
-       (if (yes-or-no-p (format "Name: %.512s\nAllow `make-network-process' call?" name))
+     (let ((name (plist-get args :name))
+            (allow))
+       (mapbacktrace
+         (lambda (_evald func _args _flags)
+           (setq allow (or allow
+                         (eq func 'server-start)
+                         (eq func 'server-running-p)
+                         (eq func 'server-eval-at)))))
+       (if (or allow (yes-or-no-p (format "Name: %.512s\nAllow `make-network-process' call?" name)))
          (apply orig args)
          (signal 'error nil)))))
 ;;; early-init.el ends here
