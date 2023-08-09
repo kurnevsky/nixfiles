@@ -1325,7 +1325,9 @@ ARGS is `kill-buffer' arguments."
     (when (lsp-find-workspace server-id (buffer-file-name))
       (lsp)))
   (add-hook 'rust-mode-hook (-partial #'lsp-activate-if-already-activated 'rust-analyzer))
+  (add-hook 'rust-ts-mode-hook (-partial #'lsp-activate-if-already-activated 'rust-analyzer))
   (add-hook 'scala-mode-hook (-partial #'lsp-activate-if-already-activated 'metals))
+  (add-hook 'scala-ts-mode-hook (-partial #'lsp-activate-if-already-activated 'metals))
   ;; Hack for metals to send ranges in hover request.
   (el-patch-defun lsp--text-document-position-params (&optional identifier position)
     "Make TextDocumentPositionParams for the current point in the current document.
