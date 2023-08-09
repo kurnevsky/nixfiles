@@ -110,7 +110,6 @@
       fuseiso
       gdb
       gimp-with-plugins
-      globalprotect-openconnect
       gnupg_patched
       openconnect
       (callPackage ./pan-globalprotect-okta.nix { })
@@ -447,7 +446,6 @@
         }
       '';
     };
-    globalprotect.enable = true;
     bloop.install = true;
   };
 
