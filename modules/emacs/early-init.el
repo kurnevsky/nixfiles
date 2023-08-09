@@ -37,9 +37,10 @@
                          (eq func 'mu4e--server-start)
                          (eq func 'mu4e--update-mail-and-index-real)
                          (eq func 'lsp--start-workspace)
-                         (eq func 'magit-parse-git-async)))))
+                         (eq func 'magit-parse-git-async)
+                         (eq func 'epg--start)))))
        (setq backtrace (butlast backtrace))
-       (if (or allow (yes-or-no-p (format "Name: %.512s\nCommand: %.512s\nBacktrace: %.512S\nAllow `make-process' call?" name command backtrace)))
+       (if (or allow (yes-or-no-p (format "Name: %.1024s\nCommand: %.1024s\nBacktrace: %.1024S\nAllow `make-process' call?" name command backtrace)))
          (apply orig args)
          (signal 'error nil)))))
 
@@ -53,7 +54,7 @@
            (when (symbolp func)
              (push func backtrace))))
        (setq backtrace (butlast backtrace))
-       (if (yes-or-no-p (format "Name: %.512s\nPort: %.512s\nBacktrace: %.512S\nAllow `make-serial-process' call?" name port backtrace))
+       (if (yes-or-no-p (format "Name: %.1024s\nPort: %.1024s\nBacktrace: %.1024S\nAllow `make-serial-process' call?" name port backtrace))
          (apply orig args)
          (signal 'error nil)))))
 
@@ -69,9 +70,10 @@
            (setq allow (or allow
                          (eq func 'server-start)
                          (eq func 'server-running-p)
-                         (eq func 'server-eval-at)))))
+                         (eq func 'server-eval-at)
+                         (eq func 'forge-pull)))))
        (setq backtrace (butlast backtrace))
-       (if (or allow (yes-or-no-p (format "Name: %.512s\nBacktrace: %.512S\nAllow `make-network-process' call?" name backtrace)))
+       (if (or allow (yes-or-no-p (format "Name: %.1024s\nBacktrace: %.1024S\nAllow `make-network-process' call?" name backtrace)))
          (apply orig args)
          (signal 'error nil)))))
 ;;; early-init.el ends here
