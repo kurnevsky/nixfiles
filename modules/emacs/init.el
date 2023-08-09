@@ -297,31 +297,33 @@ ARGS is `kill-buffer' arguments."
 (use-package ligature
   :demand t
   :config
-  (ligature-set-ligatures 'scala-mode '("<-" ;; for comprehension
-                                         "=>" ;; pattern matching
-                                         "???" ;; not implemented
-                                         "##" ;; hashCode
-                                         "=:=" ;; type equality
-                                         "->" ;; tuple
-                                         "==" "!=" "||" "&&" ">=" "<=" ;; boolean operators
-                                         "<<" ">>" ;; binary operators
-                                         "+=" "-=" "*=" "/=" "%=" "&=" "|=" "^=" "<<=" ">>=" "++=" "--=" "::=" ":::=" "+++=" ;; assign operators
-                                         "++" "--" "::" ":::" "+++" ;; collections
-                                         "//" "/*" "*/" "/**" ;; comments
-                                         "<->" ;; cats IsEq
-                                         "===" "=!=" ;; cats Eq
-                                         "<*>" "*>" "<*" ;; cats Applicative
-                                         ">>" ">>=" ;; cats FlatMap
-                                         "***" ;; cats Arrow
-                                         ":=" ;; scalatags attr
-                                         ))
-  (ligature-set-ligatures 'rust-mode '("->" ;; function
-                                        "=>" ;; pattern matching
-                                        "::" ;; path
-                                        "==" "!=" "||" "&&" ">=" "<=" ;; boolean operators
-                                        "+=" "-=" "*=" "/=" "%=" "&=" "|=" "^=" "<<=" ">>=" ;; assign operators
-                                        ".." "..=" ;; range operators
-                                        ))
+  (dolist (mode '(scala-mode scala-ts-mode))
+    (ligature-set-ligatures mode '("<-" ;; for comprehension
+                                    "=>" ;; pattern matching
+                                    "???" ;; not implemented
+                                    "##" ;; hashCode
+                                    "=:=" ;; type equality
+                                    "->" ;; tuple
+                                    "==" "!=" "||" "&&" ">=" "<=" ;; boolean operators
+                                    "<<" ">>" ;; binary operators
+                                    "+=" "-=" "*=" "/=" "%=" "&=" "|=" "^=" "<<=" ">>=" "++=" "--=" "::=" ":::=" "+++=" ;; assign operators
+                                    "++" "--" "::" ":::" "+++" ;; collections
+                                    "//" "/*" "*/" "/**" ;; comments
+                                    "<->" ;; cats IsEq
+                                    "===" "=!=" ;; cats Eq
+                                    "<*>" "*>" "<*" ;; cats Applicative
+                                    ">>" ">>=" ;; cats FlatMap
+                                    "***" ;; cats Arrow
+                                    ":=" ;; scalatags attr
+                                    )))
+  (dolist (mode '(rust-mode rust-ts-mode))
+    (ligature-set-ligatures mode '("->" ;; function
+                                    "=>" ;; pattern matching
+                                    "::" ;; path
+                                    "==" "!=" "||" "&&" ">=" "<=" ;; boolean operators
+                                    "+=" "-=" "*=" "/=" "%=" "&=" "|=" "^=" "<<=" ">>=" ;; assign operators
+                                    ".." "..=" ;; range operators
+                                    )))
   (global-ligature-mode t))
 
 (use-package cl-macs
