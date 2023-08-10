@@ -514,7 +514,7 @@ ARGS is `kill-buffer' arguments."
 (use-package langtool
   :commands langtool-check
   :custom
-  (langtool-java-classpath "/usr/share/languagetool:/usr/share/java/languagetool/*")
+  (langtool-bin "languagetool-commandline")
   (langtool-default-language "en-US")
   (langtool-mother-tongue "ru-RU")
   (langtool-autoshow-message-function (lambda (overlays)
