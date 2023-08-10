@@ -531,6 +531,7 @@ ARGS is `kill-buffer' arguments."
   (guess-language-languages '(en ru))
   (guess-language-min-paragraph-length 15)
   :config
+  (setcar (cdr (assoc 'ru guess-language-langcodes)) "ru")
   (defun guess-language-switch-langtool-function (lang _beginning _end)
     "Switch the voice used by langtool.
 
