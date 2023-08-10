@@ -25,7 +25,7 @@
      ("ispell"
        (pcase command
          (`(,(pred (string= (executable-find "aspell"))) "-a" "-m" . ,_) t)))
-     ("flycheck-emacs-lisp"
+     ((or "flycheck-emacs-lisp" "flycheck-emacs-lisp-checkdoc")
        (pcase command
          (`(,(rx bol "/nix/store/" (* nonl) "/emacs" eol) "-Q" "--batch" . ,_) t)))
      ("flycheck-scala"
@@ -43,6 +43,9 @@
      ("flycheck-rust-cargo"
        (pcase command
          (`(,(pred (string= (executable-find "cargo"))) "test" "--no-run" "--lib" "--message-format=json") t)))
+     ("flycheck-nix"
+       (pcase command
+         (`(,(pred (string= (executable-find "nix-instantiate"))) "--parse" "-") t)))
      ("doom-modeline-env"
        (pcase command
          (`(,(pred (string= (executable-find "rustc"))) "--version") t)))
@@ -60,7 +63,17 @@
          (`("git" "--no-pager" "--literal-pathspecs" . ,_) t)))
      ("epg"
        (pcase command
-         (`(,(pred (string= (executable-find "gpg2"))) "--no-tty" "--status-fd" "1" "--yes" "--enable-progress-filter" "--command-fd" "0" . ,_) t)))))
+         (`(,(pred (string= (executable-find "gpg2"))) "--no-tty" "--status-fd" "1" "--yes" "--enable-progress-filter" "--command-fd" "0" . ,_) t)))
+     ;; LSP
+     ("metals"
+       (pcase command
+         (`(,(pred (string= (executable-find "env"))) "JAVA_TOOL_OPTIONS=-Dmetals.allow-multiline-string-formatting=off -Dmetals.icons=unicode" "metals") t)))
+     ("rust-analyzer"
+       (pcase command
+         (`(,(pred (string= (executable-find "rust-analyzer")))) t)))
+     ("nix-nil"
+       (pcase command
+         (`("nil") t)))))
 
 (sec-wrap-function 'make-process
   `(lambda (orig &rest args)
