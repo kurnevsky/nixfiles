@@ -75,12 +75,32 @@
        (pcase command
          (`("nil") t)))))
 
+(defvar sec-allow-make-network-process
+  '(pcase name
+     ((or "server-client-test" "server" "eval-at")
+       (eq family 'local))
+     ;; magit forge
+     ("api.github.com"
+       (and
+         (string= "api.github.com" host)
+         (eq service 443)))
+     ("gitlab.com"
+       (and
+         (string= "gitlab.com" host)
+         (eq service 443)))
+     ("gitlab.evolution.com"
+       (and
+         (string= "gitlab.evolution.com" host)
+         (eq service 443)))))
+
 (sec-wrap-function 'make-process
   `(lambda (orig &rest args)
      (let* ((name (plist-get args :name))
              (command (plist-get args :command))
              (command-str (mapconcat #'identity command " ")))
-       (if (or ,sec-allow-make-process (yes-or-no-p (format "Name: %.1024s\nCommand: %.1024s\nAllow `make-process' call?" name command-str)))
+       (if (or ,sec-allow-make-process (yes-or-no-p (format "Name: %.1024s
+Command: %.1024s
+Allow `make-process' call?" name command-str)))
          (apply orig args)
          (signal 'error nil)))))
 
@@ -88,31 +108,35 @@
   '(lambda (orig &rest args)
      (let ((name (plist-get args :name))
             (port (plist-get args :port)))
-       (if (yes-or-no-p (format "Name: %.1024s\nPort: %.1024s\nAllow `make-serial-process' call?" name port))
+       (if (yes-or-no-p (format "Name: %.1024s
+Port: %.1024s
+Allow `make-serial-process' call?" name port))
          (apply orig args)
          (signal 'error nil)))))
 
 (sec-wrap-function 'make-network-process
-  '(lambda (orig &rest args)
+  `(lambda (orig &rest args)
      (let ((name (plist-get args :name))
-            (backtrace)
-            (allow))
-       (mapbacktrace
-         (lambda (_evald func _args _flags)
-           (when (symbolp func)
-             (push func backtrace))
-           (setq allow (or allow
-                         (eq func 'server-start)
-                         (eq func 'server-running-p)
-                         (eq func 'server-eval-at)
-                         (eq func 'forge-pull)))))
-       (setq backtrace (butlast backtrace))
-       (if (or allow (yes-or-no-p (format "Name: %.1024s\nBacktrace: %.1024S\nAllow `make-network-process' call?" name backtrace)))
+            (host (plist-get args :host))
+            (service (plist-get args :service))
+            (type (plist-get args :type))
+            (family (plist-get args :family))
+            (local (plist-get args :local))
+            (remote (plist-get args :remote)))
+       (if (or ,sec-allow-make-network-process (yes-or-no-p (format "Name: %.1024s
+Host: %.1024s
+Service: %.1024s
+Type: %.1024s
+Family: %.1024s
+Local: %.1024s
+Remote: %.1024s
+Allow `make-network-process' call?" name host service type family local remote)))
          (apply orig args)
          (signal 'error nil)))))
 
 (fmakunbound 'sec-wrap-function)
 (makunbound 'sec-allow-make-process)
+(makunbound 'sec-allow-make-network-process)
 ;;; early-init.el ends here
 
 ;; Local Variables:
