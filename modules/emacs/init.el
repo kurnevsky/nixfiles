@@ -511,7 +511,12 @@ ARGS is `kill-buffer' arguments."
   (advice-add 'uncomment-region :before (lambda (BEG END &optional _ARG)
                                           (flyspell-delete-region-overlays BEG END))))
 
+(use-package pos-tip
+  :autoload pos-tip-show)
+
 (use-package langtool
+  :ensure t
+  :ensure pos-tip
   :commands langtool-check
   :custom
   (langtool-bin "languagetool-commandline")
@@ -527,7 +532,17 @@ ARGS is `kill-buffer' arguments."
     '((en . ("en" "English"))
        (ru . ("ru" "Russian"))))
   (guess-language-languages '(en ru))
-  (guess-language-min-paragraph-length 15))
+  (guess-language-min-paragraph-length 15)
+  :config
+  (defun guess-language-switch-langtool-function (lang _beginning _end)
+    "Switch the voice used by langtool.
+
+LANG is the ISO 639-1 code of the language (as a
+symbol).  BEGINNING and END are the endpoints of the region in
+which LANG was detected but these are ignored."
+    (when (boundp 'langtool-default-language)
+      (setq-local langtool-default-language lang)))
+  (add-hook 'guess-language-after-detection-functions #'guess-language-switch-langtool-function))
 
 (use-package minimap
   :commands minimap-mode
@@ -668,7 +683,7 @@ ARGS is `kill-buffer' arguments."
   (all-the-icons-completion-mode))
 
 (use-package embark
-  :commands (kill-target-buffer)
+  :commands kill-target-buffer
   :bind (:map minibuffer-local-map
           ("C-." . embark-act)
           ("C-;" . embark-dwim))
