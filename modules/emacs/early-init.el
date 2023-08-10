@@ -46,6 +46,21 @@
      ("flycheck-nix"
        (pcase command
          (`(,(pred (string= (executable-find "nix-instantiate"))) "--parse" "-") t)))
+     ("flycheck-c/c++-gcc"
+       (pcase command
+         (`(,(pred (string= (executable-find "gcc"))) "-fshow-column" "-iquote" ,_ "-Wall" "-Wextra" "-x" "c" "-S" "-o" "/dev/null" "-") t)))
+     ("flycheck-c/c++-clang"
+       (pcase command
+         (`(,(pred (string= (executable-find "clang"))) "-fsyntax-only" "-fno-color-diagnostics" "-fno-caret-diagnostics" "-fno-diagnostics-show-option" "-iquote" ,_ "-Wall" "-Wextra" "-x" "c" "-") t)))
+     ("flycheck-haskell-ghc"
+       (pcase command
+         (`(,(pred (string= (executable-find "ghc"))) "-Wall" "-no-link" . ,_) t)))
+     ("flycheck-xml-xmlstarlet"
+       (pcase command
+         (`(,(pred (string= (executable-find "xmlstarlet"))) "val" "--err" "--quiet" "-") t)))
+     ("flycheck-json-jq"
+       (pcase command
+         (`(,(pred (string= (executable-find "jq"))) "." ,_ "/dev/null") t)))
      ("doom-modeline-env"
        (pcase command
          (`(,(pred (string= (executable-find "rustc"))) "--version") t)))
@@ -67,6 +82,12 @@
      ((rx bos "*tramp/ssh ")
        (pcase command
          (`("/bin/sh" "-i") t)))
+     ("Agda2"
+       (pcase command
+         (`("agda" "--interaction") t)))
+     ("LanguageTool"
+       (pcase command
+         (`("languagetool-commandline" . ,_) t)))
      ;; LSP
      ("metals"
        (pcase command
