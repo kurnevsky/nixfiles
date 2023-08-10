@@ -20,41 +20,62 @@
           (wrapper (byte-compile wrapper)))
     (fset symbol wrapper)))
 
+(defvar sec-allow-make-process
+  '(pcase name
+     ("ispell"
+       (pcase command
+         (`(,(pred (string= (executable-find "aspell"))) "-a" "-m" . ,_) t)))
+     ("flycheck-emacs-lisp"
+       (pcase command
+         (`(,(rx bol "/nix/store/" (* nonl) "/emacs" eol) "-Q" "--batch" . ,_) t)))
+     ("flycheck-scala"
+       (pcase command
+         (`(,(pred (string= (executable-find "scalac"))) "-Ystop-after:parser" ,_) t)))
+     ("flycheck-markdown-markdownlint-cli"
+       (pcase command
+         (`(,(pred (string= (executable-find "markdownlint"))) "--" ,_) t)))
+     ("flycheck-sh-bash"
+       (pcase command
+         (`(,(pred (string= (executable-find "bash"))) "--norc" "-n" "--") t)))
+     ("flycheck-sh-shellcheck"
+       (pcase command
+         (`(,(pred (string= (executable-find "shellcheck"))) "--format" "checkstyle" "--shell" "bash" "--external-sources" "-") t)))
+     ("flycheck-rust-cargo"
+       (pcase command
+         (`(,(pred (string= (executable-find "cargo"))) "test" "--no-run" "--lib" "--message-format=json") t)))
+     ("doom-modeline-env"
+       (pcase command
+         (`(,(pred (string= (executable-find "rustc"))) "--version") t)))
+     ("rg"
+       (pcase command
+         (`(,(pred (string= shell-file-name)) "-c" ,(pred (string-prefix-p (executable-find "rg")))) t)))
+     (" *mu4e-server*"
+       (pcase command
+         (`(,(pred (string= (executable-find "mu"))) "server") t)))
+     ("mu4e-update"
+       (pcase command
+         (`(,(pred (string= shell-file-name)) "-c" "mbsync --all") t)))
+     ("git"
+       (pcase command
+         (`("git" "--no-pager" "--literal-pathspecs" . ,_) t)))
+     ("epg"
+       (pcase command
+         (`(,(pred (string= (executable-find "gpg2"))) "--no-tty" "--status-fd" "1" "--yes" "--enable-progress-filter" "--command-fd" "0" . ,_) t)))))
+
 (sec-wrap-function 'make-process
-  '(lambda (orig &rest args)
-     (let ((name (plist-get args :name))
-            (command (mapconcat #'identity (plist-get args :command) " "))
-            (backtrace)
-            (allow))
-       (mapbacktrace
-         (lambda (_evald func _args _flags)
-           (when (symbolp func)
-             (push func backtrace))
-           (setq allow (or allow
-                         (eq func 'ispell-start-process)
-                         (eq func 'flycheck-start-command-checker)
-                         (eq func 'rg-run)
-                         (eq func 'mu4e--server-start)
-                         (eq func 'mu4e--update-mail-and-index-real)
-                         (eq func 'lsp--start-workspace)
-                         (eq func 'magit-parse-git-async)
-                         (eq func 'epg--start)))))
-       (setq backtrace (butlast backtrace))
-       (if (or allow (yes-or-no-p (format "Name: %.1024s\nCommand: %.1024s\nBacktrace: %.1024S\nAllow `make-process' call?" name command backtrace)))
+  `(lambda (orig &rest args)
+     (let* ((name (plist-get args :name))
+             (command (plist-get args :command))
+             (command-str (mapconcat #'identity command " ")))
+       (if (or ,sec-allow-make-process (yes-or-no-p (format "Name: %.1024s\nCommand: %.1024s\nAllow `make-process' call?" name command-str)))
          (apply orig args)
          (signal 'error nil)))))
 
 (sec-wrap-function 'make-serial-process
   '(lambda (orig &rest args)
      (let ((name (plist-get args :name))
-            (port (plist-get args :port))
-            (backtrace))
-       (mapbacktrace
-         (lambda (_evald func _args _flags)
-           (when (symbolp func)
-             (push func backtrace))))
-       (setq backtrace (butlast backtrace))
-       (if (yes-or-no-p (format "Name: %.1024s\nPort: %.1024s\nBacktrace: %.1024S\nAllow `make-serial-process' call?" name port backtrace))
+            (port (plist-get args :port)))
+       (if (yes-or-no-p (format "Name: %.1024s\nPort: %.1024s\nAllow `make-serial-process' call?" name port))
          (apply orig args)
          (signal 'error nil)))))
 
@@ -76,6 +97,9 @@
        (if (or allow (yes-or-no-p (format "Name: %.1024s\nBacktrace: %.1024S\nAllow `make-network-process' call?" name backtrace)))
          (apply orig args)
          (signal 'error nil)))))
+
+(fmakunbound 'sec-wrap-function)
+(makunbound 'sec-allow-make-process)
 ;;; early-init.el ends here
 
 ;; Local Variables:
