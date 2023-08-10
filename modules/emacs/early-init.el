@@ -27,7 +27,7 @@
          (`(,(pred (string= (executable-find "aspell"))) "-a" "-m" . ,_) t)))
      ((or "flycheck-emacs-lisp" "flycheck-emacs-lisp-checkdoc")
        (pcase command
-         (`(,(rx bol "/nix/store/" (* nonl) "/emacs" eol) "-Q" "--batch" . ,_) t)))
+         (`(,(rx bos "/nix/store/" (* nonl) "/emacs" eos) "-Q" "--batch" . ,_) t)))
      ("flycheck-scala"
        (pcase command
          (`(,(pred (string= (executable-find "scalac"))) "-Ystop-after:parser" ,_) t)))
@@ -64,6 +64,9 @@
      ("epg"
        (pcase command
          (`(,(pred (string= (executable-find "gpg2"))) "--no-tty" "--status-fd" "1" "--yes" "--enable-progress-filter" "--command-fd" "0" . ,_) t)))
+     ((rx bos "*tramp/ssh ")
+       (pcase command
+         (`("/bin/sh" "-i") t)))
      ;; LSP
      ("metals"
        (pcase command
