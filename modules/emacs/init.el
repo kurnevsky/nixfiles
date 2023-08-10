@@ -528,9 +528,6 @@ ARGS is `kill-buffer' arguments."
 (use-package guess-language
   :hook (text-mode . guess-language-mode)
   :custom
-  (guess-language-langcodes
-    '((en . ("en" "English"))
-       (ru . ("ru" "Russian"))))
   (guess-language-languages '(en ru))
   (guess-language-min-paragraph-length 15)
   :config
@@ -540,9 +537,9 @@ ARGS is `kill-buffer' arguments."
 LANG is the ISO 639-1 code of the language (as a
 symbol).  BEGINNING and END are the endpoints of the region in
 which LANG was detected but these are ignored."
-    (when (boundp 'langtool-default-language)
-      (setq-local langtool-default-language lang)))
-  (add-hook 'guess-language-after-detection-functions #'guess-language-switch-langtool-function))
+    (setq-local langtool-default-language lang))
+  (with-eval-after-load "langtool"
+    (add-hook 'guess-language-after-detection-functions #'guess-language-switch-langtool-function)))
 
 (use-package minimap
   :commands minimap-mode
