@@ -249,6 +249,7 @@
       (agda.withPackages (pkgs: with pkgs; [ standard-library ]))
       astyle
       gcc
+      clang
       clang-tools
       mono
       (python3.withPackages (pkgs:
