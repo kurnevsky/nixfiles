@@ -21,6 +21,8 @@
         443
         # Matrix federation
         8448
+        # Shadowsocks
+        29135
         # Tox
         33445
         # Yggdrasil
@@ -29,6 +31,8 @@
       allowedUDPPorts = [
         # DNS
         53
+        # Shadowsocks
+        29135
         # Tox
         33445
         # WireGuard
@@ -185,10 +189,6 @@
             };
             "/_matrix" = {
               proxyPass = "http://localhost:6167";
-              proxyWebsockets = true;
-            };
-            "/ss" = {
-              proxyPass = "http://localhost:8388";
               proxyWebsockets = true;
             };
             "/static/" = {
