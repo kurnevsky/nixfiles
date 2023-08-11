@@ -158,9 +158,9 @@ Allow `make-network-process' call?" name host service type family local remote))
          (apply orig args)
          (signal 'error nil)))))
 
-(fmakunbound 'sec-wrap-function)
-(makunbound 'sec-allow-make-process)
-(makunbound 'sec-allow-make-network-process)
+(unintern "sec-wrap-function" obarray)
+(unintern "sec-allow-make-process" obarray)
+(unintern "sec-allow-make-network-process" obarray)
 ;;; early-init.el ends here
 
 ;; Local Variables:
