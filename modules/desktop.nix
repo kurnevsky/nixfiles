@@ -496,6 +496,7 @@
             Name = "wg0";
             Kind = "wireguard";
             Description = "WireGuard tunnel wg0";
+            MTUBytes = "1280";
           };
           wireguardConfig = {
             PrivateKeyFile = "/secrets/wg/private.key";
@@ -506,7 +507,10 @@
               PublicKey = "5JHCxIYeZ50k7YJM+kLAbqGW4LAXpI5lycYEWSVxkBE=";
               PresharedKeyFile = "/secrets/wg/preshared.psk";
               AllowedIPs = "0.0.0.0/0, ::/0";
-              Endpoint = "kurnevsky.net:51871";
+              # Direct connection
+              # Endpoint = "kurnevsky.net:51871";
+              # Shadowsocks connection
+              Endpoint = "127.0.0.1:51870";
               PersistentKeepalive = 25;
             };
           }];
