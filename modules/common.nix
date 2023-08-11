@@ -7,6 +7,8 @@ let
     "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDDPmgbv8HY8cevVCgZPJw+4WQzXxmV8RU0r0owdFAmcMFHc0SLeFtWvZ2fV6LkerPKHzK1uWTwPq1RhqMDVlhzuaDjtgLlNX4VJ84aHzjv62+6gaAbUzEkIwF3nigVI8MECW7r1Sk38yI42VaGn8Qa2ThKwdbqcskeh8eD0TyvVSNe46vz4AnMR/gw2bkkGIIUTWF6MP8/uMbxdErLUSZPaoflfO3RpMQPomNigrgwDxptisY2nWhTSskOu+RVj17yBIQIH0d4EpiezRniQ1YeI47LSj7I01e/zy1HyyEm1S/mKe+uaHDIlcGWllWXam9AKC5atyUiH9lbj0c1vUe9WtP0dk8Zf2qgJwkB0DZAhehVbycw4rP4omUisI/rZjUxXOFk2R/O5asxbtIWsLjAJIW8g6uf9e6T0+5piAuyF3fd3zy4ZIj5/G2EAsywxxB4Jec5kKCHOy4E6tFgF2jtLAgTk4dij/dZVvZsUWYAxBdZjQ7yUIHVCNUU2Br4+NvtyoW7/2JH8EQP+agPCuUVMF0SdWUxhXfDbojEAO9y71D2PiDZwyFAPY15e0hMI80r1A6bZxRiBeufUxnimeGSuBqzUhiBBjGgT3Cm0amJ5ZGSggqss+txVEn2Ntgbi9SZ9X4BiQdE6zylIsFpSVEZ8KYIySxkK2ElQp7XqCaqDw== ykurneuski@evolution.com"
   ];
 in {
+  boot.kernel.sysctl."net.ipv4.tcp_fastopen" = 3;
+
   nixpkgs.config.allowUnfreePredicate = pkg:
     builtins.elem (lib.getName pkg) [ "symbola" "unrar" "p7zip" ];
 
