@@ -35,6 +35,7 @@ in {
     serviceConfig = {
       DynamicUser = true;
       PrivateTmp = true;
+      ProtectSystem = "strict";
       SupplementaryGroups = "secrets";
     };
     script = ''
