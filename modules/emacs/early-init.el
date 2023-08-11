@@ -79,7 +79,7 @@
      ("epg"
        (pcase command
          (`(,(pred (string= (executable-find "gpg2"))) "--no-tty" "--status-fd" "1" "--yes" "--enable-progress-filter" "--command-fd" "0" . ,_) t)))
-     ((rx bos "*tramp/ssh ")
+     ((rx bos "*tramp/")
        (pcase command
          (`("/bin/sh" "-i") t)))
      ("Agda2"
