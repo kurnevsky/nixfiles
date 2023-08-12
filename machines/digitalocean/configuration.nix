@@ -187,6 +187,10 @@
                 fastcgi_index index.php;
               '';
             };
+            "/wssh" = {
+              proxyPass = "http://localhost:58546";
+              proxyWebsockets = true;
+            };
             "/_matrix" = {
               proxyPass = "http://localhost:6167";
               proxyWebsockets = true;

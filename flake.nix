@@ -129,6 +129,7 @@
           system = "x86_64-linux";
           modules = commonModules ++ [
             ./modules/shadowsocks-server.nix
+            ./modules/websocat-ssh-server.nix
             ./modules/zswap.nix
             ./machines/digitalocean/configuration.nix
             ./machines/digitalocean/hardware-configuration.nix
