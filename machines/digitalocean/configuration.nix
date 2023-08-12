@@ -191,6 +191,10 @@
               proxyPass = "http://localhost:58546";
               proxyWebsockets = true;
             };
+            "/wswg" = {
+              proxyPass = "http://localhost:57411";
+              proxyWebsockets = true;
+            };
             "/_matrix" = {
               proxyPass = "http://localhost:6167";
               proxyWebsockets = true;

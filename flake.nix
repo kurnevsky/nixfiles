@@ -85,6 +85,7 @@
         ./modules/sandbox.nix
         ./modules/shadowsocks.nix
         ./modules/websocat-ssh.nix
+        ./modules/websocat-wg.nix
         ./modules/motion.nix
         ./modules/rnnoise.nix
         ./modules/torjail.nix
