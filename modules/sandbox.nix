@@ -600,6 +600,15 @@ let
         }];
     }
     {
+      predicate = lib.hasPrefix "mu-";
+      config = drv:
+        wrap drv [{
+          name = "mu";
+          unsetenvs = [ "MAIL" "SHELL" ];
+          whitelist = [ "~/Maildir/" "~/.cache/mu/" ];
+        }];
+    }
+    {
       predicate = lib.hasPrefix "claws-mail-";
       config = drv:
         wrap drv [
