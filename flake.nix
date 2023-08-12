@@ -84,6 +84,7 @@
         ./modules/kde.nix
         ./modules/sandbox.nix
         ./modules/shadowsocks.nix
+        ./modules/websocat-ssh.nix
         ./modules/motion.nix
         ./modules/rnnoise.nix
         ./modules/torjail.nix
