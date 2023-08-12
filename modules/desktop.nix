@@ -509,6 +509,8 @@
               AllowedIPs = "0.0.0.0/0, ::/0";
               # Direct connection
               # Endpoint = "kurnevsky.net:51871";
+              # Websocat connection
+              # Endpoint = "127.0.0.1:42930";
               # Shadowsocks connection
               Endpoint = "127.0.0.1:51870";
               PersistentKeepalive = 25;
