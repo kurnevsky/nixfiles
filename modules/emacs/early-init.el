@@ -66,7 +66,9 @@
          (`(,(pred (string= (executable-find "rustc"))) "--version") t)))
      ("rg"
        (pcase command
-         (`(,(pred (string= shell-file-name)) "-c" ,(pred (string-prefix-p (executable-find "rg")))) t)))
+         (`(,(pred (string= shell-file-name)) "-c" ,(pred (string-prefix-p (executable-find "rg")))) t)
+         ;; Tramp
+         (`("/bin/sh" "-i") t)))
      (" *mu4e-server*"
        (pcase command
          (`(,(pred (string= (executable-find "mu"))) "server") t)))
