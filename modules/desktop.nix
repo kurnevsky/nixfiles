@@ -744,7 +744,7 @@
           userName = "kurnevsky@gmail.com";
           imap.host = "imap.gmail.com";
           passwordCommand =
-            "pass show web/google.com | grep Isync | cut -d ' ' -f 2";
+            "${pkgs.pass}/bin/pass show web/google.com | grep Isync | cut -d ' ' -f 2";
         };
         yandex = {
           mbsync = {
@@ -756,7 +756,8 @@
           maildir.path = "yandex";
           userName = "kurnevsky";
           imap.host = "imap.ya.ru";
-          passwordCommand = "pass show web/yandex.ru | head -n 1";
+          passwordCommand =
+            "${pkgs.pass}/bin/pass show web/yandex.ru | head -n 1";
         };
         evolution = let user = "ykurneuski@evolution.com";
         in {

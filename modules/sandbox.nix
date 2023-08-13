@@ -708,13 +708,10 @@ in {
   environment = let
     env = pkgs.symlinkJoin {
       name = "sandboxed";
-      paths = with pkgs.sandboxed;
-        lib.concatMap (drv:
-          lib.concatMap (wrapper:
-            if wrapper.predicate drv.name then
-              [ (wrapper.config drv) ]
-            else
-              [ ]) wrappers) config.environment.systemPackages;
+      paths = lib.concatMap (drv:
+        lib.concatMap (wrapper:
+          if wrapper.predicate drv.name then [ (wrapper.config drv) ] else [ ])
+        wrappers) config.environment.systemPackages;
     };
   in {
     extraInit = ''
