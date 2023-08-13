@@ -164,6 +164,7 @@ let
       config = drv: wrap drv [ (archiver-cfg "unrar") ];
     }
     {
+      unused = true;
       predicate = lib.hasPrefix "zip-";
       config = drv: wrap drv [ (archiver-cfg "zip") ];
     }
@@ -630,6 +631,7 @@ let
         ];
     }
     {
+      unused = true;
       predicate = lib.hasPrefix "zoom-";
       config = drv:
         wrap drv [
@@ -664,6 +666,7 @@ let
         ];
     }
     {
+      unused = true;
       predicate = lib.hasPrefix "skypeforlinux-";
       config = drv:
         wrap drv [
@@ -708,10 +711,15 @@ in {
   environment = let
     env = pkgs.symlinkJoin {
       name = "sandboxed";
-      paths = lib.concatMap (drv:
-        lib.concatMap (wrapper:
-          if wrapper.predicate drv.name then [ (wrapper.config drv) ] else [ ])
-        wrappers) config.environment.systemPackages;
+      paths = assert lib.all (wrapper:
+        (wrapper.unused or false) || lib.any (drv: wrapper.predicate drv.name)
+        config.environment.systemPackages) wrappers;
+        lib.concatMap (drv:
+          lib.concatMap (wrapper:
+            if wrapper.predicate drv.name then
+              [ (wrapper.config drv) ]
+            else
+              [ ]) wrappers) config.environment.systemPackages;
     };
   in {
     extraInit = ''
