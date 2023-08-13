@@ -314,6 +314,40 @@ let
         ];
     }
     {
+      predicate = lib.hasPrefix "gajim-";
+      config = drv:
+        wrap drv [
+          (withFonts {
+            name = "gajim";
+            extra-deps = with pkgs; [
+              gnome-themes-extra
+              gnome.adwaita-icon-theme
+              hicolor-icon-theme
+              plasma-integration
+            ];
+            graphics = true;
+            pams = [
+              # Necessary for kwallet
+              "bus"
+              "pulse"
+              "pipewire-0"
+            ];
+            etcs = [ "pulse" "ssl/certs/ca-certificates.crt" ];
+            localtime = true;
+            resolv-conf = true;
+            unsetenvs = [ "MAIL" "SHELL" ];
+            unshare-net = false;
+            ro-whitelist = [ "~/.config/gtk-3.0/" ];
+            whitelist = [
+              "~/.config/gajim/"
+              "~/.cache/gajim/"
+              "~/.local/share/gajim/"
+              "~/.config/pulse/"
+            ];
+          })
+        ];
+    }
+    {
       predicate = lib.hasPrefix "telegram-desktop-";
       config = drv:
         wrap drv [
