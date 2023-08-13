@@ -181,7 +181,6 @@
       tesseract
       texlive.combined.scheme-basic
       tigervnc
-      tinc
       tmux
       torsocks
       translate-shell
