@@ -133,7 +133,8 @@ in writeShellScriptBin target-name ''
        } \
        ${
          lib.concatMapStringsSep " "
-         (x: ''--bind-try "$XDG_RUNTIME_DIR"/${x} "$XDG_RUNTIME_DIR"/${x}'') pams
+         (x: ''--bind-try "$XDG_RUNTIME_DIR"/${x} "$XDG_RUNTIME_DIR"/${x}'')
+         pams
        } \
        ${
          lib.optionalString graphics ''
