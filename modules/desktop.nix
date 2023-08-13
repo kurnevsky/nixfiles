@@ -771,7 +771,7 @@
           userName = user;
           imap.host = "outlook.office365.com";
           passwordCommand =
-            "${pkgs.cloud-mdir-sync}/bin/cms-oauth --cms_sock=/var/run/user/$UID/cms.sock --proto=IMAP --user ${user} --output=token";
+            "${pkgs.cloud-mdir-sync}/bin/cms-oauth --cms_sock=$XDG_RUNTIME_DIR/cms.sock --proto=IMAP --user ${user} --output=token";
         };
       };
       services.gpg-agent = {

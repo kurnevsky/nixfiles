@@ -600,6 +600,22 @@ let
         }];
     }
     {
+      predicate = name: name == "isync";
+      config = drv:
+        wrap drv [{
+          name = "mbsync";
+          bin-sh = true;
+          extra-deps = with pkgs; [ coreutils-full cloud-mdir-sync pass gnupg ];
+          pams = [ "gnupg" "cms.sock" ];
+          etcs = [ "ssl/certs/ca-certificates.crt" ];
+          resolv-conf = true;
+          unsetenvs = [ "MAIL" "SHELL" ];
+          unshare-net = false;
+          ro-whitelist = [ "~/.password-store/" "~/.mbsyncrc" ];
+          whitelist = [ "~/Maildir/" "~/.gnupg/" ];
+        }];
+    }
+    {
       predicate = lib.hasPrefix "mu-";
       config = drv:
         wrap drv [{
