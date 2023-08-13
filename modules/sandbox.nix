@@ -70,58 +70,6 @@ let
       ro-whitelist = [ "~/" ];
       blacklist = [ "~/.gnupg/" "~/.ssh/" ];
     };
-  wine-cfg = name:
-    lib.pipe {
-      inherit name;
-      # coreutils-full is needed because it's system default stdenv
-      # and wine has scripts that rely on stdenv being in PATH
-      extra-deps = with pkgs; [ coreutils-full ];
-      devs = [ "dri" "snd" ];
-      syses = [
-        # Necessary for hardware acceleration
-        "dev"
-        "devices"
-      ];
-      graphics = true;
-      etcs = [ "ssl/certs/ca-certificates.crt" ];
-      pams = [ "bus" "pulse" "pipewire-0" ];
-      localtime = true;
-      unsetenvs = [ "MAIL" ];
-      setenvs = [{
-        name = "SHELL";
-        value = "/run/current-system/sw/bin/bash";
-      }];
-      unshare-cgroup = false;
-      unshare-pid = false;
-      seccomp = false;
-      whitelist = [
-        "\${WINEPREFIX:-~/.wine/}"
-        "~/.cache/wine/"
-        "~/.cache/winetricks/"
-        "~/.config/pulse/"
-      ];
-    } [ withFonts withOpengl withOpengl32 ];
-  libreoffice-cfg = name:
-    withFonts {
-      inherit name;
-      # coreutils-full, gnugrep, gnused are needed because it's
-      # system default stdenv and libreoffice has scripts that rely
-      # on stdenv being in PATH
-      extra-deps = with pkgs; [
-        coreutils-full
-        gnugrep
-        gnused
-        plasma-integration
-      ];
-      graphics = true;
-      etcs = [ "pulse" "passwd" ];
-      localtime = true;
-      pams = [ "bus" "pulse" "pipewire-0" ];
-      unsetenvs = [ "MAIL" "SHELL" ];
-      media = true;
-      whitelist = [ "~/" ];
-      blacklist = [ "~/.gnupg/" "~/.ssh/" ];
-    };
   wrappers = [
     {
       predicate = lib.hasPrefix "deadbeef-";
@@ -550,22 +498,73 @@ let
     }
     {
       predicate = lib.hasPrefix "wine-";
-      config = drv: wrap drv (map wine-cfg [ "wine" "winecfg" ]);
+      config = drv:
+        wrap drv (map (name:
+          lib.pipe {
+            inherit name;
+            # coreutils-full is needed because it's system default stdenv
+            # and wine has scripts that rely on stdenv being in PATH
+            extra-deps = with pkgs; [ coreutils-full ];
+            devs = [ "dri" "snd" ];
+            syses = [
+              # Necessary for hardware acceleration
+              "dev"
+              "devices"
+            ];
+            graphics = true;
+            etcs = [ "ssl/certs/ca-certificates.crt" ];
+            pams = [ "bus" "pulse" "pipewire-0" ];
+            localtime = true;
+            unsetenvs = [ "MAIL" ];
+            setenvs = [{
+              name = "SHELL";
+              value = "/run/current-system/sw/bin/bash";
+            }];
+            unshare-cgroup = false;
+            unshare-pid = false;
+            seccomp = false;
+            whitelist = [
+              "\${WINEPREFIX:-~/.wine/}"
+              "~/.cache/wine/"
+              "~/.cache/winetricks/"
+              "~/.config/pulse/"
+            ];
+          } [ withFonts withOpengl withOpengl32 ]) [ "wine" "winecfg" ]);
     }
     {
       predicate = lib.hasPrefix "libreoffice-";
       config = drv:
-        wrap drv (map libreoffice-cfg [
-          "libreoffice"
-          "sbase"
-          "scalc"
-          "sdraw"
-          "simpress"
-          "smath"
-          "soffice"
-          "swriter"
-          "unopkg"
-        ]);
+        wrap drv (map (name:
+          withFonts {
+            inherit name;
+            # coreutils-full, gnugrep, gnused are needed because it's
+            # system default stdenv and libreoffice has scripts that rely
+            # on stdenv being in PATH
+            extra-deps = with pkgs; [
+              coreutils-full
+              gnugrep
+              gnused
+              plasma-integration
+            ];
+            graphics = true;
+            etcs = [ "pulse" "passwd" ];
+            localtime = true;
+            pams = [ "bus" "pulse" "pipewire-0" ];
+            unsetenvs = [ "MAIL" "SHELL" ];
+            media = true;
+            whitelist = [ "~/" ];
+            blacklist = [ "~/.gnupg/" "~/.ssh/" ];
+          }) [
+            "libreoffice"
+            "sbase"
+            "scalc"
+            "sdraw"
+            "simpress"
+            "smath"
+            "soffice"
+            "swriter"
+            "unopkg"
+          ]);
     }
     {
       predicate = lib.hasPrefix "wesnoth-";
