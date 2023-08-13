@@ -115,7 +115,6 @@
       (callPackage ./pan-globalprotect-okta.nix { })
       gnome-themes-extra
       gnome.adwaita-icon-theme
-      google-authenticator
       gparted
       graphicsmagick
       graphicsmagick-imagemagick-compat
