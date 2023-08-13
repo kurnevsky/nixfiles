@@ -476,6 +476,20 @@
       # It caches java path there.
       bloop.serviceConfig.ExecStartPre =
         "${pkgs.coreutils}/bin/rm -rf %h/.bloop/";
+      cloud-mdir-sync = let
+        cfg = pkgs.writeText "cms.cfg" ''
+          account = Office365_Account(user="ykurneuski@evolution.com")
+          CredentialServer("/run/user/1000/cms.sock", accounts=[account], protocols=["IMAP"])
+        '';
+      in {
+        description = "cloud-mdir-sync service";
+        after = [ "network-online.target" ];
+        wants = [ "network-online.target" ];
+        serviceConfig = {
+          Restart = "on-failure";
+          ExecStart = "${pkgs.cloud-mdir-sync}/bin/cloud-mdir-sync -c ${cfg}";
+        };
+      };
     };
     services = {
       iodine-digitalocean.wantedBy = pkgs.lib.mkForce [ ];
