@@ -452,7 +452,6 @@ let
               "~/.cache/qBittorrent/"
               "~/Downloads/"
               "~/Torrents/"
-              "~/movies/"
             ];
           } [ withFonts withOpengl ])
         ];
