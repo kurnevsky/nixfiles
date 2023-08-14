@@ -37,6 +37,9 @@
      ("flycheck-sh-bash"
        (pcase command
          (`(,(pred (string= (executable-find "bash"))) "--norc" "-n" "--") t)))
+     ("flycheck-sh-zsh"
+       (pcase command
+         (`(,(pred (string= (executable-find "zsh"))) "--no-exec" "--no-globalrcs" "--no-rcs" ,_) t)))
      ("flycheck-sh-shellcheck"
        (pcase command
          (`(,(pred (string= (executable-find "shellcheck"))) "--format" "checkstyle" "--shell" "bash" "--external-sources" "-") t)))
@@ -61,6 +64,9 @@
      ("flycheck-json-jq"
        (pcase command
          (`(,(pred (string= (executable-find "jq"))) "." ,_ "/dev/null") t)))
+     ("ess-r-flymake"
+       (pcase command
+         (`("R" "--no-save" "--no-restore" "--no-site-file" "--no-init-file" "--slave" . ,_) t)))
      ("doom-modeline-env"
        (pcase command
          (`(,(pred (string= (executable-find "rustc"))) "--version") t)))
