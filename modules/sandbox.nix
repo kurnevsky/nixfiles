@@ -121,6 +121,30 @@ let
       config = drv: wrap drv [ (archiver-cfg "unzip") ];
     }
     {
+      predicate = lib.hasPrefix "jq-";
+      config = drv:
+        wrap drv [{
+          name = "jq";
+          unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" "SHELL" ];
+          shared-tmp = true;
+          media = true;
+          whitelist = [ "~/" ];
+          blacklist = [ "~/.gnupg/" "~/.ssh/" ];
+        }];
+    }
+    {
+      predicate = lib.hasPrefix "libxml2-";
+      config = drv:
+        wrap drv [{
+          name = "xmllint";
+          unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" "SHELL" ];
+          shared-tmp = true;
+          media = true;
+          whitelist = [ "~/" ];
+          blacklist = [ "~/.gnupg/" "~/.ssh/" ];
+        }];
+    }
+    {
       predicate = lib.hasPrefix "mpv-";
       config = drv:
         wrap drv [
