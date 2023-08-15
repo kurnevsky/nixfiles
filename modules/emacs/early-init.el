@@ -105,7 +105,13 @@
          (`(,(pred (string= (executable-find "rust-analyzer")))) t)))
      ("nix-nil"
        (pcase command
-         (`("nil") t)))))
+         (`("nil") t)))
+     ("lsp-r"
+       (pcase command
+         (`("R" "--slave" "-e" "languageserver::run()") t)))
+     ("bash-ls"
+       (pcase command
+         (`(,(pred (string= (executable-find "bash-language-server"))) "start") t)))))
 
 (defvar sec-allow-make-network-process
   '(pcase name
