@@ -83,7 +83,9 @@
          (`(,(pred (string= shell-file-name)) "-c" "mbsync --all") t)))
      ("git"
        (pcase command
-         (`("git" "--no-pager" "--literal-pathspecs" . ,_) t)))
+         (`("git" "--no-pager" "--literal-pathspecs" . ,_) t)
+         ;; Tramp
+         (`("/bin/sh" "-i") t)))
      ("epg"
        (pcase command
          (`(,(pred (string= (executable-find "gpg2"))) "--no-tty" "--status-fd" "1" "--yes" "--enable-progress-filter" "--command-fd" "0" . ,_) t)))
