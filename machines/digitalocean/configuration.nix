@@ -31,6 +31,8 @@
       allowedUDPPorts = [
         # DNS
         53
+        # QUIC
+        443
         # Shadowsocks
         29135
         # Tox
@@ -145,7 +147,7 @@
     };
     nginx = {
       enable = true;
-      package = pkgs.nginxMainline;
+      package = pkgs.nginxQuic;
       recommendedTlsSettings = true;
       recommendedOptimisation = true;
       recommendedGzipSettings = true;
@@ -165,6 +167,8 @@
           };
         in {
           default = true;
+          http3 = true;
+          quic = true;
           enableACME = true;
           forceSSL = true;
           kTLS = true;
@@ -208,6 +212,8 @@
         };
         matrix-federation = {
           serverName = "kurnevsky.net";
+          http3 = true;
+          quic = true;
           onlySSL = true;
           sslCertificate = "${
               config.security.acme.certs."kurnevsky.net".directory
