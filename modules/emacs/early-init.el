@@ -64,6 +64,9 @@
      ("flycheck-json-jq"
        (pcase command
          (`(,(pred (string= (executable-find "jq"))) "." ,_ "/dev/null") t)))
+     ("flycheck-json-python-json"
+       (pcase command
+         (`(,(pred (string= (executable-find "python3"))) "-m" "json.tool" ,_ "/dev/null") t)))
      ("ess-r-flymake"
        (pcase command
          (`("R" "--no-save" "--no-restore" "--no-site-file" "--no-init-file" "--slave" . ,_) t)))
