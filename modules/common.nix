@@ -43,7 +43,7 @@ in {
   };
 
   environment = {
-    systemPackages = with pkgs; [ git lsof mc ];
+    systemPackages = with pkgs; [ git lsof mc sourceHighlight ];
     shellAliases = {
       ls = "ls --color=auto";
       grep = "grep --color=auto";

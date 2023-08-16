@@ -175,7 +175,6 @@
       shntool
       skim
       smartmontools
-      sourceHighlight
       sshfs-fuse
       tealdeer
       tesseract
