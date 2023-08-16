@@ -2,8 +2,7 @@
 
 pkgs.emacsWithPackagesFromUsePackage {
   config = ./init.el;
-  package = emacs.overrideAttrs
-    (old: { passthru = old.passthru // { treeSitter = true; }; });
+  package = emacs;
   alwaysEnsure = true;
   extraEmacsPackages = epkgs: [
     (pkgs.stdenv.mkDerivation {

@@ -453,7 +453,8 @@
       enable = true;
       setSocketVariable = true;
     };
-    virtualbox.host.enable = true;
+    # TODO: broken
+    # virtualbox.host.enable = true;
     waydroid.enable = true;
   };
 

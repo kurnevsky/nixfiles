@@ -4,7 +4,7 @@ let
   patchedPkgs = lib.foldl (pkg: pkg.extend) pkgs (import ./overlays.nix).nixpkgs.overlays;
   emacsPkgs = patchedPkgs.extend emacs-overlay;
   emacsWithPackages = emacsPkgs.callPackage ./emacs/package.nix {
-    emacs = emacsPkgs.emacs-unstable-nox;
+    emacs = emacsPkgs.emacs29-nox;
   };
 in {
   nix = {
