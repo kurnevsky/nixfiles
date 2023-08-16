@@ -153,6 +153,9 @@
       recommendedGzipSettings = true;
       recommendedProxySettings = true;
       proxyTimeout = "300s";
+      appendHttpConfig = ''
+        fastcgi_param HTTP_HOST $host;
+      '';
       virtualHosts = {
         "kurnevsky.net" = let
           index =
