@@ -39,6 +39,7 @@ pkgs.emacsWithPackagesFromUsePackage {
       org-roam = withoutDependency super.org super.org-roam;
       org-ql = withoutDependency super.org super.org-ql;
       org-super-agenda = withoutDependency super.org super.org-super-agenda;
+      treemacs = withDependency super.doom-modeline super.treemacs;
       origami = withDependency super.fringe-helper (super.origami.overrideAttrs
         (old: {
           src = pkgs.fetchFromGitHub {
