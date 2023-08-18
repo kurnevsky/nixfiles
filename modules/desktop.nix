@@ -170,7 +170,6 @@
       rage
       rclone
       ripgrep
-      ripgrep-all
       rsync
       shntool
       skim
