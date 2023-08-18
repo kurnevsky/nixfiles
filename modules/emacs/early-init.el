@@ -101,6 +101,10 @@
      ("LanguageTool"
        (pcase command
          (`("languagetool-commandline" . ,_) t)))
+     ;; Treemacs
+     ("Process Future"
+       (pcase command
+         (`(,(pred (string= (executable-find "python3"))) "-O" . ,_) t)))
      ;; LSP
      ("metals"
        (pcase command
