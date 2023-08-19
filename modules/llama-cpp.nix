@@ -24,13 +24,13 @@ let
   };
 in stdenv.mkDerivation rec {
   pname = "llama-cpp";
-  version = "unstable-2023-08-09";
+  version = "unstable-2023-08-19";
 
   src = fetchFromGitHub {
     owner = "ggerganov";
     repo = "llama.cpp";
-    rev = "25d43e0eb578b6e73046d9d6644a3a14d460600d";
-    hash = "sha256-S90+xOOLV6+LBmO8NE0IbzbrDQaCjYWUe33Uc5RHhkk=";
+    rev = "1f0bccb27929e261744c979bc75114955da49e98";
+    hash = "sha256-JsoYDF4zI6nFptUKNtzTeoJt95l0HcA1wJ89rhSN+NM=";
   };
 
   nativeBuildInputs = [ cmake makeWrapper ];
