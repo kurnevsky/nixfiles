@@ -38,7 +38,7 @@ in {
   };
 
   environment = {
-    motd = "Abandon all hope, ye who enter here.";
+    motd = "Here be dragons.";
     packages = with patchedPkgs; [
       git
       lsof
