@@ -564,7 +564,7 @@ which LANG was detected but these are ignored."
   (defun fuzzy-matcher-propertize(pattern candidate)
     (let* ((score (fuzzy-matcher-skim-fuzzy-indices (encode-coding-string pattern 'utf-8 t) (fuzzy-matcher-without-tofu-char candidate)))
             (candidate (copy-sequence candidate)))
-      (put-text-property 0 1 'completion-score (car score) candidate)
+      (put-text-property 0 1 'completion-score (- (* (car score) 100) (length candidate)) candidate)
       (dolist (char (cdr score))
         (add-face-text-property char (1+ char) 'completions-common-part nil candidate))
       (when-let* ((char (last (cdr score)))
