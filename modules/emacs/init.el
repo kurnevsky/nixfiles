@@ -1079,6 +1079,28 @@ which LANG was detected but these are ignored."
   (defmath lookuplst (val s-list r-list)
     (org-lookup-last val s-list r-list)))
 
+(use-package org-agenda
+  :ensure nil
+  :bind (:map org-agenda-mode-map
+          ("R" . (lambda ()
+                   (interactive)
+                   (shell-command "curl --fail --no-progress-meter \"$(pass evo/outlook-ical)\" | \
+AUTHOR='Evgeny Kurnevsky' \
+EMAIL='ykurneuski@evolution.com' \
+TITLE='Evolution calendar' \
+CALENDAR='evo' \
+FILETAGS='work' \
+ical2org.awk > calendar.evo.org")
+                   (when-let ((buffer (get-file-buffer "~/calendar.evo.org")))
+                     (with-current-buffer buffer
+                       (revert-buffer :ignore-auto :noconfirm)))
+                   (org-agenda-redo))))
+  :custom
+  (org-agenda-file-regexp "\\`[^.].*\\.org\\\(\\.gpg\\\)?\\'")
+  (org-agenda-start-on-weekday nil)
+  (org-agenda-span 14)
+  (org-agenda-files '("~/calendar.evo.org")))
+
 (use-package org-roam
   :custom
   (org-roam-directory (expand-file-name "~/roam/"))

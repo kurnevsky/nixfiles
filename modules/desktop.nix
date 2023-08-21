@@ -67,6 +67,7 @@
       })
       (pass-wayland.withExtensions (ext: with ext; [ pass-otp pass-update ]))
       (callPackage ./llama-cpp.nix { })
+      (callPackage ./ical2org.nix { })
       (python311Packages.callPackage ./openhrv.nix { })
       aircrack-ng
       anki
