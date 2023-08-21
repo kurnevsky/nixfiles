@@ -92,6 +92,7 @@
       clinfo
       cloud-mdir-sync
       cuetools
+      curlHTTP3
       davfs2
       deadbeef-with-plugins
       dmidecode
