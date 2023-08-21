@@ -1435,6 +1435,7 @@ identifier and the position respectively."
   (mu4e-headers-results-limit 1000)
   (mu4e-change-filenames-when-moving t)
   (mu4e-get-mail-command "mbsync --all")
+  (mu4e-update-interval (* 15 60))
   :config
   ;; Remove padding so that content won't be shifted comparing to the header
   (dolist (hook '(mu4e-main-mode-hook mu4e-headers-mode-hook mu4e-view-mode-hook mu4e-compose-mode-hook))
