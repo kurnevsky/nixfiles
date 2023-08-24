@@ -561,10 +561,11 @@ which LANG was detected but these are ignored."
           (consult--tofu-p (aref string (- (length string) 1))))
       (substring string 0 (- (length string) 1))
       string))
-  (defun fuzzy-matcher-propertize(pattern candidate)
+  (defun fuzzy-matcher-propertize (pattern candidate)
     (let* ((score (fuzzy-matcher-skim-fuzzy-indices (encode-coding-string pattern 'utf-8 t) (fuzzy-matcher-without-tofu-char candidate)))
             (candidate (copy-sequence candidate)))
-      (put-text-property 0 1 'completion-score (- (* (or (car score) 0) 100) (length candidate)) candidate)
+      (unless (string-empty-p pattern)
+        (put-text-property 0 1 'completion-score (- (* (or (car score) 0) 100) (length candidate)) candidate))
       (dolist (char (cdr score))
         (add-face-text-property char (1+ char) 'completions-common-part nil candidate))
       (when-let* ((char (last (cdr score)))
@@ -587,7 +588,16 @@ which LANG was detected but these are ignored."
                                            completion-flex-try-completion
                                            fuzzy-matcher-all-completions
                                            "Fuzzy completion with scoring."))
-  (put 'fuzzy 'completion--adjust-metadata #'completion--flex-adjust-metadata)
+  (put 'fuzzy 'completion--adjust-metadata (lambda (metadata)
+                                             ;; completion--flex-adjust-metadata has faulty check for the completion
+                                             (if (let ((input (minibuffer-contents-no-properties)))
+                                                   (or
+                                                     (string-empty-p input)
+                                                     (and
+                                                       (eq (completion-metadata-get metadata 'category) 'file)
+                                                       (string-suffix-p "/" input))))
+                                               metadata
+                                               (completion--flex-adjust-metadata metadata))))
   (setq completion-styles '(fuzzy)))
 
 (use-package ido
@@ -628,20 +638,21 @@ which LANG was detected but these are ignored."
   :hook (rfn-eshadow-update-overlay . vertico-directory-tidy)
   :custom
   (vertico-resize nil)
-  (vertico-multiform-categories '((file (vertico-sort-function . sort-directories-first))))
   :config
-  ;; Sort directories before files
-  (defun sort-directories-first (files)
-    (setq files (vertico-sort-history-length-alpha files))
-    (nconc (seq-filter (-partial #'string-suffix-p "/") files)
-      (seq-remove (-partial #'string-suffix-p "/") files)))
   (vertico-mode))
 
 (use-package vertico-multiform
   :demand t
   :ensure vertico
   :after vertico
+  :custom
+  (vertico-multiform-categories '((file (vertico-sort-function . sort-directories-first))))
   :config
+  ;; Sort directories before files
+  (defun sort-directories-first (files)
+    (setq files (vertico-sort-history-alpha files))
+    (nconc (seq-filter (-partial #'string-suffix-p "/") files)
+      (seq-remove (-partial #'string-suffix-p "/") files)))
   (vertico-multiform-mode))
 
 (use-package vertico-mouse
