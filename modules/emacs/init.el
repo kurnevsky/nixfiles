@@ -1623,6 +1623,14 @@ properly."
     (widen)
     (write-region (point-min) (point-max) filename)
     (find-file filename)))
+(defun scroll-right-2()
+  "Scroll right by 2 columns."
+  (interactive)
+  (scroll-right 2))
+(defun scroll-left-2()
+  "Scroll left by 2 columns."
+  (interactive)
+  (scroll-left 2))
 (global-set-key (kbd "<escape>") #'keyboard-escape-quit)
 (global-set-key (kbd "C-f") #'isearch-forward)
 (define-key isearch-mode-map (kbd "C-f") #'isearch-repeat-forward)
@@ -1666,6 +1674,12 @@ properly."
                                                                                     `(metadata (display-sort-function . ,#'identity))
                                                                                     (complete-with-action action kill-ring string pred)))))
                                   (kill-new value))))
+(global-set-key (kbd "<wheel-left>") #'scroll-left-2)
+(global-set-key (kbd "<double-wheel-left>") #'scroll-left-2)
+(global-set-key (kbd "<triple-wheel-left>") #'scroll-left-2)
+(global-set-key (kbd "<wheel-right>") #'scroll-right-2)
+(global-set-key (kbd "<double-wheel-right>") #'scroll-right-2)
+(global-set-key (kbd "<triple-wheel-right>") #'scroll-right-2)
 
 (provide 'init)
 ;;; init.el ends here
