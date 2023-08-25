@@ -1,0 +1,22 @@
+[package]
+name = "fuzzy-matcher"
+version = "0.0.1"
+authors = ["Evgeny Kurnevsky <kurnevsky@gmail.com>"]
+license = "GPL-3.0+"
+edition = "2021"
+
+[lib]
+path = "src/lib.rs"
+name = "fuzzy_matcher_el"
+crate-type = ["cdylib"]
+
+[dependencies]
+emacs = "0.18"
+fuzzy-matcher = "0.3"
+
+[profile.release]
+opt-level = 3
+lto = true
+debug = false
+panic = "abort"
+codegen-units = 1
