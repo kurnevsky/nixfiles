@@ -1103,7 +1103,7 @@ EMAIL='ykurneuski@evolution.com' \
 TITLE='Evolution calendar' \
 CALENDAR='evo' \
 FILETAGS='work' \
-ical2org.awk > calendar.evo.org")
+ical2org.awk > ~/calendar.evo.org")
                    (when-let ((buffer (get-file-buffer "~/calendar.evo.org")))
                      (with-current-buffer buffer
                        (revert-buffer :ignore-auto :noconfirm)))
