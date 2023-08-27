@@ -50,6 +50,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
+
+    llama-cpp = {
+      type = "github";
+      owner = "ggerganov";
+      repo = "llama.cpp";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs:
@@ -93,6 +100,10 @@
         ./modules/nspawn.nix
         ./modules/zswap.nix
         ./modules/overlays.nix
+        ({ pkgs, ... }: {
+          environment.systemPackages =
+            [ inputs.llama-cpp.packages.${pkgs.system}.default ];
+        })
       ];
     in {
       nixosConfigurations = {
