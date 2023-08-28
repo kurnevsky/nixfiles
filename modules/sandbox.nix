@@ -275,6 +275,8 @@ let
             resolv-conf = true;
             unsetenvs = [ "MAIL" "SHELL" ];
             unshare-net = false;
+            disable-userns = false;
+            ro-whitelist = [ "~/.config/gtk-3.0/" ];
             whitelist = [
               "~/.config/chromium/"
               "~/.cache/chromium/"

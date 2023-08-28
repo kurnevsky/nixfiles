@@ -9,7 +9,8 @@ drv:
 , devs ? [ ], syses ? [ ], shared-tmp ? false, camera ? false, args ? [ ]
 , system-bus-socket ? false, extra-deps ? [ ], extra-deps-no-transitive ? [ ]
 , opengl ? false, opengl32 ? false, seccomp ? true, bin-sh ? false
-, localtime ? false, resolv-conf ? false, ro-media ? false, media ? false }:
+, localtime ? false, resolv-conf ? false, ro-media ? false, media ? false
+, disable-userns ? true }:
 
 assert !(ro-media && media);
 
@@ -186,7 +187,7 @@ in writeShellScriptBin target-name ''
        ${lib.optionalString unshare-uts "--unshare-uts"} \
        ${lib.optionalString unshare-cgroup "--unshare-cgroup"} \
        \
-       --disable-userns \
+       ${lib.optionalString disable-userns "--disable-userns"} \
        \
        --new-session \
        \
