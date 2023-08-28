@@ -2,10 +2,15 @@
 
 {
   boot = {
-    kernelPackages = pkgs.linuxPackages_latest;
+    kernelPackages = pkgs.linuxPackages_xanmod_latest;
+    kernelParams = [ "threadirqs" ];
     kernel.sysctl."kernel.sysrq" = 1;
     tmp.useTmpfs = true;
     supportedFilesystems = [ "ntfs" ];
+    postBootCommands = ''
+      echo 2048 > /sys/class/rtc/rtc0/max_user_freq
+      echo 2048 > /proc/sys/dev/hpet/max-user-freq
+    '';
   };
 
   networking = {
