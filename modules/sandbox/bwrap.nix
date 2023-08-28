@@ -186,6 +186,8 @@ in writeShellScriptBin target-name ''
        ${lib.optionalString unshare-uts "--unshare-uts"} \
        ${lib.optionalString unshare-cgroup "--unshare-cgroup"} \
        \
+       --disable-userns \
+       \
        --new-session \
        \
        --cap-drop ALL \
