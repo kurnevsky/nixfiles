@@ -2,7 +2,7 @@
 
 {
   boot = {
-    kernelPackages = pkgs.linuxPackages_xanmod_latest;
+    kernelPackages = pkgs.linuxPackages_latest;
     kernelParams = [ "threadirqs" ];
     kernel.sysctl."kernel.sysrq" = 1;
     tmp.useTmpfs = true;
