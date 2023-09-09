@@ -105,7 +105,7 @@
       dosfstools
       e2fsprogs
       eiskaltdcpp
-      exa
+      eza
       exfat
       extundelete
       fd
