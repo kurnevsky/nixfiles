@@ -27,6 +27,7 @@
       krdc
       kamoso
       wl-clipboard
+      plasma-pass
     ];
 
   xdg.portal = {
