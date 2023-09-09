@@ -223,7 +223,6 @@
       tdesktop
       ## Matrix
       element-desktop
-      fractal-next
       nheko
       ## Tox
       qtox

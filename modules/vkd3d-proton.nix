@@ -29,10 +29,6 @@ stdenv.mkDerivation rec {
     ./explicitly_define_hex_base.patch
   ];
 
-  postInstall = lib.optionalString stdenv.targetPlatform.isWindows ''
-    ln -s ${windows.mcfgthreads}/bin/mcfgthread-12.dll $out/bin/mcfgthread-12.dll
-  '';
-
   mesonFlags = [
     "--buildtype=release"
   ]
