@@ -602,6 +602,9 @@
             demuxer-max-bytes = 41943040;
             demuxer-max-back-bytes = 41943040;
             volume-max = 500;
+            vo = "gpu-next";
+            target-colorspace-hint = true;
+            gpu-api = "vulkan";
           };
           bindings = {
             "Ctrl+n" = ''af toggle "lavfi=[dynaudnorm=f=175:g=25:p=0.75]"'';
