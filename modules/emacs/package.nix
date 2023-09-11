@@ -69,6 +69,26 @@ pkgs.emacsWithPackagesFromUsePackage {
                                     :files ("all-the-icons-nerd-fonts.el"))
         '';
       };
+      llama-cpp = super.melpaBuild rec {
+        pname = "llama-cpp";
+        version = "1";
+        commit = "55677e00089e7ab14e4c309ed85f50bb5be02f6e";
+
+        src = pkgs.fetchFromGitHub {
+          owner = "kurnevsky";
+          repo = "llama-cpp.el";
+          rev = commit;
+          hash = "sha256-ITYujuClwBGWzk25FV3VOifeGj7gcJLyLagyAvM4jBE=";
+        };
+
+        buildInputs = with super; [ dash ];
+
+        recipe = pkgs.writeText "recipe" ''
+          (llama-cpp :fetcher github
+                     :repo "kurnevsky/llama-cpp.el"
+                     :files ("llama-cpp.el" "llama-cpp-chat.el" "llama-cpp-code.el"))
+        '';
+      };
       scala-ts-mode = super.melpaBuild rec {
         pname = "scala-ts-mode";
         version = "1";

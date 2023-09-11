@@ -1462,6 +1462,10 @@ identifier and the position respectively."
   :config
   (dap-ui-mode t))
 
+(use-package llama-cpp
+  :custom
+  (llama-cpp-host "pc"))
+
 (use-package mu4e
   :ensure nil
   :commands mu4e
