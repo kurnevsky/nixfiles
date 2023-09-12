@@ -1467,7 +1467,6 @@ identifier and the position respectively."
   (llama-cpp-host "pc"))
 
 (use-package mu4e
-  :ensure nil
   :commands mu4e
   :custom
   (mu4e-view-show-addresses t)
