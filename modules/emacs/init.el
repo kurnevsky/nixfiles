@@ -1244,6 +1244,12 @@ ical2org.awk > ~/calendar.evo.org")
        (side            . bottom)
        (window-height   . 0.3))))
 
+(use-package flycheck-package
+  :after flycheck
+  :demand t
+  :config
+  (flycheck-package-setup))
+
 (use-package adoc-mode
   :mode ("\\.adoc\\'" . adoc-mode))
 
