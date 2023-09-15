@@ -566,7 +566,7 @@
         uid = 1001;
         isNormalUser = true;
         shell = pkgs.zsh;
-        passwordFile = "/secrets/ww";
+        hashedPasswordFile = "/secrets/ww";
         extraGroups = [ "video" "pipewire" ];
       };
       hans.group = "hans";

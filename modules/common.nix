@@ -115,7 +115,7 @@ in {
         isNormalUser = true;
         extraGroups = [ "wheel" ];
         shell = pkgs.zsh;
-        passwordFile = "/secrets/kurnevsky";
+        hashedPasswordFile = "/secrets/kurnevsky";
         openssh.authorizedKeys.keys = keys;
       };
     };
