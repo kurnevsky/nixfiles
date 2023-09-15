@@ -84,6 +84,7 @@
       delta.enable = true;
       lfs.enable = true;
       extraConfig = {
+        init.defaultBranch = "master";
         push.default = "simple";
         merge.conflictstyle = "diff3";
         pull.ff = "only";
