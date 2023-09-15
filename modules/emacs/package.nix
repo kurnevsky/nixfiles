@@ -52,21 +52,20 @@ pkgs.emacsWithPackagesFromUsePackage {
       llama-cpp = super.melpaBuild rec {
         pname = "llama-cpp";
         version = "1";
-        commit = "55677e00089e7ab14e4c309ed85f50bb5be02f6e";
+        commit = "09cf982e421e5b0d66a1ee16ed77d4301b80e2a2";
 
         src = pkgs.fetchFromGitHub {
           owner = "kurnevsky";
           repo = "llama-cpp.el";
           rev = commit;
-          hash = "sha256-ITYujuClwBGWzk25FV3VOifeGj7gcJLyLagyAvM4jBE=";
+          hash = "sha256-hJRuM8q/FI3IHyjZhAiA/Py20gDXk6sqekxrm11j0Ds=";
         };
 
         buildInputs = with super; [ dash ];
 
         recipe = pkgs.writeText "recipe" ''
           (llama-cpp :fetcher github
-                     :repo "kurnevsky/llama-cpp.el"
-                     :files ("llama-cpp.el" "llama-cpp-chat.el" "llama-cpp-code.el"))
+                     :repo "kurnevsky/llama-cpp.el")
         '';
       };
       scala-ts-mode = super.melpaBuild rec {
