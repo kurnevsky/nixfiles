@@ -90,6 +90,13 @@
               Placement = "Maximizing";
               RollOverDesktops = false;
             };
+            NightColor = {
+              Active = true;
+              EveningBeginFixed = 2200;
+              Mode = "Times";
+              NightTemperature = 1500;
+              TransitionTime = 10;
+            };
           };
           kdeglobals.KDE.SingleClick = false;
           kglobalshortcutsrc = {
