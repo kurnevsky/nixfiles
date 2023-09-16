@@ -1250,6 +1250,13 @@ ical2org.awk > ~/calendar.evo.org")
   :config
   (flycheck-package-setup))
 
+(use-package pdf-tools
+  :init
+  (pdf-loader-install)
+  :config
+  (add-hook 'pdf-view-mode-hook (lambda ()
+                                  (display-line-numbers-mode -1))))
+
 (use-package adoc-mode
   :mode ("\\.adoc\\'" . adoc-mode))
 

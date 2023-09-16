@@ -102,6 +102,9 @@
      ("LanguageTool"
        (pcase command
          (`("languagetool-commandline" . ,_) t)))
+     ("epdfinfo"
+       (pcase command
+         (`(,(rx bos "/nix/store/" (* nonl) "/epdfinfo" eos)) t)))
      ;; Treemacs
      ("Process Future"
        (pcase command
