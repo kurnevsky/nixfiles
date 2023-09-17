@@ -1094,6 +1094,12 @@ which LANG was detected but these are ignored."
   (defmath lookuplst (val s-list r-list)
     (org-lookup-last val s-list r-list)))
 
+(use-package org-modern
+  :demand t
+  :after org
+  :config
+  (global-org-modern-mode))
+
 (use-package org-agenda
   :ensure nil
   :bind (:map org-agenda-mode-map
