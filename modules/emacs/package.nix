@@ -49,25 +49,6 @@ pkgs.emacsWithPackagesFromUsePackage {
             sha256 = "sha256-Ysb1PTTvaM6Jig8JidMeNynnXyiG/YQ14ZRVqxGWyAU=";
           };
         }));
-      llama-cpp = super.melpaBuild rec {
-        pname = "llama-cpp";
-        version = "1";
-        commit = "09cf982e421e5b0d66a1ee16ed77d4301b80e2a2";
-
-        src = pkgs.fetchFromGitHub {
-          owner = "kurnevsky";
-          repo = "llama-cpp.el";
-          rev = commit;
-          hash = "sha256-hJRuM8q/FI3IHyjZhAiA/Py20gDXk6sqekxrm11j0Ds=";
-        };
-
-        buildInputs = with super; [ dash ];
-
-        recipe = pkgs.writeText "recipe" ''
-          (llama-cpp :fetcher github
-                     :repo "kurnevsky/llama-cpp.el")
-        '';
-      };
       scala-ts-mode = super.melpaBuild rec {
         pname = "scala-ts-mode";
         version = "1";
