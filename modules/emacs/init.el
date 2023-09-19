@@ -794,8 +794,6 @@ which LANG was detected but these are ignored."
           ("C-p f" . projectile-find-file)
           ("C-p o" . projectile-find-file)
           ("C-p C-p" . projectile-switch-project))
-  :custom
-  (projectile-git-fd-args "-H -0 -E .git -tf --strip-cwd-prefix -c never")
   :config
   (projectile-mode))
 

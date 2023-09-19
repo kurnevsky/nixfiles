@@ -37,9 +37,9 @@
 
     mobile-nixos = {
       type = "github";
-      owner = "Luflosi";
+      owner = "NixOS";
       repo = "mobile-nixos";
-      ref = "eg25-manager";
+      ref = "development";
       flake = false;
     };
 
