@@ -1279,6 +1279,10 @@ ical2org.awk > ~/calendar.evo.org")
   (add-hook 'polymode-before-switch-buffer-hook (lambda (_old _new)
                                                   (highlight-thing-remove-last))))
 
+(use-package markdown-mode
+  :config
+  (add-hook 'markdown-mode-hook (lambda () (setq show-trailing-whitespace t))))
+
 (use-package poly-markdown)
 
 (use-package poly-org)
