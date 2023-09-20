@@ -780,9 +780,12 @@ which LANG was detected but these are ignored."
 
 (use-package centaur-tabs
   :demand
+  :hook (treemacs-mode . (lambda () centaur-tabs-local-mode nil))
   :custom
   (centaur-tabs-set-icons t)
   :config
+  (advice-add 'centaur-tabs-hide-tab :before-until (lambda (buffer)
+                                                     (string-prefix-p " " (buffer-name buffer))))
   (centaur-tabs-mode t)
   (centaur-tabs-headline-match)
   (centaur-tabs-group-by-projectile-project)
