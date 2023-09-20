@@ -1267,10 +1267,11 @@ ical2org.awk > ~/calendar.evo.org")
 
 (use-package polymode
   :config
+  (advice-add 'flycheck-may-enable-mode :after-while (lambda ()
+                                                       (not (and polymode-mode (buffer-base-buffer)))))
   ;; Doesn't work well with polymode.
-  (add-hook 'prog-mode-hook (lambda ()
-                              (when polymode-mode
-                                (set (make-local-variable 'highlight-indent-guides-responsive) nil))))
+  (add-hook 'polymode-init-inner-hook (lambda ()
+                                        (set (make-local-variable 'highlight-indent-guides-responsive) nil)))
   ;; Fix highlight thing
   (add-hook 'polymode-before-switch-buffer-hook (lambda (_old _new)
                                                   (highlight-thing-remove-last))))
