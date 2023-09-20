@@ -784,6 +784,9 @@ which LANG was detected but these are ignored."
   (centaur-tabs-set-icons t)
   :config
   (push 'treemacs-mode-hook centaur-tabs-hide-tabs-hooks)
+  (advice-add 'centaur-tabs-hide-tab-cached :after-until (lambda (buffer)
+                                                           (with-current-buffer buffer
+                                                             (and polymode-mode (string-prefix-p " " (buffer-name buffer))))))
   (centaur-tabs-mode t)
   (centaur-tabs-headline-match)
   (centaur-tabs-group-by-projectile-project)
