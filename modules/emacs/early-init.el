@@ -54,7 +54,7 @@
          (`(,(pred (string= (executable-find "gcc"))) "-fshow-column" "-iquote" ,_ "-Wall" "-Wextra" "-x" "c" "-S" "-o" "/dev/null" "-") t)))
      ("flycheck-c/c++-clang"
        (pcase command
-         (`(,(pred (string= (executable-find "clang"))) "-fsyntax-only" "-fno-color-diagnostics" "-fno-caret-diagnostics" "-fno-diagnostics-show-option" "-iquote" ,_ "-Wall" "-Wextra" "-x" "c" "-") t)))
+         (`(,(pred (string= (executable-find "clang"))) "-fsyntax-only" "-fno-color-diagnostics" "-fno-caret-diagnostics" "-fno-diagnostics-show-option" "-iquote" ,_ "-Wall" "-Wextra" "-x" ,_ "-") t)))
      ("flycheck-haskell-ghc"
        (pcase command
          (`(,(pred (string= (executable-find "ghc"))) "-Wall" "-no-link" . ,_) t)))
