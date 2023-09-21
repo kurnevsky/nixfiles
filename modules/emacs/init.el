@@ -1421,12 +1421,10 @@ identifier and the position respectively."
 (use-package lsp-ui
   :custom
   (lsp-ui-doc-alignment 'window)
-  (lsp-ui-sideline-update-mode 'line)
   (lsp-ui-doc-position 'top)
-  (lsp-ui-sideline-wait-for-all-symbols nil)
   (lsp-ui-doc-show-with-mouse nil)
   (lsp-ui-doc-show-with-cursor t)
-  (lsp-ui-sideline-show-code-actions t)
+  (lsp-ui-sideline-enable nil)
   :config
   (delete (list 'no-accept-focus) lsp-ui-doc-frame-parameters)
   (add-to-list 'lsp-ui-doc-frame-parameters '(no-accept-focus . t)))
@@ -1492,6 +1490,17 @@ identifier and the position respectively."
   :after dap-mode
   :config
   (dap-ui-mode t))
+
+(use-package sideline
+  :hook (flycheck-mode . sideline-mode)
+  :custom
+  (sideline-backends-right '((sideline-lsp . up)
+                              (sideline-flycheck . down))))
+
+(use-package sideline-flycheck
+  :hook (flycheck-mode . sideline-flycheck-setup))
+
+(use-package sideline-lsp)
 
 (use-package llama-cpp
   :custom
