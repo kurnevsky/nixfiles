@@ -72,8 +72,7 @@
          (`("R" "--no-save" "--no-restore" "--no-site-file" "--no-init-file" "--slave" . ,_) t)))
      ("doom-modeline-env"
        (pcase command
-         (`(,(pred (string= (executable-find "rustc"))) "--version") t)
-         (`(,(rx bos "/nix/store/" (* nonl) "/rustc" eos) "--version") t)))
+         (`(,(pred (string= (executable-find "rustc"))) "--version") t)))
      ("rg"
        (pcase command
          (`(,(pred (string= shell-file-name)) "-c" ,(pred (string-prefix-p (executable-find "rg")))) t)
