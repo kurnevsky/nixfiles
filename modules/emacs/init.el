@@ -1310,7 +1310,8 @@ ical2org.awk > ~/calendar.evo.org")
 
 (use-package yaml-mode)
 
-(use-package groovy-mode)
+(use-package groovy-mode
+  :mode ("/Jenkinsfile\\." . groovy-mode))
 
 (use-package scala-mode
   :mode ("\\.sc\\'" . scala-mode)

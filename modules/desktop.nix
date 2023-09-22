@@ -263,6 +263,7 @@
           (callPackage ./python-diffusers.nix { })
           (callPackage ./python-accelerate.nix { })
         ]))
+      groovy
       ## Shell
       nodePackages.bash-language-server
       shellcheck
