@@ -79,9 +79,7 @@
       ansible-lint
       appimage-run
       aria2
-      aspell
-      aspellDicts.en
-      aspellDicts.ru
+      (aspellWithDicts (dicts: with dicts; [ en ru ]))
       barcode
       bat
       bind
