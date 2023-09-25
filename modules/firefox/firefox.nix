@@ -192,8 +192,6 @@
 
   # [SECTION 2400]: DOM (DOCUMENT OBJECT MODEL) & JAVASCRIPT
 
-  # 2402: disable website access to clipboard events/content
-  "dom.event.clipboardevents.enabled" = false;
   # 2405: disable "Confirm you want to leave" dialog on page close
   "dom.disable_beforeunload" = true;
   # 2414: disable shaking the screen
