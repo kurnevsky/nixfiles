@@ -185,15 +185,8 @@
   # 2212: limit events that can cause a popup
   "dom.popup_allowed_events" = "click dblclick";
 
-  # [SECTION 2300]: WEB WORKERS
-
-  # 2302: disable service workers
-  "dom.serviceWorkers.enabled" = false;
-
   # [SECTION 2400]: DOM (DOCUMENT OBJECT MODEL) & JAVASCRIPT
 
-  # 2414: disable shaking the screen
-  "dom.vibrator.enabled" = false;
   # 2429: enable (limited but sufficient) window.opener protection
   "dom.targetBlankNoOpener.enabled" = true;
 
