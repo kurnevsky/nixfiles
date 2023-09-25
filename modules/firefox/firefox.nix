@@ -192,8 +192,6 @@
 
   # [SECTION 2400]: DOM (DOCUMENT OBJECT MODEL) & JAVASCRIPT
 
-  # 2405: disable "Confirm you want to leave" dialog on page close
-  "dom.disable_beforeunload" = true;
   # 2414: disable shaking the screen
   "dom.vibrator.enabled" = false;
   # 2429: enable (limited but sufficient) window.opener protection
