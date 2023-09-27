@@ -286,7 +286,7 @@
       ## Scala
       coursier
       sbt
-      scala
+      scala_3
       metals
       ## Nix
       alejandra
