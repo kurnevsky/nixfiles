@@ -82,6 +82,7 @@
       (aspellWithDicts (dicts: with dicts; [ en ru ]))
       barcode
       bat
+      bc
       bind
       bindfs
       binutils
