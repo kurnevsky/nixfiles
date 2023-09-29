@@ -7,7 +7,7 @@ let
     }).unstable;
 in callPackage "${pkgs.path}/pkgs/applications/emulators/wine/base.nix" rec {
   pname = "wine-ge";
-  version = "Proton8-16";
+  version = "Proton8-17";
   src = fetchFromGitHub {
     owner = "GloriousEggroll";
     repo = "proton-wine";
