@@ -7,7 +7,7 @@ in {
     # this breaks nix daemon because /nix should be owned by root
     # type = lib.mkForce "btrfs";
     label = lib.mkForce "root";
-    id = lib.mkForce uuid;
+    ext4.partitionID = lib.mkForce uuid;
   };
 
   fileSystems."/" = {
