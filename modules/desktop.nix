@@ -72,7 +72,8 @@
       })
       (pass-wayland.withExtensions (ext: with ext; [ pass-otp pass-update ]))
       (callPackage ./ical2org.nix { })
-      (python311Packages.callPackage ./openhrv.nix { })
+      # TODO: pyside6 is broken
+      # (python311Packages.callPackage ./openhrv.nix { })
       aircrack-ng
       anki
       ansible
