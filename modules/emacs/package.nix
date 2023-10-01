@@ -52,13 +52,13 @@ pkgs.emacsWithPackagesFromUsePackage {
       scala-ts-mode = super.melpaBuild rec {
         pname = "scala-ts-mode";
         version = "1";
-        commit = "771ae55a2bbb1c9a58ade68ee704d2b8d7097a73";
+        commit = "e933ecd72d58e4dc02b81c8e2ed23da2f1948358";
 
         src = pkgs.fetchFromGitHub {
           owner = "KaranAhlawat";
           repo = pname;
           rev = commit;
-          hash = "sha256-1OLJ95hTYL7A3WDu0bN3UI7fWEouPK76xoEpyHr/CBQ=";
+          hash = "sha256-FdNWen0wjaY1c0O6O1iY018HZD/rYzxd0llhteqq8d0=";
         };
 
         recipe = pkgs.writeText "recipe" ''
