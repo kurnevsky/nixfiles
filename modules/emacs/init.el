@@ -1236,7 +1236,8 @@ ical2org.awk > ~/calendar.evo.org")
   (treemacs-show-cursor t)
   :config
   (treemacs-follow-mode t)
-  (treemacs-filewatch-mode t))
+  (treemacs-filewatch-mode t)
+  (add-hook 'treemacs-mode-hook (lambda () (display-line-numbers-mode -1))))
 
 (use-package treemacs-projectile
   :bind ("S-<f8>" . treemacs-projectile))
