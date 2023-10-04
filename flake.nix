@@ -102,7 +102,7 @@
         ./modules/overlays.nix
         ({ pkgs, ... }: {
           environment.systemPackages =
-            [ inputs.llama-cpp.packages.${pkgs.system}.default ];
+            [ inputs.llama-cpp.packages.${pkgs.system}.opencl ];
         })
       ];
     in {
