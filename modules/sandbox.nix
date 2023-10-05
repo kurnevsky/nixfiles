@@ -410,7 +410,7 @@ let
       predicate = lib.hasPrefix "element-desktop-";
       config = drv:
         wrap drv [
-          (withFonts {
+          (lib.pipe {
             name = "element-desktop";
             extra-deps = with pkgs; [
               qt5ct
@@ -439,9 +439,10 @@ let
             resolv-conf = true;
             unsetenvs = [ "MAIL" "SHELL" ];
             unshare-net = false;
+            disable-userns = false;
             ro-whitelist = [ "~/.config/gtk-3.0/" ];
             whitelist = [ "~/.config/Element/" "~/.config/pulse/" ];
-          })
+          } [ withFonts withOpengl ])
         ];
     }
     {
