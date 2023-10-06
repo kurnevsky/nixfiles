@@ -1361,6 +1361,8 @@ ical2org.awk > ~/calendar.evo.org")
 
 (use-package bats-mode)
 
+(use-package terraform-mode)
+
 (when (executable-find "agda-mode")
   (use-package agda2
     :ensure nil
