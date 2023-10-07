@@ -204,8 +204,7 @@
       dxvk.out
       wirelesstools
       xmlstarlet
-      you-get
-      youtube-dl
+      yt-dlp
       zathura
       zbar
       # Archivers
