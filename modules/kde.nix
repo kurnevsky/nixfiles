@@ -11,13 +11,43 @@
         defaultSession = "plasmawayland";
         sddm = {
           enable = true;
+          wayland = {
+            enable = true;
+            compositorCommand =
+              "${pkgs.kwin}/bin/kwin_wayland --no-global-shortcuts --no-lockscreen --locale1";
+          };
           autoNumlock = true;
-          settings.Users.HideUsers = "ww";
+          settings = {
+            Users.HideUsers = "ww";
+            # kwin compositor
+            General = {
+              GreeterEnvironment =
+                "QT_PLUGIN_PATH=${pkgs.plasma5Packages.layer-shell-qt}/${pkgs.plasma5Packages.qtbase.qtPluginPrefix},QT_WAYLAND_SHELL_INTEGRATION=layer-shell";
+              InputMethod = "";
+            };
+          };
         };
       };
       desktopManager.plasma5.enable = true;
     };
   };
+
+  # kwin compositor
+  nixpkgs.overlays = [
+    (self: super: {
+      libsForQt5 = super.libsForQt5.overrideScope' (qt5self: qt5super: {
+        sddm = qt5super.sddm.overrideAttrs (old: {
+          patces = (old.patches or [ ]) ++ [
+            (pkgs.fetchpatch {
+              url =
+                "https://github.com/sddm/sddm/commit/1a78805be83449b1b9c354157320f7730fcc9f36.diff";
+              sha256 = "sha256-JNsVTJNZV6T+SPqPkaFf3wg8NDqXGx8NZ4qQfZWOli4=";
+            })
+          ];
+        });
+      });
+    })
+  ];
 
   environment.systemPackages = with pkgs;
     with plasma5Packages; [
