@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ config, pkgs, lib, ... }:
 
 let
   keys = [
@@ -33,7 +33,7 @@ in {
       experimental-features = nix-command flakes repl-flake
       keep-outputs = true
       keep-derivations = true
-      secret-key-files = /secrets/store
+      secret-key-files = ${config.age.secrets.store.path or "/secrets/store"}
     '';
     sshServe = {
       enable = true;
@@ -115,7 +115,8 @@ in {
         isNormalUser = true;
         extraGroups = [ "wheel" ];
         shell = pkgs.zsh;
-        hashedPasswordFile = "/secrets/kurnevsky";
+        hashedPasswordFile =
+          config.age.secrets.kurnevsky.path or "/secrets/kurnevsky";
         openssh.authorizedKeys.keys = keys;
       };
     };

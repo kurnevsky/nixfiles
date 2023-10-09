@@ -240,14 +240,14 @@
       enable = true;
       ip = "172.18.43.0";
       extraConfig = "-d icmp -m 1200";
-      passwordFile = "/secrets/hans";
+      passwordFile = config.age.secrets.hans.path or "/secrets/hans";
     };
     iodine.server = {
       enable = true;
       ip = "172.18.42.1/24";
       domain = "i.kurnevsky.net";
       extraConfig = "-n 82.196.15.215";
-      passwordFile = "/secrets/iodine";
+      passwordFile = config.age.secrets.iodine.path or "/secrets/iodine";
     };
     yggdrasil = {
       enable = true;
@@ -275,6 +275,21 @@
   users = {
     users.hans.group = "hans";
     groups.hans = { };
+  };
+
+  age.secrets = {
+    kurnevsky.file = ../../secrets/kurnevsky-digitalocean.age;
+    store.file = ../../secrets/store-digitalocean.age;
+    hans = {
+      file = ../../secrets/hans.age;
+      owner = "hans";
+      group = "hans";
+    };
+    iodine = {
+      file = ../../secrets/iodine.age;
+      owner = "iodined";
+      group = "iodined";
+    };
   };
 
   system.stateVersion = "21.11";

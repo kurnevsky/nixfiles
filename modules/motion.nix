@@ -1,8 +1,8 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 let
   homeDir = "/var/lib/motion";
-  config = pkgs.writeText "motion.conf" ''
+  motion-config = pkgs.writeText "motion.conf" ''
     videodevice /dev/video1
     width 1280
     height 720
@@ -51,7 +51,9 @@ in {
       ReadWritePaths = homeDir;
     };
     script = ''
-      cat ${config} /secrets/motion > /tmp/motion.conf
+      cat ${motion-config} ${
+        config.age.secrets.motion.path or "/secrets/motion"
+      } > /tmp/motion.conf
       exec ${pkgs.motion}/bin/motion -n -c /tmp/motion.conf
     '';
   };

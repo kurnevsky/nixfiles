@@ -70,6 +70,27 @@
     kde.fprintAuth = false;
   };
 
+  age.secrets = {
+    kurnevsky.file = ../../secrets/kurnevsky-evo.age;
+    ww.file = ../../secrets/ww-evo.age;
+    store.file = ../../secrets/store-evo.age;
+    motion = {
+      file = ../../secrets/motion.age;
+      mode = "440";
+      group = "secrets";
+    };
+    hans = {
+      file = ../../secrets/hans.age;
+      owner = "hans";
+      group = "hans";
+    };
+    iodine = {
+      file = ../../secrets/iodine.age;
+      owner = "iodined";
+      group = "iodined";
+    };
+  };
+
   system.stateVersion = "21.11";
 
   home-manager.users = {

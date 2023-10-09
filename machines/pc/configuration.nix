@@ -96,6 +96,27 @@
     })
   ];
 
+  age.secrets = {
+    kurnevsky.file = ../../secrets/kurnevsky-pc.age;
+    ww.file = ../../secrets/ww-pc.age;
+    store.file = ../../secrets/store-pc.age;
+    motion = {
+      file = ../../secrets/motion.age;
+      mode = "440";
+      group = "secrets";
+    };
+    hans = {
+      file = ../../secrets/hans.age;
+      owner = "hans";
+      group = "hans";
+    };
+    iodine = {
+      file = ../../secrets/iodine.age;
+      owner = "iodined";
+      group = "iodined";
+    };
+  };
+
   system.stateVersion = "22.11";
 
   home-manager.users = {

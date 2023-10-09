@@ -51,6 +51,15 @@
       inputs.home-manager.follows = "home-manager";
     };
 
+    agenix = {
+      type = "github";
+      owner = "ryantm";
+      repo = "agenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+      inputs.darwin.follows = "";
+    };
+
     llama-cpp = {
       type = "github";
       owner = "ggerganov";
@@ -70,6 +79,7 @@
       for-all-home-users = import ./modules/for-all-home-users.nix;
       common-home = import ./modules/common-home.nix;
       commonModules = [
+        inputs.agenix.nixosModules.default
         inputs.home-manager.nixosModules.home-manager
         ./modules/common.nix
         ./modules/bfq.nix
@@ -101,8 +111,10 @@
         ./modules/zswap.nix
         ./modules/overlays.nix
         ({ pkgs, ... }: {
-          environment.systemPackages =
-            [ inputs.llama-cpp.packages.${pkgs.system}.opencl ];
+          environment.systemPackages = [
+            inputs.agenix.packages.${pkgs.system}.default
+            inputs.llama-cpp.packages.${pkgs.system}.opencl
+          ];
         })
       ];
     in {

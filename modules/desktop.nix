@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   boot = {
@@ -375,12 +375,12 @@
     };
     hans.clients.digitalocean = {
       server = "kurnevsky.net";
-      passwordFile = "/secrets/hans";
+      passwordFile = config.age.secrets.hans.path or "/secrets/hans";
       extraConfig = "-d icmp -m 1200";
     };
     iodine.clients.digitalocean = {
       server = "i.kurnevsky.net";
-      passwordFile = "/secrets/iodine";
+      passwordFile = config.age.secrets.iodine.path or "/secrets/iodine";
     };
     i2pd = {
       enable = true;
@@ -566,7 +566,7 @@
         uid = 1001;
         isNormalUser = true;
         shell = pkgs.zsh;
-        hashedPasswordFile = "/secrets/ww";
+        hashedPasswordFile = config.age.secrets.ww.path or "/secrets/ww";
         extraGroups = [ "video" "pipewire" ];
       };
       hans.group = "hans";
