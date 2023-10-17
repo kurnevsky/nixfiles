@@ -137,6 +137,7 @@
       isync
       jq
       kubectl
+      kubelogin-oidc
       languagetool
       lapce
       libnotify
