@@ -85,17 +85,6 @@
     kde.fprintAuth = false;
   };
 
-  nixpkgs.overlays = [
-    (self: super: {
-      python3 = super.python3.override {
-        packageOverrides = python-self: python-super: {
-          torchWithRocm =
-            python-super.torchWithRocm.override { gpuTargets = [ "gfx1100" ]; };
-        };
-      };
-    })
-  ];
-
   age.secrets = {
     kurnevsky.file = ../../secrets/kurnevsky-pc.age;
     ww.file = ../../secrets/ww-pc.age;
