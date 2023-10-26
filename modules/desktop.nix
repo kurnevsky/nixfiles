@@ -238,7 +238,8 @@
       grafana-loki
       kcat
       # Wallets
-      electrum
+      # TODO: broken
+      # electrum
       monero-cli
       # TODO: feather-wallet
       # Audio

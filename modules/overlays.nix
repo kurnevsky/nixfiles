@@ -8,7 +8,7 @@
         plugins = with super.deadbeefPlugins; [ mpris2 statusnotifier ];
       };
       firefox = super.firefox.override {
-        extraNativeMessagingHosts = [ super.passff-host ];
+        nativeMessagingHosts = [ super.passff-host ];
       };
       mpv = super.mpv.override { scripts = with super.mpvScripts; [ mpris ]; };
       p7zip = super.p7zip.override { enableUnfree = true; };
