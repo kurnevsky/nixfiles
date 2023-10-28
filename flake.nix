@@ -113,7 +113,12 @@
         ({ pkgs, ... }: {
           environment.systemPackages = [
             inputs.agenix.packages.${pkgs.system}.default
-            inputs.llama-cpp.packages.${pkgs.system}.opencl
+            (inputs.llama-cpp.packages.${pkgs.system}.opencl.overrideAttrs
+              (old: {
+                postInstall = (old.postInstall or "") + ''
+                  find $out/bin -type f ! -wholename '*/llama*' -exec ${pkgs.util-linux}/bin/rename "" 'llama-' {} \;
+                '';
+              }))
           ];
         })
       ];
