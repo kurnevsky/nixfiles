@@ -67,6 +67,9 @@
      ("flycheck-json-python-json"
        (pcase command
          (`(,(pred (string= (executable-find "python3"))) "-m" "json.tool" ,_ "/dev/null") t)))
+     ("flycheck-haskell-hlint"
+       (pcase command
+         (`(,(pred (string= (executable-find "hlint"))) ,_) t)))
      ("flycheck-groovy"
        (pcase command
          (`(,(pred (string= (executable-find "groovy"))) "-e" . ,_) t)))
