@@ -257,7 +257,7 @@
       (python3.withPackages (pkgs:
         with pkgs; [
           transformers
-          pytorch
+          torch
           sentencepiece
           sacremoses
           torchvision
