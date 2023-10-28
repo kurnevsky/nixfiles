@@ -8,7 +8,7 @@
         plugins = with super.deadbeefPlugins; [ mpris2 statusnotifier ];
       };
       firefox = super.firefox.override {
-        extraNativeMessagingHosts = [
+        nativeMessagingHosts = [
           super.passff-host
           super.plasma5Packages.plasma-browser-integration
         ];
