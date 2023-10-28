@@ -216,12 +216,21 @@ let
         wrap drv [
           (lib.pipe {
             name = "firefox";
+            extra-deps = with pkgs; [
+              qt5ct
+              gnome-themes-extra
+              gnome.adwaita-icon-theme
+              hicolor-icon-theme
+              plasma-integration
+              kde-gtk-config
+            ];
             devs = [ "dri" ];
             camera = true;
             syses = [
               # Necessary for hardware acceleration
               "dev"
               "devices"
+              "bus"
             ];
             graphics = true;
             pams = [ "bus" "gnupg" "pulse" "pipewire-0" ];
@@ -234,7 +243,12 @@ let
               value = "/run/current-system/sw/bin/bash";
             }];
             unshare-net = false;
-            ro-whitelist = [ "~/.password-store/" "~/.config/gtk-3.0/" ];
+            ro-whitelist = [
+              "~/.password-store/"
+              "~/.config/gtk-3.0/"
+              "~/.config/qt5ct/"
+              "~/.config/kdeglobals"
+            ];
             whitelist = [
               "~/.mozilla/"
               "~/.cache/mozilla/firefox/"
@@ -259,6 +273,8 @@ let
               gnome-themes-extra
               gnome.adwaita-icon-theme
               hicolor-icon-theme
+              plasma-integration
+              kde-gtk-config
             ];
             devs = [ "dri" ];
             camera = true;
@@ -276,7 +292,11 @@ let
             unsetenvs = [ "MAIL" "SHELL" ];
             unshare-net = false;
             disable-userns = false;
-            ro-whitelist = [ "~/.config/gtk-3.0/" ];
+            ro-whitelist = [
+              "~/.config/gtk-3.0/"
+              "~/.config/qt5ct/"
+              "~/.config/kdeglobals"
+            ];
             whitelist = [
               "~/.config/chromium/"
               "~/.cache/chromium/"
