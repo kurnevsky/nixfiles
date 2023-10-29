@@ -1380,7 +1380,10 @@ ical2org.awk > ~/calendar.evo.org")
 (use-package direnv
   :demand t
   :config
-  (direnv-mode))
+  (direnv-mode)
+  (advice-add 'direnv-update-directory-environment :after (lambda (&rest _)
+                                                            (when doom-modeline-env--command
+                                                              (setq doom-modeline-env--command (executable-find (file-name-nondirectory doom-modeline-env--command)))))))
 
 (use-package format-all)
 

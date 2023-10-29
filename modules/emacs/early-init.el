@@ -73,12 +73,16 @@
      ("flycheck-groovy"
        (pcase command
          (`(,(pred (string= (executable-find "groovy"))) "-e" . ,_) t)))
+     ("flycheck-python-pycompile"
+       (pcase command
+         (`(,(pred (string= (executable-find "python3"))) "-m" "py_compile" ,_) t)))
      ("ess-r-flymake"
        (pcase command
          (`("R" "--no-save" "--no-restore" "--no-site-file" "--no-init-file" "--slave" . ,_) t)))
      ("doom-modeline-env"
        (pcase command
-         (`(,(pred (string= (executable-find "rustc"))) "--version") t)))
+         (`(,(pred (string= (executable-find "rustc"))) "--version") t)
+         (`(,(pred (string= (executable-find "bash"))) "-c" ,_) t)))
      ("rg"
        (pcase command
          (`(,(pred (string= shell-file-name)) "-c" ,(pred (string-prefix-p (executable-find "rg")))) t)
