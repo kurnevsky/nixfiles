@@ -65,15 +65,15 @@
       telegram-desktop = super.telegram-desktop.overrideAttrs (old: {
         patches = let
           baseUrl =
-            "https://raw.githubusercontent.com/Layerex/telegram-desktop-patches/cfcced0bf6226fe273eb4fee0aaa625082ab041a/";
+            "https://raw.githubusercontent.com/Layerex/telegram-desktop-patches/2457ef3a2d3ff94dfa4b0a73ea4c51bad4b3f14b/";
         in (old.patches or [ ]) ++ [
           (super.fetchpatch {
             url = baseUrl + "0001-Disable-sponsored-messages.patch";
-            sha256 = "sha256-ZHdLxiRfRIFU2RU0v03DpCjW/ZZDTicJ2zRCGWz+dBc=";
+            sha256 = "sha256-o2Wxyag6hpEDgGm8FU4vs6aCpL9aekazKiNeZPLI9po=";
           })
           (super.fetchpatch {
             url = baseUrl + "0002-Disable-saving-restrictions.patch";
-            sha256 = "sha256-lKO8FVIlXjvPC+xdVgWw6DeSRkQ5VGp/Yf6ByjScJjk=";
+            sha256 = "sha256-sQsyXlvhXSvouPgzYSiRB8ieICo3GDXWH5MaZtBjtqw=";
           })
           (super.fetchpatch {
             url = baseUrl + "0003-Disable-invite-peeking-restrictions.patch";
