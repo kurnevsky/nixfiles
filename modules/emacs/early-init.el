@@ -121,7 +121,7 @@
      ;; LSP
      ("metals"
        (pcase command
-         (`(,(pred (string= (executable-find "env"))) "JAVA_TOOL_OPTIONS=-Dmetals.allow-multiline-string-formatting=off -Dmetals.icons=unicode" "metals") t)))
+         (`("env" "JAVA_TOOL_OPTIONS=-Dmetals.allow-multiline-string-formatting=off -Dmetals.icons=unicode" "metals") t)))
      ("rust-analyzer"
        (pcase command
          (`(,(pred (string= (executable-find "rust-analyzer")))) t)))
