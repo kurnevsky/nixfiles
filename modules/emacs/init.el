@@ -1687,11 +1687,19 @@ properly."
 (defun scroll-right-2()
   "Scroll right by 2 columns."
   (interactive)
-  (scroll-right 2))
+  (when-let ((window (window-at (cadr (mouse-position))
+                       (cddr (mouse-position))
+                       (car (mouse-position)))))
+    (with-selected-window window
+      (scroll-right 2))))
 (defun scroll-left-2()
   "Scroll left by 2 columns."
   (interactive)
-  (scroll-left 2))
+  (when-let ((window (window-at (cadr (mouse-position))
+                       (cddr (mouse-position))
+                       (car (mouse-position)))))
+    (with-selected-window window
+      (scroll-left 2))))
 (global-set-key (kbd "<escape>") #'keyboard-escape-quit)
 (global-set-key (kbd "C-f") #'isearch-forward)
 (define-key isearch-mode-map (kbd "C-f") #'isearch-repeat-forward)
