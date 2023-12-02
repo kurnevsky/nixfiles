@@ -154,7 +154,9 @@
      ("gitlab.evolution.com"
        (and
          (string= "gitlab.evolution.com" host)
-         (eq service 443)))))
+         (eq service 443)))
+     ("llama"
+       (string= "localhost" host))))
 
 (sec-wrap-function 'make-process
   `(lambda (orig &rest args)
