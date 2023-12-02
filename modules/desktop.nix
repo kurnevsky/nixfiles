@@ -271,6 +271,7 @@
       shfmt
       ## Haskell
       cabal-install
+      haskellPackages.cabal-fmt
       ghc
       haskell-language-server
       hlint
