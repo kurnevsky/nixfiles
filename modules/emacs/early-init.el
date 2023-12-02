@@ -133,7 +133,10 @@
          (`("R" "--slave" "-e" "languageserver::run()") t)))
      ("bash-ls"
        (pcase command
-         (`(,(pred (string= (executable-find "bash-language-server"))) "start") t)))))
+         (`(,(pred (string= (executable-find "bash-language-server"))) "start") t)))
+     ("lsp-haskell"
+       (pcase command
+         (`("haskell-language-server-wrapper" "--lsp" "-l" ,_) t)))))
 
 (defvar sec-allow-make-network-process
   '(pcase name
