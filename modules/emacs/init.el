@@ -1511,9 +1511,8 @@ identifier and the position respectively."
 
 (use-package llama-cpp
   :custom
-  (llama-cpp-port 8081)
-  :init
-  (setq llama-cpp-chat-prompt-message "You are Dolphin, a smart AI assistant."))
+  (llama-cpp-chat-prompt "You are Dolphin, a smart AI assistant.")
+  (llama-cpp-port 8081))
 
 (use-package mu4e
   :commands mu4e
