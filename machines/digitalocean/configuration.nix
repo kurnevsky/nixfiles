@@ -83,7 +83,7 @@
       ensureDatabases = [ "tt_rss" ];
       ensureUsers = [{
         name = "tt_rss";
-        ensurePermissions = { "DATABASE \"tt_rss\"" = "ALL PRIVILEGES"; };
+        ensureDBOwnership = true;
       }];
     };
     matrix-conduit = {
