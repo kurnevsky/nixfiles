@@ -111,17 +111,31 @@
         ./modules/zswap.nix
         ./modules/overlays.nix
         ({ pkgs, ... }: {
-          environment.systemPackages = [
-            inputs.agenix.packages.${pkgs.system}.default
-            (inputs.llama-cpp.packages.${pkgs.system}.opencl.overrideAttrs
-              (old: {
-                postInstall = (old.postInstall or "") + ''
-                  find $out/bin -type f ! -wholename '*/llama*' -exec ${pkgs.util-linux}/bin/rename "" 'llama-' {} \;
-                '';
-              }))
-          ];
+          environment.systemPackages =
+            [ inputs.agenix.packages.${pkgs.system}.default ];
         })
       ];
+      llamaOverride = pkgs: llama:
+        llama.overrideAttrs (old: {
+          postInstall = (old.postInstall or "") + ''
+            find $out/bin -type f ! -wholename '*/llama*' -exec ${pkgs.util-linux}/bin/rename "" 'llama-' {} \;
+          '';
+        });
+      llamaDefault = { pkgs, ... }: {
+        environment.systemPackages = [
+          (llamaOverride pkgs inputs.llama-cpp.packages.${pkgs.system}.default)
+        ];
+      };
+      llamaOpencl = { pkgs, ... }: {
+        environment.systemPackages = [
+          (llamaOverride pkgs inputs.llama-cpp.packages.${pkgs.system}.opencl)
+        ];
+      };
+      llamaRocm = { pkgs, ... }: {
+        environment.systemPackages = [
+          (llamaOverride pkgs inputs.llama-cpp.packages.${pkgs.system}.rocm)
+        ];
+      };
     in {
       nixosConfigurations = {
         dell = inputs.nixpkgs.lib.nixosSystem {
@@ -129,6 +143,7 @@
           modules = desktopModules ++ [
             ./machines/dell/configuration.nix
             ./machines/dell/hardware-configuration.nix
+            llamaOpencl
           ];
         };
         evo = inputs.nixpkgs.lib.nixosSystem {
@@ -136,6 +151,7 @@
           modules = desktopModules ++ [
             ./machines/evo/configuration.nix
             ./machines/evo/hardware-configuration.nix
+            llamaDefault
           ];
         };
         pc = inputs.nixpkgs.lib.nixosSystem {
@@ -143,6 +159,7 @@
           modules = desktopModules ++ [
             ./machines/pc/configuration.nix
             ./machines/pc/hardware-configuration.nix
+            llamaRocm
           ];
         };
         acer = inputs.nixpkgs.lib.nixosSystem {
