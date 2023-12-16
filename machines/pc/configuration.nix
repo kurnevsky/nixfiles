@@ -62,6 +62,7 @@
       intel-compute-runtime
       rocmPackages.clr.icd
       rocmPackages.clr
+      mesa.opencl
     ];
   };
 
