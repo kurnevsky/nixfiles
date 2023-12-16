@@ -57,6 +57,7 @@
         diffusers
         accelerate
         peft
+        (callPackage ./compel.nix { })
       ])).override { ignoreCollisions = true; })
   ];
 
