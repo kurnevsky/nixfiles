@@ -151,7 +151,7 @@
           modules = desktopModules ++ [
             ./machines/evo/configuration.nix
             ./machines/evo/hardware-configuration.nix
-            llamaDefault
+            llamaOpencl
           ];
         };
         pc = inputs.nixpkgs.lib.nixosSystem {
