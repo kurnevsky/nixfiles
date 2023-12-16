@@ -254,16 +254,7 @@
       clang
       clang-tools
       mono
-      (python3.withPackages (pkgs:
-        with pkgs; [
-          transformers
-          torch
-          sentencepiece
-          sacremoses
-          torchvision
-          (callPackage ./python-diffusers.nix { })
-          (callPackage ./python-accelerate.nix { })
-        ]))
+      python3
       groovy
       ## Shell
       nodePackages.bash-language-server

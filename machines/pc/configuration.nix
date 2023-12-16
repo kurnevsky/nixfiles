@@ -47,6 +47,17 @@
     wine-ge
     (pkgs.pkgsCross.mingw32.callPackage ./../../modules/vkd3d-proton.nix { })
     (pkgs.pkgsCross.mingwW64.callPackage ./../../modules/vkd3d-proton.nix { })
+    ((python3.withPackages (pkgs:
+      with pkgs; [
+        torchWithRocm
+        transformers
+        sentencepiece
+        sacremoses
+        torchvision
+        diffusers
+        accelerate
+        peft
+      ])).override { ignoreCollisions = true; })
   ];
 
   networking.hostName = "pc";
