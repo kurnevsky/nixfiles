@@ -82,7 +82,8 @@
      ("doom-modeline-env"
        (pcase command
          (`(,(pred (string= (executable-find "rustc"))) "--version") t)
-         (`(,(pred (string= (executable-find "bash"))) "-c" ,_) t)))
+         (`(,(pred (string= (executable-find "bash"))) "-c" ,_) t)
+         (`(,(pred (string= (executable-find "python3"))) "--version") t)))
      ("rg"
        (pcase command
          (`(,(pred (string= shell-file-name)) "-c" ,(pred (string-prefix-p (executable-find "rg")))) t)
