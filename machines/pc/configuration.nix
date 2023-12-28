@@ -30,7 +30,7 @@
     "/".options = [ "noatime" "nodiratime" "compress=zstd:3" ];
     "/home".options = [ "noatime" "nodiratime" "compress=zstd:3" ];
     "/home/kurnevsky/data".options =
-      [ "noatime" "nodiratime" "compress=zstd:3" ];
+      [ "noatime" "nodiratime" "compress=zstd:3" "nofail" ];
   };
 
   swapDevices = [{
