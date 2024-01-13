@@ -98,6 +98,7 @@
       cuetools
       curlHTTP3
       davfs2
+      dbus
       deadbeef-with-plugins
       dmidecode
       docker-compose
