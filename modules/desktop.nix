@@ -46,7 +46,8 @@
         obs-wrapped = (wrapOBS {
           plugins = with obs-studio-plugins; [
             obs-gstreamer
-            obs-backgroundremoval
+            # TODO: broken
+            # obs-backgroundremoval
           ];
         });
         obs-with-gstreamer = stdenv.mkDerivation {
@@ -72,8 +73,7 @@
       })
       (pass-wayland.withExtensions (ext: with ext; [ pass-otp pass-update ]))
       (callPackage ./ical2org.nix { })
-      # TODO: pyside6 is broken
-      # (python311Packages.callPackage ./openhrv.nix { })
+      (python311Packages.callPackage ./openhrv.nix { })
       aircrack-ng
       anki
       ansible
@@ -229,7 +229,8 @@
       qtox
       toxic
       # Games
-      cataclysm-dda
+      # TODO: broken
+      # cataclysm-dda
       hedgewars
       minetest
       openmw
@@ -239,8 +240,7 @@
       grafana-loki
       kcat
       # Wallets
-      # TODO: broken
-      # electrum
+      electrum
       monero-cli
       # TODO: feather-wallet
       # Audio
@@ -318,8 +318,6 @@
     sessionVariables = {
       NIXOS_OZONE_WL = "1";
       MOZ_USE_XINPUT2 = "1";
-      # https://docs.mesa3d.org/envvars.html#envvar-RADV_PERFTEST
-      RADV_PERFTEST = "rt";
     };
   };
 
