@@ -120,6 +120,10 @@
           postInstall = (old.postInstall or "") + ''
             find $out/bin -type f ! -wholename '*/llama*' -exec ${pkgs.util-linux}/bin/rename "" 'llama-' {} \;
           '';
+          NIX_CFLAGS_COMPILE = [ "-O3" "-march=native" "-mtune=native" ];
+          NIX_ENFORCE_NO_NATIVE = false;
+          preferLocalBuild = true;
+          allowSubstitutes = false;
         });
       llamaDefault = { pkgs, ... }: {
         environment.systemPackages = [
