@@ -150,6 +150,8 @@
       lshw
       mesa-demos
       metasploit
+      dsniff
+      vagrant
       mpc_cli
       mpv
       mu
@@ -451,6 +453,10 @@
       setSocketVariable = true;
     };
     waydroid.enable = true;
+    libvirtd = {
+      enable = true;
+      qemu.runAsRoot = false;
+    };
   };
 
   hardware = {
@@ -495,6 +501,7 @@
       };
       tor.wantedBy = pkgs.lib.mkForce [ ];
       waydroid-container.wantedBy = pkgs.lib.mkForce [ ];
+      libvirtd.wantedBy = pkgs.lib.mkForce [ ];
     };
     network = {
       enable = true;
@@ -555,7 +562,7 @@
   users = {
     users = {
       kurnevsky.extraGroups =
-        [ "adbusers" "video" "pipewire" "vboxusers" "networkmanager" ];
+        [ "adbusers" "libvirtd" "video" "pipewire" "vboxusers" "networkmanager" ];
       ww = {
         uid = 1001;
         isNormalUser = true;
