@@ -64,6 +64,7 @@
       type = "github";
       owner = "ggerganov";
       repo = "llama.cpp";
+      ref = "ea9c8e11436ad50719987fa23a289c74b7b40d40";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };

@@ -46,8 +46,7 @@
         obs-wrapped = (wrapOBS {
           plugins = with obs-studio-plugins; [
             obs-gstreamer
-            # TODO: broken
-            # obs-backgroundremoval
+            obs-backgroundremoval
           ];
         });
         obs-with-gstreamer = stdenv.mkDerivation {
@@ -117,7 +116,7 @@
       fuseiso
       gdb
       gimp-with-plugins
-      gnupg_patched
+      gnupg
       openconnect
       (callPackage ./pan-globalprotect-okta.nix { })
       gnome-themes-extra
@@ -588,7 +587,6 @@
         ".config/tox/toxic.conf".source = ./toxic.conf;
       };
       programs = {
-        gpg.package = pkgs.gnupg_patched;
         feh = {
           enable = true;
           buttons = {

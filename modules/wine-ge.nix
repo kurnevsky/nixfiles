@@ -7,13 +7,14 @@ let
     }).unstable;
 in callPackage "${pkgs.path}/pkgs/applications/emulators/wine/base.nix" rec {
   pname = "wine-ge";
-  version = "Proton8-25";
+  version = "Proton8-26";
   src = fetchFromGitHub {
     owner = "GloriousEggroll";
     repo = "proton-wine";
     rev = version;
-    hash = "sha256-Tshx7uO1EhLyqplXfS0fbbivVvowsbBz45y0CVVtUto=";
+    hash = "sha256-yJnJ7D/QHvZ+ieR8nAAnkFV8pzQkDaYDs0Xvo9YsDQA=";
   };
+  wineRelease = "ge";
   moltenvk = pkgs.moltenvk;
   patches = [ ];
   stdenv = stdenv_32bit;
@@ -57,7 +58,7 @@ in callPackage "${pkgs.path}/pkgs/applications/emulators/wine/base.nix" rec {
     usbSupport = true;
     mingwSupport = true;
     x11Support = true;
-    waylandSupport = false;
+    waylandSupport = true;
     embedInstallers = true;
   };
 }
