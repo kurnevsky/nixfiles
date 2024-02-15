@@ -99,7 +99,6 @@ in {
             pinentryFlavor = "curses";
           };
           programs = {
-            gpg.package = patchedPkgs.gnupg_patched;
             bash.initExtra = ''
               # Set cursor type to steady bar
               echo -e -n "\x1b[\x36 q"
