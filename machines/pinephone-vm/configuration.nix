@@ -19,12 +19,9 @@ in {
 
   # mobile.boot.stage-1.kernel.additionalModules = [ "btrfs" ];
 
-  users = {
-    mutableUsers = lib.mkForce true;
-    users.kurnevsky = {
-      passwordFile = lib.mkForce null;
-      password = "1234";
-    };
+  users.users.kurnevsky = {
+    hashedPasswordFile = lib.mkForce null;
+    password = "1234";
   };
 
   system.stateVersion = "23.05";
