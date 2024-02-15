@@ -54,10 +54,11 @@
         sentencepiece
         sacremoses
         torchvision
-        diffusers
-        accelerate
-        peft
-        (callPackage ./compel.nix { })
+        # TODO: broken
+        # diffusers
+        # accelerate
+        # peft
+        # (callPackage ./compel.nix { })
       ])).override { ignoreCollisions = true; })
   ];
 

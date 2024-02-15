@@ -1,7 +1,7 @@
 { python3Packages, fetchFromGitHub, pyparsing, torch, transformers, diffusers, ... }:
 
 (python3Packages.buildPythonPackage rec {
-  pname = "accelerate";
+  pname = "compel";
   version = "2.0.2";
   format = "pyproject";
 
