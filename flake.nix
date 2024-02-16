@@ -85,6 +85,7 @@
         ./modules/common.nix
         ./modules/bfq.nix
         ./modules/patches.nix
+        ./modules/overlays.nix
         (for-all-home-users (with users; [ root kurnevsky ]) common-home)
       ];
       desktopModules = commonModules ++ [
@@ -110,7 +111,6 @@
         ./modules/torbrowser.nix
         ./modules/nspawn.nix
         ./modules/zswap.nix
-        ./modules/overlays.nix
         ({ pkgs, ... }: {
           environment.systemPackages =
             [ inputs.agenix.packages.${pkgs.system}.default ];
