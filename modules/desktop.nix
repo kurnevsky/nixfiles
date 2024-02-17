@@ -79,6 +79,7 @@
       ansible-lint
       appimage-run
       aria2
+      arp-scan
       (aspellWithDicts (dicts: with dicts; [ en ru ]))
       barcode
       bat
