@@ -509,6 +509,7 @@ let
         wrap drv [ (withHomeManager [ ".config/feh" ] (viewer-cfg "feh")) ];
     }
     {
+      unused = true;
       predicate = lib.hasPrefix "imv-";
       config = drv:
         wrap drv [

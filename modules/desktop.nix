@@ -130,7 +130,8 @@
       hunspell
       hunspellDicts.en_US
       hunspellDicts.ru_RU
-      imv
+      # TODO: insecure
+      # imv
       inetutils
       inkscape
       innoextract
@@ -150,6 +151,7 @@
       lshw
       mesa-demos
       metasploit
+      exploitdb
       dsniff
       vagrant
       mpc_cli
