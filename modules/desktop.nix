@@ -130,8 +130,7 @@
       hunspell
       hunspellDicts.en_US
       hunspellDicts.ru_RU
-      # TODO: insecure
-      # imv
+      imv
       inetutils
       inkscape
       innoextract
