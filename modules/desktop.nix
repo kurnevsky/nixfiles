@@ -87,7 +87,8 @@
       bind
       bindfs
       binutils
-      blender
+      # TODO: broken
+      # blender
       brightnessctl
       btrfs-progs
       bubblewrap
