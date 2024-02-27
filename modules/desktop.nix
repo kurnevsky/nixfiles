@@ -70,7 +70,7 @@
         name = "obs-with-gstreamer-joined";
         paths = [ obs-with-gstreamer obs-wrapped ];
       })
-      (pass-wayland.withExtensions (ext: with ext; [ pass-otp pass-update ]))
+      pass
       (callPackage ./ical2org.nix { })
       (python311Packages.callPackage ./openhrv.nix { })
       aircrack-ng
@@ -563,8 +563,14 @@
 
   users = {
     users = {
-      kurnevsky.extraGroups =
-        [ "adbusers" "libvirtd" "video" "pipewire" "vboxusers" "networkmanager" ];
+      kurnevsky.extraGroups = [
+        "adbusers"
+        "libvirtd"
+        "video"
+        "pipewire"
+        "vboxusers"
+        "networkmanager"
+      ];
       ww = {
         uid = 1001;
         isNormalUser = true;

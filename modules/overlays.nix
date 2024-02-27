@@ -7,6 +7,8 @@
       deadbeef-with-plugins = super.deadbeef-with-plugins.override {
         plugins = with super.deadbeefPlugins; [ mpris2 statusnotifier ];
       };
+      pass = super.pass-wayland.withExtensions
+        (ext: with ext; [ pass-otp pass-update ]);
       firefox = super.firefox.override {
         nativeMessagingHosts = [
           super.passff-host
