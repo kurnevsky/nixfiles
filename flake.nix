@@ -105,7 +105,8 @@
         ./modules/websocat-ssh.nix
         ./modules/websocat-wg.nix
         ./modules/motion.nix
-        ./modules/rnnoise.nix
+        # TODO: needs rewriting
+        # ./modules/rnnoise.nix
         ./modules/torjail.nix
         ./modules/torbrowser.nix
         ./modules/nspawn.nix
