@@ -12,8 +12,8 @@
         telegram-desktop
         wesnoth
         megapixels
-      ] ++ (with pkgs.plasma5Packages; [ index qmlkonsole okular ]);
-    plasma5.excludePackages = with pkgs.plasma5Packages; [ konsole ];
+      ] ++ (with pkgs.kdePackages; [ index qmlkonsole okular ]);
+    plasma6.excludePackages = with pkgs.kdePackages; [ konsole ];
   };
 
   i18n.supportedLocales =
@@ -49,7 +49,7 @@
 
   services.xserver = {
     enable = true;
-    desktopManager.plasma5.mobile.enable = true;
+    desktopManager.plasma6.mobile.enable = true;
     displayManager = {
       lightdm = {
         enable = true;

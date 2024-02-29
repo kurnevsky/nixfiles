@@ -87,8 +87,7 @@
       bind
       bindfs
       binutils
-      # TODO: broken
-      # blender
+      blender
       brightnessctl
       btrfs-progs
       bubblewrap
@@ -246,7 +245,7 @@
       # Wallets
       electrum
       monero-cli
-      # TODO: feather-wallet
+      feather
       # Audio
       easyeffects
       helvum

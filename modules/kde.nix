@@ -8,7 +8,7 @@
     xserver = {
       enable = true;
       displayManager = {
-        defaultSession = "plasmawayland";
+        defaultSession = "plasma";
         sddm = {
           enable = true;
           wayland = {
@@ -22,13 +22,13 @@
             # kwin compositor
             General = {
               GreeterEnvironment =
-                "QT_PLUGIN_PATH=${pkgs.plasma5Packages.layer-shell-qt}/${pkgs.plasma5Packages.qtbase.qtPluginPrefix},QT_WAYLAND_SHELL_INTEGRATION=layer-shell";
+                "QT_PLUGIN_PATH=${pkgs.kdePackages.layer-shell-qt}/${pkgs.kdePackages.qtbase.qtPluginPrefix},QT_WAYLAND_SHELL_INTEGRATION=layer-shell";
               InputMethod = "";
             };
           };
         };
       };
-      desktopManager.plasma5.enable = true;
+      desktopManager.plasma6.enable = true;
     };
   };
 
@@ -50,12 +50,13 @@
   ];
 
   environment.systemPackages = with pkgs;
-    with plasma5Packages; [
+    with kdePackages; [
       ark
       kcalc
       krfb
       krdc
-      kamoso
+      # TODO: broken
+      # kamoso
       wl-clipboard
       plasma-pass
     ];
@@ -106,12 +107,7 @@
               Number = 9;
               Rows = 3;
             };
-            Effect-desktopgrid.BorderActivate = 5;
-            Effect-windowview = {
-              BorderActivate = 7;
-              BorderActivateAll = 9;
-              MiddleButtonWindow = 6;
-            };
+            Effect-overview.GridBorderActivate = 5;
             Plugins.invertEnabled = true;
             TabBox.LayoutName = "thumbnails";
             Windows = {

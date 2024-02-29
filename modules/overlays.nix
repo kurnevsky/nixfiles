@@ -10,10 +10,8 @@
       pass = super.pass-wayland.withExtensions
         (ext: with ext; [ pass-otp pass-update ]);
       firefox = super.firefox.override {
-        nativeMessagingHosts = [
-          super.passff-host
-          super.plasma5Packages.plasma-browser-integration
-        ];
+        nativeMessagingHosts =
+          [ super.passff-host super.kdePackages.plasma-browser-integration ];
       };
       mpv = super.mpv.override { scripts = with super.mpvScripts; [ mpris ]; };
       p7zip = super.p7zip.override { enableUnfree = true; };
@@ -89,5 +87,19 @@
       });
     })
     (self: super: { wine-ge = super.callPackage ./wine-ge.nix { }; })
+    # TODO: included in plasma 6.1
+    (self: super: {
+      kdePackages = super.kdePackages.overrideScope (kde-self: kde-super: {
+        kwin = kde-super.kwin.overrideAttrs (old: {
+          patches = old.patches ++ [
+            (super.fetchpatch {
+              url =
+                "https://invent.kde.org/plasma/kwin/-/commit/4d6f6223bcdbb0e5fbe65cff47c72d444b532372.patch";
+              sha256 = "sha256-0SsRTPLztz3S+6FE09oOurovIaAsp3/JRwNsIwpZAvM=";
+            })
+          ];
+        });
+      });
+    })
   ];
 }
