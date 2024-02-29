@@ -232,8 +232,7 @@
       qtox
       toxic
       # Games
-      # TODO: broken
-      # cataclysm-dda
+      cataclysm-dda
       hedgewars
       minetest
       openmw
