@@ -275,8 +275,8 @@ ARGS is `kill-buffer' arguments."
            (smerge-refined-added :foreground ,base0B-highlight :inverse-video t)
            (smerge-refined-removed :foreground ,base08-highlight :inverse-video t)
            ;; Highlight foreground instead of background
-           (show-paren-match :foreground base0D :background nil :weight extra-bold)
-           (show-paren-mismatch :foreground base09 :background nil :weight extra-bold)
+           (show-paren-match :foreground base0D :background unspecified :weight extra-bold)
+           (show-paren-mismatch :foreground base09 :background unspecified :weight extra-bold)
            ;; Make comments italic
            (font-lock-comment-face :foreground base03 :slant italic)
            ;; Apply string foreground for docstring and make it italic
