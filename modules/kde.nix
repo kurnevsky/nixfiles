@@ -167,7 +167,7 @@
               Active = true;
               EveningBeginFixed = 2200;
               Mode = "Times";
-              NightTemperature = 1500;
+              NightTemperature = 5000;
               TransitionTime = 10;
             };
           };
