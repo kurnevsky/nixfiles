@@ -627,6 +627,7 @@
             };
             # Base16 OneDark
             colors = {
+              draw_bold_text_with_bright_colors = false;
               primary = {
                 background = "0x282c34";
                 foreground = "0xabb2bf";
@@ -656,7 +657,6 @@
                 white = "0xc8ccd4";
               };
             };
-            draw_bold_text_with_bright_colors = false;
             cursor.style = "Beam";
             live_config_reload = false;
             hints.enabled = [{
@@ -673,19 +673,11 @@
                 mods = "Control|Shift";
               };
             }];
-            key_bindings = [
+            keyboard.bindings = [
               {
                 key = "Insert";
                 mods = "Control";
                 action = "Copy";
-              }
-              {
-                key = "Home";
-                chars = "\\x1bOH";
-              }
-              {
-                key = "End";
-                chars = "\\x1bOF";
               }
               {
                 key = "B";
