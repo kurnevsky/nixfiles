@@ -49,17 +49,64 @@
     })
   ];
 
-  environment.systemPackages = with pkgs;
-    with kdePackages; [
-      ark
-      kcalc
-      krfb
-      krdc
-      # TODO: broken
-      # kamoso
-      wl-clipboard
-      plasma-pass
-    ];
+  environment.systemPackages = let
+    command-desktop = name: command:
+      let script = pkgs.writeShellScriptBin "${name}.sh" command;
+      in pkgs.writeTextFile {
+        name = "${name}.desktop";
+        text = ''
+          [Desktop Entry]
+          Exec=${script}/bin/${name}.sh
+          Name=${name}
+          NoDisplay=true
+          StartupNotify=false
+          Type=Application
+          X-KDE-GlobalAccel-CommandShortcut=true
+        '';
+        destination = "/share/applications/${name}.desktop";
+      };
+    brightness = name: awk:
+      command-desktop name ''
+        ${pkgs.dbus}/bin/dbus-send \
+          --session \
+          --type=method_call \
+          --print-reply \
+          --dest=org.kde.Solid.PowerManagement \
+          /org/kde/Solid/PowerManagement/Actions/BrightnessControl \
+          org.kde.Solid.PowerManagement.Actions.BrightnessControl.setBrightness \
+          int32:$(
+            ${pkgs.dbus}/bin/dbus-send \
+              --session \
+              --type=method_call \
+              --print-reply=literal \
+              --dest=org.kde.Solid.PowerManagement \
+              /org/kde/Solid/PowerManagement/Actions/BrightnessControl \
+              org.kde.Solid.PowerManagement.Actions.BrightnessControl.brightnessMax | \
+                ${pkgs.gawk}/bin/awk '${awk}'
+          )
+      '';
+    brightness-min = brightness "brightness-min" "{print int($NF/10)}";
+    brightness-max = brightness "brightness-max" "{print $NF}";
+    translate-google = command-desktop "translate-google" ''
+      ${pkgs.wl-clipboard}/bin/wl-paste --primary | \
+        ${pkgs.translate-shell}/bin/trans -brief -t russian | \
+        ${pkgs.findutils}/bin/xargs -0 notify-send 'google'
+    '';
+  in with pkgs;
+  with kdePackages; [
+    ark
+    kcalc
+    krfb
+    krdc
+    # TODO: broken
+    # kamoso
+    wl-clipboard
+    plasma-pass
+    # shortcuts
+    brightness-min
+    brightness-max
+    translate-google
+  ];
 
   xdg.portal = {
     enable = true;
@@ -244,6 +291,15 @@
               "_launch" = "Meta+E,Meta+E,Dolphin";
             };
             "Alacritty.desktop" = { "_launch" = "Meta+Shift+R,,Alacritty"; };
+            "brightness-min.desktop" = {
+              "_launch" = "Shift+Monitor Brightness Down,,Brightness min";
+            };
+            "brightness-max.desktop" = {
+              "_launch" = "Shift+Monitor Brightness Up,,Brightness max";
+            };
+            "translate-google.desktop" = {
+              "_launch" = "Meta+Shift+T,,Translate google";
+            };
           };
           kxkbrc = {
             Layout = {
@@ -266,94 +322,6 @@
           };
           ksmserverrc = { General.loginMode = "emptySession"; };
           kcminputrc = { Keyboard.NumLock = 0; };
-          khotkeysrc = {
-            Data.DataCount = 7;
-            # First 3 are set by KDE by default
-            Data_4 = {
-              Comment = "Set brightness to 10%";
-              Enabled = true;
-              Name = "Brightness 10%";
-              Type = "SIMPLE_ACTION_DATA";
-            };
-            Data_4Actions.ActionsCount = 1;
-            Data_4Actions0 = {
-              CommandURL = ''
-                dbus-send --session --type=method_call --print-reply --dest=org.kde.Solid.PowerManagement /org/kde/Solid/PowerManagement/Actions/BrightnessControl org.kde.Solid.PowerManagement.Actions.BrightnessControl.setBrightness int32:$(dbus-send --session --type=method_call --print-reply=literal --dest=org.kde.Solid.PowerManagement /org/kde/Solid/PowerManagement/Actions/BrightnessControl org.kde.Solid.PowerManagement.Actions.BrightnessControl.brightnessMax | awk "{print int(\$NF/10)}")'';
-              Type = "COMMAND_URL";
-            };
-            Data_4Triggers = {
-              Comment = "Simple_action";
-              TriggersCount = 1;
-            };
-            Data_4Triggers0 = {
-              Key = "Shift+Monitor Brightness Down";
-              Type = "SHORTCUT";
-              Uuid = "{bc4dfdf5-1244-42f9-989e-22a5f6d21f73}";
-            };
-            Data_5 = {
-              Comment = "Set brightness to 100%";
-              Enabled = true;
-              Name = "Brightness 100%";
-              Type = "SIMPLE_ACTION_DATA";
-            };
-            Data_5Actions.ActionsCount = 1;
-            Data_5Actions0 = {
-              CommandURL = ''
-                dbus-send --session --type=method_call --print-reply --dest=org.kde.Solid.PowerManagement /org/kde/Solid/PowerManagement/Actions/BrightnessControl org.kde.Solid.PowerManagement.Actions.BrightnessControl.setBrightness int32:$(dbus-send --session --type=method_call --print-reply=literal --dest=org.kde.Solid.PowerManagement /org/kde/Solid/PowerManagement/Actions/BrightnessControl org.kde.Solid.PowerManagement.Actions.BrightnessControl.brightnessMax | awk "{print \$NF}")'';
-              Type = "COMMAND_URL";
-            };
-            Data_5Triggers = {
-              Comment = "Simple_action";
-              TriggersCount = 1;
-            };
-            Data_5Triggers0 = {
-              Key = "Shift+Monitor Brightness Up";
-              Type = "SHORTCUT";
-              Uuid = "{42547858-8c2f-4a2b-916e-2cd916b011ce}";
-            };
-            Data_6 = {
-              Comment = "Switch User";
-              Enabled = true;
-              Name = "Switch User";
-              Type = "SIMPLE_ACTION_DATA";
-            };
-            Data_6Actions.ActionsCount = 1;
-            Data_6Actions0 = {
-              CommandURL =
-                "dbus-send --session --type=method_call --print-reply=literal --dest=org.kde.krunner /App org.kde.krunner.App.switchUser";
-              Type = "COMMAND_URL";
-            };
-            Data_6Triggers = {
-              Comment = "Simple_action";
-              TriggersCount = 1;
-            };
-            Data_6Triggers0 = {
-              Key = "Meta+Alt+Esc";
-              Type = "SHORTCUT";
-              Uuid = "{7c6b0e9c-46af-4839-bb1f-5a805d8b4b3c}";
-            };
-            Data_7 = {
-              Comment = "Translate google";
-              Enabled = true;
-              Name = "Translate google";
-              Type = "SIMPLE_ACTION_DATA";
-            };
-            Data_7Actions.ActionsCount = 1;
-            Data_7Actions0 = {
-              CommandURL =
-                "wl-paste --primary | trans -brief -t russian | xargs -0 notify-send 'google'";
-              Type = "COMMAND_URL";
-            };
-            Data_7Triggers = {
-              Comment = "Simple_action";
-              TriggersCount = 1;
-            };
-            Data_7Triggers0 = {
-              Key = "Meta+Shift+T";
-              Type = "SHORTCUT";
-              Uuid = "{f53dc769-7376-46f2-ac13-b1170dea1f93}";
-            };
-          };
         };
         lines = lib.flatten (lib.mapAttrsToList (file: groups:
           lib.mapAttrsToList (group: keys:
