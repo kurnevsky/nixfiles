@@ -7,7 +7,7 @@ stdenv.mkDerivation rec {
   version = "63d2eec";
 
   src = (fetchFromGitHub {
-    owner = "Zamundaaa";
+    owner = "Drakulix";
     repo = "VK_hdr_layer";
     rev = "869199cd2746e7f69cf19955153080842b6dacfc";
     fetchSubmodules = true;
