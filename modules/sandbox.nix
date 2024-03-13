@@ -650,8 +650,13 @@ let
       predicate = lib.hasPrefix "wesnoth-";
       config = drv:
         wrap drv [
-          (withFonts {
+          (lib.pipe {
             name = "wesnoth";
+            devs = [ "dri" ];
+            syses = [
+              "dev"
+              "devices"
+            ];
             pams = [ "pulse" "pipewire-0" ];
             etcs = [ "pulse" "ssl/certs/ca-certificates.crt" ];
             localtime = true;
@@ -665,7 +670,7 @@ let
               "~/.local/share/wesnoth/"
               "~/.config/pulse/"
             ];
-          })
+          } [ withFonts withOpengl ])
         ];
     }
     {
