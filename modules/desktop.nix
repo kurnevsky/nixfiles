@@ -326,6 +326,49 @@
 
   fonts = {
     packages = with pkgs; [
+      (iosevka.override {
+        set = "custom";
+        privateBuildPlan = {
+          family = "Iosevka Custom";
+          leading = 1000;
+          spacing = "term";
+          serifs = "sans";
+          noCvSs = true;
+          exportGlyphNames = true;
+          variants = {
+            inherits = "ss14";
+            design = {
+              capital-g = "toothed-serifless-hooked";
+              capital-j = "serifed";
+              u = "toothed-serifless";
+              capital-u = "toothed-serifless";
+              w = "straight-serifless";
+              capital-w = "straight-serifless";
+              zero = "slashed";
+              brace = "straight";
+              question = "smooth";
+            };
+          };
+          widths = {
+            Condensed = {
+              shape = 500;
+              menu = 3;
+              css = "condensed";
+            };
+            Normal = {
+              shape = 600;
+              menu = 5;
+              css = "normal";
+            };
+            Extended = {
+              shape = 720;
+              menu = 7;
+              css = "expanded";
+            };
+          };
+          ligations.inherits = "dlig";
+        };
+      })
       noto-fonts
       noto-fonts-extra
       noto-fonts-emoji
