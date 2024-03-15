@@ -347,6 +347,7 @@
               zero = "slashed";
               brace = "straight";
               question = "smooth";
+              paren = "normal";
             };
           };
           widths = {
