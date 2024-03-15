@@ -324,12 +324,23 @@
     };
   };
 
-  fonts.packages = with pkgs; [
-    noto-fonts
-    noto-fonts-extra
-    noto-fonts-emoji
-    symbola
-  ];
+  fonts = {
+    packages = with pkgs; [
+      noto-fonts
+      noto-fonts-extra
+      noto-fonts-emoji
+      symbola
+    ];
+    fontconfig = {
+      subpixel.rgba = "rgb";
+      localConf = ''
+        <alias>
+          <family>monospace</family>
+          <prefer><family>Symbols Nerd Font</family></prefer>
+        </alias>
+      '';
+    };
+  };
 
   programs = {
     dconf.enable = true;

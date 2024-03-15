@@ -8,7 +8,9 @@ let
     rev = "2ae16853bc724c3e377726f81d9fc661d3445827";
     sha256 = "sha256-mIWQF9LTVKxIkwHLCTVK1cOuiaduJyX8pyBZ/0RKIVE=";
   };
-  font = pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" "Hack" ]; };
+  font = pkgs.nerdfonts.override {
+    fonts = [ "JetBrainsMono" "Hack" "NerdFontsSymbolsOnly" ];
+  };
 in {
   fonts.packages = [
     (pkgs.symlinkJoin {
