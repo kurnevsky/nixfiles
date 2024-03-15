@@ -340,7 +340,6 @@
             design = {
               capital-g = "toothed-serifless-hooked";
               capital-j = "serifed";
-              capital-l = "motion-serifed";
               capital-q = "crossing";
               u = "toothed-serifless";
               capital-u = "toothed-serifless";
