@@ -1298,6 +1298,11 @@ ical2org.awk > ~/calendar.evo.org")
 
 (use-package poly-rst)
 
+(use-package treesit
+  :ensure nil
+  :custom
+  (treesit-font-lock-level 4))
+
 (use-package treesit-auto
   :demand t
   :config
