@@ -37,33 +37,30 @@ in {
     "201:b5cd:a295:d34c:a75f:b369:6002:c676" = [ "pc-ygg" ];
   };
 
-  environment = {
-    motd = "Here be dragons.";
-    packages = with patchedPkgs; [
-      git
-      lsof
-      mc
-      nano
-      openssh
-      gnupg
-      procps
-      gnugrep
-      gnused
-      gnutar
-      bzip2
-      gzip
-      xz
-      zip
-      unzip
-      diffutils
-      findutils
-      utillinux
-      which
-      ripgrep
-      (pass.withExtensions (ext: with ext; [ pass-otp pass-update ]))
-      emacsWithPackages
-    ];
-  };
+  environment.packages = with patchedPkgs; [
+    git
+    lsof
+    mc
+    nano
+    openssh
+    gnupg
+    procps
+    gnugrep
+    gnused
+    gnutar
+    bzip2
+    gzip
+    xz
+    zip
+    unzip
+    diffutils
+    findutils
+    utillinux
+    which
+    ripgrep
+    (pass.withExtensions (ext: with ext; [ pass-otp pass-update ]))
+    emacsWithPackages
+  ];
 
   terminal.font = "${
       patchedPkgs.nerdfonts.override { fonts = [ "Hack" ]; }

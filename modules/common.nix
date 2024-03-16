@@ -100,7 +100,7 @@ in {
 
   users = {
     mutableUsers = false;
-    motd = "Abandon all hope, ye who enter here.";
+    motd = import ./motd.nix config.networking.hostName;
     users = {
       # To get hash use:
       # openssl passwd -6 password
