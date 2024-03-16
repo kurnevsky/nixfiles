@@ -683,7 +683,7 @@
           settings = {
             scrolling.history = 100000;
             font = {
-              normal.family = "Hack Nerd Font";
+              normal.family = "IosevkaCustom Nerd Font";
               size = 12;
             };
             # Base16 OneDark
