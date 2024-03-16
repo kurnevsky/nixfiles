@@ -1308,6 +1308,7 @@ ical2org.awk > ~/calendar.evo.org")
       :remap 'scala-mode
       :url "https://github.com/KaranAhlawat/scala-ts-mode")
     treesit-auto-recipe-list)
+  (push 'scala treesit-auto-langs)
   (global-treesit-auto-mode))
 
 (use-package conf-mode
