@@ -327,54 +327,60 @@
   fonts = {
     packages = with pkgs;
       let
-        iosevka-custom = (iosevka.override {
-          set = "custom";
-          privateBuildPlan = {
-            family = "Iosevka Custom";
-            leading = 1000;
-            spacing = "term";
-            serifs = "sans";
-            noCvSs = true;
-            exportGlyphNames = true;
-            variants = {
-              inherits = "ss14";
-              design = {
-                capital-g = "toothed-serifless-hooked";
-                capital-j = "serifed";
-                capital-q = "crossing";
-                u = "toothed-serifless";
-                capital-u = "toothed-serifless";
-                w = "straight-serifless";
-                capital-w = "straight-serifless";
-                zero = "slashed";
-                brace = "straight";
-                question = "smooth";
-                paren = "normal";
+        iosevka-custom = variant: ligations:
+          (iosevka.override {
+            set = variant;
+            privateBuildPlan = {
+              family = "Iosevka ${variant}";
+              leading = 1000;
+              spacing = lib.toLower variant;
+              serifs = "sans";
+              noCvSs = true;
+              exportGlyphNames = false;
+              noLigation = !ligations;
+              variants = {
+                inherits = "ss14";
+                design = {
+                  capital-g = "toothed-serifless-hooked";
+                  capital-j = "serifed";
+                  capital-q = "crossing";
+                  u = "toothed-serifless";
+                  capital-u = "toothed-serifless";
+                  w = "straight-serifless";
+                  capital-w = "straight-serifless";
+                  zero = "slashed";
+                  brace = "straight";
+                  question = "smooth";
+                  paren = "normal";
+                };
               };
+              widths = {
+                Condensed = {
+                  shape = 500;
+                  menu = 3;
+                  css = "condensed";
+                };
+                Normal = {
+                  shape = 600;
+                  menu = 5;
+                  css = "normal";
+                };
+                Extended = {
+                  shape = 720;
+                  menu = 7;
+                  css = "expanded";
+                };
+              };
+              ligations.inherits = "dlig";
             };
-            widths = {
-              Condensed = {
-                shape = 500;
-                menu = 3;
-                css = "condensed";
-              };
-              Normal = {
-                shape = 600;
-                menu = 5;
-                css = "normal";
-              };
-              Extended = {
-                shape = 720;
-                menu = 7;
-                css = "expanded";
-              };
-            };
-            ligations.inherits = "dlig";
-          };
-        });
+          });
+        iosevka-term = iosevka-custom "Term" false;
+        iosevka-normal = iosevka-custom "Normal" true;
       in [
-        iosevka-custom
-        (callPackage ./nerd-font-patch.nix { } iosevka-custom)
+        iosevka-term
+        iosevka-normal
+        (callPackage ./nerd-font-patch.nix { } iosevka-term)
+        (callPackage ./nerd-font-patch.nix { } iosevka-normal)
         noto-fonts
         noto-fonts-extra
         noto-fonts-emoji
@@ -683,7 +689,7 @@
           settings = {
             scrolling.history = 100000;
             font = {
-              normal.family = "IosevkaCustom Nerd Font";
+              normal.family = "IosevkaTerm Nerd Font";
               size = 12;
             };
             # Base16 OneDark
