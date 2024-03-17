@@ -1,8 +1,10 @@
 { config, lib, pkgs, emacs-overlay, ... }:
 
 let
-  patchedPkgs =
-    lib.foldl (pkg: pkg.extend) pkgs (import ./overlays.nix).nixpkgs.overlays;
+  applyOverlays = pkgs:
+    lib.foldl (pkg: pkg.extend) pkgs ((import ./overlays.nix).nixpkgs.overlays
+      ++ (pkgs.callPackage ./patches.nix { }).nixpkgs.overlays);
+  patchedPkgs = applyOverlays pkgs;
   emacsPkgs = patchedPkgs.extend emacs-overlay;
   emacsWithPackages = emacsPkgs.callPackage ./emacs/package.nix {
     emacs = emacsPkgs.emacs29-nox;
@@ -66,9 +68,10 @@ in {
   terminal.font = "${
       let
         pkgs86 = import patchedPkgs.path { system = "x86_64-linux"; };
-        iosevka-custom = pkgs86.callPackage ./iosevka.nix { };
+        patchedPkgs86 = applyOverlays pkgs86;
+        iosevka-custom = patchedPkgs86.callPackage ./iosevka.nix { };
         iosevka-term = iosevka-custom "Term" false;
-      in pkgs86.callPackage ./nerd-font-patch.nix { } iosevka-term
+      in patchedPkgs86.callPackage ./nerd-font-patch.nix { } iosevka-term
     }/share/fonts/truetype/NerdFonts/HackNerdFontMono-Regular.ttf";
 
   user.shell = "${patchedPkgs.zsh}/bin/zsh";
