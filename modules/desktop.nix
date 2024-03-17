@@ -116,8 +116,7 @@
       flac
       fuseiso
       gdb
-      # TODO: broken
-      # gimp-with-plugins
+      gimp
       gnupg
       openconnect
       (callPackage ./pan-globalprotect-okta.nix { })
