@@ -19,6 +19,8 @@ let
     "Within these boundaries lie untamed terrors."
     "Venture forth, but abandon your illusions at the gate."
     "Those who dare to cross shall face trials unimaginable."
+    "Do not seek to unravel mysteries that were never meant for mortal eyes."
+    "Do not venture too far into the abyss, lest it swallow you whole."
   ];
   length = builtins.length messages;
   hash = builtins.hashString "md5" name;
