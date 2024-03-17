@@ -5,6 +5,7 @@
     # Enabled by default in plasma.
     # TLP is used instead.
     power-profiles-daemon.enable = false;
+    desktopManager.plasma6.enable = true;
     xserver = {
       enable = true;
       displayManager = {
@@ -28,7 +29,6 @@
           };
         };
       };
-      desktopManager.plasma6.enable = true;
     };
   };
 

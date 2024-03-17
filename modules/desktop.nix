@@ -232,7 +232,8 @@
       toxic
       # Games
       cataclysm-dda
-      hedgewars
+      # TODO: broken
+      # hedgewars
       minetest
       openmw
       wesnoth
@@ -856,10 +857,7 @@
             "${pkgs.cloud-mdir-sync}/bin/cms-oauth --cms_sock=$XDG_RUNTIME_DIR/cms.sock --proto=IMAP --user ${user} --output=token";
         };
       };
-      services.gpg-agent = {
-        enable = true;
-        pinentryFlavor = "qt";
-      };
+      services.gpg-agent.enable = true;
       # To make sure that it's not overridden by WM
       xdg.mimeApps.enable = true;
     };

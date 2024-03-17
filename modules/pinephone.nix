@@ -68,10 +68,7 @@
   home-manager.users.kurnevsky = {
     programs.git.enable = true;
     services = {
-      gpg-agent = {
-        enable = true;
-        pinentryFlavor = "qt";
-      };
+      gpg-agent.enable = true;
     };
   };
 }
