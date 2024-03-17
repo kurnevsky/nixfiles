@@ -857,7 +857,10 @@
             "${pkgs.cloud-mdir-sync}/bin/cms-oauth --cms_sock=$XDG_RUNTIME_DIR/cms.sock --proto=IMAP --user ${user} --output=token";
         };
       };
-      services.gpg-agent.enable = true;
+      services.gpg-agent = {
+        enable = true;
+        pinentryPackage = pkgs.pinentry-qt;
+      };
       # To make sure that it's not overridden by WM
       xdg.mimeApps.enable = true;
     };

@@ -91,7 +91,10 @@ in {
         (import ./common-home.nix args)
         (import ./emacs/home.nix emacsWithPackages args)
         {
-          services.gpg-agent.enable = true;
+          services.gpg-agent = {
+            enable = true;
+            pinentryPackage = pkgs.pinentry-curses;
+          };
           programs = {
             bash.initExtra = ''
               # Set cursor type to steady bar
