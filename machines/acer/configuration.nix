@@ -55,8 +55,10 @@
   fonts.fonts = with pkgs; [
     (nerdfonts.override { fonts = [ "Hack" ]; })
     noto-fonts
-    noto-fonts-extra
-    noto-fonts-emoji
+    noto-fonts-color-emoji
+    noto-fonts-monochrome-emoji
+    noto-fonts-cjk-sans
+    noto-fonts-cjk-serif
     symbola
   ];
 

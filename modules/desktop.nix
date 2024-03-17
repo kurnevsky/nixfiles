@@ -335,8 +335,7 @@
         (callPackage ./nerd-font-patch.nix { } iosevka-normal)
         (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
         noto-fonts
-        noto-fonts-extra
-        noto-fonts-emoji
+        noto-fonts-color-emoji
         symbola
       ];
     fontconfig = {
