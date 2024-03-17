@@ -105,7 +105,7 @@ in {
             '';
             zsh = {
               syntaxHighlighting.enable = true;
-              enableAutosuggestions = true;
+              autosuggestions.enable = true;
               initExtra = ''
                 setopt ${lib.concatStringsSep " " (import ./zsh-options.nix)}
 
