@@ -1,7 +1,8 @@
 { config, lib, pkgs, emacs-overlay, ... }:
 
 let
-  patchedPkgs = lib.foldl (pkg: pkg.extend) pkgs (import ./overlays.nix).nixpkgs.overlays;
+  patchedPkgs =
+    lib.foldl (pkg: pkg.extend) pkgs (import ./overlays.nix).nixpkgs.overlays;
   emacsPkgs = patchedPkgs.extend emacs-overlay;
   emacsWithPackages = emacsPkgs.callPackage ./emacs/package.nix {
     emacs = emacsPkgs.emacs29-nox;
@@ -63,7 +64,11 @@ in {
   ];
 
   terminal.font = "${
-      patchedPkgs.nerdfonts.override { fonts = [ "Hack" ]; }
+      let
+        pkgs86 = import patchedPkgs.path { system = "x86_64-linux"; };
+        iosevka-custom = pkgs86.callPackage ./iosevka.nix { };
+        iosevka-term = iosevka-custom "Term" false;
+      in pkgs86.callPackage ./nerd-font-patch.nix { } iosevka-term
     }/share/fonts/truetype/NerdFonts/HackNerdFontMono-Regular.ttf";
 
   user.shell = "${patchedPkgs.zsh}/bin/zsh";
