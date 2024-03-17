@@ -72,7 +72,7 @@ in {
         iosevka-custom = patchedPkgs86.callPackage ./iosevka.nix { };
         iosevka-term = iosevka-custom "Term" false;
       in patchedPkgs86.callPackage ./nerd-font-patch.nix { } iosevka-term
-    }/share/fonts/truetype/NerdFonts/HackNerdFontMono-Regular.ttf";
+    }/share/fonts/truetype/IosevkaTerm-Regular.ttf";
 
   user.shell = "${patchedPkgs.zsh}/bin/zsh";
 
