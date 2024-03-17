@@ -697,7 +697,8 @@ which LANG was detected but these are ignored."
   :commands kill-target-buffer
   :bind (:map minibuffer-local-map
           ("C-." . embark-act)
-          ("C-;" . embark-dwim))
+          ("C-;" . embark-dwim)
+          ("C-e" . embark-export))
   :custom
   (embark-mixed-indicator-delay 0)
   (embark-mixed-indicator-both t)
@@ -714,15 +715,29 @@ which LANG was detected but these are ignored."
       (embark--act 'kill-buffer buffer)
       (user-error "No buffer target found"))))
 
+(use-package projectile
+  :demand t
+  :bind (:map projectile-mode-map
+          ("C-p f" . projectile-find-file)
+          ("C-p o" . projectile-find-file)
+          ("C-p C-p" . projectile-switch-project))
+  :config
+  (projectile-mode))
+
 (use-package consult
   :bind (("<f2>" . consult-buffer)
-          ([remap goto-line] . consult-goto-line))
+          ([remap goto-line] . consult-goto-line)
+          :map projectile-mode-map
+          ("C-p g" . consult-ripgrep))
   :init
   (setq
     register-preview-function #'consult-register-format
     xref-show-xrefs-function #'consult-xref
     xref-show-definitions-function #'consult-xref)
   (advice-add #'register-preview :override #'consult-register-window)
+  :custom
+  (consult-project-function (lambda (_) (projectile-project-root)))
+  (consult-async-min-input 2)
   :config
   (consult-customize consult-buffer
     :preview-key nil
@@ -795,22 +810,13 @@ which LANG was detected but these are ignored."
   (centaur-tabs-group-by-projectile-project)
   (remove-hook 'kill-buffer-hook 'centaur-tabs-buffer-track-killed))
 
-(use-package projectile
-  :demand t
-  :bind (:map projectile-mode-map
-          ("C-p f" . projectile-find-file)
-          ("C-p o" . projectile-find-file)
-          ("C-p C-p" . projectile-switch-project))
-  :config
-  (projectile-mode))
-
 (use-package rg
   :after projectile
   :custom
   (rg-group-result t)
   (rg-command-line-flags '("--hidden"))
   :bind (:map projectile-mode-map
-          ("C-p g" . rg-project)
+          ("C-p G" . rg-project)
           :map rg-mode-map
           ("C-b")
           ("C-f")

@@ -86,6 +86,7 @@
          (`(,(pred (string= (executable-find "python3"))) "--version") t)))
      ("rg"
        (pcase command
+         (`("rg" . ,_) t)
          (`(,(pred (string= shell-file-name)) "-c" ,(pred (string-prefix-p (executable-find "rg")))) t)
          ;; Tramp
          (`("/bin/sh" "-i") t)))
