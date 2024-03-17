@@ -58,7 +58,7 @@ in {
     utillinux
     which
     ripgrep
-    (pass.withExtensions (ext: with ext; [ pass-otp pass-update ]))
+    pass
     emacsWithPackages
   ];
 
