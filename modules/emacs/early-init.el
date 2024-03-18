@@ -116,6 +116,11 @@
      ("epdfinfo"
        (pcase command
          (`(,(rx bos "/nix/store/" (* nonl) "/epdfinfo" eos)) t)))
+     (" *consult-async-stderr*"
+       (pcase command
+         ;; Tramp
+         (`("cat" ,(rx bos "/tmp/tramp." (+ alnum) eos)) t)
+         (`("/bin/sh" "-i") t)))
      ;; Treemacs
      ("Process Future"
        (pcase command
