@@ -756,6 +756,16 @@ which LANG was detected but these are ignored."
   (counsel-describe-function-function #'helpful-callable)
   (counsel-describe-variable-function #'helpful-variable))
 
+(use-package dired
+  :ensure nil
+  :bind (:map dired-mode-map
+          ("C-e" . dired-toggle-read-only)))
+
+(use-package wdired
+  :ensure nil
+  :bind (:map wdired-mode-map
+          ("C-s" . wdired-finish-edit)))
+
 (use-package ediff-wind
   :ensure nil
   :custom
