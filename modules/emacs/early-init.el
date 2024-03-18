@@ -93,7 +93,7 @@
      (" *mu4e-server*"
        (pcase command
          (`(,(pred (string= (executable-find "mu"))) "server") t)))
-     ("mu4e-update"
+     (" *mu4e-update*"
        (pcase command
          (`(,(pred (string= shell-file-name)) "-c" "mbsync --all") t)))
      ("git"
