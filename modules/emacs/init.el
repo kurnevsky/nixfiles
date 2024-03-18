@@ -823,6 +823,14 @@ which LANG was detected but these are ignored."
           ("F" . rg-forward-history)
           ("B" . rg-back-history)))
 
+(use-package wgrep
+  :bind (:map wgrep-mode-map
+          ("C-s" . wgrep-finish-edit)
+          :map embark-consult-rerun-map
+          ("C-e" . wgrep-change-to-wgrep-mode))
+  :custom
+  (wgrep-auto-save-buffer t))
+
 (use-package company
   :demand t
   :bind (:map company-mode-map
