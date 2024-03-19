@@ -1038,12 +1038,18 @@ which LANG was detected but these are ignored."
           ("C-w" . last-edit))
   :init
   (setq undo-tree-map (make-sparse-keymap))
-  :custom
-  (undo-tree-enable-undo-in-region nil)
-  (undo-tree-auto-save-history nil)
   :config
   (global-undo-tree-mode)
-  (defun undo-tree-overridden-undo-bindings-p () nil)
+  (advice-add #'undo-tree-overridden-undo-bindings-p :override (lambda ()))
+  (defun undo-tree-make-hashed-history-save-file-name (file)
+    (concat
+      user-emacs-directory
+      "undo/"
+      (let ((filename (file-name-nondirectory file)))
+        (substring-no-properties filename 0 (min 16 (length filename))))
+      "~"
+      (secure-hash 'sha256 file)))
+  (advice-add #'undo-tree-make-history-save-file-name :override #'undo-tree-make-hashed-history-save-file-name)
   (defun last-edit-next (undo tree)
     (when undo
       (if tree
