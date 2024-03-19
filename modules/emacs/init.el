@@ -160,6 +160,9 @@ ARGS is `kill-buffer' arguments."
 (use-package dash
   :demand t)
 
+(use-package f
+  :demand t)
+
 (use-package el-patch
   :demand t
   :config
@@ -1042,6 +1045,7 @@ which LANG was detected but these are ignored."
   (global-undo-tree-mode)
   (advice-add #'undo-tree-overridden-undo-bindings-p :override (lambda ()))
   (defun undo-tree-make-hashed-history-save-file-name (file)
+    (f-mkdir (concat user-emacs-directory "undo/"))
     (concat
       user-emacs-directory
       "undo/"
