@@ -193,6 +193,7 @@
       translate-shell
       ubpm
       usbutils
+      unixtools.xxd
       v4l-utils
       vdpauinfo
       viu
@@ -444,7 +445,11 @@
         transparentProxy.enable = true;
         dns.enable = true;
       };
-      settings.Socks5Proxy = "127.0.0.1:1080";
+      settings = {
+        Socks5Proxy = "127.0.0.1:1080";
+        ControlPort = [{ port = 9051; }];
+        CookieAuthentication = true;
+      };
     };
     upower.enable = true;
     mpd = {
