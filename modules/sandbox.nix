@@ -653,10 +653,7 @@ let
           (lib.pipe {
             name = "wesnoth";
             devs = [ "dri" ];
-            syses = [
-              "dev"
-              "devices"
-            ];
+            syses = [ "dev" "devices" ];
             pams = [ "pulse" "pipewire-0" ];
             etcs = [ "pulse" "ssl/certs/ca-certificates.crt" ];
             localtime = true;
@@ -681,7 +678,7 @@ let
           graphics = true;
           unsetenvs = [ "MAIL" "SHELL" ];
           unshare-net = false;
-          whitelist = [ "~/.local/share/tor-browser/" ];
+          whitelist = [ "~/.tor\\ project/" "~/Downloads/" ];
         }];
     }
     {
