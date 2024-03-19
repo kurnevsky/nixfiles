@@ -49,24 +49,6 @@ pkgs.emacsWithPackagesFromUsePackage {
             sha256 = "sha256-Ysb1PTTvaM6Jig8JidMeNynnXyiG/YQ14ZRVqxGWyAU=";
           };
         }));
-      scala-ts-mode = super.melpaBuild rec {
-        pname = "scala-ts-mode";
-        version = "1";
-        commit = "6d489a9e4edb4fdd74a297711f81da70fe8c8f98";
-
-        src = pkgs.fetchFromGitHub {
-          owner = "KaranAhlawat";
-          repo = pname;
-          rev = commit;
-          hash = "sha256-c8GSnWHxw40I7bYROwIkdSoFGDi10cWxdZ+jbs3id2k=";
-        };
-
-        recipe = pkgs.writeText "recipe" ''
-          (scala-ts-mode :fetcher github
-                         :repo "KaranAhlawat/scala-ts-mode"
-                         :files ("scala-ts-mode.el"))
-        '';
-      };
     } // lib.genAttrs [
       "lsp-mode"
       "lsp-treemacs"
