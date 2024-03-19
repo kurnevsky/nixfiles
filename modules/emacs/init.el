@@ -119,7 +119,7 @@ ARGS is `kill-buffer' arguments."
       (when (yes-or-no-p (format "Buffer '%s' modified and not associated with a file, kill it anyway?" (buffer-name buffer)))
         (apply orig-fun args))
       (apply orig-fun args))))
-(advice-add 'kill-buffer :around #'kill-buffer-ask-first)
+(advice-add #'kill-buffer :around #'kill-buffer-ask-first)
 ;; Add possibility to use C-m as hotkey in graphic mode.
 (when (display-graphic-p)
   (define-key input-decode-map [?\C-m] [C-m]))
@@ -368,7 +368,7 @@ ARGS is `kill-buffer' arguments."
       (while (search-forward-regexp (concat "RET" endl) nil t)
         (replace-match "<return>")))
     (edmacro-finish-edit))
-  (advice-add 'kmacro-end-macro :around #'cua-macro-fix))
+  (advice-add #'kmacro-end-macro :around #'cua-macro-fix))
 
 (use-package time
   :ensure nil
@@ -504,12 +504,12 @@ ARGS is `kill-buffer' arguments."
   ;; it completely for self-insert-command when it inserts anything besides
   ;; separators. See https://en.wikipedia.org/wiki/Unicode_character_property#General_Category
   ;; for Unicode properties.
-  (advice-add 'flyspell-check-word-p :around (lambda (orig-fun &rest args)
-                                               (if (eq this-command 'self-insert-command)
-                                                 (memq (get-char-code-property (char-before) 'general-category) '(Zs Zl Zp))
-                                                 (apply orig-fun args))))
-  (advice-add 'uncomment-region :before (lambda (BEG END &optional _ARG)
-                                          (flyspell-delete-region-overlays BEG END))))
+  (advice-add #'flyspell-check-word-p :around (lambda (orig-fun &rest args)
+                                                (if (eq this-command 'self-insert-command)
+                                                  (memq (get-char-code-property (char-before) 'general-category) '(Zs Zl Zp))
+                                                  (apply orig-fun args))))
+  (advice-add #'uncomment-region :before (lambda (BEG END &optional _ARG)
+                                           (flyspell-delete-region-overlays BEG END))))
 
 (use-package pos-tip
   :autoload pos-tip-show)
@@ -809,12 +809,12 @@ which LANG was detected but these are ignored."
   (centaur-tabs-set-icons t)
   :config
   (push 'treemacs-mode-hook centaur-tabs-hide-tabs-hooks)
-  (advice-add 'centaur-tabs-hide-tab-cached :after-until (lambda (buffer)
-                                                           (with-current-buffer buffer
-                                                             (and
-                                                               (boundp 'polymode-mode)
-                                                               polymode-mode
-                                                               (string-prefix-p " " (buffer-name (current-buffer)))))))
+  (advice-add #'centaur-tabs-hide-tab-cached :after-until (lambda (buffer)
+                                                            (with-current-buffer buffer
+                                                              (and
+                                                                (boundp 'polymode-mode)
+                                                                polymode-mode
+                                                                (string-prefix-p " " (buffer-name (current-buffer)))))))
   (centaur-tabs-mode t)
   (centaur-tabs-headline-match)
   (centaur-tabs-group-by-projectile-project)
@@ -1303,8 +1303,8 @@ ical2org.awk > ~/calendar.evo.org")
 
 (use-package polymode
   :config
-  (advice-add 'flycheck-may-enable-mode :after-while (lambda ()
-                                                       (not (and polymode-mode (buffer-base-buffer)))))
+  (advice-add #'flycheck-may-enable-mode :after-while (lambda ()
+                                                        (not (and polymode-mode (buffer-base-buffer)))))
   ;; Doesn't work well with polymode.
   (add-hook 'polymode-init-inner-hook (lambda ()
                                         (set (make-local-variable 'highlight-indent-guides-responsive) nil)))
@@ -1416,9 +1416,9 @@ ical2org.awk > ~/calendar.evo.org")
   :demand t
   :config
   (direnv-mode)
-  (advice-add 'direnv-update-directory-environment :after (lambda (&rest _)
-                                                            (when doom-modeline-env--command
-                                                              (setq doom-modeline-env--command (executable-find (file-name-nondirectory doom-modeline-env--command)))))))
+  (advice-add #'direnv-update-directory-environment :after (lambda (&rest _)
+                                                             (when doom-modeline-env--command
+                                                               (setq doom-modeline-env--command (executable-find (file-name-nondirectory doom-modeline-env--command)))))))
 
 (use-package format-all)
 
