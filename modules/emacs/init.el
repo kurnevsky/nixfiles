@@ -1050,7 +1050,7 @@ which LANG was detected but these are ignored."
       user-emacs-directory
       "undo/"
       (let ((filename (file-name-nondirectory file)))
-        (substring-no-properties filename 0 (min 16 (length filename))))
+        (substring-no-properties filename 0 (min 64 (length filename))))
       "~"
       (secure-hash 'sha256 file)))
   (advice-add #'undo-tree-make-history-save-file-name :override #'undo-tree-make-hashed-history-save-file-name)
