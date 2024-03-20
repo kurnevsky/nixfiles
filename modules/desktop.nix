@@ -99,7 +99,6 @@
       curlHTTP3
       davfs2
       dbus
-      deadbeef-with-plugins
       dmidecode
       docker-compose
       dosbox
@@ -151,12 +150,9 @@
       exploitdb
       dsniff
       vagrant
-      mpc_cli
-      mpv
       mu
       nettools
       newsboat
-      ncmpc
       nmap
       nodePackages.mermaid-cli
       (pkgs.writeShellScriptBin "prettier" ''
@@ -197,7 +193,6 @@
       v4l-utils
       vdpauinfo
       viu
-      vlc
       vorbis-tools
       vulkan-tools
       wavpack
@@ -230,6 +225,12 @@
       ## Tox
       qtox
       toxic
+      # Multimedia
+      deadbeef-with-plugins
+      mpc_cli
+      mpv
+      ncmpc
+      vlc
       # Games
       cataclysm-dda
       # TODO: broken
