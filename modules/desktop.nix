@@ -71,7 +71,6 @@
         paths = [ obs-with-gstreamer obs-wrapped ];
       })
       pass
-      (callPackage ./ical2org.nix { })
       (python311Packages.callPackage ./openhrv.nix { })
       aircrack-ng
       anki
