@@ -86,7 +86,6 @@
         ];
       });
     })
-    (self: super: { wine-ge = super.callPackage ./wine-ge.nix { }; })
     # TODO: included in plasma 6.1
     (self: super: {
       kdePackages = super.kdePackages.overrideScope (kde-self: kde-super: {
