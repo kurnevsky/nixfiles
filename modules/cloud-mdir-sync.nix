@@ -7,9 +7,14 @@ python3Packages.buildPythonPackage rec {
   src = fetchFromGitHub {
     owner = "jgunthorpe";
     repo = "cloud_mdir_sync";
-    rev = "58657778420637e329d887b5b95cb30a90d43d1b";
-    sha256 = "sha256-6aP3wES9RF8lkDrezGGimGIFFwPmfbeBwGFxlviKdRw=";
+    rev = "c5c58b4723218b03b5fb8574a244d3497bd54992";
+    sha256 = "sha256-G6XIg47JvQ3QGkzzVGGsnIXwy7QWB655vdPJDylvocI=";
   };
+
+  postPatch = ''
+    substituteInPlace setup.py \
+      --replace "'pyasyncore'," ""
+  '';
 
   propagatedBuildInputs = with python3Packages; [
     aiohttp
