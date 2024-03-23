@@ -90,6 +90,11 @@
       owner = "iodined";
       group = "iodined";
     };
+    shadowsocks = {
+      file = ../../secrets/shadowsocks.age;
+      mode = "440";
+      group = "secrets";
+    };
   };
 
   system.stateVersion = "21.11";
