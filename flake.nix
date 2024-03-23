@@ -57,7 +57,6 @@
       repo = "agenix";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
-      inputs.darwin.follows = "";
     };
 
     llama-cpp = {
@@ -70,6 +69,9 @@
 
   outputs = inputs:
     let
+      collectFlakeInputs = input:
+        [ input ] ++ builtins.concatMap collectFlakeInputs
+        (builtins.attrValues (input.inputs or { }));
       users = {
         root = "root";
         kurnevsky = "kurnevsky";
@@ -86,6 +88,8 @@
         ./modules/patches.nix
         ./modules/overlays.nix
         (for-all-home-users (with users; [ root kurnevsky ]) common-home)
+        # Keep flake inputs from being garbage collected
+        { system.extraDependencies = collectFlakeInputs inputs.self; }
       ];
       desktopModules = commonModules ++ [
         {
