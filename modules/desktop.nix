@@ -747,50 +747,69 @@
             ];
           };
         };
-        mbsync = { enable = true; };
+        mbsync.enable = true;
+        vdirsyncer.enable = true;
       };
-      accounts.email.accounts = {
-        gmail = {
-          mbsync = {
-            enable = true;
-            patterns = [ "*" "![Gmail]/All Mail" ];
-            create = "both";
-            expunge = "both";
-            extraConfig.account.AuthMech = "PLAIN";
+      accounts = {
+        email.accounts = {
+          gmail = {
+            mbsync = {
+              enable = true;
+              patterns = [ "*" "![Gmail]/All Mail" ];
+              create = "both";
+              expunge = "both";
+              extraConfig.account.AuthMech = "PLAIN";
+            };
+            primary = true;
+            maildir.path = "gmail";
+            userName = "kurnevsky@gmail.com";
+            imap.host = "imap.gmail.com";
+            passwordCommand =
+              "${pkgs.pass}/bin/pass show web/google.com | grep Isync | cut -d ' ' -f 2";
           };
-          primary = true;
-          maildir.path = "gmail";
-          userName = "kurnevsky@gmail.com";
-          imap.host = "imap.gmail.com";
-          passwordCommand =
-            "${pkgs.pass}/bin/pass show web/google.com | grep Isync | cut -d ' ' -f 2";
+          yandex = {
+            mbsync = {
+              enable = true;
+              create = "both";
+              expunge = "both";
+              extraConfig.account.AuthMech = "PLAIN";
+            };
+            maildir.path = "yandex";
+            userName = "kurnevsky";
+            imap.host = "imap.ya.ru";
+            passwordCommand =
+              "${pkgs.pass}/bin/pass show web/yandex.ru | head -n 1";
+          };
+          evolution = let user = "ykurneuski@evolution.com";
+          in {
+            mbsync = {
+              enable = true;
+              create = "both";
+              expunge = "both";
+              extraConfig.account.AuthMech = "XOAUTH2";
+            };
+            maildir.path = "evolution";
+            userName = user;
+            imap.host = "outlook.office365.com";
+            passwordCommand =
+              "${pkgs.cloud-mdir-sync}/bin/cms-oauth --cms_sock=$XDG_RUNTIME_DIR/cms.sock --proto=IMAP --user ${user} --output=token";
+          };
         };
-        yandex = {
-          mbsync = {
-            enable = true;
-            create = "both";
-            expunge = "both";
-            extraConfig.account.AuthMech = "PLAIN";
+        calendar = {
+          basePath = "Calendar";
+          accounts = {
+            evo = {
+              vdirsyncer = {
+                enable = true;
+                urlCommand = [ "pass" "evo/outlook-ical" ];
+              };
+              remote.type = "http";
+              local = {
+                type = "filesystem";
+                fileExt = ".vcf";
+              };
+            };
           };
-          maildir.path = "yandex";
-          userName = "kurnevsky";
-          imap.host = "imap.ya.ru";
-          passwordCommand =
-            "${pkgs.pass}/bin/pass show web/yandex.ru | head -n 1";
-        };
-        evolution = let user = "ykurneuski@evolution.com";
-        in {
-          mbsync = {
-            enable = true;
-            create = "both";
-            expunge = "both";
-            extraConfig.account.AuthMech = "XOAUTH2";
-          };
-          maildir.path = "evolution";
-          userName = user;
-          imap.host = "outlook.office365.com";
-          passwordCommand =
-            "${pkgs.cloud-mdir-sync}/bin/cms-oauth --cms_sock=$XDG_RUNTIME_DIR/cms.sock --proto=IMAP --user ${user} --output=token";
         };
       };
       services.gpg-agent = {
