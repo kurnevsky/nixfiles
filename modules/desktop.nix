@@ -749,6 +749,7 @@
         };
         mbsync.enable = true;
         vdirsyncer.enable = true;
+        khal.enable = true;
       };
       accounts = {
         email.accounts = {
@@ -799,6 +800,10 @@
           basePath = "Calendar";
           accounts = {
             evo = {
+              khal = {
+                enable = true;
+                readOnly = true;
+              };
               vdirsyncer = {
                 enable = true;
                 urlCommand = [ "pass" "evo/outlook-ical" ];
@@ -806,7 +811,7 @@
               remote.type = "http";
               local = {
                 type = "filesystem";
-                fileExt = ".vcf";
+                fileExt = ".ics";
               };
             };
           };
