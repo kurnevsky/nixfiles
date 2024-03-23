@@ -517,13 +517,15 @@
             MTUBytes = "1280";
           };
           wireguardConfig = {
-            PrivateKeyFile = "/secrets/wg/private.key";
+            PrivateKeyFile =
+              config.age.secrets.wg-private.path or "/secrets/wg/private.key";
             ListenPort = 51871;
           };
           wireguardPeers = [{
             wireguardPeerConfig = {
               PublicKey = "5JHCxIYeZ50k7YJM+kLAbqGW4LAXpI5lycYEWSVxkBE=";
-              PresharedKeyFile = "/secrets/wg/preshared.psk";
+              PresharedKeyFile =
+                config.age.secrets.wg-preshared.path or "/secrets/wg/preshared.psk";
               AllowedIPs = "0.0.0.0/0, ::/0";
               # Direct connection
               # Endpoint = "kurnevsky.net:51871";

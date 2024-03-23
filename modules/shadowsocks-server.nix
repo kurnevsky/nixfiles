@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 let
   shadowsocksConfig = {
@@ -23,7 +23,9 @@ in {
       SupplementaryGroups = "secrets";
     };
     script = ''
-      cat ${shadowsocksConfigFile} | ${pkgs.jq}/bin/jq --arg password "$(cat /secrets/shadowsocks)" '. + { password: $password }' > /tmp/shadowsocks.json
+      cat ${shadowsocksConfigFile} | ${pkgs.jq}/bin/jq --arg password "$(cat ${
+        config.age.secrets.shadowsocks.path or "/secrets/shadowsocks"
+      })" '. + { password: $password }' > /tmp/shadowsocks.json
       exec ${pkgs.shadowsocks-rust}/bin/ssserver --config /tmp/shadowsocks.json
     '';
   };

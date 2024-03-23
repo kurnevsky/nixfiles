@@ -45,26 +45,31 @@
     wireguard.interfaces.wg0 = {
       ips = [ "192.168.14.1/32" ];
       listenPort = 51871;
-      privateKeyFile = "/secrets/wg/private.key";
+      privateKeyFile =
+        config.age.secrets.wg-private.path or "/secrets/wg/private.key";
       peers = [
         {
           publicKey = "aRD0dqodCPyqTklk0KinKiTXYTnIBXZ0WFKy/q0dhQo=";
-          presharedKeyFile = "/secrets/wg/home.psk";
+          presharedKeyFile =
+            config.age.secrets.wg-preshared-home.path or "/secrets/wg/home.psk";
           allowedIPs = [ "192.168.14.2/32" ];
         }
         {
           publicKey = "v69zSw9Ny+ym3DReKRh0gt+Ecc2rcTyKsieqnVZ/PwE=";
-          presharedKeyFile = "/secrets/wg/work.psk";
+          presharedKeyFile =
+            config.age.secrets.wg-preshared-work.path or "/secrets/wg/work.psk";
           allowedIPs = [ "192.168.14.3/32" ];
         }
         {
           publicKey = "7Do1rDKMm8dZLgChf8pkS57Cg2A/jEj0JhNEfu0YTHM=";
-          presharedKeyFile = "/secrets/wg/parents.psk";
+          presharedKeyFile =
+            config.age.secrets.wg-preshared-parents.path or "/secrets/wg/parents.psk";
           allowedIPs = [ "192.168.14.4/32" ];
         }
         {
           publicKey = "il0KQKwE2+clYFXJT/2mLoC3sRudP3B4g/GR45vlP2E=";
-          presharedKeyFile = "/secrets/wg/pc.psk";
+          presharedKeyFile =
+            config.age.secrets.wg-preshared-pc.path or "/secrets/wg/pc.psk";
           allowedIPs = [ "192.168.14.5/32" ];
         }
       ];
