@@ -749,7 +749,16 @@
         };
         mbsync.enable = true;
         vdirsyncer.enable = true;
-        khal.enable = true;
+        khal = {
+          enable = true;
+          locale = {
+            timeformat = "%H:%M";
+            dateformat = "%Y-%m-%d";
+            longdateformat = "%Y-%m-%d %a";
+            datetimeformat = "%Y-%m-%d %H:%M";
+            longdatetimeformat = "%Y-%m-%d %H:%M";
+          };
+        };
       };
       accounts = {
         email.accounts = {

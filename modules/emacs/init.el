@@ -1141,25 +1141,11 @@ which LANG was detected but these are ignored."
 
 (use-package org-agenda
   :ensure nil
-  :bind (:map org-agenda-mode-map
-          ("R" . (lambda ()
-                   (interactive)
-                   (shell-command "curl --fail --no-progress-meter \"$(pass evo/outlook-ical)\" | \
-AUTHOR='Evgeny Kurnevsky' \
-EMAIL='ykurneuski@evolution.com' \
-TITLE='Evolution calendar' \
-CALENDAR='evo' \
-FILETAGS='work' \
-ical2org.awk > ~/calendar.evo.org")
-                   (when-let ((buffer (get-file-buffer "~/calendar.evo.org")))
-                     (with-current-buffer buffer
-                       (revert-buffer :ignore-auto :noconfirm)))
-                   (org-agenda-redo))))
   :custom
   (org-agenda-file-regexp "\\`[^.].*\\.org\\\(\\.gpg\\\)?\\'")
   (org-agenda-start-on-weekday nil)
   (org-agenda-span 14)
-  (org-agenda-files '("~/calendar.evo.org")))
+  (org-agenda-files '("~/calendar.org")))
 
 (use-package org-roam
   :custom
@@ -1558,6 +1544,13 @@ identifier and the position respectively."
   :custom
   (llama-cpp-chat-prompt "You are Dolphin, a smart AI assistant.")
   (llama-cpp-port 8081))
+
+(use-package khalel
+  :commands (khalel-import-events khalel-run-vdirsyncer)
+  :custom
+  (khalel-import-org-file "~/calendar.org")
+  :config
+  (khalel-add-capture-template))
 
 (use-package mu4e
   :commands mu4e
