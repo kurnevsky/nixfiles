@@ -29,4 +29,7 @@ in {
   "hans.age".publicKeys = all;
   "iodine.age".publicKeys = all;
   "shadowsocks.age".publicKeys = all;
+
+  "wg-private-evo.age".publicKeys = [ evo ];
+  "wg-preshared-evo.age".publicKeys = [ evo digitalocean ];
 }
