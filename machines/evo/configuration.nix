@@ -66,8 +66,9 @@
 
   security.pam.services = {
     sshd.fprintAuth = false;
-    # SDDM don't support it properly at the moment (sddm imports login).
+    # KDE and SDDM don't support it properly at the moment (sddm imports login).
     login.fprintAuth = false;
+    kde.fprintAuth = false;
   };
 
   age.secrets = {
