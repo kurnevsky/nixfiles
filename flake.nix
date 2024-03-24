@@ -82,6 +82,7 @@
       common-home = import ./modules/common-home.nix;
       commonModules = [
         inputs.agenix.nixosModules.default
+        ./modules/agenix.nix
         inputs.home-manager.nixosModules.home-manager
         ./modules/common.nix
         ./modules/bfq.nix
