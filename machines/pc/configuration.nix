@@ -48,7 +48,8 @@
     (pkgs.pkgsCross.mingwW64.callPackage ./../../modules/vkd3d-proton.nix { })
     ((python3.withPackages (pkgs:
       with pkgs; [
-        torchWithRocm
+        # TODO: broken
+        # torchWithRocm
         transformers
         sentencepiece
         sacremoses
