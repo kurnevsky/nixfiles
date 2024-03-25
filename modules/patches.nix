@@ -6,8 +6,8 @@ let
     patches = [
       (pkgs.fetchpatch {
         url =
-          "https://github.com/NixOS/nixpkgs/commit/453281114f968f1c355c14db82555c80b08ed568.diff";
-        sha256 = "sha256-2TNCoB6WcaRGxw/HgPK0aWZh8Mt7dXu/cTyZOvFwyIM=";
+          "https://github.com/NixOS/nixpkgs/commit/c531d48ec60b2f0d6c76a6b991f5680525f9fff2.diff";
+        sha256 = "sha256-zpIJtr8ZYCcoRzHDBmi8gOPZqhekJziam1MOSD8HB/o=";
       })
       (pkgs.fetchpatch {
         url =
