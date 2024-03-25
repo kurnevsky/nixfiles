@@ -1427,6 +1427,7 @@ which LANG was detected but these are ignored."
   (setenv "LSP_USE_PLISTS" "true")
   (setq lsp-keymap-prefix "C-l")
   :custom
+  (lsp-session-file "/tmp/.lsp-session")
   (lsp-auto-guess-root t)
   (lsp-prefer-flymake nil)
   (lsp-file-watch-threshold nil)
