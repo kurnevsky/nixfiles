@@ -11,7 +11,7 @@ name = "fuzzy_matcher_el"
 crate-type = ["cdylib"]
 
 [dependencies]
-emacs = "0.18"
+emacs = "0.19"
 fuzzy-matcher = "0.3"
 
 [profile.release]
