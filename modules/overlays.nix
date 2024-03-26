@@ -100,10 +100,5 @@
         });
       });
     })
-    # TODO: tests fail
-    (self: super: {
-      fprintd = super.fprintd.overrideAttrs
-        (old: { mesonCheckFlags = [ "--no-suite" "fprintd:TestPamFprintd" ]; });
-    })
   ];
 }

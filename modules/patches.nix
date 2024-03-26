@@ -11,8 +11,8 @@ let
       })
       (pkgs.fetchpatch {
         url =
-          "https://github.com/NixOS/nixpkgs/commit/61cb7385bd311a6f55813f123c960adab699c96c.diff";
-        sha256 = "sha256-8QchRS+IdXxHzJSvUgMMCnDwNVxmxPeyXlj/BvxAVoc=";
+          "https://github.com/NixOS/nixpkgs/commit/5726bce7154ee34d3e1faf55612ddde6ccf4faff.diff";
+        sha256 = "sha256-uGJDWFXmSZYE9uEqbHJrlSlU0QdU6pkcm8zG+t+V8eE=";
       })
     ];
   };
@@ -20,10 +20,5 @@ let
 in {
   disabledModules = [ ];
   imports = [ ];
-  nixpkgs.overlays = [
-    (self: super: {
-      iosevka = patchedPkgs.iosevka;
-      wesnoth = patchedPkgs.wesnoth;
-    })
-  ];
+  nixpkgs.overlays = [ (self: super: { iosevka = patchedPkgs.iosevka; }) ];
 }
