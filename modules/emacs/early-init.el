@@ -125,6 +125,9 @@
      ("Process Future"
        (pcase command
          (`(,(pred (string= (executable-find "python3"))) "-O" . ,_) t)))
+     ("khalel-vdirsyncer-process"
+       (pcase command
+         (`("vdirsyncer" "sync") t)))
      ;; LSP
      ("metals"
        (pcase command
