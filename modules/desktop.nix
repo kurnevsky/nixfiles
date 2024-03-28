@@ -12,6 +12,7 @@
       echo 2048 > /proc/sys/dev/hpet/max-user-freq
     '';
     loader.grub.memtest86.enable = true;
+    initrd.systemd.enable = true;
   };
 
   networking = {
