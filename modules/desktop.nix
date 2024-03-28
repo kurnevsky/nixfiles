@@ -37,7 +37,7 @@
     [ "C.UTF-8/UTF-8" "en_US.UTF-8/UTF-8" "ru_RU.UTF-8/UTF-8" ];
 
   console = {
-    font = "cyr-sun16";
+    font = "${pkgs.terminus_font}/share/consolefonts/ter-u16n.psf.gz";
     keyMap = "ru";
   };
 
