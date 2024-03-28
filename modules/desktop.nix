@@ -13,6 +13,7 @@
     '';
     loader.grub.memtest86.enable = true;
     initrd.systemd.enable = true;
+    plymouth.enable = true;
   };
 
   networking = {
