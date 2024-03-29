@@ -121,13 +121,16 @@
          ;; Tramp
          (`("cat" ,(rx bos "/tmp/tramp." (+ alnum) eos)) t)
          (`("/bin/sh" "-i") t)))
+     ("khalel-vdirsyncer-process"
+       (pcase command
+         (`("vdirsyncer" "sync") t)))
+     ("vterm"
+       (pcase command
+         (`("/bin/sh" . ,_) t)))
      ;; Treemacs
      ("Process Future"
        (pcase command
          (`(,(pred (string= (executable-find "python3"))) "-O" . ,_) t)))
-     ("khalel-vdirsyncer-process"
-       (pcase command
-         (`("vdirsyncer" "sync") t)))
      ;; LSP
      ("metals"
        (pcase command
