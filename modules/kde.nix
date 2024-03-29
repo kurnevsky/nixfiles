@@ -176,17 +176,17 @@
           kglobalshortcutsrc = {
             ksmserver = {
               "Lock Session" =
-                "Meta+Esc	Screensaver,Meta+L	Ctrl+Alt+L	Screensaver,Lock Session";
+                "Meta+Esc	Screensaver,Meta+L	Screensaver,Lock Session";
               "Log Out" = "Meta+Shift+Esc,Ctrl+Alt+Del,Log Out";
             };
             kwin = {
               Invert = "Meta+Shift+I,Meta+Ctrl+I,Toggle Invert Effect";
               InvertWindow =
                 "Meta+I,Meta+Ctrl+U,Toggle Invert Effect on Window";
-              "Kill Window" = "Meta+Shift+C,Ctrl+Alt+Esc,Kill Window";
+              "Kill Window" = "Meta+Shift+C,Meta+Ctrl+Esc,Kill Window";
               "MoveMouseToCenter" = "Meta+Shift+W,Meta+F6,Move Mouse to Center";
               "MoveMouseToFocus" = "Meta+W,Meta+F5,Move Mouse to Focus";
-              "Show Desktop" = "none,Meta+D,Show Desktop";
+              "Show Desktop" = "none,Meta+D,Peek at Desktop";
               "Switch One Desktop Down" =
                 "Meta+Down,Meta+Ctrl+Down,Switch One Desktop Down";
               "Switch One Desktop Up" =
@@ -199,23 +199,23 @@
               "Switch to Desktop 2" = "Meta+2,Ctrl+F2,Switch to Desktop 2";
               "Switch to Desktop 3" = "Meta+3,Ctrl+F3,Switch to Desktop 3";
               "Switch to Desktop 4" = "Meta+4,Ctrl+F4,Switch to Desktop 4";
-              "Switch to Desktop 5" = "Meta+5,none,Switch to Desktop 5";
-              "Switch to Desktop 6" = "Meta+6,none,Switch to Desktop 6";
-              "Switch to Desktop 7" = "Meta+7,none,Switch to Desktop 7";
-              "Switch to Desktop 8" = "Meta+8,none,Switch to Desktop 8";
-              "Switch to Desktop 9" = "Meta+9,none,Switch to Desktop 9";
-              "Switch to Screen 0" = "Meta+A,none,Switch to Screen 0";
-              "Switch to Screen 1" = "Meta+S,none,Switch to Screen 1";
-              "Switch to Screen 2" = "Meta+D,none,Switch to Screen 2";
+              "Switch to Desktop 5" = "Meta+5,,Switch to Desktop 5";
+              "Switch to Desktop 6" = "Meta+6,,Switch to Desktop 6";
+              "Switch to Desktop 7" = "Meta+7,,Switch to Desktop 7";
+              "Switch to Desktop 8" = "Meta+8,,Switch to Desktop 8";
+              "Switch to Desktop 9" = "Meta+9,,Switch to Desktop 9";
+              "Switch to Screen 0" = "Meta+A,,Switch to Screen 0";
+              "Switch to Screen 1" = "Meta+S,,Switch to Screen 1";
+              "Switch to Screen 2" = "Meta+D,,Switch to Screen 2";
               "Walk Through Windows" = "Meta+Tab,Alt+Tab,Walk Through Windows";
               "Walk Through Windows (Reverse)" =
-                "Meta+Shift+Backtab,Alt+Shift+Backtab,Walk Through Windows (Reverse)";
+                "Meta+Shift+Tab,Alt+Shift+Tab,Walk Through Windows (Reverse)";
               "Walk Through Windows of Current Application" =
                 "Meta+`,Alt+`,Walk Through Windows of Current Application";
               "Walk Through Windows of Current Application (Reverse)" =
                 "Meta+~,Alt+~,Walk Through Windows of Current Application (Reverse)";
               "Window Close" = "Meta+C,Alt+F4,Close Window";
-              "Window Fullscreen" = "Meta+Shift+F,none,Make Window Fullscreen";
+              "Window Fullscreen" = "Meta+Shift+F,,Make Window Fullscreen";
               "Window Maximize" = "Meta+F,Meta+PgUp,Maximize Window";
               "Window Minimize" = "Meta+Alt+F,Meta+PgDown,Minimize Window";
               "Window On All Desktops" =
@@ -236,19 +236,19 @@
                 "Meta+Ctrl+Right,Meta+Right,Quick Tile Window to the Right";
               "Window Quick Tile Top" =
                 "Meta+Ctrl+Up,Meta+Up,Quick Tile Window to the Top";
-              "Window to Desktop 1" = "Meta+!,none,Window to Desktop 1";
-              "Window to Desktop 2" = "Meta+@,none,Window to Desktop 2";
-              "Window to Desktop 3" = "Meta+#,none,Window to Desktop 3";
-              "Window to Desktop 4" = "Meta+$,none,Window to Desktop 4";
-              "Window to Desktop 5" = "Meta+%,none,Window to Desktop 5";
-              "Window to Desktop 6" = "Meta+^,none,Window to Desktop 6";
-              "Window to Desktop 7" = "Meta+&,none,Window to Desktop 7";
-              "Window to Desktop 8" = "Meta+*,none,Window to Desktop 8";
-              "Window to Desktop 9" = "Meta+(,none,Window to Desktop 9";
+              "Window to Desktop 1" = "Meta+!,,Window to Desktop 1";
+              "Window to Desktop 2" = "Meta+@,,Window to Desktop 2";
+              "Window to Desktop 3" = "Meta+#,,Window to Desktop 3";
+              "Window to Desktop 4" = "Meta+$,,Window to Desktop 4";
+              "Window to Desktop 5" = "Meta+%,,Window to Desktop 5";
+              "Window to Desktop 6" = "Meta+^,,Window to Desktop 6";
+              "Window to Desktop 7" = "Meta+&,,Window to Desktop 7";
+              "Window to Desktop 8" = "Meta+*,,Window to Desktop 8";
+              "Window to Desktop 9" = "Meta+(,,Window to Desktop 9";
               "Window to Next Screen" =
-                "none,Meta+Shift+Right,Window to Next Screen";
+                "none,Meta+Shift+Right,Move Window to Next Screen";
               "Window to Previous Screen" =
-                "none,Meta+Shift+Left,Window to Previous Screen";
+                "none,Meta+Shift+Left,Move Window to Previous Screen";
               "Window to Screen 0" = "Meta+Shift+A,none,Window to Screen 0";
               "Window to Screen 1" = "Meta+Shift+S,none,Window to Screen 1";
               "Window to Screen 2" = "Meta+Shift+D,none,Window to Screen 2";
@@ -282,24 +282,14 @@
             org_kde_powerdevil = {
               "Turn Off Screen" = "Meta+F6,none,Turn Off Screen";
             };
-            "org.kde.krunner.desktop" = {
-              "_launch" = "Meta+F2	Search,Alt+Space	Alt+F2	Search,KRunner";
-            };
-            "org.kde.konsole.desktop" = {
-              "_launch" = "Ctrl+Alt+T	Meta+R,Ctrl+Alt+T,Konsole";
-            };
-            "org.kde.dolphin.desktop" = {
-              "_launch" = "Meta+E,Meta+E,Dolphin";
-            };
-            "Alacritty.desktop" = { "_launch" = "Meta+Shift+R,,Alacritty"; };
-            "brightness-min.desktop" = {
-              "_launch" = "Shift+Monitor Brightness Down,,Brightness min";
-            };
-            "brightness-max.desktop" = {
-              "_launch" = "Shift+Monitor Brightness Up,,Brightness max";
-            };
-            "translate-google.desktop" = {
-              "_launch" = "Meta+Shift+T,,Translate google";
+            services = {
+              "org.kde.krunner.desktop"._launch = "Meta+F2	Search";
+              "org.kde.konsole.desktop"._launch = "Meta+R";
+              "Alacritty.desktop"._launch = "Meta+Shift+R";
+              "brightness-min.desktop"._launch =
+                "Shift+Monitor Brightness Down";
+              "brightness-max.desktop"._launch = "Shift+Monitor Brightness Up";
+              "translate-google.desktop"._launch = "Meta+Shift+T";
             };
           };
           kxkbrc = {
@@ -324,12 +314,17 @@
           ksmserverrc = { General.loginMode = "emptySession"; };
           kcminputrc = { Keyboard.NumLock = 0; };
         };
-        lines = lib.flatten (lib.mapAttrsToList (file: groups:
-          lib.mapAttrsToList (group: keys:
-            lib.mapAttrsToList (key: value:
-              "test -f ~/.config/'${file}' && ${pkgs.libsForQt5.kconfig}/bin/kwriteconfig5 --file ~/.config/'${file}' --group '${group}' --key '${key}' ${
-                toValue value
-              }") keys) groups) configs);
+        toLine = file: path: value:
+          if builtins.isAttrs value then
+            lib.mapAttrsToList
+            (group: value: toLine file (path ++ [ group ]) value) value
+          else
+            "test -f ~/.config/'${file}' && ${pkgs.libsForQt5.kconfig}/bin/kwriteconfig5 --file ~/.config/'${file}' ${
+              lib.concatMapStringsSep " " (x: "--group ${x}")
+              (lib.lists.init path)
+            } --key '${lib.lists.last path}' ${toValue value}";
+        lines = lib.flatten
+          (lib.mapAttrsToList (file: attrs: toLine file [ ] attrs) configs);
         konsole-theme = "base16-onedark.colorscheme";
       in {
         home = {
