@@ -217,7 +217,6 @@ let
           (lib.pipe {
             name = "firefox";
             extra-deps = with pkgs; [
-              qt5ct
               gnome-themes-extra
               gnome.adwaita-icon-theme
               hicolor-icon-theme
@@ -246,7 +245,6 @@ let
             ro-whitelist = [
               "~/.password-store/"
               "~/.config/gtk-3.0/"
-              "~/.config/qt5ct/"
               "~/.config/kdeglobals"
             ];
             whitelist = [
@@ -269,7 +267,6 @@ let
           (lib.pipe {
             name = "chromium";
             extra-deps = with pkgs; [
-              qt5ct
               gnome-themes-extra
               gnome.adwaita-icon-theme
               hicolor-icon-theme
@@ -292,11 +289,7 @@ let
             unsetenvs = [ "MAIL" "SHELL" ];
             unshare-net = false;
             disable-userns = false;
-            ro-whitelist = [
-              "~/.config/gtk-3.0/"
-              "~/.config/qt5ct/"
-              "~/.config/kdeglobals"
-            ];
+            ro-whitelist = [ "~/.config/gtk-3.0/" "~/.config/kdeglobals" ];
             whitelist = [
               "~/.config/chromium/"
               "~/.cache/chromium/"
@@ -314,7 +307,6 @@ let
           (lib.pipe {
             name = "qtox";
             extra-deps = with pkgs; [
-              qt5ct
               gnome-themes-extra
               gnome.adwaita-icon-theme
               hicolor-icon-theme
@@ -334,7 +326,7 @@ let
             resolv-conf = true;
             unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" "SHELL" ];
             unshare-net = false;
-            ro-whitelist = [ "~/.config/qt5ct/" "~/.config/kdeglobals" ];
+            ro-whitelist = [ "~/.config/kdeglobals" ];
             whitelist = [ "~/.config/tox/" "~/.cache/Tox/" "~/.config/pulse/" ];
           } [ withFonts withOpengl ])
         ];
@@ -400,7 +392,6 @@ let
           (lib.pipe {
             name = "telegram-desktop";
             extra-deps = with pkgs; [
-              qt5ct
               gnome-themes-extra
               gnome.adwaita-icon-theme
               hicolor-icon-theme
@@ -420,7 +411,7 @@ let
             resolv-conf = true;
             unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" "SHELL" ];
             unshare-net = false;
-            ro-whitelist = [ "~/.config/qt5ct/" "~/.config/kdeglobals" ];
+            ro-whitelist = [ "~/.config/kdeglobals" ];
             whitelist =
               [ "~/.local/share/TelegramDesktop/" "~/.config/pulse/" ];
           } [ withFonts withOpengl ])
@@ -433,7 +424,6 @@ let
           (lib.pipe {
             name = "element-desktop";
             extra-deps = with pkgs; [
-              qt5ct
               gnome-themes-extra
               gnome.adwaita-icon-theme
               hicolor-icon-theme
@@ -472,7 +462,6 @@ let
           (lib.pipe {
             name = "qbittorrent";
             extra-deps = with pkgs; [
-              qt5ct
               gnome-themes-extra
               gnome.adwaita-icon-theme
               hicolor-icon-theme
@@ -492,7 +481,7 @@ let
             resolv-conf = true;
             unsetenvs = [ "MAIL" "SHELL" ];
             unshare-net = false;
-            ro-whitelist = [ "~/.config/qt5ct/" "~/.config/kdeglobals" ];
+            ro-whitelist = [ "~/.config/kdeglobals" ];
             whitelist = [
               "~/.local/share/data/qBittorrent/"
               "~/.config/qBittorrent/"
@@ -713,7 +702,6 @@ let
           (withFonts {
             name = "claws-mail";
             extra-deps = with pkgs; [
-              qt5ct
               gnome-themes-extra
               gnome.adwaita-icon-theme
               hicolor-icon-theme
