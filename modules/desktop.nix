@@ -106,7 +106,6 @@
       graphicsmagick
       graphicsmagick-imagemagick-compat
       hdparm
-      hicolor-icon-theme # contains deadbeef icon
       (hunspellWithDicts (with hunspellDicts; [ en_US ru_RU ]))
       imv
       inetutils
