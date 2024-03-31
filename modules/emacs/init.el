@@ -1386,7 +1386,9 @@ which LANG was detected but these are ignored."
 
 (use-package nix-mode)
 
-(use-package dhall-mode)
+(use-package dhall-mode
+  :custom
+  (dhall-format-at-save nil))
 
 (use-package mermaid-mode)
 

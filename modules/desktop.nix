@@ -288,6 +288,9 @@
       marksman
       ## TypeScript
       nodePackages.typescript-language-server
+      ## Dhall
+      dhall
+      dhall-lsp-server
       # VCS
       mercurial
       pijul
