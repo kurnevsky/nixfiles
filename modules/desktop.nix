@@ -91,7 +91,6 @@
       extundelete
       fd
       fclones
-      feh
       ffmpeg-full
       flac
       fuseiso
@@ -107,7 +106,6 @@
       graphicsmagick-imagemagick-compat
       hdparm
       (hunspellWithDicts (with hunspellDicts; [ en_US ru_RU ]))
-      imv
       inetutils
       inkscape
       innoextract
@@ -206,11 +204,17 @@
       qtox
       toxic
       # Multimedia
+      ## Image
+      feh
+      imv
+      oculante
+      ## Video
+      mpv
+      vlc
+      ## Audio
       deadbeef-with-plugins
       mpc_cli
-      mpv
       ncmpc
-      vlc
       # Games
       cataclysm-dda
       # TODO: broken
