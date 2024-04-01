@@ -281,8 +281,13 @@
             };
             org_kde_powerdevil = {
               "Turn Off Screen" = "Meta+F6,none,Turn Off Screen";
+              "Decrease Screen Brightness Small" =
+                "Ctrl+Monitor Brightness Down,Shift+Monitor Brightness Down,Decrease Screen Brightness by 1%";
+              "Increase Screen Brightness Small" =
+                "Ctrl+Monitor Brightness Up,Shift+Monitor Brightness Up,Increase Screen Brightness by 1%";
             };
             services = {
+              "org.kde.spectacle.desktop".RecordRegion = "none";
               "org.kde.krunner.desktop"._launch = "Meta+F2	Search";
               "org.kde.konsole.desktop"._launch = "Meta+R";
               "Alacritty.desktop"._launch = "Meta+Shift+R";
