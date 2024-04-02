@@ -11,7 +11,10 @@
       echo 2048 > /sys/class/rtc/rtc0/max_user_freq
       echo 2048 > /proc/sys/dev/hpet/max-user-freq
     '';
-    loader.grub.memtest86.enable = true;
+    loader = {
+      grub.memtest86.enable = true;
+      systemd-boot.memtest86.enable = true;
+    };
     initrd.systemd.enable = true;
     plymouth.enable = true;
   };
