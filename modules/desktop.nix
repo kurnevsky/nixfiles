@@ -13,7 +13,10 @@
     '';
     loader = {
       grub.memtest86.enable = true;
-      systemd-boot.memtest86.enable = true;
+      systemd-boot = {
+        memtest86.enable = true;
+        consoleMode = "max";
+      };
     };
     initrd.systemd.enable = true;
     plymouth.enable = true;
