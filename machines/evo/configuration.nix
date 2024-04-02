@@ -10,7 +10,10 @@
         device = "nodev";
       };
     };
-    initrd.luks.devices.root.allowDiscards = true;
+    initrd = {
+      kernelModules = [ "i915" ];
+      luks.devices.root.allowDiscards = true;
+    };
     extraModulePackages = with config.boot.kernelPackages; [
       acpi_call
       v4l2loopback
