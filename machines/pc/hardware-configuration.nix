@@ -30,6 +30,7 @@
   fileSystems."/boot" = {
     device = "/dev/disk/by-uuid/D7D5-8A08";
     fsType = "vfat";
+    options = [ "umask=0077" ];
   };
 
   fileSystems."/home/kurnevsky/data" = {
