@@ -40,6 +40,7 @@
     packages = with pkgs; [ terminus_font ];
     font = "${pkgs.terminus_font}/share/consolefonts/ter-u16n.psf.gz";
     keyMap = "ru";
+    earlySetup = true;
   };
 
   time.timeZone = "Europe/Minsk";
