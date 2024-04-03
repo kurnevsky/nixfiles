@@ -61,104 +61,108 @@
           obs-backgroundremoval
         ];
       })
-      pass
       (python311Packages.callPackage ./openhrv.nix { })
-      aircrack-ng
       anki
+      blender
+      calibre
+      claws-mail
+      cloud-mdir-sync
+      dosbox
+      eiskaltdcpp
+      gimp
+      openconnect
+      (callPackage ./pan-globalprotect-okta.nix { })
+      gnome-themes-extra
+      gnome.adwaita-icon-theme
+      gparted
+      inkscape
+      languagetool
+      lapce
+      libreoffice-fresh
+      pavucontrol
+      qbittorrent
+      qemu
+      radare2
+      tesseract
+      texlive.combined.scheme-basic
+      tigervnc
+      ubpm
+      wineWowPackages.stagingFull
+      winetricks
+      dxvk.out
+      zathura
+      # CLI utils
+      (aspellWithDicts (dicts: with dicts; [ en ru ]))
+      (hunspellWithDicts (with hunspellDicts; [ en_US ru_RU ]))
+      aircrack-ng
       ansible
       ansible-lint
       appimage-run
       aria2
       arp-scan
-      (aspellWithDicts (dicts: with dicts; [ en ru ]))
       barcode
       bat
       bc
       bind
       bindfs
       binutils
-      blender
       brightnessctl
       btrfs-progs
       bubblewrap
-      calibre
-      claws-mail
       clinfo
-      cloud-mdir-sync
       cuetools
       curlHTTP3
       davfs2
       dbus
       dmidecode
       docker-compose
-      dosbox
       dosfstools
+      dsniff
       e2fsprogs
-      eiskaltdcpp
-      eza
+      efibootmgr
       exfat
+      exploitdb
       extundelete
-      fd
+      eza
       fclones
+      fd
       ffmpeg-full
       flac
       fuseiso
       gdb
-      gimp
       gnupg
-      openconnect
-      (callPackage ./pan-globalprotect-okta.nix { })
-      gnome-themes-extra
-      gnome.adwaita-icon-theme
-      gparted
       graphicsmagick
       graphicsmagick-imagemagick-compat
       hdparm
-      (hunspellWithDicts (with hunspellDicts; [ en_US ru_RU ]))
       inetutils
-      inkscape
       innoextract
       iotop
       isync
       jq
       kubectl
       kubelogin-oidc
-      languagetool
-      lapce
       libnotify
-      libreoffice-fresh
       libva-utils
-      libxml2 # for xmllint
+      libxml2
       lm_sensors
       lsd
       lshw
       mesa-demos
       metasploit
-      exploitdb
-      dsniff
-      vagrant
       mu
       nettools
       newsboat
       nmap
-      nodePackages.mermaid-cli
-      (pkgs.writeShellScriptBin "prettier" ''
-        ${pkgs.nodePackages.prettier}/bin/prettier --plugin-search-dir "${pkgs.nodePackages.prettier-plugin-toml}/lib" "$@"
-      '')
       openai-whisper-cpp
       openssl
       pandoc
       parallel
-      pavucontrol
+      pass
       pciutils
-      pulseaudio # for pactl
-      perl
       playerctl
-      psmisc # for killall
-      qbittorrent
-      qemu
+      psmisc
+      pulseaudio
       qrencode
-      radare2
       rage
       rclone
       ripgrep
@@ -168,16 +172,13 @@
       smartmontools
       sshfs-fuse
       tealdeer
-      tesseract
-      texlive.combined.scheme-basic
-      tigervnc
       tmux
       torsocks
       translate-shell
-      ubpm
-      usbutils
       unixtools.xxd
+      usbutils
       v4l-utils
+      vagrant
       vdpauinfo
       viu
       vorbis-tools
@@ -185,13 +186,9 @@
       wavpack
       websocat
       wget
-      wineWowPackages.stagingFull
-      winetricks
-      dxvk.out
       wirelesstools
       xmlstarlet
       yt-dlp
-      zathura
       zbar
       # Archivers
       _7zz
@@ -246,13 +243,19 @@
       sox
       # Languages
       (agda.withPackages (pkgs: with pkgs; [ standard-library ]))
+      (pkgs.writeShellScriptBin "prettier" ''
+        ${pkgs.nodePackages.prettier}/bin/prettier --plugin-search-dir "${pkgs.nodePackages.prettier-plugin-toml}/lib" "$@"
+      '')
       astyle
-      gcc
+      groovy
+      mono
+      nodePackages.mermaid-cli
+      perl
+      python3
+      ## C/C++
       clang
       clang-tools
-      mono
-      python3
-      groovy
+      gcc
       ## Shell
       nodePackages.bash-language-server
       shellcheck
