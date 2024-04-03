@@ -1,4 +1,4 @@
-{ symlinkJoin, melpaBuild, rustPlatform, writeText, emacs }:
+{ rustPlatform }:
 
 let
   version = "0.0.1";

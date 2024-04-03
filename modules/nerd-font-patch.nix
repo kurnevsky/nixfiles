@@ -1,4 +1,4 @@
-{ fontforge-fonttools, nerd-font-patcher, parallel, stdenv }:
+{ nerd-font-patcher, parallel, stdenv }:
 
 font:
 

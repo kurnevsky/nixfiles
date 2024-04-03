@@ -1,5 +1,3 @@
-{ config, pkgs, ... }:
-
 {
   boot.kernelModules = [ "bfq" ];
   services.udev.extraRules = ''

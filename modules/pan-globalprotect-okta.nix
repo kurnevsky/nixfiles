@@ -1,4 +1,4 @@
-{ fetchFromGitHub, python3, python3Packages }:
+{ fetchFromGitHub, python3Packages }:
 
 python3Packages.buildPythonPackage rec {
   pname = "pan-globalprotect-okta";

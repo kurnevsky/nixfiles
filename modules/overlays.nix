@@ -1,7 +1,7 @@
 {
   # system.replaceRuntimeDependencies can be used to make fast fixes
   nixpkgs.overlays = [
-    (self: super: {
+    (_self: super: {
       vaapiIntel = super.vaapiIntel.override { enableHybridCodec = true; };
       deadbeef = super.deadbeef.override { wavpackSupport = true; };
       deadbeef-with-plugins = super.deadbeef-with-plugins.override {
@@ -27,7 +27,7 @@
       };
       cloud-mdir-sync = (super.callPackage ./cloud-mdir-sync.nix { });
     })
-    (self: super: {
+    (_self: super: {
       tor-browser-bundle-bin = super.symlinkJoin {
         name = super.tor-browser-bundle-bin.name;
         paths = [ super.tor-browser-bundle-bin ];
@@ -38,7 +38,7 @@
         '';
       };
     })
-    (self: super:
+    (_self: super:
       let
         javaPath = "/tmp/java";
         wrap = drv: name:
@@ -61,7 +61,7 @@
         metals = wrap super.metals "metals";
         bloop = wrap super.bloop "bloop";
       })
-    (self: super: {
+    (_self: super: {
       telegram-desktop = super.telegram-desktop.overrideAttrs (old: {
         patches = let
           baseUrl =
@@ -87,8 +87,8 @@
       });
     })
     # TODO: included in plasma 6.1
-    (self: super: {
-      kdePackages = super.kdePackages.overrideScope (kde-self: kde-super: {
+    (_self: super: {
+      kdePackages = super.kdePackages.overrideScope (_kde-self: kde-super: {
         kwin = kde-super.kwin.overrideAttrs (old: {
           patches = old.patches ++ [
             (super.fetchpatch {

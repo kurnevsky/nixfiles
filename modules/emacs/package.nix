@@ -34,14 +34,14 @@ pkgs.emacsWithPackagesFromUsePackage {
         propagatedBuildInputs = lib.lists.remove d old.propagatedBuildInputs;
         propagatedUserEnvPkgs = lib.lists.remove d old.propagatedUserEnvPkgs;
       });
-  in (self: super:
+  in (_self: super:
     {
       org-roam = withoutDependency super.org super.org-roam;
       org-ql = withoutDependency super.org super.org-ql;
       org-super-agenda = withoutDependency super.org super.org-super-agenda;
       treemacs = withDependency super.doom-modeline super.treemacs;
       origami = withDependency super.fringe-helper (super.origami.overrideAttrs
-        (old: {
+        (_old: {
           src = pkgs.fetchFromGitHub {
             owner = "elp-revive";
             repo = "origami.el";
@@ -58,5 +58,5 @@ pkgs.emacsWithPackagesFromUsePackage {
       "lsp-java"
       "lsp-metals"
       "lsp-haskell"
-    ] (name: super.${name}.overrideAttrs (super: { LSP_USE_PLISTS = true; })));
+    ] (name: super.${name}.overrideAttrs (_super: { LSP_USE_PLISTS = true; })));
 }

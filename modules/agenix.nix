@@ -4,7 +4,7 @@
   age.ageBin = "${pkgs.rage}/bin/rage";
 
   nixpkgs.overlays = [
-    (self: super: {
+    (_self: super: {
       agenix = super.agenix.override { ageBin = "${pkgs.rage}/bin/rage"; };
     })
   ];

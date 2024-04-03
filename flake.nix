@@ -242,9 +242,7 @@
           modules = [
             ./modules/android.nix
             ./machines/android/configuration.nix
-            ({ pkgs, ... }: {
-              _module.args.emacs-overlay = inputs.emacs-overlay.overlay;
-            })
+            { _module.args.emacs-overlay = inputs.emacs-overlay.overlay; }
           ];
         };
       packages.x86_64-linux = {

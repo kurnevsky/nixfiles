@@ -285,6 +285,7 @@
       metals
       ## Nix
       alejandra
+      deadnix
       nixfmt
       nixpkgs-fmt
       nil

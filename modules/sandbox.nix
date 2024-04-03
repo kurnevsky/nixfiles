@@ -31,9 +31,9 @@ let
     };
   withHomeManager = paths:
     let
-      home-files = lib.mapAttrsToList (name: value: value.home-files)
+      home-files = lib.mapAttrsToList (_name: value: value.home-files)
         config.home-manager.users;
-      home-paths = lib.mapAttrsToList (name: value: value.home.path)
+      home-paths = lib.mapAttrsToList (_name: value: value.home.path)
         config.home-manager.users;
       home-deps-drv =
         pkgs.runCommand "home-files" { disallowedReferences = home-files; }
@@ -718,7 +718,7 @@ let
   ];
 in {
   nixpkgs.overlays = [
-    (self: super: {
+    (_self: super: {
       mc = super.mc.override {
         zip = wrap (super.zip.override { enableNLS = true; })
           [ (archiver-cfg "zip") ];

@@ -1,4 +1,4 @@
-{ config, lib, pkgs, nix-colors, ... }:
+{ config, pkgs, nix-colors, ... }:
 
 {
   services = {
@@ -34,8 +34,8 @@
 
   # kwin compositor
   nixpkgs.overlays = [
-    (self: super: {
-      libsForQt5 = super.libsForQt5.overrideScope (qt5self: qt5super: {
+    (_self: super: {
+      libsForQt5 = super.libsForQt5.overrideScope (_qt5self: qt5super: {
         sddm = qt5super.sddm.overrideAttrs (old: {
           patces = (old.patches or [ ]) ++ [
             (pkgs.fetchpatch {

@@ -15,5 +15,5 @@ let
 in {
   disabledModules = [ ];
   imports = [ ];
-  nixpkgs.overlays = [ (self: super: { iosevka = patchedPkgs.iosevka; }) ];
+  nixpkgs.overlays = [ (_self: _super: { iosevka = patchedPkgs.iosevka; }) ];
 }
