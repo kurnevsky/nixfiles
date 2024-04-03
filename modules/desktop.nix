@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, nix-colors, ... }:
 
 {
   boot = {
@@ -50,6 +50,8 @@
   };
 
   time.timeZone = "Europe/Minsk";
+
+  colorScheme = nix-colors.colorSchemes.onedark;
 
   environment = {
     systemPackages = with pkgs; [
@@ -646,38 +648,39 @@
               normal.family = "IosevkaTerm Nerd Font";
               size = 12;
             };
-            # Base16 OneDark
-            colors = {
-              draw_bold_text_with_bright_colors = false;
-              primary = {
-                background = "0x282c34";
-                foreground = "0xabb2bf";
+            colors = with config.colorScheme.palette;
+              let x = c: "0x${c}";
+              in {
+                draw_bold_text_with_bright_colors = false;
+                primary = {
+                  background = x base00;
+                  foreground = x base05;
+                };
+                cursor = {
+                  text = x base00;
+                  cursor = x base05;
+                };
+                normal = {
+                  black = x base00;
+                  red = x base08;
+                  green = x base0B;
+                  yellow = x base0A;
+                  blue = x base0D;
+                  magenta = x base0E;
+                  cyan = x base0C;
+                  white = x base05;
+                };
+                bright = {
+                  black = x base03;
+                  red = x base09;
+                  green = x base01;
+                  yellow = x base02;
+                  blue = x base04;
+                  magenta = x base06;
+                  cyan = x base0F;
+                  white = x base07;
+                };
               };
-              cursor = {
-                text = "0x282c34";
-                cursor = "0xabb2bf";
-              };
-              normal = {
-                black = "0x282c34";
-                red = "0xe06c75";
-                green = "0x98c379";
-                yellow = "0xe5c07b";
-                blue = "0x61afef";
-                magenta = "0xc678dd";
-                cyan = "0x56b6c2";
-                white = "0xabb2bf";
-              };
-              bright = {
-                black = "0x545862";
-                red = "0xd19a66";
-                green = "0x353b45";
-                yellow = "0x3e4451";
-                blue = "0x565c64";
-                magenta = "0xb6bdca";
-                cyan = "0xbe5046";
-                white = "0xc8ccd4";
-              };
-            };
             cursor.style = "Beam";
             live_config_reload = false;
             hints.enabled = [{

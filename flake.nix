@@ -59,6 +59,12 @@
       inputs.home-manager.follows = "home-manager";
     };
 
+    nix-colors = {
+      type = "github";
+      owner = "Misterio77";
+      repo = "nix-colors";
+    };
+
     llama-cpp = {
       type = "github";
       owner = "ggerganov";
@@ -100,6 +106,7 @@
             inputs.nur.overlay
           ];
         }
+        inputs.nix-colors.homeManagerModules.default
         (for-all-home-users (with users; [ ww ]) common-home)
         (import ./modules/emacs.nix (with users; [ kurnevsky ww ]))
         ./modules/desktop.nix
@@ -152,6 +159,7 @@
             ./machines/dell/hardware-configuration.nix
             llamaOpencl
           ];
+          specialArgs = { nix-colors = inputs.nix-colors; };
         };
         evo = inputs.nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
@@ -160,6 +168,7 @@
             ./machines/evo/hardware-configuration.nix
             llamaDefault
           ];
+          specialArgs = { nix-colors = inputs.nix-colors; };
         };
         pc = inputs.nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
@@ -168,6 +177,7 @@
             ./machines/pc/hardware-configuration.nix
             llamaRocm
           ];
+          specialArgs = { nix-colors = inputs.nix-colors; };
         };
         acer = inputs.nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
