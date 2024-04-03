@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ config, lib, pkgs, nix-colors, ... }:
 
 {
   services = {
@@ -342,17 +342,41 @@
             } --key '${lib.lists.last path}' ${toValue value}";
         lines = lib.flatten
           (lib.mapAttrsToList (file: attrs: toLine file [ ] attrs) configs);
-        konsole-theme = "base16-onedark.colorscheme";
       in {
         home = {
           activation.kdeConfigs = lib.hm.dag.entryAfter [ "writeBoundary" ]
             (builtins.concatStringsSep "\n" lines);
 
-          file.".local/share/konsole/${konsole-theme}".source = pkgs.fetchurl {
-            url =
-              "https://raw.githubusercontent.com/cskeeters/base16-konsole/b30e0b26e766cf8a3d12afb18ac2773f53af5a87/colorscheme/${konsole-theme}";
-            sha256 = "sha256-+CLYvxMJUkHV1dmBWDbqkNGA4OoS5t+JQsKKAzYNDOI=";
-          };
+          file.".local/share/konsole/base16.colorscheme".text =
+            with config.colorScheme.palette;
+            let c = nix-colors.lib.conversions.hexToRGBString ",";
+            in lib.generators.toINI { } {
+              Background.Color = c base00;
+              BackgroundIntense.Color = c base03;
+              Color0.Color = c base00;
+              Color0Intense.Color = c base03;
+              Color1.Color = c base08;
+              Color1Intense.Color = c base08;
+              Color2.Color = c base0B;
+              Color2Intense.Color = c base0B;
+              Color3.Color = c base0A;
+              Color3Intense.Color = c base0A;
+              Color4.Color = c base0D;
+              Color4Intense.Color = c base0D;
+              Color5.Color = c base0E;
+              Color5Intense.Color = c base0E;
+              Color6.Color = c base0C;
+              Color6Intense.Color = c base0C;
+              Color7.Color = c base05;
+              Color7Intense.Color = c base07;
+              Foreground.Color = c base05;
+              ForegroundIntense.Color = c base07;
+              General = {
+                Description = "Base16 Theme";
+                Opacity = 1;
+                Wallpaper = "";
+              };
+            };
         };
       };
   in {
