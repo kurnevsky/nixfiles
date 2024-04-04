@@ -159,7 +159,7 @@
             ./machines/dell/hardware-configuration.nix
             llamaOpencl
           ];
-          specialArgs = { nix-colors = inputs.nix-colors; };
+          specialArgs = { inherit (inputs) nix-colors; };
         };
         evo = inputs.nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
@@ -168,7 +168,7 @@
             ./machines/evo/hardware-configuration.nix
             llamaDefault
           ];
-          specialArgs = { nix-colors = inputs.nix-colors; };
+          specialArgs = { inherit (inputs) nix-colors; };
         };
         pc = inputs.nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
@@ -177,7 +177,7 @@
             ./machines/pc/hardware-configuration.nix
             llamaRocm
           ];
-          specialArgs = { nix-colors = inputs.nix-colors; };
+          specialArgs = { inherit (inputs) nix-colors; };
         };
         acer = inputs.nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";

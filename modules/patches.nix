@@ -11,9 +11,9 @@ let
       })
     ];
   };
-  patchedPkgs = (import patchesDrv { system = "x86_64-linux"; });
+  patchedPkgs = import patchesDrv { system = "x86_64-linux"; };
 in {
   disabledModules = [ ];
   imports = [ ];
-  nixpkgs.overlays = [ (_self: _super: { iosevka = patchedPkgs.iosevka; }) ];
+  nixpkgs.overlays = [ (_self: _super: { inherit (patchedPkgs) iosevka; }) ];
 }

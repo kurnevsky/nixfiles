@@ -25,11 +25,11 @@
           super.isync
         ];
       };
-      cloud-mdir-sync = (super.callPackage ./cloud-mdir-sync.nix { });
+      cloud-mdir-sync = super.callPackage ./cloud-mdir-sync.nix { };
     })
     (_self: super: {
       tor-browser-bundle-bin = super.symlinkJoin {
-        name = super.tor-browser-bundle-bin.name;
+        inherit (super.tor-browser-bundle-bin) name;
         paths = [ super.tor-browser-bundle-bin ];
         buildInputs = [ super.makeWrapper ];
         postBuild = ''
@@ -43,7 +43,7 @@
         javaPath = "/tmp/java";
         wrap = drv: name:
           super.symlinkJoin {
-            name = drv.name;
+            inherit (drv) name;
             paths = [
               (super.writeShellScriptBin name ''
                 ${super.bubblewrap}/bin/bwrap \

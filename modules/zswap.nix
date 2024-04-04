@@ -1,5 +1,3 @@
-{ ... }:
-
 {
   boot.kernelParams = [ "zswap.enabled=1" ];
   boot.kernelModules = [ "lz4" "z3fold" ];

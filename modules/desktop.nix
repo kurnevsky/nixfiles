@@ -290,6 +290,7 @@
       nil
       nix-diff
       nixpkgs-review
+      statix
       ## Math
       maxima
       wxmaxima
