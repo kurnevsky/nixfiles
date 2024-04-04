@@ -1,4 +1,4 @@
-{ config, pkgs, nix-colors, ... }:
+{ config, pkgs, ... }:
 
 {
   boot = {
@@ -50,8 +50,6 @@
   };
 
   time.timeZone = "Europe/Minsk";
-
-  colorScheme = nix-colors.colorSchemes.onedark;
 
   environment = {
     systemPackages = with pkgs; [
@@ -652,7 +650,7 @@
               normal.family = "IosevkaTerm Nerd Font";
               size = 12;
             };
-            colors = with config.colorScheme.palette;
+            colors = with config.scheme;
               let x = c: "0x${c}";
               in {
                 draw_bold_text_with_bright_colors = false;
@@ -668,7 +666,7 @@
                   black = x base00;
                   red = x base08;
                   green = x base0B;
-                  yellow = x base0A;
+                  yellow = x base09;
                   blue = x base0D;
                   magenta = x base0E;
                   cyan = x base0C;
@@ -676,12 +674,12 @@
                 };
                 bright = {
                   black = x base03;
-                  red = x base09;
-                  green = x base01;
-                  yellow = x base02;
-                  blue = x base04;
-                  magenta = x base06;
-                  cyan = x base0F;
+                  red = x base12;
+                  green = x base14;
+                  yellow = x base13;
+                  blue = x base16;
+                  magenta = x base17;
+                  cyan = x base15;
                   white = x base07;
                 };
               };

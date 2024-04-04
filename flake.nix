@@ -59,10 +59,17 @@
       inputs.home-manager.follows = "home-manager";
     };
 
-    nix-colors = {
+    base16 = {
       type = "github";
-      owner = "Misterio77";
-      repo = "nix-colors";
+      owner = "SenchoPens";
+      repo = "base16.nix";
+    };
+
+    tt-schemes = {
+      type = "github";
+      owner = "tinted-theming";
+      repo = "schemes";
+      flake = false;
     };
 
     llama-cpp = {
@@ -87,6 +94,8 @@
       for-all-home-users = import ./modules/for-all-home-users.nix;
       common-home = import ./modules/common-home.nix;
       commonModules = [
+        inputs.base16.nixosModule
+        { scheme = "${inputs.tt-schemes}/base24/one-dark.yaml"; }
         inputs.agenix.nixosModules.default
         ./modules/agenix.nix
         inputs.home-manager.nixosModules.home-manager
@@ -106,7 +115,6 @@
             inputs.nur.overlay
           ];
         }
-        inputs.nix-colors.homeManagerModules.default
         (for-all-home-users (with users; [ ww ]) common-home)
         (import ./modules/emacs.nix (with users; [ kurnevsky ww ]))
         ./modules/desktop.nix
@@ -159,7 +167,6 @@
             ./machines/dell/hardware-configuration.nix
             llamaOpencl
           ];
-          specialArgs = { inherit (inputs) nix-colors; };
         };
         evo = inputs.nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
@@ -168,7 +175,6 @@
             ./machines/evo/hardware-configuration.nix
             llamaDefault
           ];
-          specialArgs = { inherit (inputs) nix-colors; };
         };
         pc = inputs.nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
@@ -177,7 +183,6 @@
             ./machines/pc/hardware-configuration.nix
             llamaRocm
           ];
-          specialArgs = { inherit (inputs) nix-colors; };
         };
         acer = inputs.nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
