@@ -142,8 +142,6 @@ ARGS is `kill-buffer' arguments."
 ;; Enable mouse support in terminal.
 (unless (display-graphic-p)
   (xterm-mouse-mode t))
-;; Fix emacs in alacritty.
-(add-to-list 'term-file-aliases '("alacritty" . "xterm-256color"))
 
 ;; ========== Configure packages ==========
 

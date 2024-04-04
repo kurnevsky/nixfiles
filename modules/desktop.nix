@@ -663,17 +663,17 @@
                   cursor = x base05;
                 };
                 normal = {
-                  black = x base00;
+                  black = x base01;
                   red = x base08;
                   green = x base0B;
                   yellow = x base09;
                   blue = x base0D;
                   magenta = x base0E;
                   cyan = x base0C;
-                  white = x base05;
+                  white = x base06;
                 };
                 bright = {
-                  black = x base03;
+                  black = x base02;
                   red = x base12;
                   green = x base14;
                   yellow = x base13;
