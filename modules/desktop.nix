@@ -223,8 +223,7 @@
       ncmpc
       # Games
       cataclysm-dda
-      # TODO: broken
-      # hedgewars
+      hedgewars
       minetest
       openmw
       wesnoth
@@ -286,7 +285,7 @@
       ## Nix
       alejandra
       deadnix
-      nixfmt
+      nixfmt-classic
       nixpkgs-fmt
       nil
       nix-diff
