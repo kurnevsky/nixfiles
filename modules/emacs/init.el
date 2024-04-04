@@ -237,9 +237,7 @@ ARGS is `kill-buffer' arguments."
             (base0A-highlight (color-saturate-darken base0A 20 10))
             (base0B-highlight (color-saturate-darken base0B 20 10)))
       (base16-theme-set-faces theme (symbol-value (intern (concat (symbol-name theme) "-theme-colors")))
-        `( ;; Don't set default face. In case of 256-color terminal proper background will be used.
-           (default :background unspecified :foreground unspecified)
-           ;; Make it slightly different from highlighting
+        `( ;; Make it slightly different from highlighting
            (hl-line :background ,base005)
            ;; Minibuffer completion
            (completions-common-part :foreground base0C)
