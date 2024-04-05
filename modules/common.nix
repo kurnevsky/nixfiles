@@ -75,6 +75,7 @@ in {
       enableGlobalCompInit = false;
       autosuggestions = {
         enable = true;
+        highlightStyle = "fg=${config.scheme.withHashtag.base02}";
         extraConfig = { ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE = "10"; };
       };
       syntaxHighlighting.enable = true;
