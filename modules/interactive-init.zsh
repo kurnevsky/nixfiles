@@ -17,7 +17,7 @@
   # Keep directories and files separated
   zstyle ':completion:*' list-dirs-first true
   # Use ls-colors for path completions
-  zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+  zstyle ':completion:*:default' list-colors "${(s.:.)LS_COLORS}"
   # Advanced process completion
   zstyle ':completion:*:*:*:*:processes' command 'ps -A -o pid,user,%cpu,cmd'
   zstyle ':completion:*:*:*:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;32'
