@@ -100,12 +100,5 @@
         });
       });
     })
-    (self: super: {
-      kdePackages = super.kdePackages.overrideScope (kde-self: kde-super: {
-        kdeconnect-kde = kde-super.kdeconnect-kde.overrideAttrs (old: {
-          cmakeFlags = (old.cmakeFlags or [ ]) ++ [ "-DBLUETOOTH_ENABLED=ON" ];
-        });
-      });
-    })
   ];
 }
