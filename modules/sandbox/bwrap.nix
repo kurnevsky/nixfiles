@@ -8,14 +8,59 @@ drv:
 , ro-whitelist ? [ ], blacklist ? [ ], unsetenvs ? [ ], setenvs ? [ ]
 , devs ? [ ], syses ? [ ], shared-tmp ? false, camera ? false, args ? [ ]
 , system-bus-socket ? false, extra-deps ? [ ], extra-deps-no-transitive ? [ ]
-, opengl ? false, opengl32 ? false, seccomp ? true, bin-sh ? false
-, localtime ? false, resolv-conf ? false, ro-media ? false, media ? false
-, disable-userns ? true }:
+, opengl ? false, opengl32 ? false, bin-sh ? false, localtime ? false
+, resolv-conf ? false, ro-media ? false, media ? false, disable-userns ? true
+, seccomp ? [
+  "_sysctl"
+  "acct"
+  "add_key"
+  "adjtimex"
+  "clock_adjtime"
+  "create_module"
+  "delete_module"
+  "fanotify_init"
+  "finit_module"
+  "get_kernel_syms"
+  "init_module"
+  "io_cancel"
+  "io_destroy"
+  "io_getevents"
+  "io_setup"
+  "io_submit"
+  "ioperm"
+  "iopl"
+  "ioprio_set"
+  "kexec_file_load"
+  "kexec_load"
+  "keyctl"
+  "lookup_dcookie"
+  "nfsservctl"
+  "migrate_pages"
+  "modify_ldt"
+  "mount"
+  "move_pages"
+  "perf_event_open"
+  "pivot_root"
+  "process_vm_readv"
+  "process_vm_writev"
+  "ptrace"
+  "reboot"
+  "remap_file_pages"
+  "request_key"
+  "swapoff"
+  "swapon"
+  "sysfs"
+  "syslog"
+  "tuxcall"
+  "umount2"
+  "uselib"
+  "vmsplice"
+] }:
 
 assert !(ro-media && media);
 
 let
-  sandbox-seccomp = callPackage ./seccomp.nix { };
+  sandbox-seccomp = callPackage ./seccomp.nix { } seccomp;
   cinfo = closureInfo { rootPaths = [ drv ] ++ extra-deps; };
 in writeShellScriptBin target-name ''
   set -euETo pipefail
@@ -194,7 +239,7 @@ in writeShellScriptBin target-name ''
        --cap-drop ALL \
        \
        ${
-         lib.optionalString seccomp
+         lib.optionalString (seccomp != [ ])
          "--seccomp 3 3< ${sandbox-seccomp}/seccomp.bpf"
        } \
        \

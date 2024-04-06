@@ -591,7 +591,7 @@ let
             }];
             unshare-cgroup = false;
             unshare-pid = false;
-            seccomp = false;
+            seccomp = [ ];
             whitelist = [
               "\${WINEPREFIX:-~/.wine/}"
               "~/.cache/wine/"

@@ -1,8 +1,3 @@
-/*
-See local README.md on how to compile and run.
-In short: gcc seccomp-gen.c -lseccomp -Wall -pedantic -o seccomp-gen
-*/
-
 #include <errno.h>
 #include <fcntl.h>
 #include <seccomp.h>
@@ -30,50 +25,7 @@ int main(int argc, char *argv[])
   if (ctx == NULL)
     goto out;
 
-  DENY_RULE(_sysctl);
-  DENY_RULE(acct);
-  DENY_RULE(add_key);
-  DENY_RULE(adjtimex);
-  DENY_RULE(clock_adjtime);
-  DENY_RULE(create_module);
-  DENY_RULE(delete_module);
-  DENY_RULE(fanotify_init);
-  DENY_RULE(finit_module);
-  DENY_RULE(get_kernel_syms);
-  DENY_RULE(init_module);
-  DENY_RULE(io_cancel);
-  DENY_RULE(io_destroy);
-  DENY_RULE(io_getevents);
-  DENY_RULE(io_setup);
-  DENY_RULE(io_submit);
-  DENY_RULE(ioperm);
-  DENY_RULE(iopl);
-  DENY_RULE(ioprio_set);
-  DENY_RULE(kexec_file_load);
-  DENY_RULE(kexec_load);
-  DENY_RULE(keyctl);
-  DENY_RULE(lookup_dcookie);
-  DENY_RULE(nfsservctl);
-  DENY_RULE(migrate_pages);
-  DENY_RULE(modify_ldt);
-  DENY_RULE(mount);
-  DENY_RULE(move_pages);
-  DENY_RULE(perf_event_open);
-  DENY_RULE(pivot_root);
-  DENY_RULE(process_vm_readv);
-  DENY_RULE(process_vm_writev);
-  DENY_RULE(ptrace);
-  DENY_RULE(reboot);
-  DENY_RULE(remap_file_pages);
-  DENY_RULE(request_key);
-  DENY_RULE(swapoff);
-  DENY_RULE(swapon);
-  DENY_RULE(sysfs);
-  DENY_RULE(syslog);
-  DENY_RULE(tuxcall);
-  DENY_RULE(umount2);
-  DENY_RULE(uselib);
-  DENY_RULE(vmsplice);
+  @rules@
 
   fd = open("seccomp.bpf", O_CREAT | O_WRONLY, 0644);
   if (fd == -1) {
