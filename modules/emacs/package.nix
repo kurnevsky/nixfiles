@@ -63,7 +63,7 @@ let
   };
   with-direct = pkgs.callPackage ../with-direct.nix { };
 in pkgs.symlinkJoin {
-  name = emacsWithPackages.name;
+  inherit (emacsWithPackages) name;
   paths = [
     (with-direct "${emacsWithPackages}/bin/emacs")
     (with-direct "${emacsWithPackages}/bin/emacsclient")
