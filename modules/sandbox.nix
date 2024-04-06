@@ -166,7 +166,7 @@ let
             etcs = [ "pulse" ];
             # xdg-screensaver creates a lockfile in /tmp
             shared-tmp = true;
-            unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" ];
+            unsetenvs = [ "MAIL" ];
             setenvs = [{
               name = "SHELL";
               value = "/run/current-system/sw/bin/bash";
@@ -236,7 +236,7 @@ let
             etcs = [ "pulse" "ssl/certs/ca-certificates.crt" ];
             localtime = true;
             resolv-conf = true;
-            unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" ];
+            unsetenvs = [ "MAIL" ];
             setenvs = [{
               name = "SHELL";
               value = "/run/current-system/sw/bin/bash";
@@ -324,7 +324,7 @@ let
             etcs = [ "pulse" ];
             localtime = true;
             resolv-conf = true;
-            unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" "SHELL" ];
+            unsetenvs = [ "MAIL" "SHELL" ];
             unshare-net = false;
             ro-whitelist = [ "~/.config/kdeglobals" ];
             whitelist = [ "~/.config/tox/" "~/.cache/Tox/" "~/.config/pulse/" ];
@@ -409,7 +409,7 @@ let
             etcs = [ "pulse" ];
             localtime = true;
             resolv-conf = true;
-            unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" "SHELL" ];
+            unsetenvs = [ "MAIL" "SHELL" ];
             unshare-net = false;
             ro-whitelist = [ "~/.config/kdeglobals" ];
             whitelist =
