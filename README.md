@@ -41,3 +41,8 @@ The following environment variables are supported:
 | UNSANDBOXED  | run application without sandbox                                                                                                      |
 | WHITELIST    | additional whitelisted paths                                                                                                         |
 | WITH_NETWORK | allow network access (if it's disabled by default)                                                                                   |
+
+## License
+
+Licensed under [GPLv3+](/LICENSE) with an exception that allows code from this repository to be incorporated into
+projects that are used as flake inputs by this project, regardless of their license.
