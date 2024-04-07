@@ -52,7 +52,7 @@
   time.timeZone = "Europe/Minsk";
 
   environment = {
-    systemPackages = with pkgs; [
+    sandboxedPackages = with pkgs; [
       (wrapOBS {
         plugins = with obs-studio-plugins; [
           obs-gstreamer

@@ -3,14 +3,24 @@
 let
   sandbox = pkgs.callPackage ./sandbox/bwrap.nix { };
   wrap = drv: bins:
-    # Don't join with original drv because only bins will be used
-    if lib.length bins == 1 then
-      sandbox drv (lib.head bins)
-    else
-      pkgs.symlinkJoin {
-        name = drv.name + "-sandboxed";
-        paths = map (sandbox drv) bins;
-      };
+    pkgs.symlinkJoin {
+      name = drv.name + "-sandboxed";
+      paths = map (sandbox drv) bins ++ [ drv ];
+      postBuild = ''
+        cd ${drv}
+        grep -RlP "\\Q${
+          lib.concatMapStringsSep "\\E|\\Q" (bin: "${drv}/bin/${bin.name}") bins
+        }\\E" | while read file; do
+          rm -f "$out/$file"
+          substitute "${drv}/$file" "$out/$file" ${
+            lib.concatMapStringsSep " "
+            (bin: "--replace-quiet ${drv}/bin/${bin.name} $out/bin/${bin.name}")
+            bins
+          }
+          chmod --reference="${drv}/$file" "$out/$file"
+        done || true
+      '';
+    };
   withFonts = attrs:
     attrs // {
       extra-deps = (attrs.extra-deps or [ ])
@@ -570,9 +580,9 @@ let
     {
       predicate = lib.hasPrefix "wine-";
       config = drv:
-        wrap drv (map (name:
-          lib.pipe {
-            inherit name;
+        wrap drv [
+          (lib.pipe {
+            name = "wine";
             # coreutils-full is needed because it's system default stdenv
             # and wine has scripts that rely on stdenv being in PATH
             extra-deps = with pkgs; [ coreutils-full ];
@@ -600,7 +610,8 @@ let
               "~/.cache/winetricks/"
               "~/.config/pulse/"
             ];
-          } [ withFonts withOpengl withOpengl32 ]) [ "wine" "winecfg" ]);
+          } [ withFonts withOpengl withOpengl32 ])
+        ];
     }
     {
       predicate = lib.hasPrefix "libreoffice-";
@@ -719,34 +730,35 @@ let
     }
   ];
 in {
-  nixpkgs.overlays = [
-    (_self: super: {
-      mc = super.mc.override {
-        zip = wrap (super.zip.override { enableNLS = true; })
-          [ (archiver-cfg "zip") ];
-        unzip = wrap (super.unzip.override { enableNLS = true; })
-          [ (archiver-cfg "unzip") ];
-      };
-    })
-  ];
-
-  environment = let
-    env = pkgs.symlinkJoin {
-      name = "sandboxed";
-      paths = assert lib.all (wrapper:
-        (wrapper.unused or false) || lib.any (drv: wrapper.predicate drv.name)
-        config.environment.systemPackages) wrappers;
-        lib.concatMap (drv:
-          lib.concatMap (wrapper:
-            if wrapper.predicate drv.name then
-              [ (wrapper.config drv) ]
-            else
-              [ ]) wrappers) config.environment.systemPackages;
+  options.environment.sandboxedPackages = with lib;
+    mkOption {
+      type = types.listOf types.package;
+      default = [ ];
+      example = literalExpression "[ pkgs.firefox pkgs.thunderbird ]";
+      description = lib.mdDoc ''
+        Like `systemPackages` but allows packages to be sandboxed.
+      '';
     };
-  in {
-    extraInit = ''
-      export PATH="/etc/sandboxed:$PATH"
-    '';
-    etc.sandboxed.source = "${env}/bin";
+
+  config = {
+    nixpkgs.overlays = [
+      (_self: super: {
+        mc = super.mc.override {
+          zip = wrap (super.zip.override { enableNLS = true; })
+            [ (archiver-cfg "zip") ];
+          unzip = wrap (super.unzip.override { enableNLS = true; })
+            [ (archiver-cfg "unzip") ];
+        };
+      })
+    ];
+
+    environment.systemPackages = assert lib.all (wrapper:
+      (wrapper.unused or false) || lib.any (drv: wrapper.predicate drv.name)
+      config.environment.sandboxedPackages) wrappers;
+      map (drv:
+        (lib.findSingle (wrapper: wrapper.predicate drv.name) {
+          config = lib.id;
+        } (throw "multiple predicates match a derivation ${drv.name}")
+          wrappers).config drv) config.environment.sandboxedPackages;
   };
 }
