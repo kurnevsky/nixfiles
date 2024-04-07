@@ -93,16 +93,17 @@ let
               hicolor-icon-theme
               plasma-integration
             ];
-            pams = [
-              # Necessary for MPRIS2
-              "bus"
-              "pulse"
-              "pipewire-0"
-            ];
+            pams = [ "pulse" "pipewire-0" ];
             etcs = [ "pulse" ];
             graphics = true;
             unsetenvs = [ "MAIL" "SHELL" ];
             ro-media = true;
+            dbus = [
+              "talk=org.kde.StatusNotifierWatcher"
+              "own=org.kde.StatusNotifierItem-2-1"
+              "own=music.deadbeef.player"
+              "own=org.mpris.MediaPlayer2.DeaDBeeF"
+            ];
             ro-whitelist = [ "~/" ];
             whitelist = [ "~/.config/pulse/" "~/.config/deadbeef/" ];
             blacklist = [ "~/.gnupg/" "~/.ssh/" ];
