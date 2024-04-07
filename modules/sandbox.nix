@@ -487,16 +487,19 @@ let
               "devices"
             ];
             graphics = true;
-            pams = [ "bus" ];
             # Creates lockfile there to launch a single instance
             shared-tmp = true;
             localtime = true;
             resolv-conf = true;
             unsetenvs = [ "MAIL" "SHELL" ];
             unshare-net = false;
+            dbus = [
+              "talk=org.kde.StatusNotifierWatcher"
+              "talk=org.freedesktop.Notifications"
+            ];
             ro-whitelist = [ "~/.config/kdeglobals" ];
             whitelist = [
-              "~/.local/share/data/qBittorrent/"
+              "~/.local/share/qBittorrent/"
               "~/.config/qBittorrent/"
               "~/.cache/qBittorrent/"
               "~/Downloads/"
