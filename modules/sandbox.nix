@@ -320,12 +320,13 @@ let
               "devices"
             ];
             graphics = true;
-            pams = [ "bus" "pulse" "pipewire-0" ];
+            pams = [ "pulse" "pipewire-0" ];
             etcs = [ "pulse" ];
             localtime = true;
             resolv-conf = true;
             unsetenvs = [ "MAIL" "SHELL" ];
             unshare-net = false;
+            dbus = [ "talk=org.kde.StatusNotifierWatcher" ];
             ro-whitelist = [ "~/.config/kdeglobals" ];
             whitelist = [ "~/.config/tox/" "~/.cache/Tox/" "~/.config/pulse/" ];
           } [ withFonts withOpengl ])
@@ -405,12 +406,13 @@ let
               "devices"
             ];
             graphics = true;
-            pams = [ "bus" "pulse" "pipewire-0" ];
+            pams = [ "pulse" "pipewire-0" ];
             etcs = [ "pulse" ];
             localtime = true;
             resolv-conf = true;
             unsetenvs = [ "MAIL" "SHELL" ];
             unshare-net = false;
+            dbus = [ "talk=org.kde.StatusNotifierWatcher" ];
             ro-whitelist = [ "~/.config/kdeglobals" ];
             whitelist =
               [ "~/.local/share/TelegramDesktop/" "~/.config/pulse/" ];

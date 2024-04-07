@@ -1,4 +1,5 @@
-{ bubblewrap, gnused, callPackage, lib, writeShellScriptBin, closureInfo }:
+{ bubblewrap, gnused, callPackage, lib, writeShellScriptBin, closureInfo
+, xdg-dbus-proxy }:
 
 drv:
 
@@ -10,7 +11,7 @@ drv:
 , system-bus-socket ? false, extra-deps ? [ ], extra-deps-no-transitive ? [ ]
 , opengl ? false, opengl32 ? false, bin-sh ? false, localtime ? false
 , resolv-conf ? false, ro-media ? false, media ? false, disable-userns ? true
-, seccomp ? [
+, dbus ? [ ], seccomp ? [
   "_sysctl"
   "acct"
   "add_key"
@@ -141,6 +142,18 @@ in writeShellScriptBin target-name ''
 
   mapfile -t deps < <(${gnused}/bin/sed 's/.*/--ro-bind\n&\n&/' ${cinfo}/store-paths)
 
+  ${lib.optionalString (dbus != [ ]) ''
+    FIFO_TMP=$(mktemp -u)
+    mkfifo "$FIFO_TMP"
+    exec 3<>"$FIFO_TMP"
+    SANDBOX_BUS="$XDG_RUNTIME_DIR/sandbox-bus-$$"
+    ${xdg-dbus-proxy}/bin/xdg-dbus-proxy --fd=3 3>"$FIFO_TMP" "$DBUS_SESSION_BUS_ADDRESS" "$SANDBOX_BUS" ${
+      lib.concatMapStringsSep " " (x: "--${x}") dbus
+    } --filter &
+    rm "$FIFO_TMP"
+    head -c 1 <&3 > /dev/null
+  ''}
+
   exec ${bubblewrap}/bin/bwrap \
        "''${deps[@]}" \
        ${
@@ -238,6 +251,13 @@ in writeShellScriptBin target-name ''
        \
        --cap-drop ALL \
        \
+       ${
+         lib.optionalString (dbus != [ ]) ''
+           --sync-fd 4 4<&3 \
+           --bind "$SANDBOX_BUS" "$XDG_RUNTIME_DIR/bus" \
+           --setenv DBUS_SESSION_BUS_ADDRESS unix:path="$XDG_RUNTIME_DIR/bus" \
+         ''
+       } \
        ${
          lib.optionalString (seccomp != [ ])
          "--seccomp 3 3< ${sandbox-seccomp}/seccomp.bpf"
