@@ -405,17 +405,28 @@ let
               plasma-integration
             ];
             graphics = true;
-            pams = [
-              # Necessary for kwallet
-              "bus"
-              "pulse"
-              "pipewire-0"
-            ];
+            pams = [ "pulse" "pipewire-0" ];
             etcs = [ "pulse" "ssl/certs/ca-certificates.crt" ];
             localtime = true;
             resolv-conf = true;
             unsetenvs = [ "MAIL" "SHELL" ];
             unshare-net = false;
+            system-dbus = [
+              "talk=org.freedesktop.login1"
+              "talk=org.freedesktop.NetworkManager"
+            ];
+            dbus = [
+              "talk=org.freedesktop.FileManager1"
+              "talk=org.gtk.Settings"
+              "talk=org.freedesktop.portal.Desktop"
+              "talk='org.mpris.MediaPlayer2.*'"
+              "talk=org.freedesktop.ScreenSaver"
+              "talk=org.freedesktop.secrets"
+              "talk=org.kde.kwalletd5"
+              "talk=org.freedesktop.Notifications"
+              "talk=org.kde.StatusNotifierWatcher"
+              "own=org.gajim.Gajim"
+            ];
             ro-whitelist = [ "~/.config/gtk-3.0/" ];
             whitelist = [
               "~/.config/gajim/"
