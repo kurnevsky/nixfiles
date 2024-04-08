@@ -494,7 +494,7 @@ let
               "devices"
             ];
             graphics = true;
-            pams = [ "bus" "pulse" "pipewire-0" ];
+            pams = [ "pulse" "pipewire-0" ];
             etcs = [ "pulse" "ssl/certs/ca-certificates.crt" ];
             # Tray icon is stored in /tmp
             shared-tmp = true;
@@ -503,6 +503,10 @@ let
             unsetenvs = [ "MAIL" "SHELL" ];
             unshare-net = false;
             disable-userns = false;
+            dbus = [
+              "talk=org.kde.StatusNotifierWatcher"
+              "talk=org.freedesktop.ScreenSaver"
+            ];
             ro-whitelist = [ "~/.config/gtk-3.0/" ];
             whitelist = [ "~/.config/Element/" "~/.config/pulse/" ];
           } [ withFonts withOpengl ])
