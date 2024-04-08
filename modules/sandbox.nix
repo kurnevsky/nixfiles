@@ -678,9 +678,11 @@ let
             graphics = true;
             etcs = [ "pulse" "passwd" ];
             localtime = true;
-            pams = [ "bus" "pulse" "pipewire-0" ];
+            pams = [ "pulse" "pipewire-0" ];
             unsetenvs = [ "MAIL" "SHELL" ];
             media = true;
+            dbus =
+              [ "talk='org.gtk.vfs.*'" "own=org.libreoffice.LibreOfficeIpc0" ];
             whitelist = [ "~/" ];
             blacklist = [ "~/.gnupg/" "~/.ssh/" ];
           }) [

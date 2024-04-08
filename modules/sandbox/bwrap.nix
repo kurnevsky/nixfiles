@@ -269,7 +269,7 @@ in writeShellScriptBin target-name ''
          ''
        } \
        ${
-         lib.optionalString (dbus != [ ])
+         lib.optionalString (system-dbus != [ ])
          ''--bind "$SANDBOX_SYSTEM_BUS" /run/dbus/system_bus_socket''
        } \
        ${
