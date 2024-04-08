@@ -8,10 +8,10 @@ drv:
 , unshare-cgroup ? true, etcs ? [ ], pams ? [ ], whitelist ? [ ]
 , ro-whitelist ? [ ], blacklist ? [ ], unsetenvs ? [ ], setenvs ? [ ]
 , devs ? [ ], syses ? [ ], shared-tmp ? false, camera ? false, args ? [ ]
-, system-bus-socket ? false, extra-deps ? [ ], extra-deps-no-transitive ? [ ]
-, opengl ? false, opengl32 ? false, bin-sh ? false, localtime ? false
-, resolv-conf ? false, ro-media ? false, media ? false, disable-userns ? true
-, dbus ? [ ], system-dbus ? [ ], seccomp ? [
+, extra-deps ? [ ], extra-deps-no-transitive ? [ ], opengl ? false
+, opengl32 ? false, bin-sh ? false, localtime ? false, resolv-conf ? false
+, ro-media ? false, media ? false, disable-userns ? true, dbus ? [ ]
+, system-dbus ? [ ], seccomp ? [
   "_sysctl"
   "acct"
   "add_key"
@@ -200,10 +200,6 @@ in writeShellScriptBin target-name ''
          "--ro-bind /run/opengl-driver-32 /run/opengl-driver-32"
        } \
        \
-       ${
-         lib.optionalString system-bus-socket
-         "--bind /run/dbus/system_bus_socket /run/dbus/system_bus_socket"
-       } \
        ${
          lib.concatMapStringsSep " "
          (x: ''--bind-try "$XDG_RUNTIME_DIR"/${x} "$XDG_RUNTIME_DIR"/${x}'')

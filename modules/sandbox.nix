@@ -308,7 +308,6 @@ let
               "devices"
             ];
             graphics = true;
-            system-bus-socket = true;
             pams = [ "gnupg" "pulse" "pipewire-0" ];
             etcs = [ "pulse" "ssl/certs/ca-certificates.crt" ];
             localtime = true;
