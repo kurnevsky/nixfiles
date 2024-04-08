@@ -173,7 +173,7 @@ let
               "devices"
             ];
             graphics = true;
-            pams = [ "bus" "pulse" "pipewire-0" ];
+            pams = [ "pulse" "pipewire-0" ];
             etcs = [ "pulse" ];
             # xdg-screensaver creates a lockfile in /tmp
             shared-tmp = true;
@@ -183,6 +183,7 @@ let
               value = "/run/current-system/sw/bin/bash";
             }];
             ro-media = true;
+            dbus = [ "org.mpris.MediaPlayer2.mpv.*" ];
             ro-whitelist = [ "~/" ];
             whitelist = [ "~/.cache/fontconfig/" "~/.config/pulse/" ];
             blacklist = [ "~/.gnupg/" "~/.ssh/" ];
