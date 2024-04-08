@@ -183,7 +183,7 @@ let
               value = "/run/current-system/sw/bin/bash";
             }];
             ro-media = true;
-            dbus = [ "org.mpris.MediaPlayer2.mpv.*" ];
+            dbus = [ "own='org.mpris.MediaPlayer2.mpv.*'" ];
             ro-whitelist = [ "~/" ];
             whitelist = [ "~/.cache/fontconfig/" "~/.config/pulse/" ];
             blacklist = [ "~/.gnupg/" "~/.ssh/" ];
@@ -252,7 +252,7 @@ let
               "bus"
             ];
             graphics = true;
-            pams = [ "bus" "gnupg" "pulse" "pipewire-0" ];
+            pams = [ "gnupg" "pulse" "pipewire-0" ];
             etcs = [ "pulse" "ssl/certs/ca-certificates.crt" ];
             localtime = true;
             resolv-conf = true;
@@ -262,6 +262,13 @@ let
               value = "/run/current-system/sw/bin/bash";
             }];
             unshare-net = false;
+            system-dbus = [ "talk=org.freedesktop.NetworkManager" ];
+            dbus = [
+              "talk=org.freedesktop.FileManager1"
+              "talk=org.a11y.Bus"
+              "own='org.mpris.MediaPlayer2.firefox.*'"
+              "own='org.mozilla.firefox.*'"
+            ];
             ro-whitelist = [
               "~/.password-store/"
               "~/.config/gtk-3.0/"
@@ -302,13 +309,27 @@ let
             ];
             graphics = true;
             system-bus-socket = true;
-            pams = [ "bus" "gnupg" "pulse" "pipewire-0" ];
+            pams = [ "gnupg" "pulse" "pipewire-0" ];
             etcs = [ "pulse" "ssl/certs/ca-certificates.crt" ];
             localtime = true;
             resolv-conf = true;
             unsetenvs = [ "MAIL" "SHELL" ];
             unshare-net = false;
             disable-userns = false;
+            system-dbus = [
+              "talk=org.bluez"
+              "talk=org.freedesktop.Avahi"
+              "talk=org.freedesktop.UPower"
+            ];
+            dbus = [
+              "talk=org.freedesktop.FileManager1"
+              "talk=org.freedesktop.Notifications"
+              "talk=org.freedesktop.ScreenSaver"
+              "talk=org.freedesktop.secrets"
+              "talk=org.kde.kwalletd5"
+              "talk=org.kde.kwalletd6"
+              "own='org.mpris.MediaPlayer2.chromium.*'"
+            ];
             ro-whitelist = [ "~/.config/gtk-3.0/" "~/.config/kdeglobals" ];
             whitelist = [
               "~/.config/chromium/"
@@ -502,9 +523,12 @@ let
             resolv-conf = true;
             unsetenvs = [ "MAIL" "SHELL" ];
             unshare-net = false;
+            system-dbus =
+              [ "talk=org.freedesktop.login1" "talk=org.freedesktop.UPower" ];
             dbus = [
               "talk=org.kde.StatusNotifierWatcher"
               "talk=org.freedesktop.Notifications"
+              "talk=org.freedesktop.PowerManagement"
             ];
             ro-whitelist = [ "~/.config/kdeglobals" ];
             whitelist = [

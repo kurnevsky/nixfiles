@@ -11,7 +11,7 @@ drv:
 , system-bus-socket ? false, extra-deps ? [ ], extra-deps-no-transitive ? [ ]
 , opengl ? false, opengl32 ? false, bin-sh ? false, localtime ? false
 , resolv-conf ? false, ro-media ? false, media ? false, disable-userns ? true
-, dbus ? [ ], seccomp ? [
+, dbus ? [ ], system-dbus ? [ ], seccomp ? [
   "_sysctl"
   "acct"
   "add_key"
@@ -142,16 +142,30 @@ in writeShellScriptBin target-name ''
 
   mapfile -t deps < <(${gnused}/bin/sed 's/.*/--ro-bind\n&\n&/' ${cinfo}/store-paths)
 
-  ${lib.optionalString (dbus != [ ]) ''
+  ${lib.optionalString (dbus != [ ] || system-dbus != [ ]) ''
     FIFO_TMP=$(mktemp -u)
     mkfifo "$FIFO_TMP"
     exec 3<>"$FIFO_TMP"
+  ''}
+
+  ${lib.optionalString (dbus != [ ]) ''
     SANDBOX_BUS="$XDG_RUNTIME_DIR/sandbox-bus-$$"
     ${xdg-dbus-proxy}/bin/xdg-dbus-proxy --fd=3 3>"$FIFO_TMP" "$DBUS_SESSION_BUS_ADDRESS" "$SANDBOX_BUS" ${
       lib.concatMapStringsSep " " (x: "--${x}") dbus
     } --filter &
-    rm "$FIFO_TMP"
     head -c 1 <&3 > /dev/null
+  ''}
+
+  ${lib.optionalString (system-dbus != [ ]) ''
+    SANDBOX_SYSTEM_BUS="$XDG_RUNTIME_DIR/sandbox-system-bus-$$"
+    ${xdg-dbus-proxy}/bin/xdg-dbus-proxy --fd=3 3>"$FIFO_TMP" unix:path=/run/dbus/system_bus_socket "$SANDBOX_SYSTEM_BUS" ${
+      lib.concatMapStringsSep " " (x: "--${x}") dbus
+    } --filter &
+    head -c 1 <&3 > /dev/null
+  ''}
+
+  ${lib.optionalString (dbus != [ ] || system-dbus != [ ]) ''
+    rm "$FIFO_TMP"
   ''}
 
   exec ${bubblewrap}/bin/bwrap \
@@ -257,6 +271,10 @@ in writeShellScriptBin target-name ''
            --bind "$SANDBOX_BUS" "$XDG_RUNTIME_DIR/bus" \
            --setenv DBUS_SESSION_BUS_ADDRESS unix:path="$XDG_RUNTIME_DIR/bus" \
          ''
+       } \
+       ${
+         lib.optionalString (dbus != [ ])
+         ''--bind "$SANDBOX_SYSTEM_BUS" /run/dbus/system_bus_socket''
        } \
        ${
          lib.optionalString (seccomp != [ ])
