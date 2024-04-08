@@ -689,8 +689,11 @@ let
             pams = [ "pulse" "pipewire-0" ];
             unsetenvs = [ "MAIL" "SHELL" ];
             media = true;
-            dbus =
-              [ "talk='org.gtk.vfs.*'" "own=org.libreoffice.LibreOfficeIpc0" ];
+            dbus = [
+              "talk='org.gtk.vfs.*'"
+              "talk=org.freedesktop.portal.Desktop"
+              "own=org.libreoffice.LibreOfficeIpc0"
+            ];
             whitelist = [ "~/" ];
             blacklist = [ "~/.gnupg/" "~/.ssh/" ];
           }) [
