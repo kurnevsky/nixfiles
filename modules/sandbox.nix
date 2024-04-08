@@ -641,7 +641,7 @@ let
             ];
             graphics = true;
             etcs = [ "ssl/certs/ca-certificates.crt" ];
-            pams = [ "bus" "pulse" "pipewire-0" ];
+            pams = [ "pulse" "pipewire-0" ];
             localtime = true;
             unsetenvs = [ "MAIL" ];
             setenvs = [{
@@ -651,6 +651,10 @@ let
             unshare-cgroup = false;
             unshare-pid = false;
             seccomp = [ ];
+            system-dbus = [
+              "talk=org.freedesktop.UDisks2"
+              "talk=org.freedesktop.NetworkManager"
+            ];
             whitelist = [
               "\${WINEPREFIX:-~/.wine/}"
               "~/.cache/wine/"
