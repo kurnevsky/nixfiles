@@ -204,7 +204,7 @@ let
               "devices"
             ];
             graphics = true;
-            pams = [ "bus" "pulse" "pipewire-0" ];
+            pams = [ "pulse" "pipewire-0" ];
             etcs = [ "pulse" ];
             unsetenvs = [ "MAIL" ];
             setenvs = [{
@@ -212,6 +212,14 @@ let
               value = "/run/current-system/sw/bin/bash";
             }];
             ro-media = true;
+            dbus = [
+              "talk=org.freedesktop.ScreenSaver"
+              "talk=org.freedesktop.secrets"
+              "talk=org.kde.kwalletd5"
+              "talk=org.kde.StatusNotifierWatcher"
+              "talk=org.mpris.MediaPlayer2.Player"
+              "own=org.mpris.MediaPlayer2.vlc"
+            ];
             ro-whitelist = [ "~/" ];
             whitelist = [
               "~/.local/share/vlc/"
