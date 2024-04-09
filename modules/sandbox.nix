@@ -125,6 +125,10 @@ in {
               "own=org.kde.StatusNotifierItem-2-1"
               "own=music.deadbeef.player"
               "own=org.mpris.MediaPlayer2.DeaDBeeF"
+              "talk=org.freedesktop.Notifications"
+              "talk=org.gtk.Settings"
+              "talk=org.freedesktop.portal.Documents"
+              "talk=org.freedesktop.portal.Desktop"
             ];
             ro-whitelist = [ "~/" ];
             whitelist = [ "~/.config/pulse/" "~/.config/deadbeef/" ];
@@ -191,6 +195,8 @@ in {
               "talk=org.kde.StatusNotifierWatcher"
               "talk=org.mpris.MediaPlayer2.Player"
               "own=org.mpris.MediaPlayer2.vlc"
+              "talk=org.freedesktop.Notifications"
+              "talk=org.a11y.Bus"
             ];
             ro-whitelist = [ "~/" ];
             whitelist = [
@@ -292,6 +298,9 @@ in {
               "talk=org.freedesktop.UPower"
             ];
             dbus = [
+              "talk=org.freedesktop.portal.Documents"
+              "talk=org.freedesktop.portal.Desktop"
+              "talk=org.gtk.Settings"
               "talk=org.freedesktop.FileManager1"
               "talk=org.freedesktop.Notifications"
               "talk=org.freedesktop.ScreenSaver"
@@ -333,7 +342,11 @@ in {
             resolv-conf = true;
             unsetenvs = [ "MAIL" "SHELL" ];
             unshare-net = false;
-            dbus = [ "talk=org.kde.StatusNotifierWatcher" ];
+            dbus = [
+              "talk=org.kde.StatusNotifierWatcher"
+              "talk=org.freedesktop.Notifications"
+              "talk=org.a11y.Bus"
+            ];
             ro-whitelist = [ "~/.config/kdeglobals" ];
             whitelist = [ "~/.config/tox/" "~/.cache/Tox/" "~/.config/pulse/" ];
           } [ withFonts withOpengl ])
@@ -423,6 +436,8 @@ in {
               "talk=org.kde.StatusNotifierWatcher"
               "talk=org.freedesktop.portal.Desktop"
               "talk=org.a11y.Bus"
+              "talk=org.freedesktop.ScreenSaver"
+              "talk=org.freedesktop.Notifications"
             ];
             ro-whitelist = [ "~/.config/kdeglobals" ];
             whitelist =
@@ -495,6 +510,7 @@ in {
               "talk=org.kde.StatusNotifierWatcher"
               "talk=org.freedesktop.Notifications"
               "talk=org.freedesktop.PowerManagement"
+              "talk=org.a11y.Bus"
             ];
             ro-whitelist = [ "~/.config/kdeglobals" ];
             whitelist = [
@@ -621,6 +637,8 @@ in {
               "talk='org.gtk.vfs.*'"
               "talk=org.freedesktop.portal.Desktop"
               "own=org.libreoffice.LibreOfficeIpc0"
+              "talk=org.gtk.Settings"
+              "talk=org.freedesktop.portal.Documents"
             ];
             whitelist = [ "~/" ];
             blacklist = [ "~/.gnupg/" "~/.ssh/" ];
