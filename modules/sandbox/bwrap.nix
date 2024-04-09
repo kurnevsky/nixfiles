@@ -132,9 +132,9 @@ in writeShellScriptBin target-name ''
     )
   ''}
 
-  mapfile -t ro_whitelist < <(echo -n "''${RO_WHITELIST-}" | ${gnused}/bin/sed 's/.*/--ro-bind\n&\n&/')
-  mapfile -t whitelist < <(echo -n "''${WHITELIST-}" | ${gnused}/bin/sed 's/.*/--bind\n&\n&/')
-  mapfile -t blacklist < <(echo -n "''${BLACKLIST-}" | ${gnused}/bin/sed 's/.*/--tmpfs\n&/')
+  mapfile -t ro_whitelist < <(echo -n "''${RO_WHITELIST-}" | grep -v '^[[:space:]]*$' | ${gnused}/bin/sed 's/.*/--ro-bind\n&\n&/')
+  mapfile -t whitelist < <(echo -n "''${WHITELIST-}" | grep -v '^[[:space:]]*$' | ${gnused}/bin/sed 's/.*/--bind\n&\n&/')
+  mapfile -t blacklist < <(echo -n "''${BLACKLIST-}" | grep -v '^[[:space:]]*$' | ${gnused}/bin/sed 's/.*/--tmpfs\n&/')
 
   ${lib.optionalString graphics ''
     mapfile -t xauthority < <(echo -n "''${XAUTHORITY-}" | ${gnused}/bin/sed 's/.*/--ro-bind\n&\n&/')
