@@ -708,18 +708,7 @@ in {
               [ -d ${files}/${path} ] && find ${files}/${path} -type l | xargs -r readlink -f >> $out
             '') paths) home-files);
       in pkgs.closureInfo { rootPaths = [ drv ]; };
-    collectBins = attrs:
-      if lib.isDerivation attrs then
-        attrs.meta.sandboxed-bins or [ ]
-      else
-        map collectBins (lib.attrValues attrs);
   in {
-    # can be tested like:
-    # while read bin; do
-    #   grep bwrap "$(which "$bin")" > /dev/null || echo "$bin is not wrapped!"
-    # done < /etc/sandbox/bins
-    "sandbox/bins".text =
-      lib.concatStringsSep "\n" (lib.flatten (collectBins pkgs.sandboxed));
     "sandbox/common".text = ''
       ${lib.concatStringsSep "\n" home-files}
       ${lib.concatStringsSep "\n" home-paths}
@@ -729,4 +718,25 @@ in {
     "sandbox/toxic".source = "${home-deps-drv [ ".config/tox" ]}/store-paths";
     "sandbox/feh".source = "${home-deps-drv [ ".config/feh" ]}/store-paths";
   };
+
+  system.activationScripts.installInitScript = let
+    collectBins = attrs:
+      if lib.isDerivation attrs then
+        attrs.meta.sandboxed-bins or [ ]
+      else
+        map collectBins (lib.attrValues attrs);
+  in lib.mkForce ''
+    RED='\033[0;31m'
+    NC='\033[0m'
+    declare -A bins
+    bins=(['${
+      lib.concatStringsSep "']=1 ['" (lib.flatten (collectBins pkgs.sandboxed))
+    }"']=1)
+    find $systemConfig/sw/bin $systemConfig/etc/profiles/per-user/*/bin -print0 |
+      while IFS= read -r -d ''' bin; do
+        if [[ -v bins["$(basename "$bin")"] ]]; then
+          grep ${pkgs.bubblewrap}/bin/bwrap "$bin" > /dev/null || echo -e "''${RED}$bin is not wrapped!''${NC}"
+        fi
+      done
+  '';
 }
