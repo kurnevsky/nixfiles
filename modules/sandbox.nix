@@ -3,7 +3,14 @@
 let
   sandbox = pkgs.callPackage ./sandbox/bwrap.nix { };
   wrap = drv: bins:
-    pkgs.symlinkJoin {
+    let
+      withOverrides = drv':
+        drv' // {
+          override = x: wrap (drv.override x) bins;
+          overrideAttrs = x: wrap (drv.overrideAttrs x) bins;
+          overrideDerivation = x: wrap (drv.overrideDerivation x) bins;
+        };
+    in withOverrides (pkgs.symlinkJoin {
       name = drv.name + "-sandboxed";
       paths = map (sandbox drv) bins ++ [ drv ];
       postBuild = ''
@@ -20,7 +27,7 @@ let
           chmod --reference="${drv}/$file" "$out/$file"
         done || true
       '';
-    };
+    });
   withFonts = attrs:
     attrs // {
       extra-deps = (attrs.extra-deps or [ ])
