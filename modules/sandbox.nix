@@ -409,7 +409,12 @@ in {
             resolv-conf = true;
             unsetenvs = [ "MAIL" "SHELL" ];
             unshare-net = false;
-            dbus = [ "talk=org.kde.StatusNotifierWatcher" ];
+            dbus = [
+              "own=org.telegram.desktop"
+              "talk=org.kde.StatusNotifierWatcher"
+              "talk=org.freedesktop.portal.Desktop"
+              "talk=org.a11y.Bus"
+            ];
             ro-whitelist = [ "~/.config/kdeglobals" ];
             whitelist =
               [ "~/.local/share/TelegramDesktop/" "~/.config/pulse/" ];
