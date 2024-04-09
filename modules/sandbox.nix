@@ -230,10 +230,19 @@ in {
               value = "/run/current-system/sw/bin/bash";
             }];
             unshare-net = false;
-            system-dbus = [ "talk=org.freedesktop.NetworkManager" ];
+            system-dbus = [
+              "talk=org.freedesktop.NetworkManager"
+              "talk=org.freedesktop.login1"
+            ];
             dbus = [
+              "talk=org.freedesktop.portal.Documents"
+              "talk=org.freedesktop.portal.Desktop"
               "talk=org.freedesktop.FileManager1"
               "talk=org.a11y.Bus"
+              "talk=org.kde.kdeconnect"
+              "talk=org.kde.KWin"
+              "talk=org.gtk.Settings"
+              "own=org.kde.plasma.browser_integration"
               "own='org.mpris.MediaPlayer2.firefox.*'"
               "own='org.mozilla.firefox.*'"
             ];
