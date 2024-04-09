@@ -10,7 +10,9 @@ let
           overrideAttrs = x: wrap (drv.overrideAttrs x) bins;
           overrideDerivation = x: wrap (drv.overrideDerivation x) bins;
         };
-    in withOverrides (pkgs.symlinkJoin {
+    in withOverrides (lib.addMetaAttrs {
+      sandboxed-bins = map (bin: bin.target-name or bin.name) bins;
+    } (pkgs.symlinkJoin {
       name = drv.name + "-sandboxed";
       paths = map (sandbox drv) bins ++ [ drv ];
       postBuild = ''
@@ -18,6 +20,13 @@ let
         grep -RlP "\\Q${
           lib.concatMapStringsSep "\\E|\\Q" (bin: "${drv}/bin/${bin.name}") bins
         }\\E" | while read file; do
+          # do not replace wrapped binaries
+          if ${
+            lib.concatMapStringsSep " || "
+            (bin: ''[[ "$file" == "bin/${bin.name}" ]]'') bins
+          }; then
+            continue
+          fi
           rm -f "$out/$file"
           substitute "${drv}/$file" "$out/$file" ${
             lib.concatMapStringsSep " "
@@ -27,7 +36,7 @@ let
           chmod --reference="${drv}/$file" "$out/$file"
         done || true
       '';
-    });
+    }));
   withFonts = attrs:
     attrs // {
       extra-deps = (attrs.extra-deps or [ ])
@@ -192,7 +201,7 @@ in {
             blacklist = [ "~/.gnupg/" "~/.ssh/" ];
           } [ withFonts withOpengl ])
         ];
-        firefox = (wrap self.firefox [
+        firefox = wrap self.firefox [
           (lib.pipe {
             name = "firefox";
             extra-deps = with pkgs; [
@@ -242,7 +251,7 @@ in {
               "~/.gnupg/"
             ];
           } [ withFonts withOpengl (withHomeManager "firefox") ])
-        ]);
+        ];
         ungoogled-chromium = wrap self.ungoogled-chromium [
           (lib.pipe {
             name = "chromium";
@@ -632,7 +641,7 @@ in {
             ];
           } [ withFonts withOpengl ])
         ];
-        tor-browser = wrap self.tor-browser [{
+        tor-browser-bundle-bin = wrap self.tor-browser-bundle-bin [{
           name = "tor-browser";
           graphics = true;
           unsetenvs = [ "MAIL" "SHELL" ];
@@ -694,7 +703,18 @@ in {
               [ -d ${files}/${path} ] && find ${files}/${path} -type l | xargs -r readlink -f >> $out
             '') paths) home-files);
       in pkgs.closureInfo { rootPaths = [ drv ]; };
+    collectBins = attrs:
+      if lib.isDerivation attrs then
+        attrs.meta.sandboxed-bins or [ ]
+      else
+        map collectBins (lib.attrValues attrs);
   in {
+    # can be tested like:
+    # while read bin; do
+    #   grep bwrap "$(which "$bin")" > /dev/null || echo "$bin is not wrapped!"
+    # done < /etc/sandbox/bins
+    "sandbox/bins".text =
+      lib.concatStringsSep "\n" (lib.flatten (collectBins pkgs.sandboxed));
     "sandbox/common".text = ''
       ${lib.concatStringsSep "\n" home-files}
       ${lib.concatStringsSep "\n" home-paths}

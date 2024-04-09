@@ -622,6 +622,7 @@
       programs = {
         feh = {
           enable = true;
+          package = pkgs.sandboxed.feh;
           buttons = {
             zoom_in = "C-4";
             zoom_out = "C-5";
@@ -772,7 +773,10 @@
             ];
           };
         };
-        mbsync.enable = true;
+        mbsync = {
+          enable = true;
+          package = pkgs.sandboxed.isync;
+        };
         vdirsyncer.enable = true;
         khal = {
           enable = true;
