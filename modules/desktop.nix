@@ -52,261 +52,262 @@
   time.timeZone = "Europe/Minsk";
 
   environment = {
-    sandboxedPackages = with pkgs; [
-      (wrapOBS {
-        plugins = with obs-studio-plugins; [
-          obs-gstreamer
-          obs-backgroundremoval
-        ];
-      })
-      (python311Packages.callPackage ./openhrv.nix { })
-      anki
-      blender
-      calibre
-      claws-mail
-      cloud-mdir-sync
-      dosbox
-      eiskaltdcpp
-      gimp
-      openconnect
-      (callPackage ./pan-globalprotect-okta.nix { })
-      gnome-themes-extra
-      gnome.adwaita-icon-theme
-      gparted
-      inkscape
-      languagetool
-      lapce
-      libreoffice-fresh
-      pavucontrol
-      qbittorrent
-      qemu
-      radare2
-      tesseract
-      texlive.combined.scheme-basic
-      tigervnc
-      ubpm
-      wineWowPackages.stagingFull
-      winetricks
-      dxvk.out
-      zathura
-      # CLI utils
-      (aspellWithDicts (dicts: with dicts; [ en ru ]))
-      (hunspellWithDicts (with hunspellDicts; [ en_US ru_RU ]))
-      aircrack-ng
-      ansible
-      ansible-lint
-      appimage-run
-      aria2
-      arp-scan
-      barcode
-      bat
-      bc
-      bind
-      bindfs
-      binutils
-      brightnessctl
-      btrfs-progs
-      bubblewrap
-      clinfo
-      cuetools
-      curlHTTP3
-      davfs2
-      dbus
-      dmidecode
-      docker-compose
-      dosfstools
-      dsniff
-      e2fsprogs
-      efibootmgr
-      exfat
-      exploitdb
-      extundelete
-      eza
-      fclones
-      fd
-      ffmpeg-full
-      flac
-      fuseiso
-      gdb
-      gnupg
-      graphicsmagick
-      graphicsmagick-imagemagick-compat
-      hdparm
-      inetutils
-      innoextract
-      iotop
-      isync
-      jq
-      kubectl
-      kubelogin-oidc
-      libnotify
-      libva-utils
-      libxml2
-      lm_sensors
-      lsd
-      lshw
-      mesa-demos
-      metasploit
-      mu
-      nettools
-      newsboat
-      nmap
-      openai-whisper-cpp
-      openssl
-      pandoc
-      parallel
-      pass
-      pciutils
-      playerctl
-      psmisc
-      pulseaudio
-      qrencode
-      rage
-      rclone
-      ripgrep
-      rsync
-      shntool
-      skim
-      smartmontools
-      sshfs-fuse
-      tealdeer
-      tmux
-      torsocks
-      translate-shell
-      unixtools.xxd
-      usbutils
-      v4l-utils
-      vagrant
-      vdpauinfo
-      viu
-      vorbis-tools
-      vulkan-tools
-      wavpack
-      websocat
-      wget
-      wirelesstools
-      xmlstarlet
-      yt-dlp
-      zbar
-      # Archivers
-      _7zz
-      p7zip
-      unrar
-      (unzip.override { enableNLS = true; })
-      # Browsers
-      firefox
-      ungoogled-chromium
-      tor-browser-bundle-bin
-      # Messengers
-      gajim
-      konversation
-      tdesktop
-      ## Matrix
-      element-desktop
-      nheko
-      ## Tox
-      qtox
-      toxic
-      # Multimedia
-      ## Image
-      feh
-      imv
-      oculante
-      ## Video
-      mpv
-      vlc
-      ## Audio
-      deadbeef-with-plugins
-      mpc_cli
-      ncmpc
-      # Games
-      cataclysm-dda
-      hedgewars
-      minetest
-      openmw
-      wesnoth
-      # Databases
-      cassandra_4
-      grafana-loki
-      kcat
-      # Wallets
-      electrum
-      monero-cli
-      feather
-      # Audio
-      easyeffects
-      helvum
-      qpwgraph
-      sox
-      # Languages
-      (agda.withPackages (pkgs: with pkgs; [ standard-library ]))
-      (pkgs.writeShellScriptBin "prettier" ''
-        ${pkgs.nodePackages.prettier}/bin/prettier --plugin-search-dir "${pkgs.nodePackages.prettier-plugin-toml}/lib" "$@"
-      '')
-      astyle
-      groovy
-      mono
-      nodePackages.mermaid-cli
-      perl
-      python3
-      ## C/C++
-      clang
-      clang-tools
-      gcc
-      ## Shell
-      nodePackages.bash-language-server
-      shellcheck
-      shfmt
-      ## Haskell
-      cabal-install
-      haskellPackages.cabal-fmt
-      ghc
-      haskell-language-server
-      hlint
-      ## Rust
-      (fenix.stable.withComponents [
-        "cargo"
-        "clippy"
-        "rust-src"
-        "rustc"
-        "rustfmt"
-      ])
-      rust-analyzer
-      ## Java
-      jdt-language-server
-      maven
-      ## Scala
-      coursier
-      sbt
-      scala_3
-      metals
-      ## Nix
-      alejandra
-      deadnix
-      nixfmt-classic
-      nixpkgs-fmt
-      nil
-      nix-diff
-      nixpkgs-review
-      statix
-      ## Math
-      maxima
-      wxmaxima
-      octave
-      (rWrapper.override { packages = with rPackages; [ styler ggplot2 ]; })
-      ## Markdown
-      nodePackages.markdownlint-cli
-      marksman
-      ## TypeScript
-      nodePackages.typescript-language-server
-      ## Dhall
-      dhall
-      dhall-lsp-server
-      # VCS
-      mercurial
-      pijul
-      subversion
-    ];
+    systemPackages = with pkgs;
+      with sandboxed; [
+        (wrapOBS {
+          plugins = with obs-studio-plugins; [
+            obs-gstreamer
+            obs-backgroundremoval
+          ];
+        })
+        (python311Packages.callPackage ./openhrv.nix { })
+        anki
+        blender
+        calibre
+        claws-mail
+        cloud-mdir-sync
+        dosbox
+        eiskaltdcpp
+        gimp
+        openconnect
+        (callPackage ./pan-globalprotect-okta.nix { })
+        gnome-themes-extra
+        gnome.adwaita-icon-theme
+        gparted
+        inkscape
+        languagetool
+        lapce
+        libreoffice-fresh
+        pavucontrol
+        qbittorrent
+        qemu
+        radare2
+        tesseract
+        texlive.combined.scheme-basic
+        tigervnc
+        ubpm
+        wineWowPackages.stagingFull
+        winetricks
+        dxvk.out
+        zathura
+        # CLI utils
+        (aspellWithDicts (dicts: with dicts; [ en ru ]))
+        (hunspellWithDicts (with hunspellDicts; [ en_US ru_RU ]))
+        aircrack-ng
+        ansible
+        ansible-lint
+        appimage-run
+        aria2
+        arp-scan
+        barcode
+        bat
+        bc
+        bind
+        bindfs
+        binutils
+        brightnessctl
+        btrfs-progs
+        bubblewrap
+        clinfo
+        cuetools
+        curlHTTP3
+        davfs2
+        dbus
+        dmidecode
+        docker-compose
+        dosfstools
+        dsniff
+        e2fsprogs
+        efibootmgr
+        exfat
+        exploitdb
+        extundelete
+        eza
+        fclones
+        fd
+        ffmpeg-full
+        flac
+        fuseiso
+        gdb
+        gnupg
+        graphicsmagick
+        graphicsmagick-imagemagick-compat
+        hdparm
+        inetutils
+        innoextract
+        iotop
+        isync
+        jq
+        kubectl
+        kubelogin-oidc
+        libnotify
+        libva-utils
+        libxml2
+        lm_sensors
+        lsd
+        lshw
+        mesa-demos
+        metasploit
+        mu
+        nettools
+        newsboat
+        nmap
+        openai-whisper-cpp
+        openssl
+        pandoc
+        parallel
+        pass
+        pciutils
+        playerctl
+        psmisc
+        pulseaudio
+        qrencode
+        rage
+        rclone
+        ripgrep
+        rsync
+        shntool
+        skim
+        smartmontools
+        sshfs-fuse
+        tealdeer
+        tmux
+        torsocks
+        translate-shell
+        unixtools.xxd
+        usbutils
+        v4l-utils
+        vagrant
+        vdpauinfo
+        viu
+        vorbis-tools
+        vulkan-tools
+        wavpack
+        websocat
+        wget
+        wirelesstools
+        xmlstarlet
+        yt-dlp
+        zbar
+        # Archivers
+        _7zz
+        p7zip
+        unrar
+        (unzip.override { enableNLS = true; })
+        # Browsers
+        firefox
+        ungoogled-chromium
+        tor-browser-bundle-bin
+        # Messengers
+        gajim
+        konversation
+        telegram-desktop
+        ## Matrix
+        element-desktop
+        nheko
+        ## Tox
+        qtox
+        toxic
+        # Multimedia
+        ## Image
+        feh
+        imv
+        oculante
+        ## Video
+        mpv
+        vlc
+        ## Audio
+        deadbeef-with-plugins
+        mpc_cli
+        ncmpc
+        # Games
+        cataclysm-dda
+        hedgewars
+        minetest
+        openmw
+        wesnoth
+        # Databases
+        cassandra_4
+        grafana-loki
+        kcat
+        # Wallets
+        electrum
+        monero-cli
+        feather
+        # Audio
+        easyeffects
+        helvum
+        qpwgraph
+        sox
+        # Languages
+        (agda.withPackages (pkgs: with pkgs; [ standard-library ]))
+        (pkgs.writeShellScriptBin "prettier" ''
+          ${pkgs.nodePackages.prettier}/bin/prettier --plugin-search-dir "${pkgs.nodePackages.prettier-plugin-toml}/lib" "$@"
+        '')
+        astyle
+        groovy
+        mono
+        nodePackages.mermaid-cli
+        perl
+        python3
+        ## C/C++
+        clang
+        clang-tools
+        gcc
+        ## Shell
+        nodePackages.bash-language-server
+        shellcheck
+        shfmt
+        ## Haskell
+        cabal-install
+        haskellPackages.cabal-fmt
+        ghc
+        haskell-language-server
+        hlint
+        ## Rust
+        (fenix.stable.withComponents [
+          "cargo"
+          "clippy"
+          "rust-src"
+          "rustc"
+          "rustfmt"
+        ])
+        rust-analyzer
+        ## Java
+        jdt-language-server
+        maven
+        ## Scala
+        coursier
+        sbt
+        scala_3
+        metals
+        ## Nix
+        alejandra
+        deadnix
+        nixfmt-classic
+        nixpkgs-fmt
+        nil
+        nix-diff
+        nixpkgs-review
+        statix
+        ## Math
+        maxima
+        wxmaxima
+        octave
+        (rWrapper.override { packages = with rPackages; [ styler ggplot2 ]; })
+        ## Markdown
+        nodePackages.markdownlint-cli
+        marksman
+        ## TypeScript
+        nodePackages.typescript-language-server
+        ## Dhall
+        dhall
+        dhall-lsp-server
+        # VCS
+        mercurial
+        pijul
+        subversion
+      ];
 
     variables = {
       EMAIL = "kurnevsky@gmail.com";
@@ -628,6 +629,7 @@
         };
         mpv = {
           enable = true;
+          package = pkgs.sandboxed.mpv;
           config = {
             hwdec = "auto";
             cache = true;
@@ -753,7 +755,7 @@
         git.enable = true;
         firefox = {
           enable = true;
-          package = pkgs.firefox;
+          package = pkgs.sandboxed.firefox;
           profiles.default = {
             settings = import ./firefox/firefox.nix;
             userChrome = builtins.readFile ./firefox/userChrome.css;

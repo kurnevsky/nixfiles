@@ -46,24 +46,9 @@ let
         (attrs.extra-deps or [ ]) ++ [ package32 ] ++ extraPackages32;
       opengl32 = true;
     };
-  withHomeManager = paths:
-    let
-      home-files = lib.mapAttrsToList (_name: value: value.home-files)
-        config.home-manager.users;
-      home-paths = lib.mapAttrsToList (_name: value: value.home.path)
-        config.home-manager.users;
-      home-deps-drv =
-        pkgs.runCommand "home-files" { disallowedReferences = home-files; }
-        (lib.concatMapStrings (files:
-          lib.concatMapStrings (path: ''
-            [ -d ${files}/${path} ] && find ${files}/${path} -type l | xargs -r readlink -f >> $out
-          '') paths) home-files);
-    in attrs:
+  withHomeManager = name: attrs:
     attrs // {
-      extra-deps-no-transitive = (attrs.extra-deps-no-transitive or [ ])
-        ++ home-files ++ home-paths;
-      extra-deps = (attrs.extra-deps or [ ])
-        ++ (if paths == [ ] then [ ] else [ home-deps-drv ]);
+      runtime-deps = [ "/etc/sandbox/common" "/etc/sandbox/${name}" ];
     };
   archiver-cfg = name: {
     inherit name;
@@ -87,11 +72,32 @@ let
       ro-whitelist = [ "~/" ];
       blacklist = [ "~/.gnupg/" "~/.ssh/" ];
     };
-  wrappers = [
-    {
-      predicate = lib.hasPrefix "deadbeef-";
-      config = drv:
-        wrap drv [
+in {
+  nixpkgs.overlays = [
+    (self: _super: {
+      sandboxed = {
+        p7zip = wrap self.p7zip (map archiver-cfg [ "7z" "7za" "7zr" ]);
+        _7zz = wrap self._7zz [ (archiver-cfg "7zz") ];
+        unrar = wrap self.unrar [ (archiver-cfg "unrar") ];
+        zip = wrap self.zip [ (archiver-cfg "zip") ];
+        unzip = wrap self.unzip [ (archiver-cfg "unzip") ];
+        jq = wrap self.jq [{
+          name = "jq";
+          unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" "SHELL" ];
+          shared-tmp = true;
+          media = true;
+          whitelist = [ "~/" ];
+          blacklist = [ "~/.gnupg/" "~/.ssh/" ];
+        }];
+        libxml2 = wrap self.libxml2 [{
+          name = "xmllint";
+          unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" "SHELL" ];
+          shared-tmp = true;
+          media = true;
+          whitelist = [ "~/" ];
+          blacklist = [ "~/.gnupg/" "~/.ssh/" ];
+        }];
+        deadbeef-with-plugins = wrap self.deadbeef-with-plugins [
           (withFonts {
             name = "deadbeef";
             extra-deps = with pkgs; [
@@ -116,56 +122,7 @@ let
             blacklist = [ "~/.gnupg/" "~/.ssh/" ];
           })
         ];
-    }
-    {
-      predicate = lib.hasPrefix "p7zip-";
-      config = drv: wrap drv (map archiver-cfg [ "7z" "7za" "7zr" ]);
-    }
-    {
-      predicate = lib.hasPrefix "7zz-";
-      config = drv: wrap drv [ (archiver-cfg "7zz") ];
-    }
-    {
-      predicate = lib.hasPrefix "unrar-";
-      config = drv: wrap drv [ (archiver-cfg "unrar") ];
-    }
-    {
-      unused = true;
-      predicate = lib.hasPrefix "zip-";
-      config = drv: wrap drv [ (archiver-cfg "zip") ];
-    }
-    {
-      predicate = lib.hasPrefix "unzip-";
-      config = drv: wrap drv [ (archiver-cfg "unzip") ];
-    }
-    {
-      predicate = lib.hasPrefix "jq-";
-      config = drv:
-        wrap drv [{
-          name = "jq";
-          unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" "SHELL" ];
-          shared-tmp = true;
-          media = true;
-          whitelist = [ "~/" ];
-          blacklist = [ "~/.gnupg/" "~/.ssh/" ];
-        }];
-    }
-    {
-      predicate = lib.hasPrefix "libxml2-";
-      config = drv:
-        wrap drv [{
-          name = "xmllint";
-          unsetenvs = [ "DBUS_SESSION_BUS_ADDRESS" "MAIL" "SHELL" ];
-          shared-tmp = true;
-          media = true;
-          whitelist = [ "~/" ];
-          blacklist = [ "~/.gnupg/" "~/.ssh/" ];
-        }];
-    }
-    {
-      predicate = lib.hasPrefix "mpv-";
-      config = drv:
-        wrap drv [
+        mpv = wrap self.mpv [
           (lib.pipe {
             name = "mpv";
             bin-sh = true;
@@ -190,17 +147,16 @@ let
               value = "/run/current-system/sw/bin/bash";
             }];
             ro-media = true;
-            dbus = [ "own='org.mpris.MediaPlayer2.mpv.*'" ];
+            dbus = [
+              "own='org.mpris.MediaPlayer2.mpv.*'"
+              "talk=org.freedesktop.portal.Desktop"
+            ];
             ro-whitelist = [ "~/" ];
             whitelist = [ "~/.cache/fontconfig/" "~/.config/pulse/" ];
             blacklist = [ "~/.gnupg/" "~/.ssh/" ];
-          } [ withFonts withOpengl (withHomeManager [ ".config/mpv" ]) ])
+          } [ withFonts withOpengl (withHomeManager "mpv") ])
         ];
-    }
-    {
-      predicate = lib.hasPrefix "vlc-";
-      config = drv:
-        wrap drv [
+        vlc = wrap self.vlc [
           (lib.pipe {
             name = "vlc";
             extra-deps = with pkgs; [ plasma-integration ];
@@ -236,11 +192,7 @@ let
             blacklist = [ "~/.gnupg/" "~/.ssh/" ];
           } [ withFonts withOpengl ])
         ];
-    }
-    {
-      predicate = lib.hasPrefix "firefox-";
-      config = drv:
-        wrap drv [
+        firefox = (wrap self.firefox [
           (lib.pipe {
             name = "firefox";
             extra-deps = with pkgs; [
@@ -289,15 +241,9 @@ let
               "~/.config/pulse/"
               "~/.gnupg/"
             ];
-          } [ withFonts withOpengl (withHomeManager [ ".mozilla" ]) ])
-        ];
-    }
-    {
-      predicate = name:
-        lib.hasPrefix "chromium-" name
-        || lib.hasPrefix "ungoogled-chromium-" name;
-      config = drv:
-        wrap drv [
+          } [ withFonts withOpengl (withHomeManager "firefox") ])
+        ]);
+        ungoogled-chromium = wrap self.ungoogled-chromium [
           (lib.pipe {
             name = "chromium";
             extra-deps = with pkgs; [
@@ -346,11 +292,7 @@ let
             ];
           } [ withFonts withOpengl ])
         ];
-    }
-    {
-      predicate = lib.hasPrefix "qtox-";
-      config = drv:
-        wrap drv [
+        qtox = wrap self.qtox [
           (lib.pipe {
             name = "qtox";
             extra-deps = with pkgs; [
@@ -378,12 +320,8 @@ let
             whitelist = [ "~/.config/tox/" "~/.cache/Tox/" "~/.config/pulse/" ];
           } [ withFonts withOpengl ])
         ];
-    }
-    {
-      predicate = lib.hasPrefix "toxic-";
-      config = drv:
-        wrap drv [
-          (withHomeManager [ ".config/tox" ] {
+        toxic = wrap self.toxic [
+          (withHomeManager "toxic" {
             name = "toxic";
             extra-deps = with pkgs; [ glibcLocales ];
             devs = [ "dri" ];
@@ -398,11 +336,7 @@ let
             whitelist = [ "~/.config/tox/" "~/.config/pulse/" ];
           })
         ];
-    }
-    {
-      predicate = lib.hasPrefix "gajim-";
-      config = drv:
-        wrap drv [
+        gajim = wrap self.gajim [
           (withFonts {
             name = "gajim";
             extra-deps = with pkgs; [
@@ -443,11 +377,7 @@ let
             ];
           })
         ];
-    }
-    {
-      predicate = lib.hasPrefix "telegram-desktop-";
-      config = drv:
-        wrap drv [
+        telegram-desktop = wrap self.telegram-desktop [
           (lib.pipe {
             name = "telegram-desktop";
             extra-deps = with pkgs; [
@@ -476,11 +406,7 @@ let
               [ "~/.local/share/TelegramDesktop/" "~/.config/pulse/" ];
           } [ withFonts withOpengl ])
         ];
-    }
-    {
-      predicate = lib.hasPrefix "element-desktop-";
-      config = drv:
-        wrap drv [
+        element-desktop = wrap self.element-desktop [
           (lib.pipe {
             name = "element-desktop";
             extra-deps = with pkgs; [
@@ -518,11 +444,7 @@ let
             whitelist = [ "~/.config/Element/" "~/.config/pulse/" ];
           } [ withFonts withOpengl ])
         ];
-    }
-    {
-      predicate = lib.hasPrefix "qbittorrent-";
-      config = drv:
-        wrap drv [
+        qbittorrent = wrap self.qbittorrent [
           (lib.pipe {
             name = "qbittorrent";
             extra-deps = with pkgs; [
@@ -561,16 +483,8 @@ let
             ];
           } [ withFonts withOpengl ])
         ];
-    }
-    {
-      predicate = lib.hasPrefix "feh-";
-      config = drv:
-        wrap drv [ (withHomeManager [ ".config/feh" ] (viewer-cfg "feh")) ];
-    }
-    {
-      predicate = lib.hasPrefix "imv-";
-      config = drv:
-        wrap drv [
+        feh = wrap self.feh [ (withHomeManager "feh" (viewer-cfg "feh")) ];
+        imv = wrap self.imv [
           (withOpengl (viewer-cfg "imv" // {
             devs = [ "dri" ];
             syses = [
@@ -580,20 +494,12 @@ let
             ];
           }))
         ];
-    }
-    {
-      predicate = lib.hasPrefix "zathura-";
-      config = drv:
-        wrap drv [
+        zathura = wrap self.zathura [
           ((viewer-cfg "zathura") // {
             whitelist = [ "~/.local/share/zathura/" "~/Print/" ];
           })
         ];
-    }
-    {
-      predicate = lib.hasPrefix "ffmpeg-";
-      config = drv:
-        wrap drv [
+        ffmpeg-full = wrap self.ffmpeg-full [
           {
             name = "ffmpeg";
             devs = [ "dri" ];
@@ -634,11 +540,7 @@ let
             ];
           }
         ];
-    }
-    {
-      predicate = lib.hasPrefix "wine-";
-      config = drv:
-        wrap drv [
+        wineWowPackages.stagingFull = wrap self.wineWowPackages.stagingFull [
           (lib.pipe {
             name = "wine";
             # coreutils-full is needed because it's system default stdenv
@@ -674,11 +576,7 @@ let
             ];
           } [ withFonts withOpengl withOpengl32 ])
         ];
-    }
-    {
-      predicate = lib.hasPrefix "libreoffice-";
-      config = drv:
-        wrap drv (map (name:
+        libreoffice-fresh = wrap self.libreoffice-fresh (map (name:
           withFonts {
             inherit name;
             # coreutils-full, gnugrep, gnused are needed because it's
@@ -714,11 +612,7 @@ let
             "swriter"
             "unopkg"
           ]);
-    }
-    {
-      predicate = lib.hasPrefix "wesnoth-";
-      config = drv:
-        wrap drv [
+        wesnoth = wrap self.wesnoth [
           (lib.pipe {
             name = "wesnoth";
             devs = [ "dri" ];
@@ -738,22 +632,14 @@ let
             ];
           } [ withFonts withOpengl ])
         ];
-    }
-    {
-      predicate = lib.hasPrefix "tor-browser-";
-      config = drv:
-        wrap drv [{
+        tor-browser = wrap self.tor-browser [{
           name = "tor-browser";
           graphics = true;
           unsetenvs = [ "MAIL" "SHELL" ];
           unshare-net = false;
           whitelist = [ "~/.tor\\ project/" "~/Downloads/" ];
         }];
-    }
-    {
-      predicate = name: name == "isync";
-      config = drv:
-        wrap drv [{
+        isync = wrap self.isync [{
           name = "mbsync";
           bin-sh = true;
           extra-deps = with pkgs; [ coreutils-full cloud-mdir-sync pass gnupg ];
@@ -765,20 +651,12 @@ let
           ro-whitelist = [ "~/.password-store/" "~/.mbsyncrc" ];
           whitelist = [ "~/Maildir/" "~/.gnupg/" ];
         }];
-    }
-    {
-      predicate = lib.hasPrefix "mu-";
-      config = drv:
-        wrap drv [{
+        mu = wrap self.mu [{
           name = "mu";
           unsetenvs = [ "MAIL" "SHELL" ];
           whitelist = [ "~/Maildir/" "~/.cache/mu/" ];
         }];
-    }
-    {
-      predicate = lib.hasPrefix "claws-mail-";
-      config = drv:
-        wrap drv [
+        claws-mail = wrap self.claws-mail [
           (withFonts {
             name = "claws-mail";
             extra-deps = with pkgs; [
@@ -794,38 +672,36 @@ let
             whitelist = [ "~/.claws-mail/" ];
           })
         ];
-    }
-  ];
-in {
-  options.environment.sandboxedPackages = with lib;
-    mkOption {
-      type = types.listOf types.package;
-      default = [ ];
-      example = literalExpression "[ pkgs.firefox pkgs.thunderbird ]";
-      description = lib.mdDoc ''
-        Like `systemPackages` but allows packages to be sandboxed.
-      '';
-    };
-
-  config = {
-    nixpkgs.overlays = [
-      (_self: super: {
-        mc = super.mc.override {
-          zip = wrap (super.zip.override { enableNLS = true; })
-            [ (archiver-cfg "zip") ];
-          unzip = wrap (super.unzip.override { enableNLS = true; })
-            [ (archiver-cfg "unzip") ];
+        mc = self.mc.override {
+          zip = self.sandboxed.zip.override { enableNLS = true; };
+          unzip = self.sandboxed.unzip.override { enableNLS = true; };
         };
-      })
-    ];
+      };
+    })
+  ];
 
-    environment.systemPackages = assert lib.all (wrapper:
-      (wrapper.unused or false) || lib.any (drv: wrapper.predicate drv.name)
-      config.environment.sandboxedPackages) wrappers;
-      map (drv:
-        (lib.findSingle (wrapper: wrapper.predicate drv.name) {
-          config = lib.id;
-        } (throw "multiple predicates match a derivation ${drv.name}")
-          wrappers).config drv) config.environment.sandboxedPackages;
+  environment.etc = let
+    home-files = lib.mapAttrsToList (_name: value: value.home-files)
+      config.home-manager.users;
+    home-paths = lib.mapAttrsToList (_name: value: value.home.path)
+      config.home-manager.users;
+    home-deps-drv = paths:
+      let
+        drv =
+          pkgs.runCommand "home-files" { disallowedReferences = home-files; }
+          (lib.concatMapStrings (files:
+            lib.concatMapStrings (path: ''
+              [ -d ${files}/${path} ] && find ${files}/${path} -type l | xargs -r readlink -f >> $out
+            '') paths) home-files);
+      in pkgs.closureInfo { rootPaths = [ drv ]; };
+  in {
+    "sandbox/common".text = ''
+      ${lib.concatStringsSep "\n" home-files}
+      ${lib.concatStringsSep "\n" home-paths}
+    '';
+    "sandbox/mpv".source = "${home-deps-drv [ ".config/mpv" ]}/store-paths";
+    "sandbox/firefox".source = "${home-deps-drv [ ".mozilla" ]}/store-paths";
+    "sandbox/toxic".source = "${home-deps-drv [ ".config/tox" ]}/store-paths";
+    "sandbox/feh".source = "${home-deps-drv [ ".config/feh" ]}/store-paths";
   };
 }

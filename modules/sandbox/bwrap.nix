@@ -8,10 +8,10 @@ drv:
 , unshare-cgroup ? true, etcs ? [ ], pams ? [ ], whitelist ? [ ]
 , ro-whitelist ? [ ], blacklist ? [ ], unsetenvs ? [ ], setenvs ? [ ]
 , devs ? [ ], syses ? [ ], shared-tmp ? false, camera ? false, args ? [ ]
-, extra-deps ? [ ], extra-deps-no-transitive ? [ ], opengl ? false
-, opengl32 ? false, bin-sh ? false, localtime ? false, resolv-conf ? false
-, ro-media ? false, media ? false, disable-userns ? true, dbus ? [ ]
-, system-dbus ? [ ], seccomp ? [
+, extra-deps ? [ ], runtime-deps ? [ ], opengl ? false, opengl32 ? false
+, bin-sh ? false, localtime ? false, resolv-conf ? false, ro-media ? false
+, media ? false, disable-userns ? true, dbus ? [ ], system-dbus ? [ ]
+, seccomp ? [
   "_sysctl"
   "acct"
   "add_key"
@@ -140,7 +140,9 @@ in writeShellScriptBin target-name ''
     mapfile -t xauthority < <(echo -n "''${XAUTHORITY-}" | ${gnused}/bin/sed 's/.*/--ro-bind\n&\n&/')
   ''}
 
-  mapfile -t deps < <(${gnused}/bin/sed 's/.*/--ro-bind\n&\n&/' ${cinfo}/store-paths)
+  mapfile -t deps < <(${gnused}/bin/sed 's/.*/--ro-bind\n&\n&/' ${cinfo}/store-paths ${
+    lib.concatStringsSep " " runtime-deps
+  })
 
   ${lib.optionalString (dbus != [ ] || system-dbus != [ ]) ''
     FIFO_TMP=$(mktemp -u)
@@ -170,10 +172,6 @@ in writeShellScriptBin target-name ''
 
   exec ${bubblewrap}/bin/bwrap \
        "''${deps[@]}" \
-       ${
-         lib.concatMapStringsSep " " (x: "--ro-bind ${x} ${x}")
-         extra-deps-no-transitive
-       } \
        \
        ${lib.optionalString bin-sh "--ro-bind /bin/sh /bin/sh"} \
        \
