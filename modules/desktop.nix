@@ -782,7 +782,10 @@
           enable = true;
           package = pkgs.sandboxed.isync;
         };
-        vdirsyncer.enable = true;
+        vdirsyncer = {
+          enable = true;
+          package = pkgs.sandboxed.vdirsyncer;
+        };
         khal = {
           enable = true;
           locale = {

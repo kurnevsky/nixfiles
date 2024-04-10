@@ -725,6 +725,21 @@ in {
           unsetenvs = [ "MAIL" "SHELL" ];
           whitelist = [ "~/Maildir/" "~/.cache/mu/" ];
         }];
+        vdirsyncer = wrap self.vdirsyncer [
+          (withHomeManager "vdirsyncer" {
+            name = "vdirsyncer";
+            bin-sh = true;
+            extra-deps = with pkgs; [ coreutils-full pass gnupg ];
+            pams = [ "gnupg" ];
+            etcs = [ "ssl/certs/ca-certificates.crt" ];
+            resolv-conf = true;
+            unsetenvs = [ "MAIL" "SHELL" ];
+            unshare-net = false;
+            ro-whitelist = [ "~/.password-store/" "~/.config/vdirsyncer/" ];
+            whitelist =
+              [ "~/Calendar/" "~/.local/share/vdirsyncer/" "~/.gnupg/" ];
+          })
+        ];
         claws-mail = wrap self.claws-mail [
           (withFonts {
             name = "claws-mail";
@@ -774,6 +789,8 @@ in {
       "sandbox/firefox".source = "${home-deps-drv [ ".mozilla" ]}/store-paths";
       "sandbox/toxic".source = "${home-deps-drv [ ".config/tox" ]}/store-paths";
       "sandbox/feh".source = "${home-deps-drv [ ".config/feh" ]}/store-paths";
+      "sandbox/vdirsyncer".source =
+        "${home-deps-drv [ ".config/vdirsyncer" ]}/store-paths";
     };
   };
 
