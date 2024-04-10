@@ -1,6 +1,19 @@
 { config, lib, pkgs, ... }:
 
 let
+  flatpakFileAccess = pkgs.writeShellScriptBin "flatpak" ''
+    [[ "$1" == "info" ]] || exit 1
+    echo "$3 attempts to access $2" >> /tmp/.document-portal-log
+    case "$3" in
+      com.sandbox.firefox|com.sandbox.chromium)
+        case "''${2#--file-access=}" in
+          $HOME/Downloads*) echo read-write;;
+          *) echo read-only;;
+        esac;;
+      *)
+        echo hidden;;
+    esac
+  '';
   sandbox = pkgs.callPackage ./sandbox/bwrap.nix { };
   wrap = drv: bins:
     let
@@ -265,6 +278,12 @@ in {
               "~/.config/pulse/"
               "~/.gnupg/"
             ];
+            flatpak = true;
+            # if firefox finds /.flatpak-info it reads configs from this hardcoded path
+            extra-args = ''
+              --ro-bind ${self.firefox}/lib/firefox/mozilla.cfg /app/etc/firefox/mozilla.cfg \
+              --ro-bind ${self.firefox}/lib/firefox/defaults/pref /app/etc/firefox/defaults/pref \
+            '';
           } [ withFonts withOpengl (withHomeManager "firefox") ])
         ];
         ungoogled-chromium = wrap self.ungoogled-chromium [
@@ -307,6 +326,7 @@ in {
               "talk=org.freedesktop.secrets"
               "talk=org.kde.kwalletd5"
               "talk=org.kde.kwalletd6"
+              "talk=org.freedesktop.PowerManagement"
               "own='org.mpris.MediaPlayer2.chromium.*'"
             ];
             ro-whitelist = [ "~/.config/gtk-3.0/" "~/.config/kdeglobals" ];
@@ -317,6 +337,7 @@ in {
               "~/.cache/fontconfig/"
               "~/.config/pulse/"
             ];
+            flatpak = true;
           } [ withFonts withOpengl ])
         ];
         qtox = wrap self.qtox [
@@ -346,6 +367,7 @@ in {
               "talk=org.kde.StatusNotifierWatcher"
               "talk=org.freedesktop.Notifications"
               "talk=org.a11y.Bus"
+              "talk=org.kde.KWin"
             ];
             ro-whitelist = [ "~/.config/kdeglobals" ];
             whitelist = [ "~/.config/tox/" "~/.cache/Tox/" "~/.config/pulse/" ];
@@ -721,29 +743,32 @@ in {
     })
   ];
 
-  environment.etc = let
-    home-files = lib.mapAttrsToList (_name: value: value.home-files)
-      config.home-manager.users;
-    home-paths = lib.mapAttrsToList (_name: value: value.home.path)
-      config.home-manager.users;
-    home-deps-drv = paths:
-      let
-        drv =
-          pkgs.runCommand "home-files" { disallowedReferences = home-files; }
-          (lib.concatMapStrings (files:
-            lib.concatMapStrings (path: ''
-              [ -d ${files}/${path} ] && find ${files}/${path} -type l | xargs -r readlink -f >> $out
-            '') paths) home-files);
-      in pkgs.closureInfo { rootPaths = [ drv ]; };
-  in {
-    "sandbox/common".text = ''
-      ${lib.concatStringsSep "\n" home-files}
-      ${lib.concatStringsSep "\n" home-paths}
-    '';
-    "sandbox/mpv".source = "${home-deps-drv [ ".config/mpv" ]}/store-paths";
-    "sandbox/firefox".source = "${home-deps-drv [ ".mozilla" ]}/store-paths";
-    "sandbox/toxic".source = "${home-deps-drv [ ".config/tox" ]}/store-paths";
-    "sandbox/feh".source = "${home-deps-drv [ ".config/feh" ]}/store-paths";
+  environment = {
+    systemPackages = [ flatpakFileAccess ];
+    etc = let
+      home-files = lib.mapAttrsToList (_name: value: value.home-files)
+        config.home-manager.users;
+      home-paths = lib.mapAttrsToList (_name: value: value.home.path)
+        config.home-manager.users;
+      home-deps-drv = paths:
+        let
+          drv =
+            pkgs.runCommand "home-files" { disallowedReferences = home-files; }
+            (lib.concatMapStrings (files:
+              lib.concatMapStrings (path: ''
+                [ -d ${files}/${path} ] && find ${files}/${path} -type l | xargs -r readlink -f >> $out
+              '') paths) home-files);
+        in pkgs.closureInfo { rootPaths = [ drv ]; };
+    in {
+      "sandbox/common".text = ''
+        ${lib.concatStringsSep "\n" home-files}
+        ${lib.concatStringsSep "\n" home-paths}
+      '';
+      "sandbox/mpv".source = "${home-deps-drv [ ".config/mpv" ]}/store-paths";
+      "sandbox/firefox".source = "${home-deps-drv [ ".mozilla" ]}/store-paths";
+      "sandbox/toxic".source = "${home-deps-drv [ ".config/tox" ]}/store-paths";
+      "sandbox/feh".source = "${home-deps-drv [ ".config/feh" ]}/store-paths";
+    };
   };
 
   system.activationScripts.installInitScript = let

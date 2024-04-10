@@ -1,5 +1,5 @@
 { bubblewrap, gnused, callPackage, lib, writeShellScriptBin, closureInfo
-, xdg-dbus-proxy }:
+, xdg-dbus-proxy, writeText, system }:
 
 drv:
 
@@ -11,7 +11,7 @@ drv:
 , extra-deps ? [ ], runtime-deps ? [ ], opengl ? false, opengl32 ? false
 , bin-sh ? false, localtime ? false, resolv-conf ? false, ro-media ? false
 , media ? false, disable-userns ? true, dbus ? [ ], system-dbus ? [ ]
-, seccomp ? [
+, flatpak ? false, extra-args ? "", seccomp ? [
   "_sysctl"
   "acct"
   "add_key"
@@ -63,6 +63,22 @@ assert !(ro-media && media);
 let
   sandbox-seccomp = callPackage ./seccomp.nix { } seccomp;
   cinfo = closureInfo { rootPaths = [ drv ] ++ extra-deps; };
+  flatpakArchitectures = {
+    "x86_64-linux" = "x86_64";
+    "aarch64-linux" = "aarch64";
+    "i686-linux" = "i386";
+  };
+  sharedNamespaces = (lib.optional (!unshare-net) "network")
+    ++ (lib.optional (!unshare-ipc) "ipc");
+  flatpak-info = writeText "flatpak-info" (lib.generators.toINI { } {
+    Application = {
+      name = "com.sandbox.${target-name}";
+      runtime = "runtime/com.nixpak.Platform/${
+          flatpakArchitectures.${system} or "unknown-arch-${system}"
+        }/1";
+    };
+    Context.shared = "${lib.concatStringsSep ";" sharedNamespaces};";
+  });
 in writeShellScriptBin target-name ''
   set -euETo pipefail
   shopt -s inherit_errexit
@@ -152,17 +168,32 @@ in writeShellScriptBin target-name ''
 
   ${lib.optionalString (dbus != [ ]) ''
     SANDBOX_BUS="$XDG_RUNTIME_DIR/sandbox-bus-$$"
-    ${xdg-dbus-proxy}/bin/xdg-dbus-proxy --fd=3 3>"$FIFO_TMP" "$DBUS_SESSION_BUS_ADDRESS" "$SANDBOX_BUS" ${
-      lib.concatMapStringsSep " " (x: "--${x}") dbus
-    } --filter &
+    ${bubblewrap}/bin/bwrap \
+      --ro-bind /nix/store /nix/store \
+      --bind "$XDG_RUNTIME_DIR" "$XDG_RUNTIME_DIR" \
+      --bind "$FIFO_TMP" "$FIFO_TMP" \
+      ${lib.optionalString flatpak "--ro-bind ${flatpak-info} /.flatpak-info"} \
+      --new-session \
+      --die-with-parent \
+        ${xdg-dbus-proxy}/bin/xdg-dbus-proxy --fd=3 3>"$FIFO_TMP" "$DBUS_SESSION_BUS_ADDRESS" "$SANDBOX_BUS" ${
+          lib.concatMapStringsSep " " (x: "--${x}") dbus
+        } --filter &
     head -c 1 <&3 > /dev/null
   ''}
 
   ${lib.optionalString (system-dbus != [ ]) ''
     SANDBOX_SYSTEM_BUS="$XDG_RUNTIME_DIR/sandbox-system-bus-$$"
-    ${xdg-dbus-proxy}/bin/xdg-dbus-proxy --fd=3 3>"$FIFO_TMP" unix:path=/run/dbus/system_bus_socket "$SANDBOX_SYSTEM_BUS" ${
-      lib.concatMapStringsSep " " (x: "--${x}") dbus
-    } --filter &
+    ${bubblewrap}/bin/bwrap \
+      --ro-bind /nix/store /nix/store \
+      --bind "$XDG_RUNTIME_DIR" "$XDG_RUNTIME_DIR" \
+      --bind /run/dbus/system_bus_socket /run/dbus/system_bus_socket \
+      --bind "$FIFO_TMP" "$FIFO_TMP" \
+      ${lib.optionalString flatpak "--ro-bind ${flatpak-info} /.flatpak-info"} \
+      --new-session \
+      --die-with-parent \
+        ${xdg-dbus-proxy}/bin/xdg-dbus-proxy --fd=3 3>"$FIFO_TMP" unix:path=/run/dbus/system_bus_socket "$SANDBOX_SYSTEM_BUS" ${
+          lib.concatMapStringsSep " " (x: "--${x}") dbus
+        } --filter &
     head -c 1 <&3 > /dev/null
   ''}
 
@@ -270,6 +301,14 @@ in writeShellScriptBin target-name ''
          lib.optionalString (system-dbus != [ ])
          ''--bind "$SANDBOX_SYSTEM_BUS" /run/dbus/system_bus_socket''
        } \
+       ${
+         lib.optionalString flatpak ''
+           --bind "$XDG_RUNTIME_DIR/doc" "$XDG_RUNTIME_DIR/doc" \
+           --ro-bind ${flatpak-info} /.flatpak-info \
+           --ro-bind ${flatpak-info} "$XDG_RUNTIME_DIR"/flatpak-info \
+         ''
+       } \
+       ${extra-args} \
        ${
          lib.optionalString (seccomp != [ ])
          "--seccomp 3 3< ${sandbox-seccomp}/seccomp.bpf"
