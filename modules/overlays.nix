@@ -86,8 +86,8 @@
         ];
       });
     })
-    # TODO: included in plasma 6.1
     (_self: super: {
+      # included in plasma 6.1
       kdePackages = super.kdePackages.overrideScope (_kde-self: kde-super: {
         kwin = kde-super.kwin.overrideAttrs (old: {
           patches = old.patches ++ [
@@ -96,6 +96,12 @@
                 "https://invent.kde.org/plasma/kwin/-/commit/4d6f6223bcdbb0e5fbe65cff47c72d444b532372.patch";
               sha256 = "sha256-0SsRTPLztz3S+6FE09oOurovIaAsp3/JRwNsIwpZAvM=";
             })
+          ];
+        });
+        # https://bugs.kde.org/show_bug.cgi?id=484682
+        kglobalacceld = kde-super.kglobalacceld.overrideAttrs (old: {
+          patches = old.patches ++ [
+            ./keys.patch
           ];
         });
       });
