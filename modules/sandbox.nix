@@ -654,6 +654,9 @@ in {
             localtime = true;
             pams = [ "pulse" "pipewire-0" ];
             unsetenvs = [ "MAIL" "SHELL" ];
+            # it finds launched instances through /tmp
+            # in case it can't find them it asks to recover documents
+            shared-tmp = true;
             media = true;
             dbus = [
               "talk='org.gtk.vfs.*'"
