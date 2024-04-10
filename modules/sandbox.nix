@@ -261,7 +261,10 @@ in {
               "talk=org.kde.kdeconnect"
               "talk=org.kde.KWin"
               "talk=org.gtk.Settings"
+              "talk=org.freedesktop.PowerManagement"
+              "talk=org.freedesktop.ScreenSaver"
               "own=org.kde.plasma.browser_integration"
+              "own=org.mpris.MediaPlayer2.plasma-browser-integration"
               "own='org.mpris.MediaPlayer2.firefox.*'"
               "own='org.mozilla.firefox.*'"
             ];
