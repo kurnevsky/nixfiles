@@ -360,6 +360,7 @@
   gtk.iconCache.enable = true;
 
   services = {
+    envfs.enable = true;
     dbus.implementation = "broker";
     avahi = {
       enable = true;
