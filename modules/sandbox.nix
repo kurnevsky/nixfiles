@@ -573,22 +573,23 @@ in {
           }))
         ];
         zathura = wrap self.zathura [
-          (let config = (viewer-cfg "zathura");
-          in config // {
-            whitelist = config.whitelist
+          (let cfg = (viewer-cfg "zathura");
+          in cfg // {
+            whitelist = cfg.whitelist
               ++ [ "~/.local/share/zathura/" "~/Print/" ];
           })
         ];
         kdePackages.okular = wrap self.kdePackages.okular [
-          (let config = withOpengl (viewer-cfg "okular");
-          in config // {
+          (let cfg = withOpengl (viewer-cfg "okular");
+          in cfg // {
             extra-deps = with pkgs;
-              config.extra-deps ++ [
+              cfg.extra-deps ++ [
                 gnome-themes-extra
                 gnome.adwaita-icon-theme
                 hicolor-icon-theme
                 plasma-integration
                 kdePackages.breeze
+                config.i18n.glibcLocales
               ];
             devs = [ "dri" ];
             syses = [
@@ -603,10 +604,10 @@ in {
               "talk=org.freedesktop.portal.Desktop"
               "own=org.kde.okular-2"
             ];
-            whitelist = config.whitelist ++ [
+            whitelist = cfg.whitelist ++ [
               "~/.local/share/okular/"
-              "~/.config/okularrc"
-              "~/.config/okularpartrc"
+              # It stores lockfiles there: `okularpartrc.lock` and `okularrc.lock`
+              "~/.config/"
               "~/Print/"
             ];
           })
