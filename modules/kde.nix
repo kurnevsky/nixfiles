@@ -93,11 +93,14 @@
         ${pkgs.findutils}/bin/xargs -0 notify-send 'google'
     '';
   in with pkgs;
+  with kdePackages;
+  with sandboxed;
   with kdePackages; [
     ark
     kcalc
     krfb
     krdc
+    okular
     # TODO: broken
     # kamoso
     wl-clipboard

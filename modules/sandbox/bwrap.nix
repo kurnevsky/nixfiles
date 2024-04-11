@@ -192,7 +192,7 @@ in writeShellScriptBin target-name ''
       --new-session \
       --die-with-parent \
         ${xdg-dbus-proxy}/bin/xdg-dbus-proxy --fd=3 3>"$FIFO_TMP" unix:path=/run/dbus/system_bus_socket "$SANDBOX_SYSTEM_BUS" ${
-          lib.concatMapStringsSep " " (x: "--${x}") dbus
+          lib.concatMapStringsSep " " (x: "--${x}") system-dbus
         } --filter &
     head -c 1 <&3 > /dev/null
   ''}
@@ -311,7 +311,7 @@ in writeShellScriptBin target-name ''
        ${extra-args} \
        ${
          lib.optionalString (seccomp != [ ])
-         "--seccomp 3 3< ${sandbox-seccomp}/seccomp.bpf"
+         "--seccomp 5 5< ${sandbox-seccomp}/seccomp.bpf"
        } \
        \
        ${drv}/bin/${name} ${lib.concatStringsSep " " args} "$@"

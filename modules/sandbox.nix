@@ -25,6 +25,7 @@ let
         };
     in withOverrides (lib.addMetaAttrs {
       sandboxed-bins = map (bin: bin.target-name or bin.name) bins;
+      priority = -5;
     } (pkgs.symlinkJoin {
       name = drv.name + "-sandboxed";
       paths = map (sandbox drv) bins ++ [ drv ];
@@ -55,6 +56,10 @@ let
       extra-deps = (attrs.extra-deps or [ ])
         ++ config.fonts.fontconfig.confPackages;
       etcs = (attrs.etcs or [ ]) ++ [ "fonts" ];
+      whitelist = if builtins.elem "~/" attrs.whitelist or [ ] then
+        attrs.whitelist
+      else
+        (attrs.whitelist or [ ]) ++ [ "~/.cache/fontconfig" ];
     };
   withOpengl = attrs:
     attrs // {
@@ -127,6 +132,7 @@ in {
               gnome.adwaita-icon-theme
               hicolor-icon-theme
               plasma-integration
+              kdePackages.breeze
             ];
             pams = [ "pulse" "pipewire-0" ];
             etcs = [ "pulse" ];
@@ -229,6 +235,7 @@ in {
               hicolor-icon-theme
               plasma-integration
               kde-gtk-config
+              kdePackages.breeze
             ];
             devs = [ "dri" ];
             camera = true;
@@ -298,6 +305,7 @@ in {
               hicolor-icon-theme
               plasma-integration
               kde-gtk-config
+              kdePackages.breeze
             ];
             devs = [ "dri" ];
             camera = true;
@@ -351,6 +359,7 @@ in {
               gnome.adwaita-icon-theme
               hicolor-icon-theme
               plasma-integration
+              kdePackages.breeze
             ];
             devs = [ "dri" ];
             camera = true;
@@ -400,6 +409,7 @@ in {
               gnome.adwaita-icon-theme
               hicolor-icon-theme
               plasma-integration
+              kdePackages.breeze
             ];
             graphics = true;
             pams = [ "pulse" "pipewire-0" ];
@@ -441,6 +451,7 @@ in {
               gnome.adwaita-icon-theme
               hicolor-icon-theme
               plasma-integration
+              kdePackages.breeze
             ];
             devs = [ "dri" ];
             camera = true;
@@ -477,6 +488,7 @@ in {
               gnome.adwaita-icon-theme
               hicolor-icon-theme
               plasma-integration
+              kdePackages.breeze
             ];
             devs = [
               "dri"
@@ -515,6 +527,7 @@ in {
               gnome.adwaita-icon-theme
               hicolor-icon-theme
               plasma-integration
+              kdePackages.breeze
             ];
             devs = [ "dri" ];
             syses = [
@@ -532,6 +545,7 @@ in {
             system-dbus =
               [ "talk=org.freedesktop.login1" "talk=org.freedesktop.UPower" ];
             dbus = [
+              "talk=org.freedesktop.portal.Desktop"
               "talk=org.kde.StatusNotifierWatcher"
               "talk=org.freedesktop.Notifications"
               "talk=org.freedesktop.PowerManagement"
@@ -559,8 +573,42 @@ in {
           }))
         ];
         zathura = wrap self.zathura [
-          ((viewer-cfg "zathura") // {
-            whitelist = [ "~/.local/share/zathura/" "~/Print/" ];
+          (let config = (viewer-cfg "zathura");
+          in config // {
+            whitelist = config.whitelist
+              ++ [ "~/.local/share/zathura/" "~/Print/" ];
+          })
+        ];
+        kdePackages.okular = wrap self.kdePackages.okular [
+          (let config = withOpengl (viewer-cfg "okular");
+          in config // {
+            extra-deps = with pkgs;
+              config.extra-deps ++ [
+                gnome-themes-extra
+                gnome.adwaita-icon-theme
+                hicolor-icon-theme
+                plasma-integration
+                kdePackages.breeze
+              ];
+            devs = [ "dri" ];
+            syses = [
+              # Necessary for hardware acceleration
+              "dev"
+              "devices"
+            ];
+            dbus = [
+              "talk=org.kde.ActivityManager"
+              "talk=org.kde.kdeconnect"
+              "talk=org.a11y.Bus"
+              "talk=org.freedesktop.portal.Desktop"
+              "own=org.kde.okular-2"
+            ];
+            whitelist = config.whitelist ++ [
+              "~/.local/share/okular/"
+              "~/.config/okularrc"
+              "~/.config/okularpartrc"
+              "~/Print/"
+            ];
           })
         ];
         ffmpeg-full = wrap self.ffmpeg-full [
@@ -747,6 +795,7 @@ in {
               gnome-themes-extra
               gnome.adwaita-icon-theme
               hicolor-icon-theme
+              kdePackages.breeze
             ];
             resolv-conf = true;
             graphics = true;
