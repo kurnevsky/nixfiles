@@ -388,7 +388,7 @@ in {
         toxic = wrap self.toxic [
           (withHomeManager "toxic" {
             name = "toxic";
-            extra-deps = with pkgs; [ glibcLocales ];
+            extra-deps = with pkgs; [ config.i18n.glibcLocales ];
             devs = [ "dri" ];
             camera = true;
             graphics = true;
@@ -528,6 +528,7 @@ in {
               hicolor-icon-theme
               plasma-integration
               kdePackages.breeze
+              config.i18n.glibcLocales
             ];
             devs = [ "dri" ];
             syses = [
@@ -575,6 +576,8 @@ in {
         zathura = wrap self.zathura [
           (let cfg = (viewer-cfg "zathura");
           in cfg // {
+            extra-deps = with pkgs;
+              cfg.extra-deps ++ [ config.i18n.glibcLocales ];
             whitelist = cfg.whitelist
               ++ [ "~/.local/share/zathura/" "~/Print/" ];
           })
