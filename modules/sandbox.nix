@@ -236,6 +236,7 @@ in {
               plasma-integration
               kde-gtk-config
               kdePackages.breeze
+              config.i18n.glibcLocales
             ];
             devs = [ "dri" ];
             camera = true;
