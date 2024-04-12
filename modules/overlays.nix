@@ -99,11 +99,8 @@
           ];
         });
         # https://bugs.kde.org/show_bug.cgi?id=484682
-        kglobalacceld = kde-super.kglobalacceld.overrideAttrs (old: {
-          patches = old.patches ++ [
-            ./keys.patch
-          ];
-        });
+        kglobalacceld = kde-super.kglobalacceld.overrideAttrs
+          (old: { patches = old.patches or [ ] ++ [ ./keys.patch ]; });
       });
     })
   ];

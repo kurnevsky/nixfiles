@@ -6,48 +6,19 @@
     # TLP is used instead.
     power-profiles-daemon.enable = false;
     desktopManager.plasma6.enable = true;
-    xserver = {
-      enable = true;
-      displayManager = {
-        defaultSession = "plasma";
-        sddm = {
+    displayManager = {
+      defaultSession = "plasma";
+      sddm = {
+        enable = true;
+        wayland = {
           enable = true;
-          wayland = {
-            enable = true;
-            compositorCommand =
-              "${pkgs.kwin}/bin/kwin_wayland --no-global-shortcuts --no-lockscreen --locale1";
-          };
-          autoNumlock = true;
-          settings = {
-            Users.HideUsers = "ww";
-            # kwin compositor
-            General = {
-              GreeterEnvironment =
-                "QT_PLUGIN_PATH=${pkgs.kdePackages.layer-shell-qt}/${pkgs.kdePackages.qtbase.qtPluginPrefix},QT_WAYLAND_SHELL_INTEGRATION=layer-shell";
-              InputMethod = "";
-            };
-          };
+          compositor = "kwin";
         };
+        autoNumlock = true;
+        settings.Users.HideUsers = "ww";
       };
     };
   };
-
-  # kwin compositor
-  nixpkgs.overlays = [
-    (_self: super: {
-      libsForQt5 = super.libsForQt5.overrideScope (_qt5self: qt5super: {
-        sddm = qt5super.sddm.overrideAttrs (old: {
-          patces = (old.patches or [ ]) ++ [
-            (pkgs.fetchpatch {
-              url =
-                "https://github.com/sddm/sddm/commit/1a78805be83449b1b9c354157320f7730fcc9f36.diff";
-              sha256 = "sha256-JNsVTJNZV6T+SPqPkaFf3wg8NDqXGx8NZ4qQfZWOli4=";
-            })
-          ];
-        });
-      });
-    })
-  ];
 
   environment.systemPackages = let
     command-desktop = name: command:
