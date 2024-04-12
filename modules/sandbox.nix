@@ -453,6 +453,7 @@ in {
               hicolor-icon-theme
               plasma-integration
               kdePackages.breeze
+              config.i18n.glibcLocales
             ];
             devs = [ "dri" ];
             camera = true;
@@ -512,9 +513,13 @@ in {
             unsetenvs = [ "MAIL" "SHELL" ];
             unshare-net = false;
             disable-userns = false;
+            system-dbus = [ "talk=org.freedesktop.login1" ];
             dbus = [
               "talk=org.kde.StatusNotifierWatcher"
               "talk=org.freedesktop.ScreenSaver"
+              "talk=org.freedesktop.secrets"
+              "talk=org.gtk.Settings"
+              "talk=org.freedesktop.portal.Desktop"
             ];
             ro-whitelist = [ "~/.config/gtk-3.0/" ];
             whitelist = [ "~/.config/Element/" "~/.config/pulse/" ];
