@@ -314,8 +314,6 @@
       EMAIL = "kurnevsky@gmail.com";
       ALTERNATE_EDITOR = "nano";
       VIEWER = "less";
-      # It causes segfaults
-      MAGICK_OCL_DEVICE = "OFF";
     };
 
     sessionVariables = {
