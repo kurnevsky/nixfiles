@@ -78,6 +78,7 @@
         languagetool
         lapce
         libreoffice-fresh
+        mc
         pavucontrol
         qbittorrent
         qemu

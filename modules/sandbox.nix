@@ -575,7 +575,7 @@ in {
           }))
         ];
         zathura = wrap self.zathura [
-          (let cfg = (viewer-cfg "zathura");
+          (let cfg = viewer-cfg "zathura";
           in cfg // {
             extra-deps = with pkgs;
               cfg.extra-deps ++ [ config.i18n.glibcLocales ];
@@ -810,10 +810,10 @@ in {
             whitelist = [ "~/.claws-mail/" ];
           })
         ];
-        mc = self.mc.override {
+        mc = lib.setPrio (-5) (self.mc.override {
           zip = self.sandboxed.zip.override { enableNLS = true; };
           unzip = self.sandboxed.unzip.override { enableNLS = true; };
-        };
+        });
       };
     })
   ];
