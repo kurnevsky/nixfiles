@@ -11,7 +11,7 @@ drv:
 , extra-deps ? [ ], runtime-deps ? [ ], opengl ? false, opengl32 ? false
 , bin-sh ? false, localtime ? false, resolv-conf ? false, ro-media ? false
 , media ? false, disable-userns ? true, dbus ? [ ], system-dbus ? [ ]
-, flatpak ? false, extra-args ? "", seccomp ? [
+, flatpak ? false, seccomp ? [
   "_sysctl"
   "acct"
   "add_key"
@@ -79,6 +79,8 @@ let
     };
     Context.shared = "${lib.concatStringsSep ";" sharedNamespaces};";
   });
+  bindFrom = x: if builtins.isAttrs x then x.from else x;
+  bindTo = x: if builtins.isAttrs x then x.to else x;
 in writeShellScriptBin target-name ''
   set -euETo pipefail
   shopt -s inherit_errexit
@@ -89,8 +91,10 @@ in writeShellScriptBin target-name ''
     exec ${drv}/bin/${name} "$@"
   fi
 
-  ${lib.concatMapStringsSep "\n" (x: "test ! -e ${x} && mkdir -p ${x}")
-  (lib.filter (s: builtins.match ".*/" s != null) (ro-whitelist ++ whitelist))}
+  ${lib.concatMapStringsSep "\n"
+  (x: "test ! -e ${bindFrom x} && mkdir -p ${bindFrom x}")
+  (lib.filter (x: builtins.match ".*/" (bindFrom x) != null)
+    (ro-whitelist ++ whitelist))}
 
   ${lib.optionalString unshare-net ''
     mapfile -t unshare_net < <(
@@ -261,8 +265,14 @@ in writeShellScriptBin target-name ''
          ''--bind-try /run/media/"$(whoami)" /run/media/"$(whoami)"''
        } \
        \
-       ${lib.concatMapStringsSep " " (x: "--ro-bind ${x} ${x}") ro-whitelist} \
-       ${lib.concatMapStringsSep " " (x: "--bind ${x} ${x}") whitelist} \
+       ${
+         lib.concatMapStringsSep " " (x: "--ro-bind ${bindFrom x} ${bindTo x}")
+         ro-whitelist
+       } \
+       ${
+         lib.concatMapStringsSep " " (x: "--bind ${bindFrom x} ${bindTo x}")
+         whitelist
+       } \
        ${lib.concatMapStringsSep " " (x: "--tmpfs ${x}") blacklist} \
        \
        ${lib.optionalString graphics ''"''${xauthority[@]}"''} \
@@ -308,7 +318,6 @@ in writeShellScriptBin target-name ''
            --ro-bind ${flatpak-info} "$XDG_RUNTIME_DIR"/flatpak-info \
          ''
        } \
-       ${extra-args} \
        ${
          lib.optionalString (seccomp != [ ])
          "--seccomp 5 5< ${sandbox-seccomp}/seccomp.bpf"

@@ -280,6 +280,15 @@ in {
               "~/.password-store/"
               "~/.config/gtk-3.0/"
               "~/.config/kdeglobals"
+              # if firefox finds /.flatpak-info it reads configs from this hardcoded path
+              {
+                from = "${self.firefox}/lib/firefox/mozilla.cfg";
+                to = "/app/etc/firefox/mozilla.cfg";
+              }
+              {
+                from = "${self.firefox}/lib/firefox/defaults/pref";
+                to = "/app/etc/firefox/defaults/pref";
+              }
             ];
             whitelist = [
               "~/.mozilla/"
@@ -290,11 +299,6 @@ in {
               "~/.gnupg/"
             ];
             flatpak = true;
-            # if firefox finds /.flatpak-info it reads configs from this hardcoded path
-            extra-args = ''
-              --ro-bind ${self.firefox}/lib/firefox/mozilla.cfg /app/etc/firefox/mozilla.cfg \
-              --ro-bind ${self.firefox}/lib/firefox/defaults/pref /app/etc/firefox/defaults/pref \
-            '';
           } [ withFonts withOpengl (withHomeManager "firefox") ])
         ];
         ungoogled-chromium = wrap self.ungoogled-chromium [
