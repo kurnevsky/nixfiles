@@ -313,7 +313,7 @@
     variables = {
       EMAIL = "kurnevsky@gmail.com";
       ALTERNATE_EDITOR = "nano";
-      VIEWER = "bat";
+      VIEWER = "less";
     };
 
     sessionVariables = {
