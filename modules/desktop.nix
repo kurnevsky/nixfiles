@@ -84,7 +84,7 @@
         qemu
         radare2
         tesseract
-        texlive.combined.scheme-basic
+        texlive.combined.scheme-medium
         tigervnc
         ubpm
         wineWowPackages.stagingFull
