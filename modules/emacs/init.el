@@ -1029,6 +1029,8 @@ which LANG was detected but these are ignored."
           ("C-w" . last-edit))
   :init
   (setq undo-tree-map (make-sparse-keymap))
+  :custom
+  (undo-tree-auto-save-history nil)
   :config
   (global-undo-tree-mode)
   (advice-add #'undo-tree-overridden-undo-bindings-p :override (lambda ()))
