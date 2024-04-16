@@ -421,6 +421,11 @@ ARGS is `kill-buffer' arguments."
   :config
   (electric-pair-mode 1))
 
+(use-package puni
+  :bind (("<delete>" . puni-backward-delete-char)
+          ("C-M-<up>" . puni-beginning-of-sexp)
+          ("C-M-<down>" . puni-end-of-sexp)))
+
 (use-package hl-line
   :ensure nil
   :demand t
