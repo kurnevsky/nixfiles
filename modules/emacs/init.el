@@ -415,25 +415,11 @@ ARGS is `kill-buffer' arguments."
   :config
   (show-paren-mode t))
 
-(use-package smartparens
-  :hook (prog-mode . smartparens-mode)
-  :custom
-  (sp-highlight-pair-overlay nil)
-  (sp-wrap-repeat-last 0)
-  (sp-wrap-respect-direction t)
+(use-package elec-pair
+  :ensure nil
+  :demand t
   :config
-  (require 'smartparens-config)
-  (defun indent-between-pair (&rest _ignored)
-    "Open a new brace or bracket expression, with relevant newlines and indent."
-    ;; Need to check last operation to prevent newline insertion when switching
-    ;; buffers and pressing RET.
-    (when (eq sp-last-operation 'sp-self-insert)
-      (newline)
-      (indent-according-to-mode)
-      (forward-line -1)
-      (indent-according-to-mode)))
-  (dolist (paren '("{" "[" "("))
-    (sp-local-pair 'prog-mode paren nil :post-handlers '((indent-between-pair "RET")))))
+  (electric-pair-mode 1))
 
 (use-package hl-line
   :ensure nil
