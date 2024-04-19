@@ -422,7 +422,7 @@ ARGS is `kill-buffer' arguments."
   (electric-pair-mode 1))
 
 (use-package puni
-  :bind (("<delete>" . puni-backward-delete-char)
+  :bind (("<delete>" . puni-forward-delete-char)
           ("C-M-<up>" . puni-beginning-of-sexp)
           ("C-M-<down>" . puni-end-of-sexp)))
 
