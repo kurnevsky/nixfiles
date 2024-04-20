@@ -67,10 +67,7 @@
           baseUrl =
             "https://raw.githubusercontent.com/Layerex/telegram-desktop-patches/2457ef3a2d3ff94dfa4b0a73ea4c51bad4b3f14b/";
         in (old.patches or [ ]) ++ [
-          (super.fetchpatch {
-            url = baseUrl + "0001-Disable-sponsored-messages.patch";
-            sha256 = "sha256-o2Wxyag6hpEDgGm8FU4vs6aCpL9aekazKiNeZPLI9po=";
-          })
+          ./telegram/disable-sponsored-messages.patch
           (super.fetchpatch {
             url = baseUrl + "0002-Disable-saving-restrictions.patch";
             sha256 = "sha256-sQsyXlvhXSvouPgzYSiRB8ieICo3GDXWH5MaZtBjtqw=";

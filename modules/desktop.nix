@@ -63,7 +63,8 @@
         (python311Packages.callPackage ./openhrv.nix { })
         anki
         blender
-        calibre
+        # TODO: broken
+        # calibre
         claws-mail
         cloud-mdir-sync
         dosbox
