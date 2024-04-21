@@ -5,7 +5,7 @@ let
     [[ "$1" == "info" ]] || exit 1
     echo "$3 attempts to access $2" >> /tmp/.document-portal-log
     case "$3" in
-      com.sandbox.firefox|com.sandbox.chromium)
+      com.sandbox.firefox|com.sandbox.chromium|com.sandbox.tor-browser)
         case "''${2#--file-access=}" in
           $HOME/Downloads*) echo read-write;;
           *) echo read-only;;
@@ -763,13 +763,57 @@ in {
             ];
           } [ withFonts withOpengl ])
         ];
-        tor-browser-bundle-bin = wrap self.tor-browser-bundle-bin [{
-          name = "tor-browser";
-          graphics = true;
-          unsetenvs = [ "MAIL" "SHELL" ];
-          unshare-net = false;
-          whitelist = [ "~/.tor\\ project/" "~/Downloads/" ];
-        }];
+        tor-browser-bundle-bin = wrap self.tor-browser-bundle-bin [
+          (withOpengl {
+            name = "tor-browser";
+            extra-deps = with pkgs; [
+              gnome-themes-extra
+              gnome.adwaita-icon-theme
+              hicolor-icon-theme
+              plasma-integration
+              kde-gtk-config
+              kdePackages.breeze
+              config.i18n.glibcLocales
+            ];
+            devs = [ "dri" ];
+            syses = [
+              # Necessary for hardware acceleration
+              "dev"
+              "devices"
+              "bus"
+            ];
+            pams = [ "gnupg" "pulse" "pipewire-0" ];
+            graphics = true;
+            unsetenvs = [ "MAIL" "SHELL" ];
+            unshare-net = false;
+            dbus = [
+              "talk=org.freedesktop.portal.Documents"
+              "talk=org.freedesktop.portal.Desktop"
+              "talk=org.freedesktop.FileManager1"
+              "talk=org.a11y.Bus"
+              "talk=org.gtk.Settings"
+              "talk=org.freedesktop.PowerManagement"
+              "talk=org.freedesktop.ScreenSaver"
+              "own='org.mpris.MediaPlayer2.firefox.*'"
+              "own='org.mozilla.firefox.*'"
+            ];
+            ro-whitelist = [
+              "~/.config/gtk-3.0/"
+              "~/.config/kdeglobals"
+              # if firefox finds /.flatpak-info it reads configs from this hardcoded path
+              {
+                from = "${self.tor-browser-bundle-bin}/share/tor-browser/mozilla.cfg";
+                to = "/app/etc/firefox/mozilla.cfg";
+              }
+              {
+                from = "${self.tor-browser-bundle-bin}/share/tor-browser/defaults/pref";
+                to = "/app/etc/firefox/defaults/pref";
+              }
+            ];
+            whitelist = [ "~/.tor\\ project/" "~/Downloads/" ];
+            flatpak = true;
+          })
+        ];
         isync = wrap self.isync [{
           name = "mbsync";
           bin-sh = true;

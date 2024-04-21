@@ -174,6 +174,7 @@ in writeShellScriptBin target-name ''
     SANDBOX_BUS="$XDG_RUNTIME_DIR/sandbox-bus-$$"
     ${bubblewrap}/bin/bwrap \
       --ro-bind /nix/store /nix/store \
+      --bind /tmp /tmp \
       --bind "$XDG_RUNTIME_DIR" "$XDG_RUNTIME_DIR" \
       --bind "$FIFO_TMP" "$FIFO_TMP" \
       ${lib.optionalString flatpak "--ro-bind ${flatpak-info} /.flatpak-info"} \
