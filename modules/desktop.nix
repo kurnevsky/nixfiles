@@ -454,6 +454,7 @@
         Socks5Proxy = "127.0.0.1:1080";
         ControlPort = [{ port = 9051; }];
         CookieAuthentication = true;
+        CookieAuthFileGroupReadable = true;
       };
     };
     upower.enable = true;

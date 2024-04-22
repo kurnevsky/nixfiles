@@ -6,8 +6,6 @@ let
   socksPort = 41718;
 in {
   services.tor.settings = {
-    CookieAuthentication = true;
-    CookieAuthFileGroupReadable = true;
     ControlPort = [{
       addr = "${subnet}.1";
       port = controlPort;
