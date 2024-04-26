@@ -7,14 +7,6 @@
       ref = "nixos-unstable";
     };
 
-    # TODO: rocm is broken: https://github.com/NixOS/nixpkgs/pull/299589
-    nixpkgs-rocm = {
-      type = "github";
-      owner = "NixOS";
-      repo = "nixpkgs";
-      ref = "cfd6b5fc90b15709b780a5a1619695a88505a176";
-    };
-
     fenix = {
       type = "github";
       owner = "nix-community";
@@ -84,7 +76,7 @@
       type = "github";
       owner = "ggerganov";
       repo = "llama.cpp";
-      inputs.nixpkgs.follows = "nixpkgs-rocm";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
@@ -102,15 +94,6 @@
       for-all-home-users = import ./modules/for-all-home-users.nix;
       common-home = import ./modules/common-home.nix;
       commonModules = [
-        ({ pkgs, ... }: {
-          nixpkgs.overlays = [
-            (self: super: {
-              rocmPackages = (import inputs.nixpkgs-rocm {
-                inherit (pkgs.stdenv.targetPlatform) system;
-              }).rocmPackages;
-            })
-          ];
-        })
         inputs.base16.nixosModule
         { scheme = "${inputs.tt-schemes}/base24/one-dark.yaml"; }
         inputs.agenix.nixosModules.default
