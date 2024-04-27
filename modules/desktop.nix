@@ -599,13 +599,14 @@
         "pipewire"
         "vboxusers"
         "networkmanager"
+        "tor"
       ];
       ww = {
         uid = 1001;
         isNormalUser = true;
         shell = pkgs.zsh;
         hashedPasswordFile = config.age.secrets.ww.path or "/secrets/ww";
-        extraGroups = [ "video" "pipewire" ];
+        extraGroups = [ "video" "pipewire" "tor" ];
       };
       hans.group = "hans";
     };
