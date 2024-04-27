@@ -6,6 +6,8 @@
 
 ;;; Code:
 
+(setq gc-cons-threshold (* 64 1024 1024))
+
 ;; TODO:
 ;; call-process-region
 ;; call-process

@@ -9,8 +9,15 @@
 ;; ========== Configure Emacs ==========
 
 ;; Speed up the initialization reducing garbage collection runs.
-(setq gc-cons-threshold (* 32 1024 1024))
-(add-hook 'after-init-hook (lambda () (setq gc-cons-threshold (* 4 1024 1024))))
+(defun display-startup-time ()
+  "Set GC threshold and display Emacs startup time."
+  (setq gc-cons-threshold (* 4 1024 1024))
+  (message "Emacs loaded in %s with %d garbage collections."
+    (format "%.2f seconds"
+      (float-time
+        (time-subtract after-init-time before-init-time)))
+    gcs-done))
+(add-hook 'emacs-startup-hook #'display-startup-time)
 ;; Speed up the initialization temporary disabling file-name-handler-alist.
 (defvar file-name-handler-alist-copy file-name-handler-alist)
 (setq file-name-handler-alist nil)
@@ -20,6 +27,8 @@
   (lambda ()
     (unless (frame-focus-state)
       (garbage-collect))))
+;; Don't print startup message.
+(advice-add #'display-startup-echo-area-message :override #'ignore)
 ;; Remove gap in maximized window mode.
 (setq frame-resize-pixelwise t)
 ;; Disable tool bar.

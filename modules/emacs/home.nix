@@ -48,6 +48,18 @@ let
 
     cp ./early-init.elc "$out"
   '';
+  package-quickstart = pkgs.runCommand "emacs-package-quickstart" { } ''
+    ${prepare}
+
+    ${emacsPackage}/bin/emacs -Q \
+      --load ~/.config/emacs/init.el \
+      --batch \
+      -f 'package-quickstart-refresh'
+
+    mkdir -p "$out"
+    cp ./.config/emacs/package-quickstart.el "$out"
+    cp ./.config/emacs/package-quickstart.elc "$out"
+  '';
 in {
   home.file = {
     ".config/emacs/early-init.el".source = ./early-init.el;
@@ -66,5 +78,7 @@ in {
         ln -s ${eln-config} "$dest"
       '';
     };
+    ".config/emacs/package-quickstart.el".source = "${package-quickstart}/package-quickstart.el";
+    ".config/emacs/package-quickstart.elc".source = "${package-quickstart}/package-quickstart.elc";
   };
 }
