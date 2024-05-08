@@ -329,11 +329,14 @@
         iosevka-custom = callPackage ./iosevka.nix { };
         iosevka-term = iosevka-custom "Term" false;
         iosevka-normal = iosevka-custom "Normal" true;
+        iosevka-quasi-proportional = iosevka-custom "Quasi-Proportional" true;
       in [
         iosevka-term
         iosevka-normal
+        iosevka-quasi-proportional
         (callPackage ./nerd-font-patch.nix { } iosevka-term)
         (callPackage ./nerd-font-patch.nix { } iosevka-normal)
+        (callPackage ./nerd-font-patch.nix { } iosevka-quasi-proportional)
         (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
         noto-fonts
         noto-fonts-color-emoji
