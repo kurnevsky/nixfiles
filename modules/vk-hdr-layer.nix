@@ -9,9 +9,9 @@ stdenv.mkDerivation rec {
   src = (fetchFromGitHub {
     owner = "Drakulix";
     repo = "VK_hdr_layer";
-    rev = "869199cd2746e7f69cf19955153080842b6dacfc";
+    rev = "e47dc6da924cd361b0082f5c27fe5e923377bb54";
     fetchSubmodules = true;
-    hash = "sha256-xfVYI+Aajmnf3BTaY2Ysg5fyDO6SwDFGyU0L+F+E3is=";
+    hash = "sha256-wuZdUWMKEM/UCeuZSiNyup2vzo6+KIH9Rpaoc4FARJE=";
   }).overrideAttrs (_: {
     GIT_CONFIG_COUNT = 1;
     GIT_CONFIG_KEY_0 = "url.https://github.com/.insteadOf";
