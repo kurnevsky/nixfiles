@@ -1544,7 +1544,7 @@ identifier and the position respectively."
 
 (use-package llama-cpp
   :custom
-  (llama-cpp-chat-prompt "You are Dolphin, a smart AI assistant.")
+  (llama-cpp-chat-prompt "You are Echo, an advanced AI system.")
   (llama-cpp-port 8081))
 
 (use-package khalel
