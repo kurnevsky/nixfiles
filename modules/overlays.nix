@@ -87,7 +87,7 @@
       # included in plasma 6.1
       kdePackages = super.kdePackages.overrideScope (_kde-self: kde-super: {
         kwin = kde-super.kwin.overrideAttrs (old: {
-          patches = old.patches ++ [
+          patches = old.patches or [ ] ++ [
             (super.fetchpatch {
               url =
                 "https://invent.kde.org/plasma/kwin/-/commit/4d6f6223bcdbb0e5fbe65cff47c72d444b532372.patch";
@@ -95,9 +95,15 @@
             })
           ];
         });
-        # https://bugs.kde.org/show_bug.cgi?id=484682
-        kglobalacceld = kde-super.kglobalacceld.overrideAttrs
-          (old: { patches = old.patches or [ ] ++ [ ./keys.patch ]; });
+        kglobalacceld = kde-super.kglobalacceld.overrideAttrs (old: {
+          patches = old.patches or [ ] ++ [
+            (super.fetchpatch {
+              url =
+                "https://invent.kde.org/plasma/kglobalacceld/-/commit/32cb447cc59950ab6f5be0ebb68defcf31d64902.patch";
+              sha256 = "sha256-VRYEADOzxsBGYpe39DIGxixbzHQCwEKg4n6NacOhCFo=";
+            })
+          ];
+        });
       });
     })
   ];
