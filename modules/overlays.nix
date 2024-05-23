@@ -95,15 +95,6 @@
             })
           ];
         });
-        kglobalacceld = kde-super.kglobalacceld.overrideAttrs (old: {
-          patches = old.patches or [ ] ++ [
-            (super.fetchpatch {
-              url =
-                "https://invent.kde.org/plasma/kglobalacceld/-/commit/32cb447cc59950ab6f5be0ebb68defcf31d64902.patch";
-              sha256 = "sha256-VRYEADOzxsBGYpe39DIGxixbzHQCwEKg4n6NacOhCFo=";
-            })
-          ];
-        });
       });
     })
   ];
