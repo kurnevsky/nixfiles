@@ -14,6 +14,7 @@
           [ super.passff-host super.kdePackages.plasma-browser-integration ];
       };
       mpv = super.mpv.override { scripts = with super.mpvScripts; [ mpris ]; };
+      _7zz = super._7zz.override { enableUnfree = true; };
       p7zip = super.p7zip.override { enableUnfree = true; };
       isync = super.symlinkJoin {
         name = "isync";

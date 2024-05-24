@@ -10,7 +10,13 @@ in {
   boot.kernel.sysctl."net.ipv4.tcp_fastopen" = 3;
 
   nixpkgs.config.allowUnfreePredicate = pkg:
-    builtins.elem (lib.getName pkg) [ "symbola" "unrar" "p7zip" "vagrant" ];
+    builtins.elem (lib.getName pkg) [
+      "symbola"
+      "unrar"
+      "7zz"
+      "p7zip"
+      "vagrant"
+    ];
 
   nix = {
     settings = {
