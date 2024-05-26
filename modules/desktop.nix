@@ -107,6 +107,7 @@
         bind
         bindfs
         binutils
+        bottom
         brightnessctl
         btrfs-progs
         bubblewrap
