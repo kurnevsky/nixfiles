@@ -60,8 +60,7 @@
             obs-backgroundremoval
           ];
         })
-        # TODO: broken
-        # (python311Packages.callPackage ./openhrv.nix { })
+        (python311Packages.callPackage ./openhrv.nix { })
         anki
         blender
         calibre
