@@ -779,7 +779,7 @@
               ublock-origin
               brandon1024-find
               passff
-              i-dont-care-about-cookies
+              istilldontcareaboutcookies
             ];
           };
         };
