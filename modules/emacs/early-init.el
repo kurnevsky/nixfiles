@@ -129,6 +129,9 @@
      ("vterm"
        (pcase command
          (`("/bin/sh" . ,_) t)))
+     ("gptel-curl"
+       (pcase command
+         (`("curl" . ,_) t)))
      ;; Treemacs
      ("Process Future"
        (pcase command

@@ -1545,7 +1545,41 @@ identifier and the position respectively."
 (use-package llama-cpp
   :custom
   (llama-cpp-chat-prompt "You are Echo, an advanced AI system.")
-  (llama-cpp-port 8081))
+  (llama-cpp-port 8081)
+  :config
+  (defun llama-cpp-magit-write-message ()
+    (interactive)
+    (with-temp-buffer
+      (magit-git-insert "diff" "--staged" "-U8")
+      (diff-mode)
+      (llama-cpp-code-region-task
+        (point-min)
+        (point-max)
+        "Write git commit message for the following diff. Your answer should contain only commit message with no additional explanation."))))
+
+(use-package gptel
+  :custom
+  (gptel-model "llama3-70b-8192")
+  (gptel-backend (gptel-make-openai "Groq"
+                   :host "api.groq.com"
+                   :endpoint "/openai/v1/chat/completions"
+                   :stream t
+                   :key (lambda () (nth 1 (auth-source-user-and-password "groq")))
+                   :models '("mixtral-8x7b-32768"
+                              "llama3-70b-8192")))
+  (gptel-directives
+    '((default . "You are Echo, an advanced AI system.")
+       (programming . "Provide code and only code as output without any additional text, prompt or note.")
+       (writing . "You are a writing assistant.")
+       (chat . "You are Echo, an advanced AI system. Respond concisely.")))
+  :config
+  (setq gptel-expert-commands t)
+  (gptel-make-openai "llama-cpp"
+    :stream t
+    :protocol "http"
+    :host "localhost:8081"
+    :models '("llama3-70b-8192"))
+  (add-hook 'gptel-post-response-functions 'gptel-end-of-response))
 
 (use-package khalel
   :commands (khalel-import-events khalel-run-vdirsyncer)
