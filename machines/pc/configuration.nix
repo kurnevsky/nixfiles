@@ -43,6 +43,7 @@
       with pkgs; [
         # TODO: broken
         # torchWithRocm
+        torch
         transformers
         sentencepiece
         sacremoses
