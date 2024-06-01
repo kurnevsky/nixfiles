@@ -66,9 +66,12 @@
       telegram-desktop = super.telegram-desktop.overrideAttrs (old: {
         patches = let
           baseUrl =
-            "https://raw.githubusercontent.com/Layerex/telegram-desktop-patches/2457ef3a2d3ff94dfa4b0a73ea4c51bad4b3f14b/";
+            "https://raw.githubusercontent.com/olodar/telegram-desktop-patches/d3035b4dd1f24168f926a10acca4cd13b26750f1/";
         in (old.patches or [ ]) ++ [
-          ./telegram/disable-sponsored-messages.patch
+          (super.fetchpatch {
+            url = baseUrl + "0001-Disable-sponsored-messages.patch";
+            sha256 = "sha256-aKEDtDj6zoe8VIDNiqm9da6Coi1j4vuvI5tq0aS8+vc=";
+          })
           (super.fetchpatch {
             url = baseUrl + "0002-Disable-saving-restrictions.patch";
             sha256 = "sha256-sQsyXlvhXSvouPgzYSiRB8ieICo3GDXWH5MaZtBjtqw=";
