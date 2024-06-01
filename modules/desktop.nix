@@ -33,6 +33,8 @@
         33445
         # WireGuard
         51871
+        # Yggdrasil multicast
+        17606
       ];
       trustedInterfaces = [ "wg0" "icmp" "dns0" ];
     };
@@ -391,6 +393,12 @@
           "tls://54.37.137.221:11129"
           "tls://pl1.servers.devices.cwinfo.net:11129"
         ];
+        MulticastInterfaces = [{
+          Regex = "(en|wl).*";
+          Beacon = true;
+          Listen = true;
+          Port = 17606;
+        }];
       };
       openMulticastPort = true;
       persistentKeys = true;
