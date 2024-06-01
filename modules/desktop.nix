@@ -33,6 +33,8 @@
         33445
         # WireGuard
         51871
+      ];
+      allowedTCPPorts = [
         # Yggdrasil multicast
         17606
       ];
