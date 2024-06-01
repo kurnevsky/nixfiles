@@ -390,8 +390,6 @@
           "tls://box.paulll.cc:13338"
           "tls://54.37.137.221:11129"
           "tls://pl1.servers.devices.cwinfo.net:11129"
-          "tls://193.111.114.28:1443"
-          "tls://ygg-ukr.incognet.io:8884"
         ];
       };
       openMulticastPort = true;
