@@ -20,7 +20,7 @@ in {
       DynamicUser = true;
       PrivateTmp = true;
       ProtectSystem = "strict";
-      SupplementaryGroups = "secrets";
+      SupplementaryGroups = "secrets-shadowsocks";
     };
     script = ''
       cat ${shadowsocksConfigFile} | ${pkgs.jq}/bin/jq --arg password "$(cat ${
@@ -29,4 +29,6 @@ in {
       exec ${pkgs.shadowsocks-rust}/bin/ssserver --config /tmp/shadowsocks.json
     '';
   };
+
+  users.groups.secrets-shadowsocks = { };
 }

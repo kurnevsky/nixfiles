@@ -34,7 +34,10 @@ in {
       createHome = true;
       isSystemUser = true;
     };
-    groups.motion = { };
+    groups = {
+      motion = { };
+      secrets-motion = { };
+    };
   };
 
   systemd.services.motion = {
@@ -44,7 +47,7 @@ in {
       Type = "simple";
       Restart = "on-failure";
       User = "motion";
-      SupplementaryGroups = "secrets";
+      SupplementaryGroups = "secrets-motion";
       WorkingDirectory = homeDir;
       PrivateTmp = true;
       ProtectSystem = "strict";

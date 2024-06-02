@@ -277,9 +277,14 @@
     };
   };
 
+  systemd.services.tox-node.serviceConfig.SupplementaryGroups = "secrets-tox";
+
   users = {
     users.hans.group = "hans";
-    groups.hans = { };
+    groups = {
+      hans = { };
+      secrets-tox = { };
+    };
   };
 
   age.secrets = {
@@ -298,11 +303,12 @@
     shadowsocks = {
       file = ../../secrets/shadowsocks.age;
       mode = "440";
-      group = "secrets";
+      group = "secrets-shadowsocks";
     };
     tox = {
       file = ../../secrets/tox.age;
-      mode = "444";
+      mode = "440";
+      group = "secrets-tox";
     };
   };
 

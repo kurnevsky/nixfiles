@@ -81,7 +81,7 @@
     motion = {
       file = ../../secrets/motion.age;
       mode = "440";
-      group = "secrets";
+      group = "secrets-motion";
     };
     hans = {
       file = ../../secrets/hans.age;
@@ -96,7 +96,7 @@
     shadowsocks = {
       file = ../../secrets/shadowsocks.age;
       mode = "440";
-      group = "secrets";
+      group = "secrets-shadowsocks";
     };
     wg-private = {
       file = ../../secrets/wg-private-evo.age;
