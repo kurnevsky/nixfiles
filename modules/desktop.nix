@@ -64,6 +64,8 @@
             obs-backgroundremoval
           ];
         })
+        (pkgs.pkgsCross.mingw32.callPackage ./vkd3d-proton.nix { })
+        (pkgs.pkgsCross.mingwW64.callPackage ./vkd3d-proton.nix { })
         (python311Packages.callPackage ./openhrv.nix { })
         anki
         blender
