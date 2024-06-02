@@ -270,7 +270,7 @@
     };
     tox-node = {
       enable = true;
-      keysFile = "/secrets/tox";
+      keysFile = config.age.secrets.tox.path or "/secrets/tox";
       tcpAddresses = [ ];
       lanDiscovery = false;
       motd = "Hi from tox-rs!";
@@ -299,6 +299,10 @@
       file = ../../secrets/shadowsocks.age;
       mode = "440";
       group = "secrets";
+    };
+    tox = {
+      file = ../../secrets/tox.age;
+      mode = "444";
     };
   };
 

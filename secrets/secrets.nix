@@ -1,5 +1,5 @@
 # To edit:
-# EDITOR=nano sudo --preserve-env=EDITOR agenix --identity /etc/ssh/ssh_host_ed25519_key -e file.age
+# agenix --identity /etc/ssh/ssh_host_ed25519_key -e file.age
 
 let
   evo =
@@ -23,6 +23,8 @@ in {
 
   "kurnevsky-digitalocean.age".publicKeys = [ digitalocean ];
   "store-digitalocean.age".publicKeys = [ digitalocean ];
+
+  "tox.age".publicKeys = [ digitalocean ];
 
   "motion.age".publicKeys = desktop;
 
