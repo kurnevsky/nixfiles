@@ -53,8 +53,6 @@
     earlySetup = true;
   };
 
-  time.timeZone = "Europe/Minsk";
-
   environment = {
     systemPackages = with pkgs;
       with sandboxed; [
@@ -379,6 +377,7 @@
       ACTION=="add|change", KERNEL=="sd[a-z]", ATTRS{queue/rotational}=="1", RUN+="${pkgs.hdparm}/bin/hdparm -B 254 /dev/%k"
     '';
     fwupd.enable = true;
+    automatic-timezoned.enable = true;
     pipewire = {
       enable = true;
       systemWide = true;
