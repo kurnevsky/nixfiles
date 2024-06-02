@@ -94,7 +94,7 @@
       }];
     };
     matrix-conduit = {
-      enable = true;
+      enable = false;
       settings.global = {
         database_backend = "rocksdb";
         server_name = "kurnevsky.net";
