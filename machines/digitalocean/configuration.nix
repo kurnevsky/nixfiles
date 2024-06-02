@@ -39,6 +39,8 @@
         33445
         # WireGuard
         51871
+        # Yggdrasil
+        42853
       ];
       trustedInterfaces = [ "wg0" "icmp" "dns0" ];
     };
@@ -259,12 +261,10 @@
       settings = {
         Peers = [
           "tls://45.147.198.155:6010"
-          "tls://94.103.82.150:8080"
-          "tls://ygg-nl.incognet.io:8884"
-          "tls://ygg1.ezdomain.ru:11130"
           "tls://ygg.mkg20001.io:443"
+          "quic://vpn.itrus.su:7993"
         ];
-        Listen = [ "tls://0.0.0.0:42853" ];
+        Listen = [ "tls://0.0.0.0:42853" "quic://0.0.0.0:42853" ];
       };
       persistentKeys = true;
     };
