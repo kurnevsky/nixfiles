@@ -128,7 +128,7 @@ in {
       };
       extraConfig = "PermitTunnel yes";
     };
-    timesyncd.enable = true;
+    ntpd-rs.enable = true;
   };
 
   home-manager = {
