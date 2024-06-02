@@ -32,4 +32,7 @@ in {
 
   "wg-private-evo.age".publicKeys = [ evo ];
   "wg-preshared-evo.age".publicKeys = [ evo digitalocean ];
+
+  "wg-private-pc.age".publicKeys = [ pc ];
+  "wg-preshared-pc.age".publicKeys = [ pc digitalocean ];
 }

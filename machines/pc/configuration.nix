@@ -116,6 +116,16 @@
       mode = "440";
       group = "secrets";
     };
+    wg-private = {
+      file = ../../secrets/wg-private-pc.age;
+      owner = "systemd-network";
+      group = "systemd-network";
+    };
+    wg-preshared = {
+      file = ../../secrets/wg-preshared-pc.age;
+      owner = "systemd-network";
+      group = "systemd-network";
+    };
   };
 
   system.stateVersion = "22.11";
