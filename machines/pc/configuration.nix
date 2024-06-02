@@ -85,13 +85,6 @@
     };
   };
 
-  security.pam.services = {
-    sshd.fprintAuth = false;
-    # KDE and SDDM don't support it properly at the moment.
-    sddm.fprintAuth = false;
-    kde.fprintAuth = false;
-  };
-
   age.secrets = {
     kurnevsky.file = ../../secrets/kurnevsky-pc.age;
     ww.file = ../../secrets/ww-pc.age;
