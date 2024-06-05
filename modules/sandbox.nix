@@ -802,11 +802,13 @@ in {
               "~/.config/kdeglobals"
               # if firefox finds /.flatpak-info it reads configs from this hardcoded path
               {
-                from = "${self.tor-browser-bundle-bin}/share/tor-browser/mozilla.cfg";
+                from =
+                  "${self.tor-browser-bundle-bin}/share/tor-browser/mozilla.cfg";
                 to = "/app/etc/firefox/mozilla.cfg";
               }
               {
-                from = "${self.tor-browser-bundle-bin}/share/tor-browser/defaults/pref";
+                from =
+                  "${self.tor-browser-bundle-bin}/share/tor-browser/defaults/pref";
                 to = "/app/etc/firefox/defaults/pref";
               }
             ];

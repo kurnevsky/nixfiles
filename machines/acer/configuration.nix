@@ -201,13 +201,11 @@
             ListenPort = 51871;
           };
           wireguardPeers = [{
-            wireguardPeerConfig = {
-              PublicKey = "5JHCxIYeZ50k7YJM+kLAbqGW4LAXpI5lycYEWSVxkBE=";
-              PresharedKeyFile = "/secrets/wg/preshared.psk";
-              AllowedIPs = "192.168.14.0/24";
-              Endpoint = "kurnevsky.net:51871";
-              PersistentKeepalive = 25;
-            };
+            PublicKey = "5JHCxIYeZ50k7YJM+kLAbqGW4LAXpI5lycYEWSVxkBE=";
+            PresharedKeyFile = "/secrets/wg/preshared.psk";
+            AllowedIPs = "192.168.14.0/24";
+            Endpoint = "kurnevsky.net:51871";
+            PersistentKeepalive = 25;
           }];
         };
       };
@@ -215,10 +213,8 @@
         name = "wg0";
         address = [ "192.168.14.4/32" ];
         routes = [{
-          routeConfig = {
-            Destination = "192.168.14.0/24";
-            Scope = "link";
-          };
+          Destination = "192.168.14.0/24";
+          Scope = "link";
         }];
       };
     };

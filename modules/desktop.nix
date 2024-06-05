@@ -560,29 +560,25 @@
             ListenPort = 51871;
           };
           wireguardPeers = [{
-            wireguardPeerConfig = {
-              PublicKey = "5JHCxIYeZ50k7YJM+kLAbqGW4LAXpI5lycYEWSVxkBE=";
-              PresharedKeyFile =
-                config.age.secrets.wg-preshared.path or "/secrets/wg/preshared.psk";
-              AllowedIPs = "0.0.0.0/0, ::/0";
-              # Direct connection
-              # Endpoint = "kurnevsky.net:51871";
-              # Websocat connection
-              # Endpoint = "127.0.0.1:42930";
-              # Shadowsocks connection
-              Endpoint = "127.0.0.1:51870";
-              PersistentKeepalive = 25;
-            };
+            PublicKey = "5JHCxIYeZ50k7YJM+kLAbqGW4LAXpI5lycYEWSVxkBE=";
+            PresharedKeyFile =
+              config.age.secrets.wg-preshared.path or "/secrets/wg/preshared.psk";
+            AllowedIPs = "0.0.0.0/0, ::/0";
+            # Direct connection
+            # Endpoint = "kurnevsky.net:51871";
+            # Websocat connection
+            # Endpoint = "127.0.0.1:42930";
+            # Shadowsocks connection
+            Endpoint = "127.0.0.1:51870";
+            PersistentKeepalive = 25;
           }];
         };
       };
       networks."99-wg0" = {
         name = "wg0";
         routes = [{
-          routeConfig = {
-            Destination = "192.168.14.0/24";
-            Scope = "link";
-          };
+          Destination = "192.168.14.0/24";
+          Scope = "link";
         }];
       };
     };
