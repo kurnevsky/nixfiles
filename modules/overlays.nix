@@ -26,6 +26,7 @@
           super.isync
         ];
       };
+      viu = super.viu.override { withSixel = true; };
       cloud-mdir-sync = super.callPackage ./cloud-mdir-sync.nix { };
     })
     (_self: super: {
