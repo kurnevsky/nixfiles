@@ -478,6 +478,8 @@ ARGS is `kill-buffer' arguments."
                                             (when (derived-mode-p 'prog-mode)
                                               (add-to-list 'font-lock-extra-managed-props 'display)))))
 
+(use-package eat)
+
 (use-package vterm
   :bind (:map vterm-mode-map
           ("<f2>"))
