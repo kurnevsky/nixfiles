@@ -319,6 +319,9 @@
       EMAIL = "kurnevsky@gmail.com";
       ALTERNATE_EDITOR = "nano";
       VIEWER = "less";
+      # Fixes aspell when it's used as build time dependency,
+      # e.g. enchant in emacs
+      ASPELL_CONF="dict-dir /run/current-system/sw/lib/aspell";
     };
 
     sessionVariables = {
