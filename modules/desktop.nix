@@ -507,9 +507,9 @@
   hardware = {
     bluetooth.enable = true;
     usb-modeswitch.enable = true;
-    opengl = {
+    graphics = {
       enable = true;
-      driSupport32Bit = true;
+      enable32Bit = true;
     };
     flipperzero.enable = true;
   };

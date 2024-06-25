@@ -63,13 +63,13 @@ let
     };
   withOpengl = attrs:
     attrs // {
-      extra-deps = with config.hardware.opengl;
+      extra-deps = with config.hardware.graphics;
         (attrs.extra-deps or [ ]) ++ [ package ] ++ extraPackages;
       opengl = true;
     };
   withOpengl32 = attrs:
     attrs // {
-      extra-deps = with config.hardware.opengl;
+      extra-deps = with config.hardware.graphics;
         (attrs.extra-deps or [ ]) ++ [ package32 ] ++ extraPackages32;
       opengl32 = true;
     };

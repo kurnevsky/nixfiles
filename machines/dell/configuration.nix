@@ -44,7 +44,7 @@
 
   hardware = {
     cpu.intel.updateMicrocode = true;
-    opengl.extraPackages = with pkgs; [
+    graphics.extraPackages = with pkgs; [
       # Discrete GPU can be used with DRI_PRIME=1 LIBVA_DRIVER_NAME=radeonsi
       vaapiIntel
       libvdpau-va-gl

@@ -153,7 +153,7 @@
       enable = true;
       package = pkgs.bluezFull;
     };
-    opengl.enable = true;
+    graphics.enable = true;
     cpu.intel.updateMicrocode = true;
   };
 

@@ -59,7 +59,7 @@
 
   hardware = {
     cpu.intel.updateMicrocode = true;
-    opengl.extraPackages = with pkgs; [
+    graphics.extraPackages = with pkgs; [
       vaapiIntel
       intel-media-driver
       libvdpau-va-gl
