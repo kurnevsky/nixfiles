@@ -965,9 +965,7 @@ which LANG was detected but these are ignored."
         (mc/create-fake-cursor-at-point)))))
 
 (use-package hydra
-  :bind (("<C-return>" . hydra-multiple-cursors/body)
-          :map prog-mode-map
-          ("C-(" . hydra-smartparens/body))
+  :bind (("<C-return>" . hydra-multiple-cursors/body))
   :config
   (defhydra hydra-multiple-cursors (:foreign-keys run
                                      :body-pre (progn
@@ -977,54 +975,7 @@ which LANG was detected but these are ignored."
     "multiple-cursors"
     ("<C-return>" mc/toggle-fake-cursor "toggle")
     ("<return>" nil "apply")
-    ("<escape>" mc/remove-fake-cursors-interactive "quit" :exit t))
-  (defhydra hydra-smartparens (:hint nil)
-    "
- Moving^^^^                                  Slurp & Barf^^   Wrapping^^            Sexp juggling^^^^               Destructive
------------------------------------------------------------------------------------------------------------------------------------
- [_<home>_] beginning  [_<down>_] down       [_h_] bw slurp   [_R_]   rewrap        [_S_] split   [_t_] transpose   [_c_] change inner  [_w_] copy
- [_<end>_] end         [_S-<down>_] bw down  [_H_] bw barf    [_u_]   unwrap        [_s_] splice  [_A_] absorb      [_C_] change outer
- [_<right>_] forward   [_<up>_] up           [_l_] slurp      [_U_]   bw unwrap     [_r_] raise   [_E_] emit        [_k_] kill          [_<escape>_] quit
- [_<left>_] backward   [_S-<up>_] bw up      [_L_] barf       [_(__{__[_] wrap (){}[]   [_j_] join    [_o_] convolute   [_K_] bw kill       [_q_] quit"
-    ;; Moving
-    ("<home>" sp-beginning-of-sexp)
-    ("<end>" sp-end-of-sexp)
-    ("<right>" sp-forward-sexp)
-    ("<left>" sp-backward-sexp)
-    ("<down>" sp-down-sexp)
-    ("S-<down>" sp-backward-down-sexp)
-    ("<up>" sp-up-sexp)
-    ("S-<up>" sp-backward-up-sexp)
-    ;; Slurping & barfing
-    ("h" sp-backward-slurp-sexp)
-    ("H" sp-backward-barf-sexp)
-    ("l" sp-forward-slurp-sexp)
-    ("L" sp-forward-barf-sexp)
-    ;; Wrapping
-    ("R" sp-rewrap-sexp)
-    ("u" sp-unwrap-sexp)
-    ("U" sp-backward-unwrap-sexp)
-    ("(" sp-wrap-round)
-    ("{" sp-wrap-curly)
-    ("[" sp-wrap-square)
-    ;; Sexp juggling
-    ("S" sp-split-sexp)
-    ("s" sp-splice-sexp)
-    ("r" sp-raise-sexp)
-    ("j" sp-join-sexp)
-    ("t" sp-transpose-sexp)
-    ("A" sp-absorb-sexp)
-    ("E" sp-emit-sexp)
-    ("o" sp-convolute-sexp)
-    ;; Destructive editing
-    ("c" sp-change-inner :exit t)
-    ("C" sp-change-enclosing :exit t)
-    ("k" sp-kill-sexp)
-    ("K" sp-backward-kill-sexp)
-    ;; Other
-    ("w" sp-copy-sexp)
-    ("<escape>" nil)
-    ("q" nil)))
+    ("<escape>" mc/remove-fake-cursors-interactive "quit" :exit t)))
 
 (use-package undo-tree
   :demand t
