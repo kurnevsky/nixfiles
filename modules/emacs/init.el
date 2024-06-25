@@ -495,8 +495,6 @@ ARGS is `kill-buffer' arguments."
 
 (use-package flyspell
   :ensure nil
-  :hook ((text-mode . flyspell-mode)
-          (prog-mode . flyspell-prog-mode))
   :bind (:map flyspell-mode-map
           ("C-.")
           ("C-,"))
@@ -510,9 +508,12 @@ ARGS is `kill-buffer' arguments."
   (advice-add #'flyspell-check-word-p :around (lambda (orig-fun &rest args)
                                                 (if (eq this-command 'self-insert-command)
                                                   (memq (get-char-code-property (char-before) 'general-category) '(Zs Zl Zp))
-                                                  (apply orig-fun args))))
-  (advice-add #'uncomment-region :before (lambda (BEG END &optional _ARG)
-                                           (flyspell-delete-region-overlays BEG END))))
+                                                  (apply orig-fun args)))))
+
+(use-package jinx
+  :demand t
+  :config
+  (global-jinx-mode))
 
 (use-package pos-tip
   :autoload pos-tip-show)
