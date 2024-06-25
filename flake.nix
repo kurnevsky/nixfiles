@@ -72,6 +72,14 @@
       flake = false;
     };
 
+    solaar = {
+      type = "github";
+      owner = "Svenum";
+      repo = "Solaar-Flake";
+      ref = "1.1.13";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     llama-cpp = {
       type = "github";
       owner = "ggerganov";
@@ -115,6 +123,7 @@
             inputs.nur.overlay
           ];
         }
+        inputs.solaar.nixosModules.default
         (for-all-home-users (with users; [ ww ]) common-home)
         (import ./modules/emacs.nix (with users; [ kurnevsky ww ]))
         ./modules/desktop.nix

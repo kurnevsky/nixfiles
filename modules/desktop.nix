@@ -362,6 +362,7 @@
     adb.enable = true;
     java.enable = true;
     fuse.userAllowOther = true;
+    solaar.enable = true;
   };
 
   gtk.iconCache.enable = true;
