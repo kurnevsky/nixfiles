@@ -321,7 +321,7 @@
       VIEWER = "less";
       # Fixes aspell when it's used as build time dependency,
       # e.g. enchant in emacs
-      ASPELL_CONF="dict-dir /run/current-system/sw/lib/aspell";
+      ASPELL_CONF = "dict-dir /run/current-system/sw/lib/aspell";
     };
 
     sessionVariables = {
