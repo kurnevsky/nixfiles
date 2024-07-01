@@ -324,10 +324,7 @@
       ASPELL_CONF = "dict-dir /run/current-system/sw/lib/aspell";
     };
 
-    sessionVariables = {
-      NIXOS_OZONE_WL = "1";
-      MOZ_USE_XINPUT2 = "1";
-    };
+    sessionVariables.NIXOS_OZONE_WL = "1";
   };
 
   fonts = {
