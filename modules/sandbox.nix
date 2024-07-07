@@ -129,7 +129,7 @@ in {
             name = "deadbeef";
             extra-deps = with pkgs; [
               gnome-themes-extra
-              gnome.adwaita-icon-theme
+              adwaita-icon-theme
               hicolor-icon-theme
               plasma-integration
               kdePackages.breeze
@@ -231,7 +231,7 @@ in {
             name = "firefox";
             extra-deps = with pkgs; [
               gnome-themes-extra
-              gnome.adwaita-icon-theme
+              adwaita-icon-theme
               hicolor-icon-theme
               plasma-integration
               kde-gtk-config
@@ -306,7 +306,7 @@ in {
             name = "chromium";
             extra-deps = with pkgs; [
               gnome-themes-extra
-              gnome.adwaita-icon-theme
+              adwaita-icon-theme
               hicolor-icon-theme
               plasma-integration
               kde-gtk-config
@@ -361,7 +361,7 @@ in {
             name = "qtox";
             extra-deps = with pkgs; [
               gnome-themes-extra
-              gnome.adwaita-icon-theme
+              adwaita-icon-theme
               hicolor-icon-theme
               plasma-integration
               kdePackages.breeze
@@ -411,7 +411,7 @@ in {
             name = "gajim";
             extra-deps = with pkgs; [
               gnome-themes-extra
-              gnome.adwaita-icon-theme
+              adwaita-icon-theme
               hicolor-icon-theme
               plasma-integration
               kdePackages.breeze
@@ -453,7 +453,7 @@ in {
             name = "telegram-desktop";
             extra-deps = with pkgs; [
               gnome-themes-extra
-              gnome.adwaita-icon-theme
+              adwaita-icon-theme
               hicolor-icon-theme
               plasma-integration
               kdePackages.breeze
@@ -491,7 +491,7 @@ in {
             name = "element-desktop";
             extra-deps = with pkgs; [
               gnome-themes-extra
-              gnome.adwaita-icon-theme
+              adwaita-icon-theme
               hicolor-icon-theme
               plasma-integration
               kdePackages.breeze
@@ -534,7 +534,7 @@ in {
             name = "qbittorrent";
             extra-deps = with pkgs; [
               gnome-themes-extra
-              gnome.adwaita-icon-theme
+              adwaita-icon-theme
               hicolor-icon-theme
               plasma-integration
               kdePackages.breeze
@@ -598,7 +598,7 @@ in {
             extra-deps = with pkgs;
               cfg.extra-deps ++ [
                 gnome-themes-extra
-                gnome.adwaita-icon-theme
+                adwaita-icon-theme
                 hicolor-icon-theme
                 plasma-integration
                 kdePackages.breeze
@@ -768,7 +768,7 @@ in {
             name = "tor-browser";
             extra-deps = with pkgs; [
               gnome-themes-extra
-              gnome.adwaita-icon-theme
+              adwaita-icon-theme
               hicolor-icon-theme
               plasma-integration
               kde-gtk-config
@@ -853,7 +853,7 @@ in {
             name = "claws-mail";
             extra-deps = with pkgs; [
               gnome-themes-extra
-              gnome.adwaita-icon-theme
+              adwaita-icon-theme
               hicolor-icon-theme
               kdePackages.breeze
             ];

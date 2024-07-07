@@ -76,7 +76,7 @@
         openconnect
         (callPackage ./pan-globalprotect-okta.nix { })
         gnome-themes-extra
-        gnome.adwaita-icon-theme
+        adwaita-icon-theme
         gparted
         inkscape
         languagetool
