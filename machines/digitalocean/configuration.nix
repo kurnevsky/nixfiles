@@ -231,7 +231,7 @@
           sslCertificateKey =
             "${config.security.acme.certs."kurnevsky.net".directory}/key.pem";
           kTLS = true;
-          listen = lib.cartesianProductOfSets {
+          listen = lib.cartesianProduct {
             addr = [ "0.0.0.0" "[::0]" ];
             port = [ 8448 ];
             ssl = [ true ];
