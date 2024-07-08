@@ -131,6 +131,7 @@
         eza
         fclones
         fd
+        fdroidcl
         ffmpeg-full
         flac
         fuseiso
