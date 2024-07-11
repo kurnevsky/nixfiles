@@ -7,6 +7,14 @@
       ref = "nixos-unstable";
     };
 
+    # TODO: a lot of packages are broken
+    nixpkgs-old = {
+      type = "github";
+      owner = "NixOS";
+      repo = "nixpkgs";
+      ref = "9f4128e00b0ae8ec65918efeba59db998750ead6";
+    };
+
     fenix = {
       type = "github";
       owner = "nix-community";
@@ -84,7 +92,7 @@
       type = "github";
       owner = "ggerganov";
       repo = "llama.cpp";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-old";
     };
   };
 
@@ -102,6 +110,21 @@
       for-all-home-users = import ./modules/for-all-home-users.nix;
       common-home = import ./modules/common-home.nix;
       commonModules = [
+        ({ pkgs, ... }: {
+          nixpkgs.overlays = let
+            pkgs-old = import inputs.nixpkgs-old {
+              inherit (pkgs.stdenv.targetPlatform) system;
+            };
+          in [
+            (self: super: {
+              rocmPackages = pkgs-old.rocmPackages;
+              eiskaltdcpp = pkgs-old.eiskaltdcpp;
+              monero-cli = pkgs-old.monero-cli;
+              i2pd = pkgs-old.i2pd;
+              electrum = pkgs-old.electrum;
+            })
+          ];
+        })
         inputs.base16.nixosModule
         { scheme = "${inputs.tt-schemes}/base24/one-dark.yaml"; }
         inputs.agenix.nixosModules.default

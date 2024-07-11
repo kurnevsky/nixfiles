@@ -36,6 +36,7 @@ in {
       trusted-users = [ "nix-ssh" ];
     };
     extraOptions = ''
+      !include ${config.age.secrets.github.path or "/secrets/github"}
       experimental-features = nix-command flakes repl-flake
       keep-outputs = true
       keep-derivations = true

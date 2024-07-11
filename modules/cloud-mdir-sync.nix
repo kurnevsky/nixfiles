@@ -1,6 +1,6 @@
-{ lib, fetchFromGitHub, python3Packages }:
+{ lib, fetchFromGitHub, python311Packages }:
 
-python3Packages.buildPythonPackage rec {
+python311Packages.buildPythonPackage rec {
   pname = "cloud-mdir-sync";
   version = "1";
 
@@ -16,7 +16,7 @@ python3Packages.buildPythonPackage rec {
       --replace "'pyasyncore'," ""
   '';
 
-  propagatedBuildInputs = with python3Packages; [
+  propagatedBuildInputs = with python311Packages; [
     aiohttp
     keyring
     oauthlib

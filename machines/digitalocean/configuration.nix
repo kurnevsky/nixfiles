@@ -289,6 +289,7 @@
 
   age.secrets = {
     kurnevsky.file = ../../secrets/kurnevsky-digitalocean.age;
+    github.file = ../../secrets/github.age;
     store.file = ../../secrets/store-digitalocean.age;
     hans = {
       file = ../../secrets/hans.age;

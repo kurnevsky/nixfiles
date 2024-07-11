@@ -37,4 +37,6 @@ in {
 
   "wg-private-pc.age".publicKeys = [ pc ];
   "wg-preshared-pc.age".publicKeys = [ pc digitalocean ];
+
+  "github.age".publicKeys = all;
 }
