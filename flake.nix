@@ -111,19 +111,14 @@
       common-home = import ./modules/common-home.nix;
       commonModules = [
         ({ pkgs, ... }: {
-          nixpkgs.overlays = let
-            pkgs-old = import inputs.nixpkgs-old {
-              inherit (pkgs.stdenv.targetPlatform) system;
-            };
-          in [
-            (self: super: {
-              rocmPackages = pkgs-old.rocmPackages;
-              eiskaltdcpp = pkgs-old.eiskaltdcpp;
-              monero-cli = pkgs-old.monero-cli;
-              i2pd = pkgs-old.i2pd;
-              electrum = pkgs-old.electrum;
-            })
-          ];
+          nixpkgs.overlays = with import inputs.nixpkgs-old {
+            inherit (pkgs.stdenv.targetPlatform) system;
+          };
+            [
+              (_self: _super: {
+                inherit rocmPackages eiskaltdcpp monero-cli i2pd electrum;
+              })
+            ];
         })
         inputs.base16.nixosModule
         { scheme = "${inputs.tt-schemes}/base24/one-dark.yaml"; }
