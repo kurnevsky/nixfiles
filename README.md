@@ -42,6 +42,61 @@ The following environment variables are supported:
 | WHITELIST    | additional whitelisted paths                                                                                                         |
 | WITH_NETWORK | allow network access (if it's disabled by default)                                                                                   |
 
+## Breaking updates
+
+In case something breaks during update an old version can be used with an overlay like:
+
+```nix
+{ pkgs, ... }:
+
+let oldPkgs = import inputs.nixpkgs-old {
+  inherit (pkgs.stdenv.targetPlatform) system;
+}; in {
+  nixpkgs.overlays = [
+    (_self: _super: {
+      inherit (oldPkgs) some-broken-package;
+    })
+  ];
+}
+```
+
+A patch to a derivation can be applied like:
+
+```nix
+{ pkgs, ... }:
+
+let
+  patchesDrv = pkgs.applyPatches {
+    src = pkgs.path;
+    patches = [
+      (builtins.fetchpatch {
+        url = "https://some-patch.diff";
+        sha256 = "";
+      })
+    ];
+  };
+  patchedPkgs = import patchesDrv { inherit (pkgs.stdenv.targetPlatform) system; };
+in {
+  nixpkgs.overlays = [ (_self: _super: { inherit (patchedPkgs) some-broken-package; }) ];
+}
+```
+
+A module can be patched like:
+
+```nix
+{ pkgs, ... }:
+
+{
+  disabledModules = [ "services/networking/some-broken-module.nix" ];
+  imports = [
+    (builtins.fetchurl {
+      url = "https://some-fixed-module.nix";
+      sha256 = "";
+    })
+  ];
+}
+```
+
 ## License
 
 Licensed under [GPLv3+](/LICENSE) with an exception that allows code from this repository to be incorporated into
