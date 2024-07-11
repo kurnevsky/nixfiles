@@ -92,10 +92,6 @@ in {
       lessopen = "| ${pkgs.sourceHighlight}/bin/src-hilite-lesspipe.sh %s";
       envVariables.LESS = " -R ";
     };
-    nh = {
-      enable = true;
-      flake = "/etc/nixos";
-    };
     # Replaced by nix-index
     command-not-found.enable = false;
   };
