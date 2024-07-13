@@ -310,6 +310,7 @@ ARGS is `kill-buffer' arguments."
   (dolist (mode '(scala-mode scala-ts-mode))
     (ligature-set-ligatures mode '("<-" ;; for comprehension
                                     "=>" ;; pattern matching
+                                    "=>>" ;; type lambda
                                     "???" ;; not implemented
                                     "##" ;; hashCode
                                     "=:=" ;; type equality
