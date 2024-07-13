@@ -272,12 +272,16 @@
         haskell-language-server
         hlint
         ## Rust
-        (fenix.stable.withComponents [
-          "cargo"
-          "clippy"
-          "rust-src"
-          "rustc"
-          "rustfmt"
+        (fenix.combine [
+          (fenix.stable.withComponents [
+            "cargo"
+            "clippy"
+            "rust-src"
+            "rustc"
+            "rustfmt"
+          ])
+          fenix.targets.wasm32-unknown-unknown.stable.rust-std
+          fenix.targets.wasm32-wasi.stable.rust-std
         ])
         rust-analyzer
         ## Java
