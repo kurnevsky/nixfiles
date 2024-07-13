@@ -292,6 +292,8 @@
         sbt
         scala_3
         metals
+        ## JavaScript
+        nodejs
         ## Nix
         alejandra
         deadnix
