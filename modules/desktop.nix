@@ -303,6 +303,7 @@
         nix-diff
         nixpkgs-review
         statix
+        nix-output-monitor
         ## Math
         maxima
         wxmaxima

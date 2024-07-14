@@ -18,6 +18,16 @@ My personal [NixOS](https://nixos.org/) configuration.
 | `all_proxy=socks5://127.0.0.1:1080 nixos-rebuild switch -L`                                         | apply configuration using proxy                   |
 | `nix-collect-garbage --delete-old`                                                                  | collect garbage                                   |
 
+To use `nix-output-monitor` the following command can be executed as root:
+
+```sh
+nom build \
+  --keep-going \
+  --option extra-substituters 'ssh://somehost' \
+  --builders 'ssh://somehost x86_64-linux,aarch64-linux - 32' \
+  "/etc/nixos#nixosConfigurations.${HOST}.config.system.build.toplevel"
+```
+
 ### Nix-on-droid commands
 
 Specifying `binfmt.emulatedSystems` allows to build packages remotely for a different architecture using qemu. Nix-on-droid can be called like:
