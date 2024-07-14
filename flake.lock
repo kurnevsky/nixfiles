@@ -201,7 +201,7 @@
       "inputs": {
         "flake-parts": "flake-parts",
         "nixpkgs": [
-          "nixpkgs-old"
+          "nixpkgs"
         ]
       },
       "locked": {

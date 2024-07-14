@@ -92,7 +92,7 @@
       type = "github";
       owner = "ggerganov";
       repo = "llama.cpp";
-      inputs.nixpkgs.follows = "nixpkgs-old";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
@@ -114,11 +114,7 @@
           nixpkgs.overlays = with import inputs.nixpkgs-old {
             inherit (pkgs.stdenv.targetPlatform) system;
           };
-            [
-              (_self: _super: {
-                inherit rocmPackages eiskaltdcpp monero-cli i2pd electrum;
-              })
-            ];
+            [ (_self: _super: { inherit electrum; }) ];
         })
         inputs.base16.nixosModule
         { scheme = "${inputs.tt-schemes}/base24/one-dark.yaml"; }
