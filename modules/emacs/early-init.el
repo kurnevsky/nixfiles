@@ -71,7 +71,7 @@
          (`(,(pred (string= (executable-find "python3"))) "-m" "json.tool" ,_ "/dev/null") t)))
      ("flycheck-haskell-hlint"
        (pcase command
-         (`(,(pred (string= (executable-find "hlint"))) ,_) t)))
+         (`(,(pred (string= (executable-find "hlint"))) "--no-exit-code" ,_) t)))
      ("flycheck-groovy"
        (pcase command
          (`(,(pred (string= (executable-find "groovy"))) "-e" . ,_) t)))
@@ -154,7 +154,10 @@
          (`(,(pred (string= (executable-find "bash-language-server"))) "start") t)))
      ("lsp-haskell"
        (pcase command
-         (`("haskell-language-server-wrapper" "--lsp" "-l" ,_) t)))))
+         (`("haskell-language-server-wrapper" "--lsp" "-l" ,_) t)))
+     ("pursls"
+       (pcase command
+         (`("purescript-language-server" "--stdio") t)))))
 
 (defvar sec-allow-make-network-process
   '(pcase name

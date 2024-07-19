@@ -271,6 +271,11 @@
         ghc
         haskell-language-server
         hlint
+        ## PureScript
+        nodePackages.purescript-language-server
+        nodePackages.purs-tidy
+        purescript
+        spago-unstable
         ## Rust
         (fenix.combine [
           (fenix.stable.withComponents [

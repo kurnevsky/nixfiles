@@ -88,6 +88,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    purescript-overlay = {
+      type = "github";
+      owner = "thomashoneyman";
+      repo = "purescript-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     llama-cpp = {
       type = "github";
       owner = "ggerganov";
@@ -133,6 +140,7 @@
           nixpkgs.overlays = [
             inputs.emacs-overlay.overlay
             inputs.fenix.overlays.default
+            inputs.purescript-overlay.overlays.default
             inputs.nur.overlay
           ];
         }

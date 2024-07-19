@@ -1302,6 +1302,9 @@ which LANG was detected but these are ignored."
 
 (use-package haskell-mode)
 
+(use-package purescript-mode
+  :hook (purescript-mode . turn-on-purescript-indentation))
+
 (use-package eldoc
   :ensure nil
   :commands (eldoc-mode turn-on-eldoc-mode)
@@ -1466,6 +1469,13 @@ identifier and the position respectively."
 (use-package lsp-haskell
   :after lsp-mode
   :demand t)
+
+(use-package lsp-haskell
+  :ensure lsp-mode
+  :after lsp-mode
+  :demand t
+  :custom
+  (lsp-purescript-formatter "purs-tidy"))
 
 (use-package dap-mode
   :ensure t
