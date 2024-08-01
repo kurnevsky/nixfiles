@@ -7,14 +7,6 @@
       ref = "nixos-unstable";
     };
 
-    # TODO: a lot of packages are broken
-    nixpkgs-old = {
-      type = "github";
-      owner = "NixOS";
-      repo = "nixpkgs";
-      ref = "7e7c39ea35c5cdd002cd4588b03a3fb9ece6fad9";
-    };
-
     fenix = {
       type = "github";
       owner = "nix-community";
@@ -117,12 +109,6 @@
       for-all-home-users = import ./modules/for-all-home-users.nix;
       common-home = import ./modules/common-home.nix;
       commonModules = [
-        ({ pkgs, ... }: {
-          nixpkgs.overlays = with import inputs.nixpkgs-old {
-            inherit (pkgs.stdenv.targetPlatform) system;
-          };
-            [ (_self: _super: { inherit easyeffects; }) ];
-        })
         inputs.base16.nixosModule
         { scheme = "${inputs.tt-schemes}/base24/one-dark.yaml"; }
         inputs.agenix.nixosModules.default
