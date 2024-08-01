@@ -376,12 +376,12 @@
     adb.enable = true;
     java.enable = true;
     fuse.userAllowOther = true;
-    solaar.enable = true;
   };
 
   gtk.iconCache.enable = true;
 
   services = {
+    solaar.enable = true;
     envfs.enable = true;
     dbus.implementation = "broker";
     avahi = {

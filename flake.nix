@@ -12,7 +12,7 @@
       type = "github";
       owner = "NixOS";
       repo = "nixpkgs";
-      ref = "9f4128e00b0ae8ec65918efeba59db998750ead6";
+      ref = "7e7c39ea35c5cdd002cd4588b03a3fb9ece6fad9";
     };
 
     fenix = {
@@ -84,7 +84,7 @@
       type = "github";
       owner = "Svenum";
       repo = "Solaar-Flake";
-      ref = "1.1.13";
+      ref = "0.1.1";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -121,7 +121,7 @@
           nixpkgs.overlays = with import inputs.nixpkgs-old {
             inherit (pkgs.stdenv.targetPlatform) system;
           };
-            [ (_self: _super: { inherit electrum; }) ];
+            [ (_self: _super: { inherit easyeffects; }) ];
         })
         inputs.base16.nixosModule
         { scheme = "${inputs.tt-schemes}/base24/one-dark.yaml"; }
