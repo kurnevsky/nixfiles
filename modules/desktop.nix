@@ -276,6 +276,7 @@
         nodePackages.purs-tidy
         purescript
         spago-unstable
+        purs-backend-es
         ## Rust
         (fenix.combine [
           (fenix.stable.withComponents [
@@ -299,6 +300,7 @@
         metals
         ## JavaScript
         nodejs
+        esbuild
         ## Nix
         alejandra
         deadnix
