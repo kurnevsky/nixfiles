@@ -129,6 +129,15 @@
           user = "admin";
           secret = "%{env:ADMIN_SECRET}%";
         };
+        signature.ed25519 = {
+          private-key = "%{env:DKIM_KEY}%";
+          domain = "kropki.org";
+          selector = "default";
+          headers = [ "From" "To" "Date" "Subject" "Message-ID" ];
+          algorithm = "ed25519-sha256";
+          canonicalization = "simple/simple";
+          set-body-length = true;
+        };
       };
     };
     matrix-conduit = {
