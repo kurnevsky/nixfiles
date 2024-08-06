@@ -87,11 +87,49 @@
     do-agent.enable = true;
     postgresql = {
       enable = true;
-      ensureDatabases = [ "tt_rss" ];
-      ensureUsers = [{
-        name = "tt_rss";
-        ensureDBOwnership = true;
-      }];
+      ensureDatabases = [ "tt_rss" "stalwart-mail" "kropki" ];
+      ensureUsers = [
+        {
+          name = "tt_rss";
+          ensureDBOwnership = true;
+        }
+        {
+          name = "stalwart-mail";
+          ensureDBOwnership = true;
+        }
+        {
+          name = "kropki";
+          ensureDBOwnership = true;
+        }
+      ];
+    };
+    stalwart-mail = {
+      enable = true;
+      settings = {
+        storage.blob = "db";
+        store = {
+          db = {
+            type = "postgresql";
+            host = "/var/run/postgresql";
+            database = "stalwart-mail";
+          };
+        };
+        lookup.default.hostname = "kropki.org";
+        server.listener = {
+          smtp = {
+            bind = "[::]:25";
+            protocol = "smtp";
+          };
+          jmap = {
+            bind = [ "[::]:30452" ];
+            protocol = "http";
+          };
+        };
+        authentication.fallback-admin = {
+          user = "admin";
+          secret = "%{env:ADMIN_SECRET}%";
+        };
+      };
     };
     matrix-conduit = {
       enable = false;
@@ -220,6 +258,29 @@
             };
           };
         };
+        "kropki.org" = {
+          http3 = true;
+          quic = true;
+          enableACME = true;
+          forceSSL = true;
+          kTLS = true;
+          root = "/kropki";
+          locations."/ws" = {
+            proxyPass = "http://localhost:8080";
+            proxyWebsockets = true;
+          };
+        };
+        "stalwart.kropki.org" = {
+          http3 = true;
+          quic = true;
+          enableACME = true;
+          forceSSL = true;
+          kTLS = true;
+          locations."/" = {
+            proxyPass = "http://localhost:30452";
+            proxyWebsockets = true;
+          };
+        };
         matrix-federation = {
           serverName = "kurnevsky.net";
           http3 = true;
@@ -277,13 +338,47 @@
     };
   };
 
-  systemd.services.tox-node.serviceConfig.SupplementaryGroups = "secrets-tox";
+  systemd.services = {
+    stalwart-mail.serviceConfig = {
+      RestrictAddressFamilies = [ "AF_UNIX" ];
+      EnvironmentFile =
+        "${config.age.secrets.stalwart.path or "/secrets/stalwart"}";
+    };
+    tox-node.serviceConfig.SupplementaryGroups = "secrets-tox";
+    kropki = {
+      description = "Kropki server";
+      after = [ "network.target" ];
+      wants = [ "network.target" ];
+      wantedBy = [ "multi-user.target" ];
+      serviceConfig = {
+        Restart = "on-failure";
+        User = "kropki";
+        Group = "kropki";
+        PrivateTmp = true;
+        ProtectSystem = "strict";
+        Environment = [ "POSTGRES_SOCKET=/var/run/postgresql" ];
+        EnvironmentFile =
+          "${config.age.secrets.kropki.path or "/secrets/kropki"}";
+        ExecStart = "${pkgs.callPackage ./kropki-server.nix { }}/bin/kropki";
+      };
+    };
+  };
 
   users = {
-    users.hans.group = "hans";
+    users = {
+      hans = {
+        group = "hans";
+        isSystemUser = true;
+      };
+      kropki = {
+        group = "kropki";
+        isSystemUser = true;
+      };
+    };
     groups = {
       hans = { };
       secrets-tox = { };
+      kropki = { };
     };
   };
 
@@ -311,6 +406,8 @@
       mode = "440";
       group = "secrets-tox";
     };
+    stalwart.file = ../../secrets/stalwart.age;
+    kropki.file = ../../secrets/kropki.age;
   };
 
   system.stateVersion = "21.11";

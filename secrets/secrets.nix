@@ -23,6 +23,8 @@ in {
 
   "kurnevsky-digitalocean.age".publicKeys = [ digitalocean ];
   "store-digitalocean.age".publicKeys = [ digitalocean ];
+  "kropki.age".publicKeys = [ digitalocean ];
+  "stalwart.age".publicKeys = [ digitalocean ];
 
   "tox.age".publicKeys = [ digitalocean ];
 
