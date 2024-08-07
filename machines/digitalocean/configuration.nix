@@ -81,6 +81,11 @@
   security.acme = {
     acceptTerms = true;
     defaults.email = "kurnevsky@gmail.com";
+    certs = {
+      "kurnevsky.net".group = "acme";
+      "kropki.org".group = "acme";
+      "stalwart.kropki.org".group = "acme";
+    };
   };
 
   services = {
@@ -137,6 +142,11 @@
           algorithm = "ed25519-sha256";
           canonicalization = "simple/simple";
           set-body-length = true;
+        };
+        certificate.default = {
+          cert = "%{file:/var/lib/acme/kropki.org/fullchain.pem}%";
+          private-key = "%{file:/var/lib/acme/kropki.org/key.pem}%";
+          default = true;
         };
       };
     };
@@ -385,6 +395,7 @@
       };
     };
     groups = {
+      acme.members = [ "nginx" "stalwart-mail" ];
       hans = { };
       secrets-tox = { };
       kropki = { };
