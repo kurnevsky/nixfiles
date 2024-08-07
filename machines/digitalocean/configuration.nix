@@ -15,10 +15,18 @@
     firewall = {
       enable = true;
       allowedTCPPorts = [
+        # SMTP
+        25
         # HTTP
         80
         # HTTPS
         443
+        # SMTPS
+        465
+        # SMTPS
+        587
+        # IMAPS
+        993
         # Matrix federation
         8448
         # Shadowsocks
@@ -124,6 +132,20 @@
           smtp = {
             bind = "[::]:25";
             protocol = "smtp";
+          };
+          submission = {
+            bind = [ "[::]:587" ];
+            protocol = "smtp";
+          };
+          submissions = {
+            bind = [ "[::]:465" ];
+            protocol = "smtp";
+            tls.implicit = true;
+          };
+          imaptls = {
+            bind = [ "[::]:993" ];
+            protocol = "imap";
+            tls.implicit = true;
           };
           jmap = {
             bind = [ "[::]:30452" ];
