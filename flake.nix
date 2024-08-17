@@ -7,6 +7,13 @@
       ref = "nixos-unstable";
     };
 
+    nixpkgs-old = {
+      type = "github";
+      owner = "NixOS";
+      repo = "nixpkgs";
+      ref = "9f918d616c5321ad374ae6cb5ea89c9e04bf3e58";
+    };
+
     fenix = {
       type = "github";
       owner = "nix-community";
@@ -148,6 +155,15 @@
           environment.systemPackages =
             [ inputs.agenix.packages.${pkgs.system}.default ];
         })
+        ({ pkgs, ... }:
+          let
+            oldPkgs = import inputs.nixpkgs-old {
+              inherit (pkgs.stdenv.targetPlatform) system;
+            };
+          in {
+            nixpkgs.overlays =
+              [ (_self: _super: { inherit (oldPkgs) delta lapce deepfilternet emacs-pdf-tools; }) ];
+          })
       ];
       llamaOverride = pkgs: llama:
         llama.overrideAttrs (old: {

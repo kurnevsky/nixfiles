@@ -1231,17 +1231,18 @@ which LANG was detected but these are ignored."
   :config
   (flycheck-package-setup))
 
-(use-package pdf-loader
-  :ensure pdf-tools
-  :demand t
-  :config
-  (pdf-loader-install))
+;; TODO: broken
+;; (use-package pdf-loader
+;;   :ensure pdf-tools
+;;   :demand t
+;;   :config
+;;   (pdf-loader-install))
 
-(use-package pdf-view
-  :ensure pdf-tools
-  :config
-  (add-hook 'pdf-view-mode-hook (lambda ()
-                                  (display-line-numbers-mode -1))))
+;; (use-package pdf-view
+;;   :ensure pdf-tools
+;;   :config
+;;   (add-hook 'pdf-view-mode-hook (lambda ()
+;;                                   (display-line-numbers-mode -1))))
 
 (use-package adoc-mode
   :mode ("\\.adoc\\'" . adoc-mode))
