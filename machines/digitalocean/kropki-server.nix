@@ -7,8 +7,8 @@ rustPlatform.buildRustPackage {
   src = fetchFromGitHub {
     owner = "pointsgame";
     repo = "oppai-rs";
-    rev = "c09bee32eb70619786f785d2f31f98ecfdb04368";
-    sha256 = "sha256-Ue+e8u59ECMdEWVAHTcqXcP/8Hzc/4/HZvypsNp9iE4=";
+    rev = "f026c2bfd46ec9f06ddba61f357b7db9b8aa4c73";
+    sha256 = "sha256-BsiOrrghogFj4eiy8K1kWt6zNLZBQZH8abI2Zs+HGX8=";
   };
 
   buildAndTestSubdir = "server";

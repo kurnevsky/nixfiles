@@ -127,6 +127,19 @@
         (for-all-home-users (with users; [ root kurnevsky ]) common-home)
         # Keep flake inputs from being garbage collected
         { system.extraDependencies = collectFlakeInputs inputs.self; }
+        ({ pkgs, ... }:
+          let
+            oldPkgs = import inputs.nixpkgs-old {
+              inherit (pkgs.stdenv.targetPlatform) system;
+            };
+          in {
+            nixpkgs.overlays = [
+              (_self: _super: {
+                inherit (oldPkgs)
+                  delta lapce deepfilternet emacs-pdf-tools stalwart-mail;
+              })
+            ];
+          })
       ];
       desktopModules = commonModules ++ [
         {
@@ -155,15 +168,6 @@
           environment.systemPackages =
             [ inputs.agenix.packages.${pkgs.system}.default ];
         })
-        ({ pkgs, ... }:
-          let
-            oldPkgs = import inputs.nixpkgs-old {
-              inherit (pkgs.stdenv.targetPlatform) system;
-            };
-          in {
-            nixpkgs.overlays =
-              [ (_self: _super: { inherit (oldPkgs) delta lapce deepfilternet emacs-pdf-tools; }) ];
-          })
       ];
       llamaOverride = pkgs: llama:
         llama.overrideAttrs (old: {
