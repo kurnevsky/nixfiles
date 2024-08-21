@@ -1101,15 +1101,13 @@ which LANG was detected but these are ignored."
   (khalel-import-org-file-confirm-overwrite nil)
   (khalel-import-org-file "~/calendar.org")
   :config
-  (khalel-add-capture-template))
+  (khalel-add-capture-template)
+  (advice-add #'khalel--delete-process-window-when-done :after (lambda (&rest _) (khalel-import-events))))
 
 (use-package org-agenda
   :ensure nil
   :bind (:map org-agenda-mode-map
-          ("R" . (lambda ()
-                   (interactive)
-                   (khalel-run-vdirsyncer)
-                   (khalel-import-events))))
+          ("R" . khalel-run-vdirsyncer))
   :custom
   (org-agenda-file-regexp "\\`[^.].*\\.org\\\(\\.gpg\\\)?\\'")
   (org-agenda-start-on-weekday nil)
