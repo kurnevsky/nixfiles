@@ -50,6 +50,24 @@ let
             sha256 = "sha256-Ysb1PTTvaM6Jig8JidMeNynnXyiG/YQ14ZRVqxGWyAU=";
           };
         }));
+      lean4-mode = super.melpaBuild rec {
+        pname = "lean4-mode";
+        version = "0";
+        commit = "da7b63d854d010d621e2c82a53d6ae2d94dd53b0";
+
+        src = pkgs.fetchFromGitHub {
+          owner = "leanprover-community";
+          repo = pname;
+          rev = commit;
+          hash = "sha256-U6MJIcBZf1XrUnssipgEy0BhF4/zhKVWblUvNqKNQe0=";
+        };
+
+        recipe = pkgs.writeText "recipe" ''
+          (lean4-mode :fetcher github
+                      :repo "leanprover-community/lean4-mode"
+                      :files ("*.el" "data"))
+        '';
+      };
     } // lib.genAttrs [
       "lsp-mode"
       "lsp-treemacs"

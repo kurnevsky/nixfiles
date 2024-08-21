@@ -1366,6 +1366,8 @@ which LANG was detected but these are ignored."
 
 (use-package terraform-mode)
 
+(use-package lean4-mode)
+
 (when (executable-find "agda-mode")
   (use-package agda2
     :ensure nil
