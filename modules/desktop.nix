@@ -300,6 +300,8 @@
         ## JavaScript
         nodejs
         esbuild
+        ## Lean
+        lean4
         ## Nix
         alejandra
         deadnix
