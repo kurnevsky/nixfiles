@@ -1090,8 +1090,21 @@ which LANG was detected but these are ignored."
   :config
   (global-org-modern-mode))
 
+(use-package khalel
+  :commands (khalel-import-events khalel-run-vdirsyncer)
+  :custom
+  (khalel-import-org-file-confirm-overwrite nil)
+  (khalel-import-org-file "~/calendar.org")
+  :config
+  (khalel-add-capture-template))
+
 (use-package org-agenda
   :ensure nil
+  :bind (:map org-agenda-mode-map
+          ("R" . (lambda ()
+                   (interactive)
+                   (khalel-run-vdirsyncer)
+                   (khalel-import-events))))
   :custom
   (org-agenda-file-regexp "\\`[^.].*\\.org\\\(\\.gpg\\\)?\\'")
   (org-agenda-start-on-weekday nil)
@@ -1542,13 +1555,6 @@ identifier and the position respectively."
     :host "localhost:8081"
     :models '("llama3-70b-8192"))
   (add-hook 'gptel-post-response-functions 'gptel-end-of-response))
-
-(use-package khalel
-  :commands (khalel-import-events khalel-run-vdirsyncer)
-  :custom
-  (khalel-import-org-file "~/calendar.org")
-  :config
-  (khalel-add-capture-template))
 
 (use-package mu4e
   :commands mu4e
