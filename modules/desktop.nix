@@ -211,7 +211,6 @@
         telegram-desktop
         ## Matrix
         element-desktop
-        nheko
         ## Tox
         qtox
         toxic

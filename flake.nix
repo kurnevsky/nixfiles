@@ -133,12 +133,28 @@
               inherit (pkgs.stdenv.targetPlatform) system;
             };
           in {
-            nixpkgs.overlays = [
-              (_self: _super: {
-                inherit (oldPkgs)
-                  delta lapce deepfilternet emacs-pdf-tools stalwart-mail;
-              })
-            ];
+            nixpkgs.overlays =
+              [ (_self: _super: { inherit (oldPkgs) lapce stalwart-mail; }) ];
+          })
+        ({ pkgs, ... }:
+          let
+            patchesDrv = pkgs.applyPatches {
+              src = pkgs.path;
+              patches = [
+                (pkgs.fetchpatch {
+                  url =
+                    "https://patch-diff.githubusercontent.com/raw/NixOS/nixpkgs/pull/335753.diff";
+                  sha256 =
+                    "sha256-hIHgp/jXpQiEJP/CNHjCW41UlL9x3tGkm8fM12TD4hI=";
+                })
+              ];
+            };
+            patchedPkgs = import patchesDrv {
+              inherit (pkgs.stdenv.targetPlatform) system;
+            };
+          in {
+            nixpkgs.overlays =
+              [ (_self: _super: { inherit (patchedPkgs) element-desktop; }) ];
           })
       ];
       desktopModules = commonModules ++ [

@@ -79,7 +79,7 @@ let
   patchesDrv = pkgs.applyPatches {
     src = pkgs.path;
     patches = [
-      (builtins.fetchpatch {
+      (pkgs.fetchpatch {
         url = "https://some-patch.diff";
         sha256 = "";
       })
