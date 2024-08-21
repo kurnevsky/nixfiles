@@ -428,6 +428,8 @@ ARGS is `kill-buffer' arguments."
 (use-package elec-pair
   :ensure nil
   :demand t
+  :custom
+  (electric-pair-preserve-balance nil)
   :config
   (electric-pair-mode 1))
 
