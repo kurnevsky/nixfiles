@@ -7,13 +7,6 @@
       ref = "nixos-unstable";
     };
 
-    nixpkgs-old = {
-      type = "github";
-      owner = "NixOS";
-      repo = "nixpkgs";
-      ref = "9f918d616c5321ad374ae6cb5ea89c9e04bf3e58";
-    };
-
     fenix = {
       type = "github";
       owner = "nix-community";
@@ -127,35 +120,6 @@
         (for-all-home-users (with users; [ root kurnevsky ]) common-home)
         # Keep flake inputs from being garbage collected
         { system.extraDependencies = collectFlakeInputs inputs.self; }
-        ({ pkgs, ... }:
-          let
-            oldPkgs = import inputs.nixpkgs-old {
-              inherit (pkgs.stdenv.targetPlatform) system;
-            };
-          in {
-            nixpkgs.overlays =
-              [ (_self: _super: { inherit (oldPkgs) lapce stalwart-mail; }) ];
-          })
-        ({ pkgs, ... }:
-          let
-            patchesDrv = pkgs.applyPatches {
-              src = pkgs.path;
-              patches = [
-                (pkgs.fetchpatch {
-                  url =
-                    "https://patch-diff.githubusercontent.com/raw/NixOS/nixpkgs/pull/335753.diff";
-                  sha256 =
-                    "sha256-hIHgp/jXpQiEJP/CNHjCW41UlL9x3tGkm8fM12TD4hI=";
-                })
-              ];
-            };
-            patchedPkgs = import patchesDrv {
-              inherit (pkgs.stdenv.targetPlatform) system;
-            };
-          in {
-            nixpkgs.overlays =
-              [ (_self: _super: { inherit (patchedPkgs) element-desktop; }) ];
-          })
       ];
       desktopModules = commonModules ++ [
         {
