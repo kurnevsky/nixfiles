@@ -1586,18 +1586,16 @@ identifier and the position respectively."
       (shr-render-region (point-min) (point-max))
       (goto-char (point-min))))
   (defvar mu4e-sent-folder-alternatives '("/[Gmail]/Sent Mail" ;; gmail
-                                           "/Sent" ;; yandex
                                            "/Sent Items" ;; outlook
                                            ))
   (defvar mu4e-drafts-folder-alternatives '("/[Gmail]/Drafts" ;; gmail
-                                             "/Drafts" ;; yandex, outlook
+                                             "/Drafts" ;; outlook
                                              ))
   (defvar mu4e-trash-folder-alternatives '("/[Gmail]/Trash" ;; gmail
-                                            "/Trash" ;; yandex
                                             "/Deleted Items" ;; outlook
                                             ))
   (defvar mu4e-refile-folder-alternatives '("/[Gmail]/Archive" ;; gmail
-                                             "/Archive" ;; yandex, outlook
+                                             "/Archive" ;; outlook
                                              ))
   (defun choose-mu4e-alternative (name alternatives)
     (string-remove-prefix "~/Maildir"
