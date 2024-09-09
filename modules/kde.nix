@@ -73,7 +73,6 @@
     # kamoso
     wl-clipboard
     plasma-pass
-    (callPackage ./vk-hdr-layer.nix { })
     # shortcuts
     brightness-min
     brightness-max
