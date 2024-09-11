@@ -7,6 +7,13 @@
       ref = "nixos-unstable";
     };
 
+    nixpkgs-old = {
+      type = "github";
+      owner = "NixOS";
+      repo = "nixpkgs";
+      ref = "574d1eac1c200690e27b8eb4e24887f8df7ac27c";
+    };
+
     fenix = {
       type = "github";
       owner = "nix-community";
@@ -120,6 +127,15 @@
         (for-all-home-users (with users; [ root kurnevsky ]) common-home)
         # Keep flake inputs from being garbage collected
         { system.extraDependencies = collectFlakeInputs inputs.self; }
+        ({ pkgs, ... }:
+          let
+            oldPkgs = import inputs.nixpkgs-old {
+              inherit (pkgs.stdenv.targetPlatform) system;
+            };
+          in {
+            nixpkgs.overlays =
+              [ (_self: _super: { inherit (oldPkgs) deadbeef; }) ];
+          })
       ];
       desktopModules = commonModules ++ [
         {
