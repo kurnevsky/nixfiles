@@ -1368,6 +1368,10 @@ which LANG was detected but these are ignored."
 
 (use-package lean4-mode)
 
+(use-package idris-mode
+  :custom
+  (idris-interpreter-path "idris2"))
+
 (when (executable-find "agda-mode")
   (use-package agda2
     :ensure nil

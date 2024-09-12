@@ -302,6 +302,9 @@
         esbuild
         ## Lean
         lean4
+        ## Idris
+        idris2Packages.idris2Lsp
+        idris2.withPkgs
         ## Nix
         alejandra
         deadnix
