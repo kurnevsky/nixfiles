@@ -117,7 +117,7 @@
       ];
     };
     stalwart-mail = {
-      enable = true;
+      enable = false;
       settings = {
         storage.blob = "db";
         store = {
