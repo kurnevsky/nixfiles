@@ -304,7 +304,7 @@
         lean4
         ## Idris
         idris2Packages.idris2Lsp
-        idris2.withPkgs
+        idris2
         ## Nix
         alejandra
         deadnix
