@@ -136,6 +136,15 @@
             nixpkgs.overlays =
               [ (_self: _super: { inherit (oldPkgs) deadbeef; }) ];
           })
+        ({ pkgs, ... }: {
+          disabledModules = [ "services/networking/i2pd.nix" ];
+          imports = [
+            (builtins.fetchurl {
+              url = "https://raw.githubusercontent.com/NixOS/nixpkgs/1d8136e1ae15484677de11487e74dd2c1fe495d6/nixos/modules/services/networking/i2pd.nix";
+              sha256 = "sha256:1mpks4prsj60i5hgxz2kahmjs5j3z028973lffx5z4a4xclqfm5j";
+            })
+          ];
+        })
       ];
       desktopModules = commonModules ++ [
         {
