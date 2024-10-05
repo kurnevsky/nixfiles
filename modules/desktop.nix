@@ -341,6 +341,7 @@
       # Fixes aspell when it's used as build time dependency,
       # e.g. enchant in emacs
       ASPELL_CONF = "dict-dir /run/current-system/sw/lib/aspell";
+      RCLONE_PASSWORD_COMMAND = "pass rclone";
     };
 
     sessionVariables.NIXOS_OZONE_WL = "1";
