@@ -654,6 +654,7 @@
         ".face.icon".source = ../resources/face.icon;
         ".wallpaper.jpg".source = ../resources/wallpaper.jpg;
         ".config/tox/toxic.conf".source = ./toxic.conf;
+        ".config/mpv/scripts/next_unexpanded.lua".source = ./next_unexpanded.lua;
       };
       programs = {
         feh = {
