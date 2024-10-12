@@ -78,6 +78,9 @@
      ("flycheck-python-pycompile"
        (pcase command
          (`(,(pred (string= (executable-find "python3"))) "-m" "py_compile" ,_) t)))
+     ("flycheck-tex-chktex"
+       (pcase command
+         (`(,(pred (string= (executable-find "chktex"))) "--verbosity=0" "--quiet" "--inputfiles") t)))
      ("ess-r-flymake"
        (pcase command
          (`("R" "--no-save" "--no-restore" "--no-site-file" "--no-init-file" "--slave" . ,_) t)))
