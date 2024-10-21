@@ -73,10 +73,11 @@
             url = baseUrl + "0001-Disable-sponsored-messages.patch";
             sha256 = "sha256-HeDH6tkkGx2XYTtzfo+gRee4BYxRiPKXQuftycl8Kvo=";
           })
-          (super.fetchpatch {
-            url = baseUrl + "0002-Disable-saving-restrictions.patch";
-            sha256 = "sha256-YarWT2rDNoOpLt0jGuT5BAe662GG9TMWF/F7KGa3I0E=";
-          })
+          # TODO
+          # (super.fetchpatch {
+            # url = baseUrl + "0002-Disable-saving-restrictions.patch";
+            # sha256 = "sha256-YarWT2rDNoOpLt0jGuT5BAe662GG9TMWF/F7KGa3I0E=";
+          # })
           (super.fetchpatch {
             url = baseUrl + "0003-Disable-invite-peeking-restrictions.patch";
             sha256 = "sha256-8mJD6LOjz11yfAdY4QPK/AUz9o5W3XdupXxy7kRrbC8=";
@@ -85,10 +86,10 @@
             url = baseUrl + "0004-Disable-accounts-limit.patch";
             sha256 = "sha256-PZWCFdGE/TTJ1auG1JXNpnTUko2rCWla6dYKaQNzreg=";
           })
-          (super.fetchpatch {
-            url = baseUrl + "0005-Option-to-disable-stories.patch";
-            sha256 = "sha256-aSAjyFiOg8JLgYA3voijVvkGIgK93kNMx40vqHsvW8Y=";
-          })
+          # (super.fetchpatch {
+            # url = baseUrl + "0005-Option-to-disable-stories.patch";
+            # sha256 = "sha256-aSAjyFiOg8JLgYA3voijVvkGIgK93kNMx40vqHsvW8Y=";
+          # })
         ];
       });
     })

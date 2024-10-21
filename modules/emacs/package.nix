@@ -53,14 +53,16 @@ let
       lean4-mode = super.melpaBuild rec {
         pname = "lean4-mode";
         version = "0";
-        commit = "da7b63d854d010d621e2c82a53d6ae2d94dd53b0";
+        commit = "004ad0e60b85fb4eac74a5523ee3e648fd5cfce5";
 
         src = pkgs.fetchFromGitHub {
           owner = "leanprover-community";
           repo = pname;
           rev = commit;
-          hash = "sha256-U6MJIcBZf1XrUnssipgEy0BhF4/zhKVWblUvNqKNQe0=";
+          hash = "sha256-9RCWidoEFucafKoWpT2yQgMh9CNXMLrpZJC1z1f60M0=";
         };
+
+        buildInputs = with super; [ dash flycheck lsp-mode magit ];
 
         recipe = pkgs.writeText "recipe" ''
           (lean4-mode :fetcher github

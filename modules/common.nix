@@ -37,7 +37,7 @@ in {
     };
     extraOptions = ''
       !include ${config.age.secrets.github.path or "/secrets/github"}
-      experimental-features = nix-command flakes repl-flake
+      experimental-features = nix-command flakes
       keep-outputs = true
       keep-derivations = true
       secret-key-files = ${config.age.secrets.store.path or "/secrets/store"}
