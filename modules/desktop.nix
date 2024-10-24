@@ -67,8 +67,7 @@
         (python311Packages.callPackage ./openhrv.nix { })
         anki
         blender
-        # TODO: broken
-        # calibre
+        calibre
         claws-mail
         cloud-mdir-sync
         dosbox
@@ -185,8 +184,6 @@
         unixtools.xxd
         usbutils
         v4l-utils
-        #TODO: broken
-        # vagrant
         vdpauinfo
         viu
         vorbis-tools
@@ -238,8 +235,7 @@
         grafana-loki
         kcat
         # Wallets
-        # TODO: broken
-        # electrum
+        electrum
         monero-cli
         feather
         # Audio
