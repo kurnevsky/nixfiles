@@ -170,6 +170,7 @@
         pulseaudio
         qrencode
         rage
+        reptyr
         rclone
         ripgrep
         rsync
@@ -189,6 +190,7 @@
         vorbis-tools
         vulkan-tools
         wavpack
+        waypipe
         websocat
         wget
         wirelesstools
