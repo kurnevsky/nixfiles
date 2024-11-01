@@ -16,5 +16,5 @@ in rustPlatform.buildRustPackage {
     rm -r $out/lib/
   '';
 
-  cargoHash = "sha256-tolVzrPhCFVpCz29WDEIIdh0iy6CNp9dZQ9yweBg5yk=";
+  cargoHash = "sha256-YQf85rK4tIVOB10aNpFEZJvLDEPSrr9b/9steMM7ITU=";
 }

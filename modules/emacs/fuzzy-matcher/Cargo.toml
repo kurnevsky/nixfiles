@@ -12,7 +12,8 @@ crate-type = ["cdylib"]
 
 [dependencies]
 emacs = "0.19"
-fuzzy-matcher = "0.3"
+nucleo-matcher = "0.3"
+lazy_static = "1.5"
 
 [profile.release]
 opt-level = 3
