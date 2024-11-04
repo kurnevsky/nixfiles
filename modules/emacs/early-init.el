@@ -142,25 +142,32 @@
      ;; LSP
      ("metals"
        (pcase command
-         (`("env" "JAVA_TOOL_OPTIONS=-Dmetals.allow-multiline-string-formatting=off -Dmetals.icons=unicode" "metals") t)))
+         (`("env" "JAVA_TOOL_OPTIONS=-Dmetals.allow-multiline-string-formatting=off -Dmetals.icons=unicode" "metals") t)
+         (`("emacs-lsp-booster" ,(pred (string= (executable-find "env"))) "JAVA_TOOL_OPTIONS=-Dmetals.allow-multiline-string-formatting=off -Dmetals.icons=unicode" "metals") t)))
      ("rust-analyzer"
        (pcase command
-         (`(,(pred (string= (executable-find "rust-analyzer")))) t)))
+         (`(,(pred (string= (executable-find "rust-analyzer")))) t)
+         (`("emacs-lsp-booster" ,(pred (string= (executable-find "rust-analyzer")))) t)))
      ("nix-nil"
        (pcase command
-         (`("nil") t)))
+         (`("nil") t)
+         (`("emacs-lsp-booster" ,(pred (string= (executable-find "nil")))) t)))
      ("lsp-r"
        (pcase command
-         (`("R" "--slave" "-e" "languageserver::run()") t)))
+         (`("R" "--slave" "-e" "languageserver::run()") t)
+         (`("emacs-lsp-booster" ,(pred (string= (executable-find "R"))) "--slave" "-e" "languageserver::run()") t)))
      ("bash-ls"
        (pcase command
-         (`(,(pred (string= (executable-find "bash-language-server"))) "start") t)))
+         (`(,(pred (string= (executable-find "bash-language-server"))) "start") t)
+         (`("emacs-lsp-booster" ,(pred (string= (executable-find "bash-language-server"))) "start") t)))
      ("lsp-haskell"
        (pcase command
-         (`("haskell-language-server-wrapper" "--lsp" "-l" ,_) t)))
+         (`("haskell-language-server-wrapper" "--lsp" "-l" ,_) t)
+         (`("emacs-lsp-booster" ,(pred (string= (executable-find "haskell-language-server-wrapper"))) "--lsp" "-l" ,_) t)))
      ("pursls"
        (pcase command
-         (`("purescript-language-server" "--stdio") t)))))
+         (`("purescript-language-server" "--stdio") t)
+         (`("emacs-lsp-booster" ,(pred (string= (executable-find "purescript-language-server"))) "--stdio") t)))))
 
 (defvar sec-allow-make-network-process
   '(pcase name

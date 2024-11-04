@@ -1433,7 +1433,34 @@ If IDENTIFIER and POSITION are non-nil, they will be used as the document
 identifier and the position respectively."
     (list :textDocument (or identifier (lsp--text-document-identifier))
       :position (or position (lsp--cur-position))
-      (el-patch-add :range (when (use-region-p) (lsp--region-to-range (region-beginning) (region-end)))))))
+      (el-patch-add :range (when (use-region-p) (lsp--region-to-range (region-beginning) (region-end))))))
+  ;; lsp-booster
+  (defun lsp-booster--advice-json-parse (old-fn &rest args)
+    "Try to parse bytecode instead of json."
+    (or
+      (when (equal (following-char) ?#)
+        (let ((bytecode (read (current-buffer))))
+          (when (byte-code-function-p bytecode)
+            (funcall bytecode))))
+      (apply old-fn args)))
+  (advice-add (if (progn (require 'json)
+                    (fboundp 'json-parse-buffer))
+                'json-parse-buffer
+                'json-read)
+    :around
+    #'lsp-booster--advice-json-parse)
+  (defun lsp-booster--advice-final-command (old-fn cmd &optional test?)
+    "Prepend emacs-lsp-booster command to lsp CMD."
+    (let ((orig-result (funcall old-fn cmd test?)))
+      (if (and (not test?) ;; for check lsp-server-present?
+            (not (file-remote-p default-directory))) ;; see lsp-resolve-final-command, it would add extra shell wrapper)
+        (progn
+          (when-let ((command-from-exec-path (executable-find (car orig-result)))) ;; resolve command from exec-path (in case not found in $PATH)
+            (setcar orig-result command-from-exec-path))
+          (message "Using emacs-lsp-booster for %s!" orig-result)
+          (cons "emacs-lsp-booster" orig-result))
+        orig-result)))
+  (advice-add 'lsp-resolve-final-command :around #'lsp-booster--advice-final-command))
 
 (use-package lsp-ui
   :custom
