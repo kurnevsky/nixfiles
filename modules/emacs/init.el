@@ -628,11 +628,7 @@ which LANG was detected but these are ignored."
       ((and (not (ends-with-/ a)) (ends-with-/ b)) nil)
       (t (string-lessp a b)))))
 
-(use-package all-the-icons-nerd-fonts
-  :demand t
-  :after all-the-icons
-  :config
-  (all-the-icons-nerd-fonts-prefer))
+(use-package nerd-icons)
 
 (use-package vertico
   :demand t
@@ -815,6 +811,7 @@ which LANG was detected but these are ignored."
   :demand
   :custom
   (centaur-tabs-set-icons t)
+  (centaur-tabs-icon-type 'nerd-icons)
   :config
   (push 'treemacs-mode-hook centaur-tabs-hide-tabs-hooks)
   (advice-add #'centaur-tabs-hide-tab-cached :after-until (lambda (buffer)
