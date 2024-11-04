@@ -758,10 +758,11 @@ which LANG was detected but these are ignored."
   (embark-collect-mode . consult-preview-at-point-mode))
 
 (use-package helpful
-  :bind (([remap describe-key] . helpful-key))
-  :custom
-  (counsel-describe-function-function #'helpful-callable)
-  (counsel-describe-variable-function #'helpful-variable))
+  :bind (([remap describe-key] . helpful-key)
+          ([remap describe-variable] . helpful-variable)
+          ([remap describe-function] . helpful-callable)
+          ([remap describe-command] . helpful-command)
+          ("C-h F" . helpful-function)))
 
 (use-package dired
   :ensure nil
