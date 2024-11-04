@@ -695,10 +695,11 @@ which LANG was detected but these are ignored."
           :truncate -0.5 :face 'marginalia-file-name))))
   (marginalia-mode))
 
-(use-package all-the-icons-completion
+(use-package nerd-icons-completion
   :demand t
   :config
-  (all-the-icons-completion-mode))
+  (nerd-icons-completion-mode)
+  (add-hook 'marginalia-mode-hook #'nerd-icons-completion-marginalia-setup))
 
 (use-package embark
   :commands kill-target-buffer
