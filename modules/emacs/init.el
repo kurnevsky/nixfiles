@@ -248,6 +248,9 @@ ARGS is `kill-buffer' arguments."
       (base16-theme-set-faces theme (symbol-value (intern (concat (symbol-name theme) "-theme-colors")))
         `( ;; Make it slightly different from highlighting
            (hl-line :background ,base005)
+           ;; Fix line numbers zoom via setting inherit
+           (line-number :foreground base03 :background base16-settings-fringe-bg :inherit default)
+           (line-number-current-line :background base16-settings-fringe-bg :inherit default)
            ;; Minibuffer completion
            (completions-common-part :foreground base0C)
            ;; Ediff
