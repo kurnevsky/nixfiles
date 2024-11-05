@@ -1273,6 +1273,9 @@ which LANG was detected but these are ignored."
 (use-package nov
   :mode ("\\.epub\\'" . nov-mode))
 
+(use-package fb2-reader
+  :mode ("\\.fb2\\(\\.zip\\)?\\'" . fb2-reader-mode))
+
 (use-package adoc-mode
   :mode ("\\.adoc\\'" . adoc-mode))
 
