@@ -86,6 +86,8 @@ let
       "MAIL"
       "SHELL"
     ];
+    # some apps might want to unpack archives in /tmp
+    shared-tmp = true;
     media = true;
     whitelist = [ "~/" ];
     blacklist = [ "~/.gnupg/" "~/.ssh/" ];
