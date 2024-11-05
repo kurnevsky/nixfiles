@@ -696,6 +696,7 @@ which LANG was detected but these are ignored."
 
 (use-package nerd-icons-completion
   :demand t
+  :after marginalia
   :config
   (nerd-icons-completion-mode)
   (add-hook 'marginalia-mode-hook #'nerd-icons-completion-marginalia-setup))
@@ -1230,6 +1231,12 @@ which LANG was detected but these are ignored."
 
 (use-package treemacs-projectile
   :bind ("S-<f8>" . treemacs-projectile))
+
+(use-package treemacs-nerd-icons
+  :demand t
+  :after treemacs
+  :config
+  (treemacs-load-theme "nerd-icons"))
 
 (use-package flycheck
   :demand t

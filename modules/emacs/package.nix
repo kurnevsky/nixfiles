@@ -50,6 +50,14 @@ let
             sha256 = "sha256-Ysb1PTTvaM6Jig8JidMeNynnXyiG/YQ14ZRVqxGWyAU=";
           };
         }));
+      treemacs-nerd-icons = super.treemacs-nerd-icons.overrideAttrs (_old: {
+        src = pkgs.fetchFromGitHub {
+          owner = "m-delfino";
+          repo = "treemacs-nerd-icons";
+          rev = "75b880a7a7eb52ddef1cb061315b1718645c1c6e";
+          sha256 = "sha256-8BjaRcwnecgq/zMBizpl/t9KNeMDKau7PWjzVaPqrpY=";
+        };
+      });
       lean4-mode = super.melpaBuild rec {
         pname = "lean4-mode";
         version = "0";
