@@ -1412,8 +1412,12 @@ which LANG was detected but these are ignored."
 (use-package format-all)
 
 (use-package dumb-jump
+  :demand t
+  :after xref
   :custom
-  (dumb-jump-selector 'completing-read))
+  (dumb-jump-selector 'completing-read)
+  :config
+  (add-hook 'xref-backend-functions #'dumb-jump-xref-activate))
 
 (use-package lsp-mode
   :init
