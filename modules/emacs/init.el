@@ -37,8 +37,6 @@
 ;; Set font.
 (set-face-attribute 'default nil :font "Iosevka Normal:size=15")
 (add-to-list 'default-frame-alist '(font . "Iosevka Normal:size=15"))
-;; Disable deferred compilation.
-(setq native-comp-jit-compilation nil)
 ;; It causes compilation call at startup.
 (setq comp--delayed-sources nil)
 ;; Don't do backup files.

@@ -6,7 +6,10 @@
 
 ;;; Code:
 
+;; Speed up the initialization reducing garbage collection runs.
 (setq gc-cons-threshold (* 64 1024 1024))
+;; Disable deferred compilation.
+(setq native-comp-jit-compilation nil)
 
 ;; TODO:
 ;; call-process-region
