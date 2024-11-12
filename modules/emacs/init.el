@@ -1428,7 +1428,7 @@ which LANG was detected but these are ignored."
   (lsp-file-watch-threshold nil)
   (lsp-keep-workspace-alive nil)
   (lsp-lens-auto-enable t)
-  (lsp-prefer-capf t)
+  (lsp-inlay-hint-enable t)
   (lsp-headerline-breadcrumb-enable t)
   (lsp-headerline-breadcrumb-segments '(symbols))
   (lsp-semantic-tokens-enable t)
