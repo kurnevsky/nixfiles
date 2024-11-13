@@ -593,7 +593,7 @@ which LANG was detected but these are ignored."
       (pcase-let ((`(,all ,_pattern ,prefix ,_suffix ,_carbounds)
                     (completion-substring--all-completions string table pred point #'completion-flex--make-flex-pattern)))
         (when all
-          (nconc (mapcar (-partial #'fuzzy-matcher-propertize infix) all) (length prefix))))))
+          (nconc (mapcar (-partial #'fuzzy-matcher-propertize (downcase infix)) all) (length prefix))))))
   (add-to-list 'completion-styles-alist '(fuzzy
                                            completion-flex-try-completion
                                            fuzzy-matcher-all-completions
