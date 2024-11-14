@@ -851,7 +851,8 @@ which LANG was detected but these are ignored."
 (use-package company
   :demand t
   :bind (:map company-mode-map
-          ("TAB" . company-indent-or-complete-common))
+          ("TAB" . company-indent-or-complete-common)
+          ("<escape>" . company-abort))
   :custom
   (company-tooltip-align-annotations t)
   (company-require-match nil)
