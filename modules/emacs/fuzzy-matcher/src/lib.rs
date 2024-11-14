@@ -15,7 +15,7 @@ lazy_static! {
 }
 
 #[defun]
-fn skim_fuzzy_indices(env: &Env, pattern: String, source: String) -> Result<Option<Value>> {
+fn fuzzy_indices(env: &Env, pattern: String, source: String) -> Result<Option<Value>> {
   let mut indices = Vec::new();
   let mut source_buf = Vec::new();
   let mut pattern_buf = Vec::new();

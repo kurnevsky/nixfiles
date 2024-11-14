@@ -570,7 +570,7 @@ which LANG was detected but these are ignored."
       (substring string 0 (- (length string) 1))
       string))
   (defun fuzzy-matcher-propertize (pattern candidate)
-    (let* ((score (fuzzy-matcher-skim-fuzzy-indices
+    (let* ((score (fuzzy-matcher-fuzzy-indices
                     (encode-coding-string pattern 'utf-8 t)
                     (encode-coding-string (fuzzy-matcher-without-tofu-char candidate) 'utf-8 t)))
             (candidate (copy-sequence candidate)))
