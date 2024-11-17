@@ -1116,20 +1116,21 @@ which LANG was detected but these are ignored."
   (org-agenda-span 14)
   (org-agenda-files '("~/calendar.org")))
 
-(use-package org-roam
-  :custom
-  (org-roam-directory (expand-file-name "~/roam/"))
-  :config
-  (org-roam-db-autosync-mode))
+;; TODO: broken
+;; (use-package org-roam
+;;   :custom
+;;   (org-roam-directory (expand-file-name "~/roam/"))
+;;   :config
+;;   (org-roam-db-autosync-mode))
 
-(use-package org-roam-capture
-  :ensure org-roam
-  :after org-roam
-  :custom
-  (org-roam-capture-templates '(("d" "default" plain "%?"
-                                  :target (file+head "${slug}.org.gpg"
-                                            "# -*- mode:org; epa-file-encrypt-to: (\"kurnevsky@gmail.com\") -*-\n#+title: ${title}\n")
-                                  :unnarrowed t))))
+;; (use-package org-roam-capture
+;;   :ensure org-roam
+;;   :after org-roam
+;;   :custom
+;;   (org-roam-capture-templates '(("d" "default" plain "%?"
+;;                                   :target (file+head "${slug}.org.gpg"
+;;                                             "# -*- mode:org; epa-file-encrypt-to: (\"kurnevsky@gmail.com\") -*-\n#+title: ${title}\n")
+;;                                   :unnarrowed t))))
 
 (use-package org-ql)
 
@@ -1162,14 +1163,15 @@ which LANG was detected but these are ignored."
   (add-hook 'magit-status-mode-hook
     (lambda () (company-mode -1))))
 
-(use-package forge
-  :demand t
-  :after magit
-  :config
-  (let ((host "gitlab.evolution.com"))
-    (add-to-list
-      'forge-alist
-      `(,host ,(concat host "/api/v4") ,host forge-gitlab-repository))))
+;; TODO: broken
+;; (use-package forge
+;;   :demand t
+;;   :after magit
+;;   :config
+;;   (let ((host "gitlab.evolution.com"))
+;;     (add-to-list
+;;       'forge-alist
+;;       `(,host ,(concat host "/api/v4") ,host forge-gitlab-repository))))
 
 (use-package pass
   :mode (".password-store/.*\\.gpg\\'" . pass-view-mode))
