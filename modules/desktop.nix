@@ -66,8 +66,7 @@
         (pkgs.pkgsCross.mingwW64.callPackage ./vkd3d-proton.nix { })
         anki
         blender
-        # TODO: broken
-        # calibre
+        calibre
         claws-mail
         cloud-mdir-sync
         dosbox
