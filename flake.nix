@@ -7,13 +7,6 @@
       ref = "nixos-unstable";
     };
 
-    nixpkgs-old = {
-      type = "github";
-      owner = "NixOS";
-      repo = "nixpkgs";
-      ref = "5e4fbfb6b3de1aa2872b76d49fafc942626e2add";
-    };
-
     fenix = {
       type = "github";
       owner = "nix-community";
@@ -127,15 +120,6 @@
         (for-all-home-users (with users; [ root kurnevsky ]) common-home)
         # Keep flake inputs from being garbage collected
         { system.extraDependencies = collectFlakeInputs inputs.self; }
-        ({ pkgs, ... }:
-          let
-            oldPkgs = import inputs.nixpkgs-old {
-              inherit (pkgs.stdenv.targetPlatform) system;
-            };
-          in {
-            nixpkgs.overlays =
-              [ (_self: _super: { inherit (oldPkgs) libreoffice-fresh; }) ];
-          })
       ];
       desktopModules = commonModules ++ [
         {
