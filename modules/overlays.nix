@@ -63,6 +63,7 @@
         metals = wrap super.metals "metals";
         bloop = wrap super.bloop "bloop";
       })
+    (self: super: { wine-ge = super.callPackage ./wine-ge.nix { }; })
     # TODO:
     # (_self: super: {
     #   telegram-desktop = super.telegram-desktop.overrideAttrs (old: {
