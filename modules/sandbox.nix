@@ -497,6 +497,7 @@ in {
               hicolor-icon-theme
               plasma-integration
               kdePackages.breeze
+              kdePackages.kde-gtk-config
             ];
             devs = [
               "dri"
@@ -511,7 +512,7 @@ in {
             ];
             graphics = true;
             pams = [ "pulse" "pipewire-0" ];
-            etcs = [ "pulse" "ssl/certs/ca-certificates.crt" ];
+            etcs = [ "pulse" "passwd" "ssl/certs/ca-certificates.crt" ];
             # Tray icon is stored in /tmp
             shared-tmp = true;
             localtime = true;
