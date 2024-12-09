@@ -127,7 +127,7 @@
             inputs.emacs-overlay.overlay
             inputs.fenix.overlays.default
             inputs.purescript-overlay.overlays.default
-            inputs.nur.overlay
+            inputs.nur.overlays.default
           ];
         }
         inputs.solaar.nixosModules.default

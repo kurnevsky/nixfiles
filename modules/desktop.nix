@@ -360,7 +360,7 @@
         (callPackage ./nerd-font-patch.nix { } iosevka-term)
         (callPackage ./nerd-font-patch.nix { } iosevka-normal)
         (callPackage ./nerd-font-patch.nix { } iosevka-quasi-proportional)
-        (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
+        nerd-fonts.symbols-only
         noto-fonts
         noto-fonts-color-emoji
         symbola
