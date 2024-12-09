@@ -64,35 +64,17 @@
         bloop = wrap super.bloop "bloop";
       })
     (self: super: { wine-ge = super.callPackage ./wine-ge.nix { }; })
-    # TODO:
-    # (_self: super: {
-    #   telegram-desktop = super.telegram-desktop.overrideAttrs (old: {
-    #     patches = let
-    #       baseUrl =
-    #         "https://raw.githubusercontent.com/kurnevsky/telegram-desktop-patches/03c1041f13ffbbae18d25bef65de6040318fc4a2/";
-    #     in (old.patches or [ ]) ++ [
-    #       (super.fetchpatch {
-    #         url = baseUrl + "0001-Disable-sponsored-messages.patch";
-    #         sha256 = "sha256-HeDH6tkkGx2XYTtzfo+gRee4BYxRiPKXQuftycl8Kvo=";
-    #       })
-    #       (super.fetchpatch {
-    #         url = baseUrl + "0002-Disable-saving-restrictions.patch";
-    #         sha256 = "sha256-YarWT2rDNoOpLt0jGuT5BAe662GG9TMWF/F7KGa3I0E=";
-    #       })
-    #       (super.fetchpatch {
-    #         url = baseUrl + "0003-Disable-invite-peeking-restrictions.patch";
-    #         sha256 = "sha256-8mJD6LOjz11yfAdY4QPK/AUz9o5W3XdupXxy7kRrbC8=";
-    #       })
-    #       (super.fetchpatch {
-    #         url = baseUrl + "0004-Disable-accounts-limit.patch";
-    #         sha256 = "sha256-PZWCFdGE/TTJ1auG1JXNpnTUko2rCWla6dYKaQNzreg=";
-    #       })
-    #       (super.fetchpatch {
-    #         url = baseUrl + "0005-Option-to-disable-stories.patch";
-    #         sha256 = "sha256-aSAjyFiOg8JLgYA3voijVvkGIgK93kNMx40vqHsvW8Y=";
-    #       })
-    #     ];
-    #   });
-    # })
+    (_self: super: {
+      telegram-desktop = super.telegram-desktop.override {
+        unwrapped = super.telegram-desktop.unwrapped.overrideAttrs (old: {
+          patches = (old.patches or [ ]) ++ [
+            ./telegram/0001-Disable-sponsored-messages.patch
+            ./telegram/0002-Disable-saving-restrictions.patch
+            ./telegram/0003-Disable-invite-peeking-restrictions.patch
+            ./telegram/0004-Disable-accounts-limit.patch
+          ];
+        });
+      };
+    })
   ];
 }

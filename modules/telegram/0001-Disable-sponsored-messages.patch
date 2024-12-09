@@ -1,0 +1,16 @@
+diff --git a/Telegram/SourceFiles/data/components/sponsored_messages.cpp b/Telegram/SourceFiles/data/components/sponsored_messages.cpp
+index 61e36d1c5..803905047 100644
+--- a/Telegram/SourceFiles/data/components/sponsored_messages.cpp
++++ b/Telegram/SourceFiles/data/components/sponsored_messages.cpp
+@@ -198,11 +198,6 @@ void SponsoredMessages::inject(
+ }
+ 
+ bool SponsoredMessages::canHaveFor(not_null<History*> history) const {
+-	if (history->peer->isChannel()) {
+-		return true;
+-	} else if (const auto user = history->peer->asUser()) {
+-		return user->isBot();
+-	}
+ 	return false;
+ }
+ 
