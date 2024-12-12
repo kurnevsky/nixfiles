@@ -37,6 +37,10 @@
 
   environment.systemPackages = with pkgs; [
     radeontop
+    (pkgs.callPackage ../../modules/stable-diffusion-cpp.nix {
+      useRocm = true;
+      gpuTargets = "gfx1100";
+    })
     ((python3.withPackages (pkgs:
       with pkgs; [
         # TODO: broken
