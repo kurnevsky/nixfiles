@@ -150,15 +150,12 @@
         })
       ];
       llamaOverride = pkgs: llama:
-        llama.overrideAttrs (old: {
-          postInstall = (old.postInstall or "") + ''
-            find $out/bin -type f ! -wholename '*/llama*' -exec ${pkgs.util-linux}/bin/rename "" 'llama-' {} \;
-          '';
-          NIX_CFLAGS_COMPILE = [ "-O3" "-march=native" "-mtune=native" ];
-          NIX_ENFORCE_NO_NATIVE = false;
-          preferLocalBuild = true;
-          allowSubstitutes = false;
-        });
+        import ./modules/with-native-optimizations.nix (llama.overrideAttrs
+          (old: {
+            postInstall = (old.postInstall or "") + ''
+              find $out/bin -type f ! -wholename '*/llama*' -exec ${pkgs.util-linux}/bin/rename "" 'llama-' {} \;
+            '';
+          }));
       llamaDefault = { pkgs, ... }: {
         environment.systemPackages = [
           (llamaOverride pkgs inputs.llama-cpp.packages.${pkgs.system}.default)

@@ -33,11 +33,6 @@ stdenv.mkDerivation {
     HIP_DEVICE_LIB_PATH = "${rocmPackages.rocm-device-libs}/amdgcn/bitcode";
   };
 
-  NIX_CFLAGS_COMPILE = [ "-O3" "-march=native" "-mtune=native" ];
-  NIX_ENFORCE_NO_NATIVE = false;
-  preferLocalBuild = true;
-  allowSubstitutes = false;
-
   meta = {
     description = "Stable Diffusion in pure C/C++";
     homepage = "https://github.com/leejet/stable-diffusion.cpp";
