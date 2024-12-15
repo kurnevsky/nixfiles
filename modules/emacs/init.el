@@ -1269,8 +1269,9 @@ which LANG was detected but these are ignored."
   (add-hook 'pdf-view-mode-hook (lambda ()
                                   (display-line-numbers-mode -1))))
 
-(use-package nov
-  :mode ("\\.epub\\'" . nov-mode))
+;; TODO: broken
+;; (use-package nov
+;;   :mode ("\\.epub\\'" . nov-mode))
 
 (use-package fb2-reader
   :mode ("\\.fb2\\(\\.zip\\)?\\'" . fb2-reader-mode))
