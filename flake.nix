@@ -149,27 +149,29 @@
             [ inputs.agenix.packages.${pkgs.system}.default ];
         })
       ];
-      llamaOverride = pkgs: llama:
-        import ./modules/with-native-optimizations.nix (llama.overrideAttrs
-          (old: {
-            postInstall = (old.postInstall or "") + ''
-              find $out/bin -type f ! -wholename '*/llama*' -exec ${pkgs.util-linux}/bin/rename "" 'llama-' {} \;
-            '';
-          }));
-      llamaDefault = { pkgs, ... }: {
+      llamaOverride = pkgs: config: llama:
+        import ./modules/with-native-optimizations.nix
+        config.networking.hostName (llama.overrideAttrs (old: {
+          postInstall = (old.postInstall or "") + ''
+            find $out/bin -type f ! -wholename '*/llama*' -exec ${pkgs.util-linux}/bin/rename "" 'llama-' {} \;
+          '';
+        }));
+      llamaDefault = { pkgs, config, ... }: {
         environment.systemPackages = [
-          (llamaOverride pkgs inputs.llama-cpp.packages.${pkgs.system}.default)
+          (llamaOverride pkgs config
+            inputs.llama-cpp.packages.${pkgs.system}.default)
         ];
       };
-      llamaOpencl = { pkgs, ... }: {
+      llamaOpencl = { pkgs, config, ... }: {
         environment.systemPackages = [
-          (llamaOverride pkgs inputs.llama-cpp.packages.${pkgs.system}.opencl)
+          (llamaOverride pkgs config
+            inputs.llama-cpp.packages.${pkgs.system}.opencl)
         ];
       };
       llamaRocm = gpuTargets:
-        { pkgs, ... }: {
+        { pkgs, config, ... }: {
           environment.systemPackages = [
-            (llamaOverride pkgs
+            (llamaOverride pkgs config
               (inputs.llama-cpp.packages.${pkgs.system}.rocm.override {
                 rocmGpuTargets = gpuTargets;
               }))
