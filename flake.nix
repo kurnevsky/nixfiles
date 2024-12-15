@@ -166,11 +166,15 @@
           (llamaOverride pkgs inputs.llama-cpp.packages.${pkgs.system}.opencl)
         ];
       };
-      llamaRocm = { pkgs, ... }: {
-        environment.systemPackages = [
-          (llamaOverride pkgs inputs.llama-cpp.packages.${pkgs.system}.rocm)
-        ];
-      };
+      llamaRocm = gpuTargets:
+        { pkgs, ... }: {
+          environment.systemPackages = [
+            (llamaOverride pkgs
+              (inputs.llama-cpp.packages.${pkgs.system}.rocm.override {
+                rocmGpuTargets = gpuTargets;
+              }))
+          ];
+        };
     in {
       nixosConfigurations = {
         dell = inputs.nixpkgs.lib.nixosSystem {
@@ -194,7 +198,7 @@
           modules = desktopModules ++ [
             ./machines/pc/configuration.nix
             ./machines/pc/hardware-configuration.nix
-            llamaRocm
+            (llamaRocm "gfx1100")
           ];
         };
         acer = inputs.nixpkgs.lib.nixosSystem {
