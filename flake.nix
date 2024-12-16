@@ -95,11 +95,12 @@
     };
   };
 
-  outputs = inputs:
+  outputs =
+    inputs:
     let
-      collectFlakeInputs = input:
-        [ input ] ++ builtins.concatMap collectFlakeInputs
-        (builtins.attrValues (input.inputs or { }));
+      collectFlakeInputs =
+        input:
+        [ input ] ++ builtins.concatMap collectFlakeInputs (builtins.attrValues (input.inputs or { }));
       users = {
         root = "root";
         kurnevsky = "kurnevsky";
@@ -117,7 +118,10 @@
         ./modules/common.nix
         ./modules/bfq.nix
         ./modules/overlays.nix
-        (for-all-home-users (with users; [ root kurnevsky ]) common-home)
+        (for-all-home-users (with users; [
+          root
+          kurnevsky
+        ]) common-home)
         # Keep flake inputs from being garbage collected
         { system.extraDependencies = collectFlakeInputs inputs.self; }
       ];
@@ -132,7 +136,13 @@
         }
         inputs.solaar.nixosModules.default
         (for-all-home-users (with users; [ ww ]) common-home)
-        (import ./modules/emacs.nix (with users; [ kurnevsky ww ]))
+        (import ./modules/emacs.nix (
+          with users;
+          [
+            kurnevsky
+            ww
+          ]
+        ))
         ./modules/desktop.nix
         ./modules/kde.nix
         ./modules/sandbox.nix
@@ -144,40 +154,53 @@
         ./modules/torbrowser.nix
         ./modules/nspawn.nix
         ./modules/zswap.nix
-        ({ pkgs, ... }: {
-          environment.systemPackages =
-            [ inputs.agenix.packages.${pkgs.system}.default ];
-        })
+        (
+          { pkgs, ... }:
+          {
+            environment.systemPackages = [ inputs.agenix.packages.${pkgs.system}.default ];
+          }
+        )
       ];
-      llamaOverride = pkgs: config: llama:
-        import ./modules/with-native-optimizations.nix
-        config.networking.hostName (llama.overrideAttrs (old: {
-          postInstall = (old.postInstall or "") + ''
-            find $out/bin -type f ! -wholename '*/llama*' -exec ${pkgs.util-linux}/bin/rename "" 'llama-' {} \;
-          '';
-        }));
-      llamaDefault = { pkgs, config, ... }: {
-        environment.systemPackages = [
-          (llamaOverride pkgs config
-            inputs.llama-cpp.packages.${pkgs.system}.default)
-        ];
-      };
-      llamaOpencl = { pkgs, config, ... }: {
-        environment.systemPackages = [
-          (llamaOverride pkgs config
-            inputs.llama-cpp.packages.${pkgs.system}.opencl)
-        ];
-      };
-      llamaRocm = gpuTargets:
-        { pkgs, config, ... }: {
+      llamaOverride =
+        pkgs: config: llama:
+        import ./modules/with-native-optimizations.nix config.networking.hostName (
+          llama.overrideAttrs (old: {
+            postInstall =
+              (old.postInstall or "")
+              + ''
+                find $out/bin -type f ! -wholename '*/llama*' -exec ${pkgs.util-linux}/bin/rename "" 'llama-' {} \;
+              '';
+          })
+        );
+      llamaDefault =
+        { pkgs, config, ... }:
+        {
           environment.systemPackages = [
-            (llamaOverride pkgs config
-              (inputs.llama-cpp.packages.${pkgs.system}.rocm.override {
-                rocmGpuTargets = gpuTargets;
-              }))
+            (llamaOverride pkgs config inputs.llama-cpp.packages.${pkgs.system}.default)
           ];
         };
-    in {
+      llamaOpencl =
+        { pkgs, config, ... }:
+        {
+          environment.systemPackages = [
+            (llamaOverride pkgs config inputs.llama-cpp.packages.${pkgs.system}.opencl)
+          ];
+        };
+      llamaRocm =
+        gpuTargets:
+        { pkgs, config, ... }:
+        {
+          environment.systemPackages = [
+            (llamaOverride pkgs config (
+              inputs.llama-cpp.packages.${pkgs.system}.rocm.override {
+                rocmGpuTargets = gpuTargets;
+              }
+            ))
+          ];
+        };
+    in
+    {
+      formatter.x86_64-linux = inputs.nixpkgs.legacyPackages.x86_64-linux.nixfmt-rfc-style;
       nixosConfigurations = {
         dell = inputs.nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
@@ -239,8 +262,7 @@
           system = "x86_64-linux";
           modules = [
             {
-              _module.args.rootfs =
-                inputs.self.nixosConfigurations.pinephone-vm.config.mobile.outputs.rootfs;
+              _module.args.rootfs = inputs.self.nixosConfigurations.pinephone-vm.config.mobile.outputs.rootfs;
             }
             (import "${inputs.mobile-nixos}/lib/configuration.nix" {
               device = "uefi-x86_64";
@@ -261,19 +283,17 @@
           ];
         };
       };
-      nixOnDroidConfigurations.default =
-        inputs.nix-on-droid.lib.nixOnDroidConfiguration {
-          pkgs = import inputs.nixpkgs { system = "aarch64-linux"; };
-          modules = [
-            ./modules/android.nix
-            ./machines/android/configuration.nix
-            { _module.args.emacs-overlay = inputs.emacs-overlay.overlay; }
-          ];
-        };
+      nixOnDroidConfigurations.default = inputs.nix-on-droid.lib.nixOnDroidConfiguration {
+        pkgs = import inputs.nixpkgs { system = "aarch64-linux"; };
+        modules = [
+          ./modules/android.nix
+          ./machines/android/configuration.nix
+          { _module.args.emacs-overlay = inputs.emacs-overlay.overlay; }
+        ];
+      };
       packages.x86_64-linux = {
         # nix build -L '/etc/nixos#phone-vm' && ./result -enable-kvm -smp 2
-        phone-vm =
-          inputs.self.nixosConfigurations.pinephone-vm.config.mobile.outputs.uefi.vm;
+        phone-vm = inputs.self.nixosConfigurations.pinephone-vm.config.mobile.outputs.uefi.vm;
         # nix build -L '/etc/nixos#phone-vm-encrypted' && ./result -enable-kvm -smp 2
         phone-vm-encrypted =
           inputs.self.nixosConfigurations.pinephone-vm-encrypted.config.mobile.outputs.uefi.vm;

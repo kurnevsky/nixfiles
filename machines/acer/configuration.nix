@@ -5,10 +5,12 @@
     cleanTmpDir = true;
     kernelPackages = pkgs.linuxPackages_latest;
     kernel.sysctl."kernel.sysrq" = 1;
-    kernelPatches = [{
-      name = "nouveau";
-      patch = ./nouveau.patch;
-    }];
+    kernelPatches = [
+      {
+        name = "nouveau";
+        patch = ./nouveau.patch;
+      }
+    ];
     loader.grub = {
       enable = true;
       device = "/dev/sda";
@@ -31,7 +33,11 @@
         # WireGuard
         51871
       ];
-      trustedInterfaces = [ "wg0" "icmp" "dns0" ];
+      trustedInterfaces = [
+        "wg0"
+        "icmp"
+        "dns0"
+      ];
     };
     wireguard.enable = true;
   };
@@ -130,22 +136,22 @@
     # Enable pam_systemd module to set dbus environment variable.
     pam.services.login.startSession = true;
     rtkit.enable = true;
-    sudo.extraRules = [{
-      runAs = "root";
-      users = [ "parents" ];
-      commands = [
-        {
-          command =
-            "/run/current-system/sw/bin/systemctl start iodine-digitalocean.service";
-          options = [ "NOPASSWD" ];
-        }
-        {
-          command =
-            "/run/current-system/sw/bin/systemctl start hans-digitalocean.service";
-          options = [ "NOPASSWD" ];
-        }
-      ];
-    }];
+    sudo.extraRules = [
+      {
+        runAs = "root";
+        users = [ "parents" ];
+        commands = [
+          {
+            command = "/run/current-system/sw/bin/systemctl start iodine-digitalocean.service";
+            options = [ "NOPASSWD" ];
+          }
+          {
+            command = "/run/current-system/sw/bin/systemctl start hans-digitalocean.service";
+            options = [ "NOPASSWD" ];
+          }
+        ];
+      }
+    ];
   };
 
   hardware = {
@@ -164,7 +170,10 @@
         isNormalUser = true;
         shell = pkgs.zsh;
         passwordFile = "/secrets/parents";
-        extraGroups = [ "audio" "video" ];
+        extraGroups = [
+          "audio"
+          "video"
+        ];
       };
       hans.group = "hans";
     };
@@ -200,22 +209,26 @@
             PrivateKeyFile = "/secrets/wg/private.key";
             ListenPort = 51871;
           };
-          wireguardPeers = [{
-            PublicKey = "5JHCxIYeZ50k7YJM+kLAbqGW4LAXpI5lycYEWSVxkBE=";
-            PresharedKeyFile = "/secrets/wg/preshared.psk";
-            AllowedIPs = "192.168.14.0/24";
-            Endpoint = "kurnevsky.net:51871";
-            PersistentKeepalive = 25;
-          }];
+          wireguardPeers = [
+            {
+              PublicKey = "5JHCxIYeZ50k7YJM+kLAbqGW4LAXpI5lycYEWSVxkBE=";
+              PresharedKeyFile = "/secrets/wg/preshared.psk";
+              AllowedIPs = "192.168.14.0/24";
+              Endpoint = "kurnevsky.net:51871";
+              PersistentKeepalive = 25;
+            }
+          ];
         };
       };
       networks."99-wg0" = {
         name = "wg0";
         address = [ "192.168.14.4/32" ];
-        routes = [{
-          Destination = "192.168.14.0/24";
-          Scope = "link";
-        }];
+        routes = [
+          {
+            Destination = "192.168.14.0/24";
+            Scope = "link";
+          }
+        ];
       };
     };
   };
@@ -237,10 +250,8 @@
         Service = {
           Type = "simple";
           # wait for Xorg started by ${USER}
-          ExecStartPre =
-            "${pkgs.bash}/bin/sh -c 'while ! ${pkgs.procps}/bin/pgrep -U \"$USER\" plasmashell; do ${pkgs.coreutils}/bin/sleep 2; done'";
-          ExecStart =
-            "${pkgs.tigervnc}/bin/x0vncserver -rfbauth /home/\${USER}/.vnc/passwd";
+          ExecStartPre = "${pkgs.bash}/bin/sh -c 'while ! ${pkgs.procps}/bin/pgrep -U \"$USER\" plasmashell; do ${pkgs.coreutils}/bin/sleep 2; done'";
+          ExecStart = "${pkgs.tigervnc}/bin/x0vncserver -rfbauth /home/\${USER}/.vnc/passwd";
         };
         Install.WantedBy = [ "default.target" ];
       };

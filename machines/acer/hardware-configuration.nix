@@ -1,12 +1,23 @@
-{ config, lib, modulesPath, ... }:
+{
+  config,
+  lib,
+  modulesPath,
+  ...
+}:
 
 {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
   boot = {
     initrd = {
-      availableKernelModules =
-        [ "uhci_hcd" "ehci_pci" "ahci" "usb_storage" "sd_mod" "sr_mod" ];
+      availableKernelModules = [
+        "uhci_hcd"
+        "ehci_pci"
+        "ahci"
+        "usb_storage"
+        "sd_mod"
+        "sr_mod"
+      ];
       kernelModules = [ "dm-snapshot" ];
     };
     kernelModules = [ ];
@@ -29,9 +40,7 @@
     };
   };
 
-  swapDevices =
-    [{ device = "/dev/disk/by-uuid/e15e4a3e-c561-4511-83a0-db50009d2349"; }];
+  swapDevices = [ { device = "/dev/disk/by-uuid/e15e4a3e-c561-4511-83a0-db50009d2349"; } ];
 
-  hardware.cpu.intel.updateMicrocode =
-    lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }

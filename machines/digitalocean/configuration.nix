@@ -1,16 +1,28 @@
-{ lib, pkgs, config, ... }: {
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
+{
   boot.tmp.cleanOnBoot = true;
 
-  swapDevices = [{
-    device = "/swap";
-    size = 1024;
-  }];
+  swapDevices = [
+    {
+      device = "/swap";
+      size = 1024;
+    }
+  ];
 
   networking = {
     hostName = "digitalocean";
     nat = {
       enable = true;
-      internalInterfaces = [ "wg0" "icmp" "dns0" ];
+      internalInterfaces = [
+        "wg0"
+        "icmp"
+        "dns0"
+      ];
     };
     firewall = {
       enable = true;
@@ -50,36 +62,35 @@
         # Yggdrasil
         42853
       ];
-      trustedInterfaces = [ "wg0" "icmp" "dns0" ];
+      trustedInterfaces = [
+        "wg0"
+        "icmp"
+        "dns0"
+      ];
     };
     wireguard.interfaces.wg0 = {
       ips = [ "192.168.14.1/32" ];
       listenPort = 51871;
-      privateKeyFile =
-        config.age.secrets.wg-private.path or "/secrets/wg/private.key";
+      privateKeyFile = config.age.secrets.wg-private.path or "/secrets/wg/private.key";
       peers = [
         {
           publicKey = "aRD0dqodCPyqTklk0KinKiTXYTnIBXZ0WFKy/q0dhQo=";
-          presharedKeyFile =
-            config.age.secrets.wg-preshared-home.path or "/secrets/wg/home.psk";
+          presharedKeyFile = config.age.secrets.wg-preshared-home.path or "/secrets/wg/home.psk";
           allowedIPs = [ "192.168.14.2/32" ];
         }
         {
           publicKey = "v69zSw9Ny+ym3DReKRh0gt+Ecc2rcTyKsieqnVZ/PwE=";
-          presharedKeyFile =
-            config.age.secrets.wg-preshared-work.path or "/secrets/wg/work.psk";
+          presharedKeyFile = config.age.secrets.wg-preshared-work.path or "/secrets/wg/work.psk";
           allowedIPs = [ "192.168.14.3/32" ];
         }
         {
           publicKey = "7Do1rDKMm8dZLgChf8pkS57Cg2A/jEj0JhNEfu0YTHM=";
-          presharedKeyFile =
-            config.age.secrets.wg-preshared-parents.path or "/secrets/wg/parents.psk";
+          presharedKeyFile = config.age.secrets.wg-preshared-parents.path or "/secrets/wg/parents.psk";
           allowedIPs = [ "192.168.14.4/32" ];
         }
         {
           publicKey = "il0KQKwE2+clYFXJT/2mLoC3sRudP3B4g/GR45vlP2E=";
-          presharedKeyFile =
-            config.age.secrets.wg-preshared-pc.path or "/secrets/wg/pc.psk";
+          presharedKeyFile = config.age.secrets.wg-preshared-pc.path or "/secrets/wg/pc.psk";
           allowedIPs = [ "192.168.14.5/32" ];
         }
       ];
@@ -100,7 +111,11 @@
     do-agent.enable = true;
     postgresql = {
       enable = true;
-      ensureDatabases = [ "tt_rss" "stalwart-mail" "kropki" ];
+      ensureDatabases = [
+        "tt_rss"
+        "stalwart-mail"
+        "kropki"
+      ];
       ensureUsers = [
         {
           name = "tt_rss";
@@ -160,7 +175,13 @@
           private-key = "%{env:DKIM_KEY}%";
           domain = "kropki.org";
           selector = "default";
-          headers = [ "From" "To" "Date" "Subject" "Message-ID" ];
+          headers = [
+            "From"
+            "To"
+            "Date"
+            "Subject"
+            "Message-ID"
+          ];
           algorithm = "ed25519-sha256";
           canonicalization = "simple/simple";
           set-body-length = true;
@@ -243,62 +264,63 @@
         fastcgi_param HTTP_HOST $host;
       '';
       virtualHosts = {
-        "kurnevsky.net" = let
-          index =
-            pkgs.writeTextDir "index.html" (builtins.readFile ./index.html);
-          robots = pkgs.writeTextDir "robots.txt" ''
-            User-agent: *
-            Disallow: /
-          '';
-          root = pkgs.symlinkJoin {
-            name = "root";
-            paths = [ index robots ];
+        "kurnevsky.net" =
+          let
+            index = pkgs.writeTextDir "index.html" (builtins.readFile ./index.html);
+            robots = pkgs.writeTextDir "robots.txt" ''
+              User-agent: *
+              Disallow: /
+            '';
+            root = pkgs.symlinkJoin {
+              name = "root";
+              paths = [
+                index
+                robots
+              ];
+            };
+          in
+          {
+            default = true;
+            http3 = true;
+            quic = true;
+            enableACME = true;
+            forceSSL = true;
+            kTLS = true;
+            root = "${root}";
+            locations = {
+              "= /tt-rss".return = "301 $request_uri/";
+              "/tt-rss/" = {
+                alias = "${config.services.tt-rss.root}/www/";
+                index = "index.php";
+              };
+              "^~ /tt-rss/feed-icons/".alias = "${config.services.tt-rss.root}/feed-icons/";
+              "~ /tt-rss/.+\\.php$" = {
+                alias = "${config.services.tt-rss.root}/www/";
+                extraConfig = ''
+                  fastcgi_split_path_info ^/tt-rss/(.+\.php)(.*)$;
+                  fastcgi_pass unix:${config.services.phpfpm.pools.${config.services.tt-rss.pool}.socket};
+                  fastcgi_index index.php;
+                '';
+              };
+              "/wssh" = {
+                proxyPass = "http://localhost:58546";
+                proxyWebsockets = true;
+              };
+              "/wswg" = {
+                proxyPass = "http://localhost:57411";
+                proxyWebsockets = true;
+              };
+              "/_matrix" = {
+                proxyPass = "http://localhost:6167";
+                proxyWebsockets = true;
+              };
+              "/static/" = {
+                alias = "/srv/www/";
+                tryFiles = "$uri =404";
+                extraConfig = "expires 24h;";
+              };
+            };
           };
-        in {
-          default = true;
-          http3 = true;
-          quic = true;
-          enableACME = true;
-          forceSSL = true;
-          kTLS = true;
-          root = "${root}";
-          locations = {
-            "= /tt-rss".return = "301 $request_uri/";
-            "/tt-rss/" = {
-              alias = "${config.services.tt-rss.root}/www/";
-              index = "index.php";
-            };
-            "^~ /tt-rss/feed-icons/".alias =
-              "${config.services.tt-rss.root}/feed-icons/";
-            "~ /tt-rss/.+\\.php$" = {
-              alias = "${config.services.tt-rss.root}/www/";
-              extraConfig = ''
-                fastcgi_split_path_info ^/tt-rss/(.+\.php)(.*)$;
-                fastcgi_pass unix:${
-                  config.services.phpfpm.pools.${config.services.tt-rss.pool}.socket
-                };
-                fastcgi_index index.php;
-              '';
-            };
-            "/wssh" = {
-              proxyPass = "http://localhost:58546";
-              proxyWebsockets = true;
-            };
-            "/wswg" = {
-              proxyPass = "http://localhost:57411";
-              proxyWebsockets = true;
-            };
-            "/_matrix" = {
-              proxyPass = "http://localhost:6167";
-              proxyWebsockets = true;
-            };
-            "/static/" = {
-              alias = "/srv/www/";
-              tryFiles = "$uri =404";
-              extraConfig = "expires 24h;";
-            };
-          };
-        };
         "kropki.org" = {
           http3 = true;
           quic = true;
@@ -327,14 +349,14 @@
           http3 = true;
           quic = true;
           onlySSL = true;
-          sslCertificate = "${
-              config.security.acme.certs."kurnevsky.net".directory
-            }/fullchain.pem";
-          sslCertificateKey =
-            "${config.security.acme.certs."kurnevsky.net".directory}/key.pem";
+          sslCertificate = "${config.security.acme.certs."kurnevsky.net".directory}/fullchain.pem";
+          sslCertificateKey = "${config.security.acme.certs."kurnevsky.net".directory}/key.pem";
           kTLS = true;
           listen = lib.cartesianProduct {
-            addr = [ "0.0.0.0" "[::0]" ];
+            addr = [
+              "0.0.0.0"
+              "[::0]"
+            ];
             port = [ 8448 ];
             ssl = [ true ];
           };
@@ -366,7 +388,10 @@
           "tls://ygg.mkg20001.io:443"
           "quic://vpn.itrus.su:7993"
         ];
-        Listen = [ "tls://0.0.0.0:42853" "quic://0.0.0.0:42853" ];
+        Listen = [
+          "tls://0.0.0.0:42853"
+          "quic://0.0.0.0:42853"
+        ];
       };
       persistentKeys = true;
     };
@@ -382,8 +407,7 @@
   systemd.services = {
     stalwart-mail.serviceConfig = {
       RestrictAddressFamilies = [ "AF_UNIX" ];
-      EnvironmentFile =
-        "${config.age.secrets.stalwart.path or "/secrets/stalwart"}";
+      EnvironmentFile = "${config.age.secrets.stalwart.path or "/secrets/stalwart"}";
     };
     tox-node.serviceConfig.SupplementaryGroups = "secrets-tox";
     kropki = {
@@ -398,8 +422,7 @@
         PrivateTmp = true;
         ProtectSystem = "strict";
         Environment = [ "POSTGRES_SOCKET=/var/run/postgresql" ];
-        EnvironmentFile =
-          "${config.age.secrets.kropki.path or "/secrets/kropki"}";
+        EnvironmentFile = "${config.age.secrets.kropki.path or "/secrets/kropki"}";
         ExecStart = "${pkgs.callPackage ./kropki-server.nix { }}/bin/kropki";
       };
     };
@@ -417,7 +440,10 @@
       };
     };
     groups = {
-      acme.members = [ "nginx" "stalwart-mail" ];
+      acme.members = [
+        "nginx"
+        "stalwart-mail"
+      ];
       hans = { };
       secrets-tox = { };
       kropki = { };

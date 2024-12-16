@@ -14,49 +14,70 @@
       acpi_call
       v4l2loopback
     ];
-    kernelModules = [ "v4l2loopback" "acpi_call" ];
+    kernelModules = [
+      "v4l2loopback"
+      "acpi_call"
+    ];
     tmp.tmpfsSize = "87%";
     binfmt.emulatedSystems = [ "aarch64-linux" ];
   };
 
   fileSystems = {
-    "/".options = [ "noatime" "nodiratime" "compress=zstd:3" ];
-    "/home".options = [ "noatime" "nodiratime" "compress=zstd:3" ];
-    "/home/kurnevsky/data".options =
-      [ "noatime" "nodiratime" "compress=zstd:3" "nofail" ];
+    "/".options = [
+      "noatime"
+      "nodiratime"
+      "compress=zstd:3"
+    ];
+    "/home".options = [
+      "noatime"
+      "nodiratime"
+      "compress=zstd:3"
+    ];
+    "/home/kurnevsky/data".options = [
+      "noatime"
+      "nodiratime"
+      "compress=zstd:3"
+      "nofail"
+    ];
   };
 
-  swapDevices = [{
-    device = "/dev/nvme0n1p2";
-    randomEncryption = {
-      enable = true;
-      allowDiscards = true;
-    };
-    discardPolicy = "both";
-  }];
+  swapDevices = [
+    {
+      device = "/dev/nvme0n1p2";
+      randomEncryption = {
+        enable = true;
+        allowDiscards = true;
+      };
+      discardPolicy = "both";
+    }
+  ];
 
   environment.systemPackages = with pkgs; [
     radeontop
-    (import ../../modules/with-native-optimizations.nix
-      config.networking.hostName
-      (pkgs.callPackage ../../modules/stable-diffusion-cpp.nix {
+    (import ../../modules/with-native-optimizations.nix config.networking.hostName (
+      pkgs.callPackage ../../modules/stable-diffusion-cpp.nix {
         useRocm = true;
         gpuTargets = "gfx1100";
-      }))
-    ((python3.withPackages (pkgs:
-      with pkgs; [
-        # TODO: broken
-        # torchWithRocm
-        torch
-        transformers
-        sentencepiece
-        sacremoses
-        torchvision
-        diffusers
-        accelerate
-        peft
-        (callPackage ./compel.nix { })
-      ])).override { ignoreCollisions = true; })
+      }
+    ))
+    (
+      (python3.withPackages (
+        pkgs: with pkgs; [
+          # TODO: broken
+          # torchWithRocm
+          torch
+          transformers
+          sentencepiece
+          sacremoses
+          torchvision
+          diffusers
+          accelerate
+          peft
+          (callPackage ./compel.nix { })
+        ]
+      )).override
+      { ignoreCollisions = true; }
+    )
   ];
 
   networking.hostName = "pc";
@@ -79,10 +100,16 @@
   services = {
     btrfs.autoScrub = {
       enable = true;
-      fileSystems = [ "/" "/home/kurnevsky/data" ];
+      fileSystems = [
+        "/"
+        "/home/kurnevsky/data"
+      ];
     };
     xserver = {
-      videoDrivers = [ "intel" "amdgpu" ];
+      videoDrivers = [
+        "intel"
+        "amdgpu"
+      ];
       deviceSection = ''
         Option "TearFree" "true"
       '';

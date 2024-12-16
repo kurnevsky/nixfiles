@@ -4,17 +4,22 @@ let
   subnet = "192.168.43";
   controlPort = 37404;
   socksPort = 41718;
-in {
+in
+{
   services.tor.settings = {
-    ControlPort = [{
-      addr = "${subnet}.1";
-      port = controlPort;
-    }];
-    SOCKSPort = [{
-      addr = "${subnet}.1";
-      port = socksPort;
-      IsolateDestAddr = true;
-    }];
+    ControlPort = [
+      {
+        addr = "${subnet}.1";
+        port = controlPort;
+      }
+    ];
+    SOCKSPort = [
+      {
+        addr = "${subnet}.1";
+        port = socksPort;
+        IsolateDestAddr = true;
+      }
+    ];
   };
 
   systemd.services = {
@@ -35,12 +40,17 @@ in {
         ${iproute2}/bin/ip netns exec torbrowser ${iproute2}/bin/ip addr add ${subnet}.2/24 dev in-torbrowser
         ${iproute2}/bin/ip netns exec torbrowser ${iproute2}/bin/ip link set in-torbrowser up
       '';
-      serviceConfig = { Type = "oneshot"; };
+      serviceConfig = {
+        Type = "oneshot";
+      };
       restartIfChanged = false;
       stopIfChanged = false;
     };
     tor.requires = [ "torbrowser-ns.service" ];
   };
 
-  networking.firewall.allowedTCPPorts = [ controlPort socksPort ];
+  networking.firewall.allowedTCPPorts = [
+    controlPort
+    socksPort
+  ];
 }

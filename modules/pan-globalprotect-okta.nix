@@ -13,7 +13,11 @@ python3Packages.buildPythonPackage rec {
     sha256 = "sha256-ptS++IhGeQjBuwK/VzODDwmFvWYljBlkL+52X8BuUS4=";
   };
 
-  propagatedBuildInputs = with python3Packages; [ requests lxml pyotp ];
+  propagatedBuildInputs = with python3Packages; [
+    requests
+    lxml
+    pyotp
+  ];
 
   installPhase = ''
     mkdir -p $out/bin

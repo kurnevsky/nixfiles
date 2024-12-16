@@ -55,17 +55,16 @@ let
     =UgmI
     -----END PGP PUBLIC KEY BLOCK-----
   '';
-  gpgKeyring =
-    pkgs.runCommand "gpg-keyring" { buildInputs = [ pkgs.gnupg ]; } ''
-      mkdir -p $out
-      export GNUPGHOME=$out
-      gpg --no-default-keyring --keyring=$out/import-pubring.gpg --fingerprint
-      gpg --no-default-keyring --keyring=$out/import-pubring.gpg --import <<< '${key}'
-      rm $out/S.scdaemon $out/S.gpg-agent $out/S.gpg-agent.*
-    '';
-in {
-  environment.etc."systemd/import-pubring.gpg".source =
-    "${gpgKeyring}/import-pubring.gpg";
+  gpgKeyring = pkgs.runCommand "gpg-keyring" { buildInputs = [ pkgs.gnupg ]; } ''
+    mkdir -p $out
+    export GNUPGHOME=$out
+    gpg --no-default-keyring --keyring=$out/import-pubring.gpg --fingerprint
+    gpg --no-default-keyring --keyring=$out/import-pubring.gpg --import <<< '${key}'
+    rm $out/S.scdaemon $out/S.gpg-agent $out/S.gpg-agent.*
+  '';
+in
+{
+  environment.etc."systemd/import-pubring.gpg".source = "${gpgKeyring}/import-pubring.gpg";
   systemd = {
     targets.machines.enable = true;
     nspawn."archlinux" = {

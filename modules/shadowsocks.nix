@@ -24,9 +24,9 @@ let
       }
     ];
   };
-  shadowsocksConfigFile =
-    pkgs.writeText "shadowsocks.json" (builtins.toJSON shadowsocksConfig);
-in {
+  shadowsocksConfigFile = pkgs.writeText "shadowsocks.json" (builtins.toJSON shadowsocksConfig);
+in
+{
   systemd.services.shadowsocks-client = {
     description = "Shadowsocks client service";
     after = [ "network-online.target" ];

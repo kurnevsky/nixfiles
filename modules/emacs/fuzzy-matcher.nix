@@ -3,7 +3,8 @@
 let
   version = "0.0.1";
   pname = "fuzzy-matcher";
-in rustPlatform.buildRustPackage {
+in
+rustPlatform.buildRustPackage {
   inherit pname version;
 
   src = ./fuzzy-matcher;

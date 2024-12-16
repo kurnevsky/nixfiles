@@ -1,12 +1,23 @@
-{ config, lib, modulesPath, ... }:
+{
+  config,
+  lib,
+  modulesPath,
+  ...
+}:
 
 {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
   boot = {
     initrd = {
-      availableKernelModules =
-        [ "vmd" "xhci_pci" "ahci" "nvme" "usbhid" "sd_mod" ];
+      availableKernelModules = [
+        "vmd"
+        "xhci_pci"
+        "ahci"
+        "nvme"
+        "usbhid"
+        "sd_mod"
+      ];
       kernelModules = [ ];
       luks.devices = {
         root.device = "/dev/disk/by-uuid/ff379d89-c2c8-4324-9310-3a7150e312ae";
@@ -52,6 +63,5 @@
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
-  hardware.cpu.intel.updateMicrocode =
-    lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }

@@ -1,15 +1,24 @@
-{ config, lib, modulesPath, ... }:
+{
+  config,
+  lib,
+  modulesPath,
+  ...
+}:
 
 {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
   boot = {
     initrd = {
-      availableKernelModules =
-        [ "xhci_pci" "nvme" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
+      availableKernelModules = [
+        "xhci_pci"
+        "nvme"
+        "usb_storage"
+        "sd_mod"
+        "rtsx_pci_sdmmc"
+      ];
       kernelModules = [ ];
-      luks.devices.root.device =
-        "/dev/disk/by-uuid/149788f1-7814-4ad5-8938-0bfc5981cebe";
+      luks.devices.root.device = "/dev/disk/by-uuid/149788f1-7814-4ad5-8938-0bfc5981cebe";
     };
     kernelModules = [ "kvm-intel" ];
     extraModulePackages = [ ];
@@ -36,6 +45,5 @@
   swapDevices = [ ];
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
-  hardware.cpu.intel.updateMicrocode =
-    lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }

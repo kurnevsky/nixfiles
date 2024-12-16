@@ -27,4 +27,5 @@ let
   hex = builtins.substring 0 8 hash;
   number = (builtins.fromTOML "n = 0x${hex}").n;
   index = number - (number / length) * length;
-in builtins.elemAt messages index
+in
+builtins.elemAt messages index

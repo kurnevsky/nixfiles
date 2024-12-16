@@ -2,8 +2,10 @@ users:
 
 { lib, pkgs, ... }:
 
-let emacs = pkgs.callPackage ./emacs/package.nix { emacs = pkgs.emacs29-pgtk; };
-in lib.mkMerge [
+let
+  emacs = pkgs.callPackage ./emacs/package.nix { emacs = pkgs.emacs29-pgtk; };
+in
+lib.mkMerge [
   {
     services.emacs = {
       enable = true;

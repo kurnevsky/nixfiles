@@ -1,4 +1,5 @@
-{ lib, ... }: {
+{ lib, ... }:
+{
   # This file was populated at runtime with the networking
   # details gathered from the active system.
   networking = {
@@ -29,14 +30,18 @@
             prefixLength = 64;
           }
         ];
-        ipv4.routes = [{
-          address = "82.196.15.1";
-          prefixLength = 32;
-        }];
-        ipv6.routes = [{
-          address = "2a03:b0c0:0:1010::1";
-          prefixLength = 128;
-        }];
+        ipv4.routes = [
+          {
+            address = "82.196.15.1";
+            prefixLength = 32;
+          }
+        ];
+        ipv6.routes = [
+          {
+            address = "2a03:b0c0:0:1010::1";
+            prefixLength = 128;
+          }
+        ];
       };
     };
   };

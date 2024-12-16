@@ -6,7 +6,11 @@
     "/" = {
       device = "/dev/disk/by-uuid/8cbb77f4-24f7-4c9c-9ea4-23d4236cb64c";
       fsType = "btrfs";
-      options = [ "noatime" "nodiratime" "compress=zstd:3" ];
+      options = [
+        "noatime"
+        "nodiratime"
+        "compress=zstd:3"
+      ];
     };
   };
 

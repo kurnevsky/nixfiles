@@ -1,18 +1,29 @@
-{ config, lib, pkgs, emacs-overlay, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  emacs-overlay,
+  ...
+}:
 
 let
-  applyOverlays = pkgs:
-    lib.foldl (pkg: pkg.extend) pkgs ((import ./overlays.nix).nixpkgs.overlays
-      ++ (pkgs.callPackage ./patches.nix { }).nixpkgs.overlays);
+  applyOverlays =
+    pkgs:
+    lib.foldl (pkg: pkg.extend) pkgs (
+      (import ./overlays.nix).nixpkgs.overlays ++ (pkgs.callPackage ./patches.nix { }).nixpkgs.overlays
+    );
   patchedPkgs = applyOverlays pkgs;
   emacsPkgs = patchedPkgs.extend emacs-overlay;
   emacsWithPackages = emacsPkgs.callPackage ./emacs/package.nix {
     emacs = emacsPkgs.emacs29-nox;
   };
-in {
+in
+{
   nix = {
-    substituters =
-      [ "https://cachix.cachix.org" "https://nix-community.cachix.org" ];
+    substituters = [
+      "https://cachix.cachix.org"
+      "https://nix-community.cachix.org"
+    ];
     trustedPublicKeys = [
       "cachix.cachix.org-1:eWNHQldwUO7G2VkjpnjDbWwy4KQ/HNxht7H4SSoMckM="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
@@ -56,28 +67,28 @@ in {
   ];
 
   terminal.font = "${
-      let
-        pkgs86 = import patchedPkgs.path { system = "x86_64-linux"; };
-        patchedPkgs86 = applyOverlays pkgs86;
-        iosevka-custom = patchedPkgs86.callPackage ./iosevka.nix { };
-        iosevka-term = iosevka-custom "Term" false;
-      in patchedPkgs86.callPackage ./nerd-font-patch.nix { } iosevka-term
-    }/share/fonts/truetype/IosevkaTerm-Regular.ttf";
+    let
+      pkgs86 = import patchedPkgs.path { system = "x86_64-linux"; };
+      patchedPkgs86 = applyOverlays pkgs86;
+      iosevka-custom = patchedPkgs86.callPackage ./iosevka.nix { };
+      iosevka-term = iosevka-custom "Term" false;
+    in
+    patchedPkgs86.callPackage ./nerd-font-patch.nix { } iosevka-term
+  }/share/fonts/truetype/IosevkaTerm-Regular.ttf";
 
   user.shell = "${patchedPkgs.zsh}/bin/zsh";
 
   build.activation.termux = ''
     mkdir -p ~/.termux/
     rm -rf ~/.termux/termux.properties
-    cp ${config.build.installationDir}/${
-      ./termux.properties
-    } ~/.termux/termux.properties
+    cp ${config.build.installationDir}/${./termux.properties} ~/.termux/termux.properties
   '';
 
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
-    config = args@{ pkgs, ... }:
+    config =
+      args@{ pkgs, ... }:
       lib.mkMerge [
         {
           # Override default prompt as it doesn't work good in Midnigt Commander

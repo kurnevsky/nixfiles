@@ -1,4 +1,8 @@
-{ lib, fetchFromGitHub, python311Packages }:
+{
+  lib,
+  fetchFromGitHub,
+  python311Packages,
+}:
 
 python311Packages.buildPythonPackage rec {
   pname = "cloud-mdir-sync";

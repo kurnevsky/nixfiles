@@ -22,7 +22,8 @@ let
     stream_localhost off
     stream_auth_method 2
   '';
-in {
+in
+{
   networking.firewall.allowedTCPPorts = [ 8081 ];
 
   users = {
@@ -54,9 +55,7 @@ in {
       ReadWritePaths = homeDir;
     };
     script = ''
-      cat ${motion-config} ${
-        config.age.secrets.motion.path or "/secrets/motion"
-      } > /tmp/motion.conf
+      cat ${motion-config} ${config.age.secrets.motion.path or "/secrets/motion"} > /tmp/motion.conf
       exec ${pkgs.motion}/bin/motion -n -c /tmp/motion.conf
     '';
   };

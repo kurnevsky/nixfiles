@@ -21,22 +21,35 @@
       acpi_call
       v4l2loopback
     ];
-    kernelModules = [ "v4l2loopback" "acpi_call" ];
+    kernelModules = [
+      "v4l2loopback"
+      "acpi_call"
+    ];
   };
 
   fileSystems = {
-    "/".options = [ "noatime" "nodiratime" "compress=zstd:3" ];
-    "/home".options = [ "noatime" "nodiratime" "compress=zstd:3" ];
+    "/".options = [
+      "noatime"
+      "nodiratime"
+      "compress=zstd:3"
+    ];
+    "/home".options = [
+      "noatime"
+      "nodiratime"
+      "compress=zstd:3"
+    ];
   };
 
-  swapDevices = [{
-    device = "/dev/sda2";
-    randomEncryption = {
-      enable = true;
-      allowDiscards = true;
-    };
-    discardPolicy = "both";
-  }];
+  swapDevices = [
+    {
+      device = "/dev/sda2";
+      randomEncryption = {
+        enable = true;
+        allowDiscards = true;
+      };
+      discardPolicy = "both";
+    }
+  ];
 
   networking.hostName = "dell";
 
@@ -61,16 +74,21 @@
       ACTION=="add|change", SUBSYSTEM=="usb", TEST=="power/control", ATTR{idVendor}=="0cf3", ATTR{idProduct}=="0036", ATTR{power/control}="on"
     '';
     xserver = {
-      videoDrivers = [ "intel" "amdgpu" ];
+      videoDrivers = [
+        "intel"
+        "amdgpu"
+      ];
       deviceSection = ''
         Option "TearFree" "true"
       '';
-      displayManager.sessionCommands = let
-        layout = pkgs.writeText "xkb-layout" ''
-          ! Bind right super key as menu.
-          keycode 134 = Menu
-        '';
-      in "${pkgs.xorg.xmodmap}/bin/xmodmap ${layout}";
+      displayManager.sessionCommands =
+        let
+          layout = pkgs.writeText "xkb-layout" ''
+            ! Bind right super key as menu.
+            keycode 134 = Menu
+          '';
+        in
+        "${pkgs.xorg.xmodmap}/bin/xmodmap ${layout}";
     };
   };
 

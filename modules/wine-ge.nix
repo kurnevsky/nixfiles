@@ -1,11 +1,20 @@
-{ pkgs, pkgsi686Linux, callPackage, fetchFromGitHub, stdenv_32bit, pkgsCross, ... }:
+{
+  pkgs,
+  pkgsi686Linux,
+  callPackage,
+  fetchFromGitHub,
+  stdenv_32bit,
+  pkgsCross,
+  ...
+}:
 
 let
   sources =
     (import "${pkgs.path}/pkgs/applications/emulators/wine/sources.nix" {
       inherit pkgs;
     }).unstable;
-in callPackage "${pkgs.path}/pkgs/applications/emulators/wine/base.nix" rec {
+in
+callPackage "${pkgs.path}/pkgs/applications/emulators/wine/base.nix" rec {
   pname = "wine-ge";
   version = "Proton8-26";
   src = fetchFromGitHub {
@@ -18,8 +27,14 @@ in callPackage "${pkgs.path}/pkgs/applications/emulators/wine/base.nix" rec {
   moltenvk = pkgs.moltenvk;
   patches = [ ];
   stdenv = stdenv_32bit;
-  pkgArches = [ pkgs pkgsi686Linux ];
-  geckos = with sources; [ gecko32 gecko64 ];
+  pkgArches = [
+    pkgs
+    pkgsi686Linux
+  ];
+  geckos = with sources; [
+    gecko32
+    gecko64
+  ];
   mingwGccs = with pkgsCross; [
     mingw32.buildPackages.gcc
     mingwW64.buildPackages.gcc

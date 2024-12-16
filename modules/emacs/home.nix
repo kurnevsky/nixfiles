@@ -60,7 +60,8 @@ let
     cp ./.config/emacs/package-quickstart.el "$out"
     cp ./.config/emacs/package-quickstart.elc "$out"
   '';
-in {
+in
+{
   home.file = {
     ".config/emacs/early-init.el".source = ./early-init.el;
     ".config/emacs/early-init.elc".source = elc-early-config;

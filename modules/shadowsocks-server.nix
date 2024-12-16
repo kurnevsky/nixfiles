@@ -8,9 +8,9 @@ let
     mode = "tcp_and_udp";
     fast_open = true;
   };
-  shadowsocksConfigFile =
-    pkgs.writeText "shadowsocks.json" (builtins.toJSON shadowsocksConfig);
-in {
+  shadowsocksConfigFile = pkgs.writeText "shadowsocks.json" (builtins.toJSON shadowsocksConfig);
+in
+{
   systemd.services.shadowsocks-server = {
     description = "Shadowsocks server service";
     after = [ "network-online.target" ];

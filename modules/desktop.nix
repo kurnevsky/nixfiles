@@ -38,13 +38,20 @@
         # Yggdrasil multicast
         17606
       ];
-      trustedInterfaces = [ "wg0" "icmp" "dns0" ];
+      trustedInterfaces = [
+        "wg0"
+        "icmp"
+        "dns0"
+      ];
     };
     wireguard.enable = true;
   };
 
-  i18n.supportedLocales =
-    [ "C.UTF-8/UTF-8" "en_US.UTF-8/UTF-8" "ru_RU.UTF-8/UTF-8" ];
+  i18n.supportedLocales = [
+    "C.UTF-8/UTF-8"
+    "en_US.UTF-8/UTF-8"
+    "ru_RU.UTF-8/UTF-8"
+  ];
 
   console = {
     packages = with pkgs; [ terminus_font ];
@@ -54,8 +61,10 @@
   };
 
   environment = {
-    systemPackages = with pkgs;
-      with sandboxed; [
+    systemPackages =
+      with pkgs;
+      with sandboxed;
+      [
         (wrapOBS {
           plugins = with obs-studio-plugins; [
             obs-gstreamer
@@ -95,8 +104,19 @@
         dxvk.out
         zathura
         # CLI utils
-        (aspellWithDicts (dicts: with dicts; [ en ru ]))
-        (hunspellWithDicts (with hunspellDicts; [ en_US ru_RU ]))
+        (aspellWithDicts (
+          dicts: with dicts; [
+            en
+            ru
+          ]
+        ))
+        (hunspellWithDicts (
+          with hunspellDicts;
+          [
+            en_US
+            ru_RU
+          ]
+        ))
         aircrack-ng
         ansible
         ansible-lint
@@ -318,7 +338,12 @@
         maxima
         wxmaxima
         octave
-        (rWrapper.override { packages = with rPackages; [ styler ggplot2 ]; })
+        (rWrapper.override {
+          packages = with rPackages; [
+            styler
+            ggplot2
+          ];
+        })
         ## Markdown
         nodePackages.markdownlint-cli
         marksman
@@ -347,13 +372,15 @@
   };
 
   fonts = {
-    packages = with pkgs;
+    packages =
+      with pkgs;
       let
         iosevka-custom = callPackage ./iosevka.nix { };
         iosevka-term = iosevka-custom "Term" false;
         iosevka-normal = iosevka-custom "Normal" true;
         iosevka-quasi-proportional = iosevka-custom "Quasi-Proportional" true;
-      in [
+      in
+      [
         iosevka-term
         iosevka-normal
         iosevka-quasi-proportional
@@ -416,12 +443,14 @@
           "tls://box.paulll.cc:13338"
           "tls://pl1.servers.devices.cwinfo.net:11129"
         ];
-        MulticastInterfaces = [{
-          Regex = "(en|wl).*";
-          Beacon = true;
-          Listen = true;
-          Port = 17606;
-        }];
+        MulticastInterfaces = [
+          {
+            Regex = "(en|wl).*";
+            Beacon = true;
+            Listen = true;
+            Port = 17606;
+          }
+        ];
       };
       openMulticastPort = true;
       persistentKeys = true;
@@ -484,7 +513,7 @@
       };
       settings = {
         Socks5Proxy = "127.0.0.1:1080";
-        ControlPort = [{ port = 9051; }];
+        ControlPort = [ { port = 9051; } ];
         CookieAuthentication = true;
         CookieAuthFileGroupReadable = true;
       };
@@ -536,22 +565,23 @@
       dbus.wantedBy = [ "default.target" ];
       docker.wantedBy = pkgs.lib.mkForce [ ];
       # It caches java path there.
-      bloop.serviceConfig.ExecStartPre =
-        "${pkgs.coreutils}/bin/rm -rf %h/.bloop/";
-      cloud-mdir-sync = let
-        cfg = pkgs.writeText "cms.cfg" ''
-          account = Office365_Account(user="ykurneuski@evolution.com")
-          CredentialServer("/run/user/1000/cms.sock", accounts=[account], protocols=["IMAP"])
-        '';
-      in {
-        description = "cloud-mdir-sync service";
-        after = [ "network-online.target" ];
-        wants = [ "network-online.target" ];
-        serviceConfig = {
-          Restart = "on-failure";
-          ExecStart = "${pkgs.cloud-mdir-sync}/bin/cloud-mdir-sync -c ${cfg}";
+      bloop.serviceConfig.ExecStartPre = "${pkgs.coreutils}/bin/rm -rf %h/.bloop/";
+      cloud-mdir-sync =
+        let
+          cfg = pkgs.writeText "cms.cfg" ''
+            account = Office365_Account(user="ykurneuski@evolution.com")
+            CredentialServer("/run/user/1000/cms.sock", accounts=[account], protocols=["IMAP"])
+          '';
+        in
+        {
+          description = "cloud-mdir-sync service";
+          after = [ "network-online.target" ];
+          wants = [ "network-online.target" ];
+          serviceConfig = {
+            Restart = "on-failure";
+            ExecStart = "${pkgs.cloud-mdir-sync}/bin/cloud-mdir-sync -c ${cfg}";
+          };
         };
-      };
     };
     services = {
       iodine-digitalocean.wantedBy = pkgs.lib.mkForce [ ];
@@ -559,7 +589,10 @@
       i2pd.wantedBy = pkgs.lib.mkForce [ ];
       monero = {
         wantedBy = pkgs.lib.mkForce [ ];
-        requires = [ "i2pd.service" "tor.service" ];
+        requires = [
+          "i2pd.service"
+          "tor.service"
+        ];
       };
       tor.wantedBy = pkgs.lib.mkForce [ ];
       waydroid-container.wantedBy = pkgs.lib.mkForce [ ];
@@ -576,31 +609,33 @@
             MTUBytes = "1280";
           };
           wireguardConfig = {
-            PrivateKeyFile =
-              config.age.secrets.wg-private.path or "/secrets/wg/private.key";
+            PrivateKeyFile = config.age.secrets.wg-private.path or "/secrets/wg/private.key";
             ListenPort = 51871;
           };
-          wireguardPeers = [{
-            PublicKey = "5JHCxIYeZ50k7YJM+kLAbqGW4LAXpI5lycYEWSVxkBE=";
-            PresharedKeyFile =
-              config.age.secrets.wg-preshared.path or "/secrets/wg/preshared.psk";
-            AllowedIPs = "0.0.0.0/0, ::/0";
-            # Direct connection
-            # Endpoint = "kurnevsky.net:51871";
-            # Websocat connection
-            # Endpoint = "127.0.0.1:42930";
-            # Shadowsocks connection
-            Endpoint = "127.0.0.1:51870";
-            PersistentKeepalive = 25;
-          }];
+          wireguardPeers = [
+            {
+              PublicKey = "5JHCxIYeZ50k7YJM+kLAbqGW4LAXpI5lycYEWSVxkBE=";
+              PresharedKeyFile = config.age.secrets.wg-preshared.path or "/secrets/wg/preshared.psk";
+              AllowedIPs = "0.0.0.0/0, ::/0";
+              # Direct connection
+              # Endpoint = "kurnevsky.net:51871";
+              # Websocat connection
+              # Endpoint = "127.0.0.1:42930";
+              # Shadowsocks connection
+              Endpoint = "127.0.0.1:51870";
+              PersistentKeepalive = 25;
+            }
+          ];
         };
       };
       networks."99-wg0" = {
         name = "wg0";
-        routes = [{
-          Destination = "192.168.14.0/24";
-          Scope = "link";
-        }];
+        routes = [
+          {
+            Destination = "192.168.14.0/24";
+            Scope = "link";
+          }
+        ];
       };
     };
   };
@@ -610,13 +645,15 @@
     pam.services.login.startSession = true;
     unprivilegedUsernsClone = true;
     rtkit.enable = true;
-    sudo.extraRules = [{
-      runAs = "root";
-      users = [ "ww" ];
-      commands = [
-        "/run/current-system/sw/bin/ip ^netns exec [[:alnum:]]+ sudo -u ww [^-].*$"
-      ];
-    }];
+    sudo.extraRules = [
+      {
+        runAs = "root";
+        users = [ "ww" ];
+        commands = [
+          "/run/current-system/sw/bin/ip ^netns exec [[:alnum:]]+ sudo -u ww [^-].*$"
+        ];
+      }
+    ];
   };
 
   users = {
@@ -635,7 +672,11 @@
         isNormalUser = true;
         shell = pkgs.zsh;
         hashedPasswordFile = config.age.secrets.ww.path or "/secrets/ww";
-        extraGroups = [ "video" "pipewire" "tor" ];
+        extraGroups = [
+          "video"
+          "pipewire"
+          "tor"
+        ];
       };
       hans.group = "hans";
     };
@@ -647,251 +688,264 @@
     defaultApplications = import ./default-applications.nix;
   };
 
-  home-manager = let
-    home-config = {
-      home.file = {
-        ".face.icon".source = ../resources/face.icon;
-        ".wallpaper.jpg".source = ../resources/wallpaper.jpg;
-        ".config/tox/toxic.conf".source = ./toxic.conf;
-        ".config/mpv/scripts/next_unexpanded.lua".source = ./next_unexpanded.lua;
-      };
-      programs = {
-        feh = {
-          enable = true;
-          package = pkgs.sandboxed.feh;
-          buttons = {
-            zoom_in = "C-4";
-            zoom_out = "C-5";
-          };
+  home-manager =
+    let
+      home-config = {
+        home.file = {
+          ".face.icon".source = ../resources/face.icon;
+          ".wallpaper.jpg".source = ../resources/wallpaper.jpg;
+          ".config/tox/toxic.conf".source = ./toxic.conf;
+          ".config/mpv/scripts/next_unexpanded.lua".source = ./next_unexpanded.lua;
         };
-        mpv = {
-          enable = true;
-          package = pkgs.sandboxed.mpv;
-          config = {
-            hwdec = "auto";
-            cache = true;
-            demuxer-max-bytes = 41943040;
-            demuxer-max-back-bytes = 41943040;
-            volume-max = 500;
-            vo = "gpu-next";
-            target-colorspace-hint = true;
-            gpu-api = "vulkan";
-          };
-          bindings = {
-            "Ctrl+n" = ''af toggle "lavfi=[dynaudnorm=f=175:g=25:p=0.75]"'';
-          };
-        };
-        alacritty = {
-          enable = true;
-          settings = {
-            scrolling.history = 100000;
-            font = {
-              normal.family = "IosevkaTerm Nerd Font";
-              size = 12;
+        programs = {
+          feh = {
+            enable = true;
+            package = pkgs.sandboxed.feh;
+            buttons = {
+              zoom_in = "C-4";
+              zoom_out = "C-5";
             };
-            colors = with config.scheme;
-              let x = c: "0x${c}";
-              in {
-                draw_bold_text_with_bright_colors = false;
-                primary = {
-                  background = x base00;
-                  foreground = x base05;
-                };
-                cursor = {
-                  text = x base00;
-                  cursor = x base05;
-                };
-                normal = {
-                  black = x base01;
-                  red = x base08;
-                  green = x base0B;
-                  yellow = x base09;
-                  blue = x base0D;
-                  magenta = x base0E;
-                  cyan = x base0C;
-                  white = x base06;
-                };
-                bright = {
-                  black = x base02;
-                  red = x base12;
-                  green = x base14;
-                  yellow = x base13;
-                  blue = x base16;
-                  magenta = x base17;
-                  cyan = x base15;
-                  white = x base07;
-                };
-              };
-            cursor.style = "Beam";
-            live_config_reload = false;
-            hints.enabled = [{
-              regex = ''
-                (ipfs:|ipns:|magnet:|mailto:|gemini:|gopher:|https:|http:|news:|file:|git:|ssh:|ftp:)[^\u0000-\u001F\u007F-\u009F<>"\\s{-}\\^⟨⟩`]+'';
-              command = "xdg-open";
-              post_processing = true;
-              mouse = {
-                enabled = true;
-                mods = "Control";
-              };
-              binding = {
-                key = "U";
-                mods = "Control|Shift";
-              };
-            }];
-            keyboard.bindings = [
-              {
-                key = "Insert";
-                mods = "Control";
-                action = "Copy";
-              }
-              {
-                key = "B";
-                mods = "Control|Shift";
-                action = "SearchForward";
-              }
-              {
-                key = "F";
-                mods = "Control|Shift";
-                action = "SearchBackward";
-              }
-              {
-                key = "Home";
-                mods = "Control";
-                mode = "Vi";
-                action = "ScrollToTop";
-              }
-              {
-                key = "End";
-                mods = "Control";
-                mode = "Vi";
-                action = "ScrollToBottom";
-              }
-              {
-                key = "PageUp";
-                mode = "Vi";
-                action = "ScrollPageUp";
-              }
-              {
-                key = "PageDown";
-                mode = "Vi";
-                action = "ScrollPageDown";
-              }
-              {
-                key = "Space";
-                mode = "Vi";
-                action = "ToggleNormalSelection";
-              }
-              {
-                key = "Q";
-                mode = "Vi";
-                action = "ToggleViMode";
-              }
-            ];
           };
-        };
-        git.enable = true;
-        firefox = {
-          enable = true;
-          package = pkgs.sandboxed.firefox;
-          profiles.default = {
-            settings = import ./firefox/firefox.nix;
-            userChrome = builtins.readFile ./firefox/userChrome.css;
-            extensions = with pkgs.nur.repos.rycee.firefox-addons; [
-              darkreader
-              decentraleyes
-              plasma-integration
-              privacy-badger
-              sponsorblock
-              ublock-origin
-              brandon1024-find
-              passff
-              istilldontcareaboutcookies
-            ];
-          };
-        };
-        mbsync = {
-          enable = true;
-          package = pkgs.sandboxed.isync;
-        };
-        vdirsyncer = {
-          enable = true;
-          package = pkgs.sandboxed.vdirsyncer;
-        };
-        khal = {
-          enable = true;
-          locale = {
-            timeformat = "%H:%M";
-            dateformat = "%Y-%m-%d";
-            longdateformat = "%Y-%m-%d %a";
-            datetimeformat = "%Y-%m-%d %H:%M";
-            longdatetimeformat = "%Y-%m-%d %H:%M";
-          };
-        };
-      };
-      accounts = {
-        email.accounts = {
-          gmail = {
-            mbsync = {
-              enable = true;
-              patterns = [ "*" "![Gmail]/All Mail" ];
-              create = "both";
-              expunge = "both";
-              extraConfig.account.AuthMech = "PLAIN";
+          mpv = {
+            enable = true;
+            package = pkgs.sandboxed.mpv;
+            config = {
+              hwdec = "auto";
+              cache = true;
+              demuxer-max-bytes = 41943040;
+              demuxer-max-back-bytes = 41943040;
+              volume-max = 500;
+              vo = "gpu-next";
+              target-colorspace-hint = true;
+              gpu-api = "vulkan";
             };
-            primary = true;
-            maildir.path = "gmail";
-            userName = "kurnevsky@gmail.com";
-            imap.host = "imap.gmail.com";
-            passwordCommand =
-              "${pkgs.pass}/bin/pass show web/google.com | grep Isync | cut -d ' ' -f 2";
-          };
-          evolution = let user = "ykurneuski@evolution.com";
-          in {
-            mbsync = {
-              enable = true;
-              create = "both";
-              expunge = "both";
-              extraConfig.account.AuthMech = "XOAUTH2";
+            bindings = {
+              "Ctrl+n" = ''af toggle "lavfi=[dynaudnorm=f=175:g=25:p=0.75]"'';
             };
-            maildir.path = "evolution";
-            userName = user;
-            imap.host = "outlook.office365.com";
-            passwordCommand =
-              "${pkgs.cloud-mdir-sync}/bin/cms-oauth --cms_sock=$XDG_RUNTIME_DIR/cms.sock --proto=IMAP --user ${user} --output=token";
+          };
+          alacritty = {
+            enable = true;
+            settings = {
+              scrolling.history = 100000;
+              font = {
+                normal.family = "IosevkaTerm Nerd Font";
+                size = 12;
+              };
+              colors =
+                with config.scheme;
+                let
+                  x = c: "0x${c}";
+                in
+                {
+                  draw_bold_text_with_bright_colors = false;
+                  primary = {
+                    background = x base00;
+                    foreground = x base05;
+                  };
+                  cursor = {
+                    text = x base00;
+                    cursor = x base05;
+                  };
+                  normal = {
+                    black = x base01;
+                    red = x base08;
+                    green = x base0B;
+                    yellow = x base09;
+                    blue = x base0D;
+                    magenta = x base0E;
+                    cyan = x base0C;
+                    white = x base06;
+                  };
+                  bright = {
+                    black = x base02;
+                    red = x base12;
+                    green = x base14;
+                    yellow = x base13;
+                    blue = x base16;
+                    magenta = x base17;
+                    cyan = x base15;
+                    white = x base07;
+                  };
+                };
+              cursor.style = "Beam";
+              live_config_reload = false;
+              hints.enabled = [
+                {
+                  regex = ''(ipfs:|ipns:|magnet:|mailto:|gemini:|gopher:|https:|http:|news:|file:|git:|ssh:|ftp:)[^\u0000-\u001F\u007F-\u009F<>"\\s{-}\\^⟨⟩`]+'';
+                  command = "xdg-open";
+                  post_processing = true;
+                  mouse = {
+                    enabled = true;
+                    mods = "Control";
+                  };
+                  binding = {
+                    key = "U";
+                    mods = "Control|Shift";
+                  };
+                }
+              ];
+              keyboard.bindings = [
+                {
+                  key = "Insert";
+                  mods = "Control";
+                  action = "Copy";
+                }
+                {
+                  key = "B";
+                  mods = "Control|Shift";
+                  action = "SearchForward";
+                }
+                {
+                  key = "F";
+                  mods = "Control|Shift";
+                  action = "SearchBackward";
+                }
+                {
+                  key = "Home";
+                  mods = "Control";
+                  mode = "Vi";
+                  action = "ScrollToTop";
+                }
+                {
+                  key = "End";
+                  mods = "Control";
+                  mode = "Vi";
+                  action = "ScrollToBottom";
+                }
+                {
+                  key = "PageUp";
+                  mode = "Vi";
+                  action = "ScrollPageUp";
+                }
+                {
+                  key = "PageDown";
+                  mode = "Vi";
+                  action = "ScrollPageDown";
+                }
+                {
+                  key = "Space";
+                  mode = "Vi";
+                  action = "ToggleNormalSelection";
+                }
+                {
+                  key = "Q";
+                  mode = "Vi";
+                  action = "ToggleViMode";
+                }
+              ];
+            };
+          };
+          git.enable = true;
+          firefox = {
+            enable = true;
+            package = pkgs.sandboxed.firefox;
+            profiles.default = {
+              settings = import ./firefox/firefox.nix;
+              userChrome = builtins.readFile ./firefox/userChrome.css;
+              extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+                darkreader
+                decentraleyes
+                plasma-integration
+                privacy-badger
+                sponsorblock
+                ublock-origin
+                brandon1024-find
+                passff
+                istilldontcareaboutcookies
+              ];
+            };
+          };
+          mbsync = {
+            enable = true;
+            package = pkgs.sandboxed.isync;
+          };
+          vdirsyncer = {
+            enable = true;
+            package = pkgs.sandboxed.vdirsyncer;
+          };
+          khal = {
+            enable = true;
+            locale = {
+              timeformat = "%H:%M";
+              dateformat = "%Y-%m-%d";
+              longdateformat = "%Y-%m-%d %a";
+              datetimeformat = "%Y-%m-%d %H:%M";
+              longdatetimeformat = "%Y-%m-%d %H:%M";
+            };
           };
         };
-        calendar = {
-          basePath = "Calendar";
-          accounts = {
-            evo = {
-              khal = {
+        accounts = {
+          email.accounts = {
+            gmail = {
+              mbsync = {
                 enable = true;
-                readOnly = true;
+                patterns = [
+                  "*"
+                  "![Gmail]/All Mail"
+                ];
+                create = "both";
+                expunge = "both";
+                extraConfig.account.AuthMech = "PLAIN";
               };
-              vdirsyncer = {
-                enable = true;
-                urlCommand = [ "pass" "evo/outlook-ical" ];
+              primary = true;
+              maildir.path = "gmail";
+              userName = "kurnevsky@gmail.com";
+              imap.host = "imap.gmail.com";
+              passwordCommand = "${pkgs.pass}/bin/pass show web/google.com | grep Isync | cut -d ' ' -f 2";
+            };
+            evolution =
+              let
+                user = "ykurneuski@evolution.com";
+              in
+              {
+                mbsync = {
+                  enable = true;
+                  create = "both";
+                  expunge = "both";
+                  extraConfig.account.AuthMech = "XOAUTH2";
+                };
+                maildir.path = "evolution";
+                userName = user;
+                imap.host = "outlook.office365.com";
+                passwordCommand = "${pkgs.cloud-mdir-sync}/bin/cms-oauth --cms_sock=$XDG_RUNTIME_DIR/cms.sock --proto=IMAP --user ${user} --output=token";
               };
-              remote.type = "http";
-              local = {
-                type = "filesystem";
-                fileExt = ".ics";
+          };
+          calendar = {
+            basePath = "Calendar";
+            accounts = {
+              evo = {
+                khal = {
+                  enable = true;
+                  readOnly = true;
+                };
+                vdirsyncer = {
+                  enable = true;
+                  urlCommand = [
+                    "pass"
+                    "evo/outlook-ical"
+                  ];
+                };
+                remote.type = "http";
+                local = {
+                  type = "filesystem";
+                  fileExt = ".ics";
+                };
               };
             };
           };
         };
+        services.gpg-agent = {
+          enable = true;
+          pinentryPackage = pkgs.pinentry-qt;
+        };
+        # To make sure that it's not overridden by WM
+        xdg.mimeApps.enable = true;
       };
-      services.gpg-agent = {
-        enable = true;
-        pinentryPackage = pkgs.pinentry-qt;
+    in
+    {
+      users = {
+        kurnevsky = home-config;
+        ww = home-config;
       };
-      # To make sure that it's not overridden by WM
-      xdg.mimeApps.enable = true;
     };
-  in {
-    users = {
-      kurnevsky = home-config;
-      ww = home-config;
-    };
-  };
 }

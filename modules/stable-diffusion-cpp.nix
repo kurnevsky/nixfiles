@@ -1,6 +1,13 @@
-{ lib, stdenv, config, fetchFromGitHub, cmake, rocmPackages
-, useRocm ? config.rocmSupport
-, gpuTargets ? builtins.concatStringsSep ";" rocmPackages.clr.gpuTargets }:
+{
+  lib,
+  stdenv,
+  config,
+  fetchFromGitHub,
+  cmake,
+  rocmPackages,
+  useRocm ? config.rocmSupport,
+  gpuTargets ? builtins.concatStringsSep ";" rocmPackages.clr.gpuTargets,
+}:
 
 stdenv.mkDerivation {
   pname = "stable-diffusion-cpp";
@@ -16,14 +23,22 @@ stdenv.mkDerivation {
 
   nativeBuildInputs = [ cmake ];
 
-  buildInputs =
-    lib.optionals useRocm (with rocmPackages; [ clr hipblas rocblas ]);
+  buildInputs = lib.optionals useRocm (
+    with rocmPackages;
+    [
+      clr
+      hipblas
+      rocblas
+    ]
+  );
 
   cmakeFlags =
-    [ (lib.cmakeBool "GGML_HIP" useRocm) (lib.cmakeBool "SD_HIPBLAS" useRocm) ]
+    [
+      (lib.cmakeBool "GGML_HIP" useRocm)
+      (lib.cmakeBool "SD_HIPBLAS" useRocm)
+    ]
     ++ lib.optionals useRocm [
-      (lib.cmakeFeature "CMAKE_HIP_COMPILER"
-        "${rocmPackages.llvm.clang}/bin/clang")
+      (lib.cmakeFeature "CMAKE_HIP_COMPILER" "${rocmPackages.llvm.clang}/bin/clang")
       (lib.cmakeFeature "CMAKE_HIP_ARCHITECTURES" gpuTargets)
       (lib.cmakeFeature "AMDGPU_TARGETS" gpuTargets)
     ];

@@ -18,23 +18,36 @@
       acpi_call
       v4l2loopback
     ];
-    kernelModules = [ "v4l2loopback" "acpi_call" ];
+    kernelModules = [
+      "v4l2loopback"
+      "acpi_call"
+    ];
     tmp.tmpfsSize = "75%";
   };
 
   fileSystems = {
-    "/".options = [ "noatime" "nodiratime" "compress=zstd:3" ];
-    "/home".options = [ "noatime" "nodiratime" "compress=zstd:3" ];
+    "/".options = [
+      "noatime"
+      "nodiratime"
+      "compress=zstd:3"
+    ];
+    "/home".options = [
+      "noatime"
+      "nodiratime"
+      "compress=zstd:3"
+    ];
   };
 
-  swapDevices = [{
-    device = "/dev/nvme0n1p2";
-    randomEncryption = {
-      enable = true;
-      allowDiscards = true;
-    };
-    discardPolicy = "both";
-  }];
+  swapDevices = [
+    {
+      device = "/dev/nvme0n1p2";
+      randomEncryption = {
+        enable = true;
+        allowDiscards = true;
+      };
+      discardPolicy = "both";
+    }
+  ];
 
   networking.hostName = "evo";
 

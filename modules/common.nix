@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 let
   keys = [
@@ -6,10 +11,12 @@ let
     "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCnphYFSCOiMmmvpktspcCc+Qkg8GArzaB3aSxuIgUOQzS/uk+shTSbnHsP/ABvtGPWz3Fc0XJzRkDVQpYaSdpdMWXR7RgxeZ0GzB4954mV+e3wD8qN+4zlQY+g/ablv9HEPnjOrkbwXGERnj/4DVBJQhcrBB6GKIWk7YGOek1Bp70CUp9jdaLhnuh6qnvIRb/CDR9aIDZoQjt9O4DcUJYRsQOdS7QgxzRG8loiy6ur82GarLVR1aQAq8dB46eDZDBS91WxrzrWtk1T7UBg7MKNmQdyVw5aqh6V6s+fpOn+KmjajD0DOIspDNmFe3+TkPEqGFJGMTrqCrWSqtxyhPqJ kurnevsky@gmail.com"
     "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDDPmgbv8HY8cevVCgZPJw+4WQzXxmV8RU0r0owdFAmcMFHc0SLeFtWvZ2fV6LkerPKHzK1uWTwPq1RhqMDVlhzuaDjtgLlNX4VJ84aHzjv62+6gaAbUzEkIwF3nigVI8MECW7r1Sk38yI42VaGn8Qa2ThKwdbqcskeh8eD0TyvVSNe46vz4AnMR/gw2bkkGIIUTWF6MP8/uMbxdErLUSZPaoflfO3RpMQPomNigrgwDxptisY2nWhTSskOu+RVj17yBIQIH0d4EpiezRniQ1YeI47LSj7I01e/zy1HyyEm1S/mKe+uaHDIlcGWllWXam9AKC5atyUiH9lbj0c1vUe9WtP0dk8Zf2qgJwkB0DZAhehVbycw4rP4omUisI/rZjUxXOFk2R/O5asxbtIWsLjAJIW8g6uf9e6T0+5piAuyF3fd3zy4ZIj5/G2EAsywxxB4Jec5kKCHOy4E6tFgF2jtLAgTk4dij/dZVvZsUWYAxBdZjQ7yUIHVCNUU2Br4+NvtyoW7/2JH8EQP+agPCuUVMF0SdWUxhXfDbojEAO9y71D2PiDZwyFAPY15e0hMI80r1A6bZxRiBeufUxnimeGSuBqzUhiBBjGgT3Cm0amJ5ZGSggqss+txVEn2Ntgbi9SZ9X4BiQdE6zylIsFpSVEZ8KYIySxkK2ElQp7XqCaqDw== ykurneuski@evolution.com"
   ];
-in {
+in
+{
   boot.kernel.sysctl."net.ipv4.tcp_fastopen" = 3;
 
-  nixpkgs.config.allowUnfreePredicate = pkg:
+  nixpkgs.config.allowUnfreePredicate =
+    pkg:
     builtins.elem (lib.getName pkg) [
       "symbola"
       "unrar"
@@ -50,7 +57,12 @@ in {
   };
 
   environment = {
-    systemPackages = with pkgs; [ git lsof mc sourceHighlight ];
+    systemPackages = with pkgs; [
+      git
+      lsof
+      mc
+      sourceHighlight
+    ];
     shellAliases = {
       ls = "ls --color=auto";
       grep = "grep --color=auto";
@@ -73,7 +85,9 @@ in {
       autosuggestions = {
         enable = true;
         highlightStyle = "fg=${config.scheme.withHashtag.base02}";
-        extraConfig = { ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE = "10"; };
+        extraConfig = {
+          ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE = "10";
+        };
       };
       syntaxHighlighting.enable = true;
       # Override default prompt as it doesn't work good in Midnigt Commander
@@ -113,8 +127,7 @@ in {
         isNormalUser = true;
         extraGroups = [ "wheel" ];
         shell = pkgs.zsh;
-        hashedPasswordFile =
-          config.age.secrets.kurnevsky.path or "/secrets/kurnevsky";
+        hashedPasswordFile = config.age.secrets.kurnevsky.path or "/secrets/kurnevsky";
         openssh.authorizedKeys.keys = keys;
       };
     };
@@ -135,7 +148,6 @@ in {
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
-    users.root.programs.ssh.extraOptionOverrides.IdentityAgent =
-      "/run/user/1000/gnupg/S.gpg-agent.ssh";
+    users.root.programs.ssh.extraOptionOverrides.IdentityAgent = "/run/user/1000/gnupg/S.gpg-agent.ssh";
   };
 }

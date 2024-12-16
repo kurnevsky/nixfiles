@@ -1,4 +1,12 @@
-{ python3Packages, fetchFromGitHub, pyparsing, torch, transformers, diffusers, ... }:
+{
+  python3Packages,
+  fetchFromGitHub,
+  pyparsing,
+  torch,
+  transformers,
+  diffusers,
+  ...
+}:
 
 (python3Packages.buildPythonPackage rec {
   pname = "compel";
@@ -12,7 +20,12 @@
     hash = "sha256-OHldDlHtxSs112rmy/DsZPV6TIhsmfAzcxH2rjJ9cR4=";
   };
 
-  buildInputs = [ pyparsing torch transformers diffusers ];
+  buildInputs = [
+    pyparsing
+    torch
+    transformers
+    diffusers
+  ];
 
   propagatedBuildInputs = [ pyparsing ];
 
