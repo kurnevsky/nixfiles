@@ -24,7 +24,7 @@ callPackage "${pkgs.path}/pkgs/applications/emulators/wine/base.nix" rec {
     hash = "sha256-yJnJ7D/QHvZ+ieR8nAAnkFV8pzQkDaYDs0Xvo9YsDQA=";
   };
   wineRelease = "ge";
-  moltenvk = pkgs.moltenvk;
+  inherit (pkgs) moltenvk;
   patches = [ ];
   stdenv = stdenv_32bit;
   pkgArches = [

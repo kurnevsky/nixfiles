@@ -76,7 +76,7 @@
         bloop = wrap super.bloop "bloop";
       }
     )
-    (self: super: { wine-ge = super.callPackage ./wine-ge.nix { }; })
+    (_self: super: { wine-ge = super.callPackage ./wine-ge.nix { }; })
     (_self: super: {
       telegram-desktop = super.telegram-desktop.override {
         unwrapped = super.telegram-desktop.unwrapped.overrideAttrs (old: {
