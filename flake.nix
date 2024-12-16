@@ -184,13 +184,6 @@
             (llamaOverride pkgs config inputs.llama-cpp.packages.${pkgs.system}.default)
           ];
         };
-      llamaOpencl =
-        { pkgs, config, ... }:
-        {
-          environment.systemPackages = [
-            (llamaOverride pkgs config inputs.llama-cpp.packages.${pkgs.system}.opencl)
-          ];
-        };
       llamaRocm =
         gpuTargets:
         { pkgs, config, ... }:
@@ -212,7 +205,7 @@
           modules = desktopModules ++ [
             ./machines/dell/configuration.nix
             ./machines/dell/hardware-configuration.nix
-            llamaOpencl
+            llamaDefault
           ];
         };
         evo = inputs.nixpkgs.lib.nixosSystem {

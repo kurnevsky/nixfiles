@@ -20,7 +20,6 @@
         megapixels
       ]
       ++ (with pkgs.kdePackages; [
-        index
         qmlkonsole
         okular
       ]);

@@ -155,10 +155,7 @@
   };
 
   hardware = {
-    bluetooth = {
-      enable = true;
-      package = pkgs.bluezFull;
-    };
+    bluetooth.enable = true;
     graphics.enable = true;
     cpu.intel.updateMicrocode = true;
   };
