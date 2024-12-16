@@ -98,6 +98,11 @@
   outputs =
     inputs:
     let
+      supportedSystems = [
+        "x86_64-linux"
+        "aarch64-linux"
+      ];
+      forAllSystems = inputs.nixpkgs.lib.genAttrs supportedSystems;
       collectFlakeInputs =
         input:
         [ input ] ++ builtins.concatMap collectFlakeInputs (builtins.attrValues (input.inputs or { }));
@@ -200,7 +205,7 @@
         };
     in
     {
-      formatter.x86_64-linux = inputs.nixpkgs.legacyPackages.x86_64-linux.nixfmt-rfc-style;
+      formatter = forAllSystems (system: inputs.nixpkgs.legacyPackages.${system}.nixfmt-rfc-style);
       nixosConfigurations = {
         dell = inputs.nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
@@ -291,12 +296,12 @@
           { _module.args.emacs-overlay = inputs.emacs-overlay.overlay; }
         ];
       };
-      packages.x86_64-linux = {
+      packages = forAllSystems (_system: {
         # nix build -L '/etc/nixos#phone-vm' && ./result -enable-kvm -smp 2
         phone-vm = inputs.self.nixosConfigurations.pinephone-vm.config.mobile.outputs.uefi.vm;
         # nix build -L '/etc/nixos#phone-vm-encrypted' && ./result -enable-kvm -smp 2
         phone-vm-encrypted =
           inputs.self.nixosConfigurations.pinephone-vm-encrypted.config.mobile.outputs.uefi.vm;
-      };
+      });
     };
 }
