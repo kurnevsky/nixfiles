@@ -328,7 +328,6 @@
         alejandra
         deadnix
         nixfmt-rfc-style
-        nixpkgs-fmt
         nil
         nix-diff
         nixpkgs-review
