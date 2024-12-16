@@ -307,7 +307,7 @@
         ## Nix
         alejandra
         deadnix
-        nixfmt-classic
+        nixfmt-rfc-style
         nixpkgs-fmt
         nil
         nix-diff
