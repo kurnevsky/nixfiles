@@ -15,7 +15,17 @@ lazy_static! {
 }
 
 #[defun]
-fn fuzzy_indices(env: &Env, pattern: String, source: String) -> Result<Option<Value>> {
+fn fuzzy_indices<'a>(env: &'a Env, pattern: Value<'a>, source: Value<'a>) -> Result<Option<Value<'a>>> {
+  let pattern: String = if let Ok(pattern) = pattern.into_rust() {
+    pattern
+  } else {
+    return Ok(None);
+  };
+  let source: String = if let Ok(source) = source.into_rust() {
+    source
+  } else {
+    return Ok(None);
+  };
   let mut indices = Vec::new();
   let mut source_buf = Vec::new();
   let mut pattern_buf = Vec::new();
