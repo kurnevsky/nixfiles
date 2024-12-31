@@ -2,7 +2,7 @@
 
 {
   boot = {
-    cleanTmpDir = true;
+    tmp.cleanOnBoot = true;
     kernelPackages = pkgs.linuxPackages_latest;
     kernel.sysctl."kernel.sysrq" = 1;
     kernelPatches = [
@@ -58,7 +58,7 @@
     xorg.xmodmap
   ];
 
-  fonts.fonts = with pkgs; [
+  fonts.packages = with pkgs; [
     nerd-fonts.hack
     noto-fonts
     noto-fonts-color-emoji
@@ -110,25 +110,25 @@
       server = "i.kurnevsky.net";
       passwordFile = "/secrets/iodine";
     };
+    desktopManager.plasma6.enable = true;
+    displayManager = {
+      defaultSession = "plasma";
+      autoLogin = {
+        enable = true;
+        user = "parents";
+      };
+      sddm = {
+        enable = true;
+        autoNumlock = true;
+      };
+    };
+    libinput = {
+      enable = true;
+      touchpad.disableWhileTyping = true;
+    };
     xserver = {
       enable = true;
       videoDrivers = [ "modesetting" ];
-      displayManager = {
-        defaultSession = "plasma";
-        autoLogin = {
-          enable = true;
-          user = "parents";
-        };
-        sddm = {
-          enable = true;
-          autoNumlock = true;
-        };
-      };
-      desktopManager.plasma6.enable = true;
-      libinput = {
-        enable = true;
-        touchpad.disableWhileTyping = true;
-      };
     };
   };
 
@@ -166,7 +166,7 @@
         uid = 1001;
         isNormalUser = true;
         shell = pkgs.zsh;
-        passwordFile = "/secrets/parents";
+        hashedPasswordFile = "/secrets/parents";
         extraGroups = [
           "audio"
           "video"
