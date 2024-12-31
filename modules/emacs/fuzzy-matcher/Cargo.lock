@@ -56,7 +56,7 @@ dependencies = [
 [[package]]
 name = "emacs"
 version = "0.19.0"
-source = "git+https://github.com/kurnevsky/emacs-module-rs.git?rev=297bdd761b3c827d9387708330f3cef62edd7be8#297bdd761b3c827d9387708330f3cef62edd7be8"
+source = "git+https://github.com/kurnevsky/emacs-module-rs.git?rev=49665c9ae23b19711fc41e15ac526755f6a48072#49665c9ae23b19711fc41e15ac526755f6a48072"
 dependencies = [
  "anyhow",
  "ctor",
@@ -70,7 +70,7 @@ dependencies = [
 [[package]]
 name = "emacs-macros"
 version = "0.17.0"
-source = "git+https://github.com/kurnevsky/emacs-module-rs.git?rev=297bdd761b3c827d9387708330f3cef62edd7be8#297bdd761b3c827d9387708330f3cef62edd7be8"
+source = "git+https://github.com/kurnevsky/emacs-module-rs.git?rev=49665c9ae23b19711fc41e15ac526755f6a48072#49665c9ae23b19711fc41e15ac526755f6a48072"
 dependencies = [
  "darling",
  "proc-macro2",
@@ -81,7 +81,7 @@ dependencies = [
 [[package]]
 name = "emacs_module"
 version = "0.18.0"
-source = "git+https://github.com/kurnevsky/emacs-module-rs.git?rev=297bdd761b3c827d9387708330f3cef62edd7be8#297bdd761b3c827d9387708330f3cef62edd7be8"
+source = "git+https://github.com/kurnevsky/emacs-module-rs.git?rev=49665c9ae23b19711fc41e15ac526755f6a48072#49665c9ae23b19711fc41e15ac526755f6a48072"
 
 [[package]]
 name = "fnv"

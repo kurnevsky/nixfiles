@@ -11,7 +11,7 @@ name = "fuzzy_matcher_el"
 crate-type = ["cdylib"]
 
 [dependencies]
-emacs = { git = "https://github.com/kurnevsky/emacs-module-rs.git", rev = "297bdd761b3c827d9387708330f3cef62edd7be8" }
+emacs = { git = "https://github.com/kurnevsky/emacs-module-rs.git", rev = "49665c9ae23b19711fc41e15ac526755f6a48072", features = [ "utf-8-validation" ] }
 nucleo-matcher = "0.3"
 lazy_static = "1.5"
 

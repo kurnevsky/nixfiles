@@ -20,7 +20,7 @@ rustPlatform.buildRustPackage {
   cargoLock = {
     lockFile = ./fuzzy-matcher/Cargo.lock;
     outputHashes = {
-      "emacs-0.19.0" = "sha256-094GLODTvUpwjs77KTsAYBdytX726c2aNkyOS9sxRuU=";
+      "emacs-0.19.0" = "sha256-qMRNuGc+HgGwbwucxGC9KENHUh4yl8D8r+TINM6nTjY=";
     };
   };
 }

@@ -570,9 +570,7 @@ which LANG was detected but these are ignored."
       (substring string 0 (- (length string) 1))
       string))
   (defun fuzzy-matcher-propertize (pattern candidate)
-    (let* ((score (fuzzy-matcher-fuzzy-indices
-                    (encode-coding-string pattern 'utf-8 t)
-                    (encode-coding-string (fuzzy-matcher-without-tofu-char candidate) 'utf-8 t)))
+    (let* ((score (fuzzy-matcher-fuzzy-indices pattern (fuzzy-matcher-without-tofu-char candidate)))
             (candidate (copy-sequence candidate)))
       (unless (string-empty-p pattern)
         (put-text-property 0 1 'completion-score (- (* (or (car score) 0) 100) (length candidate)) candidate))
