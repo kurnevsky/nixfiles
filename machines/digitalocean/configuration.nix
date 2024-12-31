@@ -111,6 +111,7 @@
     do-agent.enable = true;
     postgresql = {
       enable = true;
+      package = pkgs.postgresql_17;
       ensureDatabases = [
         "tt_rss"
         "stalwart-mail"
