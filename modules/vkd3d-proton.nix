@@ -11,7 +11,7 @@
 
 stdenv.mkDerivation rec {
   pname = "vkd3d-proton";
-  version = "2.13";
+  version = "2.14";
 
   enableParallelBuilding = true;
   separateDebugInfo = true;
@@ -21,7 +21,7 @@ stdenv.mkDerivation rec {
     repo = "vkd3d-proton";
     rev = "v${version}";
     fetchSubmodules = true;
-    hash = "sha256-28/TXuZVlA+du6Fnuai+WCywCKr5x7fCuICNdFCNYxg=";
+    hash = "sha256-mttwPOJUQ+YAxLWySAuMsdLSKAtI3Wa7RzhP8qZc73A=";
   };
 
   buildInputs = lib.optionals stdenv.targetPlatform.isWindows [
