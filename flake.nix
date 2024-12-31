@@ -7,6 +7,13 @@
       ref = "nixos-unstable";
     };
 
+    nixpkgs-old = {
+      type = "github";
+      owner = "NixOS";
+      repo = "nixpkgs";
+      ref = "3566ab7246670a43abd2ffa913cc62dad9cdf7d5";
+    };
+
     fenix = {
       type = "github";
       owner = "nix-community";
@@ -129,6 +136,29 @@
         ]) common-home)
         # Keep flake inputs from being garbage collected
         { system.extraDependencies = collectFlakeInputs inputs.self; }
+        (
+          # TODO: a lot of things are broken :(
+          { pkgs, ... }:
+          let
+            oldPkgs = import inputs.nixpkgs-old {
+              inherit (pkgs.stdenv.targetPlatform) system;
+            };
+          in
+          {
+            nixpkgs.overlays = [
+              (_self: _super: {
+                inherit (oldPkgs)
+                  rocmPackages
+                  cataclysm-dda
+                  openmw
+                  ansible-lint
+                  kcat
+                  dsniff
+                  ;
+              })
+            ];
+          }
+        )
       ];
       desktopModules = commonModules ++ [
         {
@@ -191,6 +221,8 @@
           environment.systemPackages = [
             (llamaOverride pkgs config (
               inputs.llama-cpp.packages.${pkgs.system}.rocm.override {
+                # TODO: rocm is broken in nixpkgs
+                rocmPackages = pkgs.rocmPackages;
                 rocmGpuTargets = gpuTargets;
               }
             ))

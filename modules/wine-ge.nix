@@ -14,7 +14,7 @@ let
       inherit pkgs;
     }).unstable;
 in
-callPackage "${pkgs.path}/pkgs/applications/emulators/wine/base.nix" rec {
+(callPackage "${pkgs.path}/pkgs/applications/emulators/wine/base.nix" rec {
   pname = "wine-ge";
   version = "Proton8-26";
   src = fetchFromGitHub {
@@ -76,4 +76,9 @@ callPackage "${pkgs.path}/pkgs/applications/emulators/wine/base.nix" rec {
     waylandSupport = true;
     embedInstallers = true;
   };
-}
+}).overrideAttrs
+  (old: {
+    NIX_CFLAGS_COMPILE = [
+      "-Wno-error=incompatible-pointer-types"
+    ];
+  })

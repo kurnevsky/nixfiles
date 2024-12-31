@@ -60,24 +60,25 @@
         gpuTargets = "gfx1100";
       }
     ))
-    (
-      (python3.withPackages (
-        pkgs: with pkgs; [
-          # TODO: broken
-          # torchWithRocm
-          torch
-          transformers
-          sentencepiece
-          sacremoses
-          torchvision
-          diffusers
-          accelerate
-          peft
-          (callPackage ./compel.nix { })
-        ]
-      )).override
-      { ignoreCollisions = true; }
-    )
+    # TODO: broken
+    # (
+    #   (python3.withPackages (
+    #     pkgs: with pkgs; [
+    #       # TODO: broken
+    #       # torchWithRocm
+    #       torch
+    #       transformers
+    #       sentencepiece
+    #       sacremoses
+    #       torchvision
+    #       diffusers
+    #       accelerate
+    #       peft
+    #       (callPackage ./compel.nix { })
+    #     ]
+    #   )).override
+    #   { ignoreCollisions = true; }
+    # )
   ];
 
   networking.hostName = "pc";
