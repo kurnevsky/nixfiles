@@ -100,6 +100,13 @@
       repo = "llama.cpp";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    git-hooks = {
+      type = "github";
+      owner = "cachix";
+      repo = "git-hooks.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -222,7 +229,7 @@
             (llamaOverride pkgs config (
               inputs.llama-cpp.packages.${pkgs.system}.rocm.override {
                 # TODO: rocm is broken in nixpkgs
-                rocmPackages = pkgs.rocmPackages;
+                inherit (pkgs) rocmPackages;
                 rocmGpuTargets = gpuTargets;
               }
             ))
@@ -311,6 +318,16 @@
       packages = forAllSystems (_system: {
         # nix build -L '/etc/nixos#phone-vm' && ./result -enable-kvm -smp 2
         phone-vm = inputs.self.nixosConfigurations.pinephone-vm.config.mobile.outputs.uefi.vm;
+      });
+      checks = forAllSystems (system: {
+        pre-commit-check = inputs.git-hooks.lib.${system}.run {
+          src = ./.;
+          hooks = {
+            nixfmt-rfc-style.enable = true;
+            deadnix.enable = true;
+            statix.enable = true;
+          };
+        };
       });
     };
 }

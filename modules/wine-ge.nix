@@ -77,7 +77,7 @@ in
     embedInstallers = true;
   };
 }).overrideAttrs
-  (old: {
+  (_old: {
     NIX_CFLAGS_COMPILE = [
       "-Wno-error=incompatible-pointer-types"
     ];
