@@ -1142,7 +1142,7 @@ in
             unshare-net = false;
             ro-whitelist = [
               "~/.password-store/"
-              "~/.mbsyncrc"
+              "~/.config/isyncrc"
             ];
             whitelist = [
               "~/Maildir/"
