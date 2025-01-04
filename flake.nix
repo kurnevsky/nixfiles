@@ -158,8 +158,6 @@
                   rocmPackages
                   cataclysm-dda
                   openmw
-                  ansible-lint
-                  kcat
                   dsniff
                   ;
               })
