@@ -16,8 +16,8 @@ stdenv.mkDerivation {
   src = fetchFromGitHub {
     owner = "leejet";
     repo = "stable-diffusion.cpp";
-    rev = "4570715727f35e5a07a76796d823824c8f42206c";
-    hash = "sha256-1w7OokrQflasvauDEADLDJf2530m5a7WP+X1KgwxCks=";
+    rev = "dcf91f9e0f2cbf9da472ee2a556751ed4bab2d2a";
+    hash = "sha256-NHIjLZNfx9G6olp0VWBthuf7jIQC/qVRw6q9A6H866E=";
     fetchSubmodules = true;
   };
 
