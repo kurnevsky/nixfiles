@@ -157,7 +157,6 @@
                 inherit (oldPkgs)
                   rocmPackages
                   cataclysm-dda
-                  openmw
                   dsniff
                   ;
               })
