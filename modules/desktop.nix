@@ -267,7 +267,7 @@
         # Languages
         (agda.withPackages (pkgs: with pkgs; [ standard-library ]))
         (pkgs.writeShellScriptBin "prettier" ''
-          ${pkgs.nodePackages.prettier}/bin/prettier --plugin-search-dir "${pkgs.nodePackages.prettier-plugin-toml}/lib" "$@"
+          ${pkgs.nodePackages.prettier}/bin/prettier --plugin "${pkgs.nodePackages.prettier-plugin-toml}/lib/node_modules/prettier-plugin-toml/lib/index.cjs" "$@"
         '')
         astyle
         groovy
