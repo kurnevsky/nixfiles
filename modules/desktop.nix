@@ -309,7 +309,7 @@
             "rustfmt"
           ])
           fenix.targets.wasm32-unknown-unknown.stable.rust-std
-          fenix.targets.wasm32-wasi.stable.rust-std
+          fenix.targets.wasm32-wasip2.stable.rust-std
         ])
         rust-analyzer
         ## Java
