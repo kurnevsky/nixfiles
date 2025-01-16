@@ -1434,6 +1434,7 @@ which LANG was detected but these are ignored."
   (lsp-semantic-tokens-enable t)
   (lsp-semantic-tokens-honor-refresh-requests t)
   (lsp-semantic-tokens-apply-modifiers nil)
+  (lsp-inline-completion-idle-delay 1)
   :config
   (lsp-enable-which-key-integration)
   (defun lsp-activate-if-already-activated (server-id)
@@ -1443,6 +1444,7 @@ which LANG was detected but these are ignored."
   (add-hook 'rust-ts-mode-hook (-partial #'lsp-activate-if-already-activated 'rust-analyzer))
   (add-hook 'scala-mode-hook (-partial #'lsp-activate-if-already-activated 'metals))
   (add-hook 'scala-ts-mode-hook (-partial #'lsp-activate-if-already-activated 'metals))
+  (add-hook 'lsp-inline-completion-mode-hook (lambda () (lsp-inline-completion-company-integration-mode 1)))
   ;; Hack for metals to send ranges in hover request.
   (el-patch-defun lsp--text-document-position-params (&optional identifier position)
     "Make TextDocumentPositionParams for the current point in the current document.
@@ -1477,7 +1479,25 @@ identifier and the position respectively."
           (message "Using emacs-lsp-booster for %s!" orig-result)
           (cons "emacs-lsp-booster" orig-result))
         orig-result)))
-  (advice-add 'lsp-resolve-final-command :around #'lsp-booster--advice-final-command))
+  (advice-add 'lsp-resolve-final-command :around #'lsp-booster--advice-final-command)
+  ;; Famulus
+  (lsp-register-client
+    (make-lsp-client :new-connection (lsp-stdio-connection (executable-find "famulus"))
+      :activation-fn (-const t)
+      :add-on? t
+      :priority -1
+      :server-id 'famulus
+      :completion-in-comments? t
+      :initialized-fn (lambda (workspace)
+                        (let ((caps (lsp--workspace-server-capabilities workspace)))
+                          (unless (lsp-get caps :inlineCompletionProvider)
+                            (lsp:set-server-capabilities-inline-completion-provider? caps t))))
+      :initialization-options '((infill . ((privider . "Mistral")
+                                            (config . ((url . "https://api.mistral.ai/v1/fim/completions")
+                                                        (model . "codestral-latest")
+                                                        (temperature . 0)
+                                                        (max_tokens . 512)
+                                                        (stop . ["\n\n"])))))))))
 
 (use-package lsp-ui
   :custom
