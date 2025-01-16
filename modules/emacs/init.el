@@ -958,7 +958,8 @@ which LANG was detected but these are ignored."
   (setq mc/cmds-to-run-for-all '(back-to-indentation-or-beginning
                                   end-of-code-or-line
                                   indent-for-tab-command
-                                  org-self-insert-command)))
+                                  org-self-insert-command
+                                  puni-forward-delete-char)))
 
 (use-package mc-mark-more
   :ensure multiple-cursors
