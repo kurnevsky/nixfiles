@@ -276,7 +276,7 @@
         python3
         (pkgs.writeShellScriptBin "famulus" ''
           ${pkgs.coreutils}/bin/env MISTRAL_API_KEY="$(pass auth-source/mistral)" \
-            ${callPackage ./famulus.nix {}}/bin/famulus "$@"
+            ${callPackage ./famulus.nix { }}/bin/famulus "$@"
         '')
         ## C/C++
         clang
