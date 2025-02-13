@@ -15,7 +15,9 @@ rustPlatform.buildRustPackage rec {
     hash = "sha256-F0Sd5JtKuKYpWVDUHZa4rpA836vOi+USRmaFTQFUiys=";
   };
 
-  cargoHash = "sha256-iVAfoA+CoE7NhQkvR6ccFRTTdTRSnL6hVL+Wd9EF9oA=";
+  useFetchCargoVendor = true;
+
+  cargoHash = "sha256-rmGOLhyP1JctzBlYsmv3oqc2HtkdURB6IueDC3/bHAs=";
 
   meta = with lib; {
     description = "LSP server integrating LLMs";
