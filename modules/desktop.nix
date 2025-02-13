@@ -178,7 +178,6 @@
         nettools
         newsboat
         nmap
-        openai-whisper-cpp
         openssl
         pandoc
         parallel

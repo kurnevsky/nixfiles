@@ -25,6 +25,10 @@
     tmp.tmpfsSize = "75%";
   };
 
+  environment.systemPackages = with pkgs; [
+    (import ../../modules/with-native-optimizations.nix config.networking.hostName whisper-cpp)
+  ];
+
   fileSystems = {
     "/".options = [
       "noatime"
