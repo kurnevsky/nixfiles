@@ -44,6 +44,13 @@ let
       in
       _self: super:
       {
+        # TODO: fixed in master: https://github.com/NixOS/nixpkgs/pull/381064
+        dap-mode = super.dap-mode.overrideAttrs {
+          preBuild = null;
+          LSP_USE_PLISTS = true;
+        };
+        # Doesn't properly depend on dash: https://github.com/dandavison/magit-delta/issues/30
+        magit-delta = withDependency super.dash super.magit-delta;
         org-roam = withoutDependency super.org super.org-roam;
         org-ql = withoutDependency super.org super.org-ql;
         org-super-agenda = withoutDependency super.org super.org-super-agenda;
@@ -99,7 +106,7 @@ let
             "lsp-treemacs"
             "lsp-ui"
             "lsp-origami"
-            "dap-mode"
+            # "dap-mode"
             "lsp-java"
             "lsp-metals"
             "lsp-haskell"
