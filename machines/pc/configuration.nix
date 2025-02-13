@@ -85,6 +85,8 @@
 
   systemd.network.networks."99-wg0".address = [ "192.168.14.5/32" ];
 
+  nixpkgs.config.rocmSupport = true;
+
   hardware = {
     cpu.intel.updateMicrocode = true;
     graphics.extraPackages = with pkgs; [
