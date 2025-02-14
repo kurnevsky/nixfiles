@@ -353,13 +353,13 @@
       "locked": {
         "lastModified": 1737346419,
         "narHash": "sha256-YHByUFujAnfJJ2JnhHIJyohECr5o0EDmuRdyUcvnZGQ=",
-        "owner": "NixOS",
+        "owner": "mobile-nixos",
         "repo": "mobile-nixos",
         "rev": "1498c4d7fd59026479469efdbfe30c78a7300d89",
         "type": "github"
       },
       "original": {
-        "owner": "NixOS",
+        "owner": "mobile-nixos",
         "ref": "development",
         "repo": "mobile-nixos",
         "type": "github"
