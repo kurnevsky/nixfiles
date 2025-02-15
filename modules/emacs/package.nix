@@ -55,29 +55,20 @@ let
             src = pkgs.fetchFromGitHub {
               owner = "elp-revive";
               repo = "origami.el";
-              rev = "a8300d79f8ba7429f656ea81ae74dd9ec7f9c894";
-              sha256 = "sha256-Ysb1PTTvaM6Jig8JidMeNynnXyiG/YQ14ZRVqxGWyAU=";
+              rev = "2a26a428a0046af282e2ef4ec574d7383f8ccc86";
+              sha256 = "sha256-vSTW2cO8WI5EgM0Tdph3WM2wFoF3aQhrsBaH+EOQNA0=";
             };
           })
         );
-        treemacs-nerd-icons = super.treemacs-nerd-icons.overrideAttrs (_old: {
-          src = pkgs.fetchFromGitHub {
-            owner = "m-delfino";
-            repo = "treemacs-nerd-icons";
-            rev = "75b880a7a7eb52ddef1cb061315b1718645c1c6e";
-            sha256 = "sha256-8BjaRcwnecgq/zMBizpl/t9KNeMDKau7PWjzVaPqrpY=";
-          };
-        });
         lean4-mode = super.melpaBuild rec {
           pname = "lean4-mode";
-          version = "0";
-          commit = "004ad0e60b85fb4eac74a5523ee3e648fd5cfce5";
+          version = "1.1.2";
 
           src = pkgs.fetchFromGitHub {
             owner = "leanprover-community";
             repo = pname;
-            rev = commit;
-            hash = "sha256-9RCWidoEFucafKoWpT2yQgMh9CNXMLrpZJC1z1f60M0=";
+            tag = version;
+            hash = "sha256-DLgdxd0m3SmJ9heJ/pe5k8bZCfvWdaKAF0BDYEkwlMQ=";
           };
 
           buildInputs = with super; [
