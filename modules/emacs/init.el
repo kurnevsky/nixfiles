@@ -1492,12 +1492,29 @@ identifier and the position respectively."
                         (let ((caps (lsp--workspace-server-capabilities workspace)))
                           (unless (lsp-get caps :inlineCompletionProvider)
                             (lsp:set-server-capabilities-inline-completion-provider? caps t))))
-      :initialization-options '((infill . ((privider . "Mistral")
+      :initialization-options '((infill . ((provider . "Mistral")
                                             (config . ((url . "https://api.mistral.ai/v1/fim/completions")
+                                                        (api_key_env . "MISTRAL_API_KEY")
                                                         (model . "codestral-latest")
                                                         (temperature . 0)
                                                         (max_tokens . 512)
-                                                        (stop . ["\n\n"])))))))))
+                                                        (stop . ["\n\n"])))))
+                                 (chat . ((messages . [((role . "system")
+                                                         (content . "You provide the modified code directly without any surrounding explanation or context, and do not enclose it within a code block."))
+                                                        ((role . "user")
+                                                          (content . "{{ prompt }}\n\n```\n{{ selection }}\n```"))])
+                                           (model_config . ((provider . "OpenAI")
+                                                             (config . ((url . "https://api.groq.com/openai/v1/chat/completions")
+                                                                         (api_key_env . "OPENAI_API_KEY")
+                                                                         (model . "llama-3.3-70b-versatile")
+                                                                         (temperature . 0))))))))))
+  (defun famulus-rewrite ()
+    "Rewrite the region."
+    (interactive)
+    (lsp-send-execute-command
+      "famulus-rewrite"
+      (vector `(:uri ,(lsp--buffer-uri) :range ,(lsp--region-to-range (region-beginning) (region-end)))
+        (read-string "Enter your query: ")))))
 
 (use-package lsp-ui
   :custom

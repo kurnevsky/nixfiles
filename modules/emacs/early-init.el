@@ -170,7 +170,11 @@
      ("pursls"
        (pcase command
          (`("purescript-language-server" "--stdio") t)
-         (`("emacs-lsp-booster" ,(pred (string= (executable-find "purescript-language-server"))) "--stdio") t)))))
+         (`("emacs-lsp-booster" ,(pred (string= (executable-find "purescript-language-server"))) "--stdio") t)))
+     ("famulus"
+       (pcase command
+         (`(,(pred (string= (executable-find "famulus")))) t)
+         (`("emacs-lsp-booster" ,(pred (string= (executable-find "famulus")))) t)))))
 
 (defvar sec-allow-make-network-process
   '(pcase name

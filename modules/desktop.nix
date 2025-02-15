@@ -275,7 +275,9 @@
         perl
         python3
         (pkgs.writeShellScriptBin "famulus" ''
-          ${pkgs.coreutils}/bin/env MISTRAL_API_KEY="$(pass auth-source/mistral)" \
+          ${pkgs.coreutils}/bin/env \
+            MISTRAL_API_KEY="$(pass auth-source/mistral)" \
+            OPENAI_API_KEY="$(pass auth-source/groq)" \
             ${callPackage ./famulus.nix { }}/bin/famulus "$@"
         '')
         ## C/C++

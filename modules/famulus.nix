@@ -6,18 +6,18 @@
 
 rustPlatform.buildRustPackage rec {
   pname = "famulus";
-  version = "0.0.3";
+  version = "0.0.4";
 
   src = fetchFromGitHub {
     owner = "kurnevsky";
     repo = "famulus";
     rev = "v${version}";
-    hash = "sha256-F0Sd5JtKuKYpWVDUHZa4rpA836vOi+USRmaFTQFUiys=";
+    hash = "sha256-cE3PVZOGNpMi+m9vk4fEtZSo+IOINZiG2lEQAmNWMAQ=";
   };
 
   useFetchCargoVendor = true;
 
-  cargoHash = "sha256-rmGOLhyP1JctzBlYsmv3oqc2HtkdURB6IueDC3/bHAs=";
+  cargoHash = "sha256-sUBwiCW0rYhIsS7oY9qkkuBFKJaxLDqg+7+5mhMNTKg=";
 
   meta = with lib; {
     description = "LSP server integrating LLMs";
