@@ -76,7 +76,7 @@
       type = "github";
       owner = "Svenum";
       repo = "Solaar-Flake";
-      ref = "0.1.1";
+      ref = "0.1.2";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
