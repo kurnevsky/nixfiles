@@ -164,7 +164,6 @@
         ./modules/motion.nix
         ./modules/torjail.nix
         ./modules/torbrowser.nix
-        ./modules/nspawn.nix
         ./modules/zswap.nix
         (
           { pkgs, ... }:
