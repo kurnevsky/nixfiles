@@ -935,6 +935,24 @@
                   fileExt = ".ics";
                 };
               };
+              google = {
+                khal = {
+                  enable = true;
+                  readOnly = true;
+                };
+                vdirsyncer = {
+                  enable = true;
+                  urlCommand = [
+                    "pass"
+                    "auth-source/google-calendar"
+                  ];
+                };
+                remote.type = "http";
+                local = {
+                  type = "filesystem";
+                  fileExt = ".ics";
+                };
+              };
             };
           };
         };
