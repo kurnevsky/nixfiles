@@ -26,18 +26,16 @@ let
     ];
     override =
       let
-        # https://github.com/NixOS/nixpkgs/blob/e6e389917a8c778be636e67a67ec958f511cc55d/pkgs/build-support/emacs/generic.nix#L48-L50
+        # https://github.com/NixOS/nixpkgs/blob/80c49cf3d7731406605c9ebe87dd4601a7181e63/pkgs/applications/editors/emacs/build-support/generic.nix#L60-L61
         withDependency =
           d: p:
           p.overrideAttrs (old: {
-            buildInputs = old.buildInputs ++ [ d ];
             propagatedBuildInputs = old.propagatedBuildInputs ++ [ d ];
             propagatedUserEnvPkgs = old.propagatedUserEnvPkgs ++ [ d ];
           });
         withoutDependency =
           d: p:
           p.overrideAttrs (old: {
-            buildInputs = lib.lists.remove d old.buildInputs;
             propagatedBuildInputs = lib.lists.remove d old.propagatedBuildInputs;
             propagatedUserEnvPkgs = lib.lists.remove d old.propagatedUserEnvPkgs;
           });

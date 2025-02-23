@@ -846,7 +846,7 @@
             profiles.default = {
               settings = import ./firefox/firefox.nix;
               userChrome = builtins.readFile ./firefox/userChrome.css;
-              extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+              extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
                 darkreader
                 decentraleyes
                 plasma-integration
