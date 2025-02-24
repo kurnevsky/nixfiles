@@ -194,7 +194,7 @@ in
               gnome-themes-extra
               adwaita-icon-theme
               hicolor-icon-theme
-              plasma-integration
+              kdePackages.plasma-integration
               kdePackages.breeze
             ];
             pams = [
@@ -234,7 +234,7 @@ in
             {
               name = "mpv";
               bin-sh = true;
-              extra-deps = with pkgs; [ plasma-integration ];
+              extra-deps = with pkgs; [ kdePackages.plasma-integration ];
               # unshare-pid breaks xdg-screensaver in a way that it can't detect
               # process termination and therefore might not enable screensaver
               unshare-pid = false;
@@ -285,7 +285,7 @@ in
           (lib.pipe
             {
               name = "vlc";
-              extra-deps = with pkgs; [ plasma-integration ];
+              extra-deps = with pkgs; [ kdePackages.plasma-integration ];
               devs = [ "dri" ];
               syses = [
                 # Necessary for hardware acceleration
@@ -341,8 +341,8 @@ in
                 gnome-themes-extra
                 adwaita-icon-theme
                 hicolor-icon-theme
-                plasma-integration
-                kde-gtk-config
+                kdePackages.plasma-integration
+                kdePackages.kde-gtk-config
                 kdePackages.breeze
                 config.i18n.glibcLocales
               ];
@@ -432,8 +432,8 @@ in
                 gnome-themes-extra
                 adwaita-icon-theme
                 hicolor-icon-theme
-                plasma-integration
-                kde-gtk-config
+                kdePackages.plasma-integration
+                kdePackages.kde-gtk-config
                 kdePackages.breeze
               ];
               devs = [ "dri" ];
@@ -506,7 +506,7 @@ in
                 gnome-themes-extra
                 adwaita-icon-theme
                 hicolor-icon-theme
-                plasma-integration
+                kdePackages.plasma-integration
                 kdePackages.breeze
               ];
               devs = [ "dri" ];
@@ -581,7 +581,7 @@ in
               gnome-themes-extra
               adwaita-icon-theme
               hicolor-icon-theme
-              plasma-integration
+              kdePackages.plasma-integration
               kdePackages.breeze
             ];
             graphics = true;
@@ -633,7 +633,7 @@ in
                 gnome-themes-extra
                 adwaita-icon-theme
                 hicolor-icon-theme
-                plasma-integration
+                kdePackages.plasma-integration
                 kdePackages.breeze
                 config.i18n.glibcLocales
               ];
@@ -685,7 +685,7 @@ in
                 gnome-themes-extra
                 adwaita-icon-theme
                 hicolor-icon-theme
-                plasma-integration
+                kdePackages.plasma-integration
                 kdePackages.breeze
                 kdePackages.kde-gtk-config
               ];
@@ -748,7 +748,7 @@ in
                 gnome-themes-extra
                 adwaita-icon-theme
                 hicolor-icon-theme
-                plasma-integration
+                kdePackages.plasma-integration
                 kdePackages.breeze
                 config.i18n.glibcLocales
               ];
@@ -837,7 +837,7 @@ in
                   gnome-themes-extra
                   adwaita-icon-theme
                   hicolor-icon-theme
-                  plasma-integration
+                  kdePackages.plasma-integration
                   kdePackages.breeze
                   config.i18n.glibcLocales
                 ];
@@ -974,7 +974,7 @@ in
                   coreutils-full
                   gnugrep
                   gnused
-                  plasma-integration
+                  kdePackages.plasma-integration
                 ];
                 graphics = true;
                 etcs = [
@@ -1065,8 +1065,8 @@ in
               gnome-themes-extra
               adwaita-icon-theme
               hicolor-icon-theme
-              plasma-integration
-              kde-gtk-config
+              kdePackages.plasma-integration
+              kdePackages.kde-gtk-config
               kdePackages.breeze
               config.i18n.glibcLocales
             ];

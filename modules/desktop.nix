@@ -225,7 +225,6 @@
         tor-browser-bundle-bin
         # Messengers
         gajim
-        konversation
         telegram-desktop
         ## Matrix
         element-desktop
