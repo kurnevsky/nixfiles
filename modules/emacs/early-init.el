@@ -11,10 +11,6 @@
 ;; Disable deferred compilation.
 (setq native-comp-jit-compilation nil)
 
-;; TODO:
-;; call-process-region
-;; call-process
-
 (defun sec-wrap-function (symbol callback)
   "Wrap a function with SYMBOL name and call CALLBACK instead."
   (let* ((orig (symbol-function symbol))
@@ -234,6 +230,44 @@ Family: %.1024s
 Local: %.1024s
 Remote: %.1024s
 Allow `make-network-process' call?" name host service type family local remote)))
+         (apply orig args)
+         (signal 'error nil)))))
+
+(defvar sec-allow-call-process
+  '(pcase program
+     ((rx bos "/nix/store/" (* nonl) "/emacsclient") t)
+     ("git" t)
+     ("tar" t)
+     ("diff" t)
+     ("openssl" t)
+     ("khal" t)
+     ("jq" t)
+     ("sh" t)
+     ("gcc" t)
+     ("g++" t)
+     ("locale" t)
+     ("ssh" t)
+     ("chown" t)
+     ("bzr" t)
+     ("env" t)
+     ("/bin/sh" t)
+     ((pred (string= "/run/current-system/sw/bin/zsh")) t)
+     ((pred (string= (executable-find "aspell"))) t)
+     ((pred (string= (executable-find "direnv"))) t)))
+
+(sec-wrap-function 'call-process
+  `(lambda (orig &rest args)
+     (let ((program (car args)))
+       (if (or ,sec-allow-call-process (yes-or-no-p (format "Program: %.1024s
+Allow `call-process' call?" program)))
+         (apply orig args)
+         (signal 'error nil)))))
+
+(sec-wrap-function 'call-process-region
+  `(lambda (orig &rest args)
+     (let ((program (car (cdr (cdr args)))))
+       (if (or ,sec-allow-call-process (yes-or-no-p (format "Program: %.1024s
+Allow `call-process-region' call?" program)))
          (apply orig args)
          (signal 'error nil)))))
 
