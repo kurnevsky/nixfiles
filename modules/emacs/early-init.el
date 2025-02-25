@@ -274,6 +274,7 @@ Allow `call-process-region' call?" program)))
 (unintern "sec-wrap-function" obarray)
 (unintern "sec-allow-make-process" obarray)
 (unintern "sec-allow-make-network-process" obarray)
+(unintern "sec-allow-call-process" obarray)
 ;;; early-init.el ends here
 
 ;; Local Variables:
