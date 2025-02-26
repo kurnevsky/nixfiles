@@ -11,7 +11,7 @@ let
   patchedPkgs = applyOverlays pkgs;
   emacsPkgs = patchedPkgs.extend emacs-overlay;
   emacsWithPackages = emacsPkgs.callPackage ./emacs/package.nix {
-    emacs = emacsPkgs.emacs29-nox;
+    emacs = emacsPkgs.emacs30-nox;
   };
 in
 {

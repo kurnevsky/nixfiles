@@ -49,13 +49,20 @@ let
         org-super-agenda = withoutDependency super.org super.org-super-agenda;
         treemacs = withDependency super.doom-modeline super.treemacs;
         origami = withDependency super.fringe-helper (
-          super.origami.overrideAttrs (_old: {
+          super.origami.overrideAttrs (old: {
             src = pkgs.fetchFromGitHub {
               owner = "elp-revive";
               repo = "origami.el";
               rev = "2a26a428a0046af282e2ef4ec574d7383f8ccc86";
               sha256 = "sha256-vSTW2cO8WI5EgM0Tdph3WM2wFoF3aQhrsBaH+EOQNA0=";
             };
+
+            postPatch =
+              (old.postPatch or "")
+              + ''
+                substituteInPlace origami.el \
+                  --replace-fail ",(face-attribute 'highlight :background)" 'nil'
+              '';
           })
         );
         lean4-mode = super.melpaBuild rec {

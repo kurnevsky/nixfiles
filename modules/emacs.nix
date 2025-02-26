@@ -3,7 +3,7 @@ users:
 { lib, pkgs, ... }:
 
 let
-  emacs = pkgs.callPackage ./emacs/package.nix { emacs = pkgs.emacs29-pgtk; };
+  emacs = pkgs.callPackage ./emacs/package.nix { emacs = pkgs.emacs30-pgtk; };
 in
 lib.mkMerge [
   {
