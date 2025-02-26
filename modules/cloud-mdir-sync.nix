@@ -1,26 +1,21 @@
 {
   lib,
   fetchFromGitHub,
-  python311Packages,
+  python3Packages,
 }:
 
-python311Packages.buildPythonPackage rec {
+python3Packages.buildPythonPackage rec {
   pname = "cloud-mdir-sync";
   version = "1";
 
   src = fetchFromGitHub {
     owner = "jgunthorpe";
     repo = "cloud_mdir_sync";
-    rev = "c5c58b4723218b03b5fb8574a244d3497bd54992";
-    sha256 = "sha256-G6XIg47JvQ3QGkzzVGGsnIXwy7QWB655vdPJDylvocI=";
+    rev = "5f94e58a043fef57be41c01c21ae5efb955098c6";
+    sha256 = "sha256-AKlcHyj8F2oWySQzxYp4JbWP2BkKQOTSiBKeHX7htog=";
   };
 
-  postPatch = ''
-    substituteInPlace setup.py \
-      --replace "'pyasyncore'," ""
-  '';
-
-  propagatedBuildInputs = with python311Packages; [
+  propagatedBuildInputs = with python3Packages; [
     aiohttp
     keyring
     oauthlib
