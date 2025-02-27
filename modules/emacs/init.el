@@ -596,8 +596,26 @@ which LANG was detected but these are ignored."
                                            completion-flex-try-completion
                                            fuzzy-matcher-all-completions
                                            "Fuzzy completion with scoring."))
+  (defun fuzzy-matcher-adjust-metadata (metadata)
+    (let ((existing-dsf
+            (completion-metadata-get metadata 'display-sort-function))
+           (existing-csf
+             (completion-metadata-get metadata 'cycle-sort-function)))
+      (cl-flet
+        ((compose-flex-sort-fn
+           (existing-sort-fn)
+           (lambda (completions)
+             (sort
+               (funcall existing-sort-fn completions)
+               (lambda (c1 c2)
+                 (let ((s1 (get-text-property 0 'completion-score c1))
+                        (s2 (get-text-property 0 'completion-score c2)))
+                   (> (or s1 0) (or s2 0))))))))
+        `(metadata
+           (display-sort-function . ,(compose-flex-sort-fn (or existing-dsf #'identity)))
+           (cycle-sort-function . ,(compose-flex-sort-fn (or existing-csf #'identity)))
+           ,@(cdr metadata)))))
   (put 'fuzzy 'completion--adjust-metadata (lambda (metadata)
-                                             ;; completion--flex-adjust-metadata has faulty check for the completion
                                              (if (let ((input (minibuffer-contents-no-properties)))
                                                    (or
                                                      (string-empty-p input)
@@ -605,7 +623,7 @@ which LANG was detected but these are ignored."
                                                        (eq (completion-metadata-get metadata 'category) 'file)
                                                        (string-suffix-p "/" input))))
                                                metadata
-                                               (completion--flex-adjust-metadata metadata))))
+                                               (fuzzy-matcher-adjust-metadata metadata))))
   (setq completion-styles '(fuzzy)))
 
 (use-package ido
