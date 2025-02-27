@@ -1268,11 +1268,12 @@ which LANG was detected but these are ignored."
        (side            . bottom)
        (window-height   . 0.3))))
 
-(use-package flycheck-package
-  :after flycheck
-  :demand t
-  :config
-  (flycheck-package-setup))
+;; TODO: broken: https://github.com/purcell/package-lint/issues/285
+;; (use-package flycheck-package
+;;   :after flycheck
+;;   :demand t
+;;   :config
+;;   (flycheck-package-setup))
 
 (use-package pdf-loader
   :ensure pdf-tools
