@@ -15,7 +15,7 @@ let
         name = "hexrgb.el";
         src = pkgs.fetchurl {
           url = "https://www.emacswiki.org/emacs/download/hexrgb.el";
-          sha256 = "sha256-qFKdT3IjhUAgNaCVTjCe2cT8rOqfPSdbVCL14/JCC6I=";
+          hash = "sha256-qFKdT3IjhUAgNaCVTjCe2cT8rOqfPSdbVCL14/JCC6I=";
         };
         unpackCmd = "mkdir el && cp $curSrc el/hexrgb.el";
         buildPhase = "${emacs}/bin/emacs -Q -nw -batch -f batch-byte-compile hexrgb.el";
@@ -54,7 +54,7 @@ let
               owner = "elp-revive";
               repo = "origami.el";
               rev = "2a26a428a0046af282e2ef4ec574d7383f8ccc86";
-              sha256 = "sha256-vSTW2cO8WI5EgM0Tdph3WM2wFoF3aQhrsBaH+EOQNA0=";
+              hash = "sha256-vSTW2cO8WI5EgM0Tdph3WM2wFoF3aQhrsBaH+EOQNA0=";
             };
 
             postPatch =

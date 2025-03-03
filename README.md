@@ -81,7 +81,7 @@ let
     patches = [
       (pkgs.fetchpatch {
         url = "https://some-patch.diff";
-        sha256 = "";
+        hash = "";
       })
     ];
   };
@@ -101,7 +101,7 @@ A module can be patched like:
   imports = [
     (builtins.fetchurl {
       url = "https://some-fixed-module.nix";
-      sha256 = "";
+      hash = "";
     })
   ];
 }
