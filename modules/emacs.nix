@@ -1,9 +1,17 @@
 users:
 
-{ lib, pkgs, ... }:
+{
+  lib,
+  pkgs,
+  inputs,
+  ...
+}:
 
 let
-  emacs = pkgs.callPackage ./emacs/package.nix { emacs = pkgs.emacs30-pgtk; };
+  emacs = pkgs.callPackage ./emacs/package.nix {
+    emacs = pkgs.emacs30-pgtk;
+    inherit inputs;
+  };
 in
 lib.mkMerge [
   {

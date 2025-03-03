@@ -306,6 +306,22 @@
         "type": "github"
       }
     },
+    "hexrgb": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1514842371,
+        "narHash": "sha256-PxwRIuiX0gzm9pZMUcFIbr8Oe/7lylKzk0KW+jM0tHg=",
+        "owner": "emacsmirror",
+        "repo": "hexrgb",
+        "rev": "90e5f07f14bdb9966648977965094c75072691d4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "emacsmirror",
+        "repo": "hexrgb",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -324,6 +340,23 @@
         "owner": "nix-community",
         "ref": "master",
         "repo": "home-manager",
+        "type": "github"
+      }
+    },
+    "lean4-mode": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1733861382,
+        "narHash": "sha256-DLgdxd0m3SmJ9heJ/pe5k8bZCfvWdaKAF0BDYEkwlMQ=",
+        "owner": "leanprover-community",
+        "repo": "lean4-mode",
+        "rev": "76895d8939111654a472cfc617cfd43fbf5f1eb6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "leanprover-community",
+        "ref": "1.1.2",
+        "repo": "lean4-mode",
         "type": "github"
       }
     },
@@ -568,6 +601,22 @@
         "type": "github"
       }
     },
+    "origami.el": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1740420473,
+        "narHash": "sha256-A4iVHdm8Cdf0NnW1q0wEk+29Xm84cdAE6wu37buwYtQ=",
+        "owner": "elp-revive",
+        "repo": "origami.el",
+        "rev": "2a882820f3f3925c3d9e6eb91ab5ee5dea082a57",
+        "type": "github"
+      },
+      "original": {
+        "owner": "elp-revive",
+        "repo": "origami.el",
+        "type": "github"
+      }
+    },
     "purescript-overlay": {
       "inputs": {
         "flake-compat": "flake-compat_2",
@@ -597,12 +646,15 @@
         "emacs-overlay": "emacs-overlay",
         "fenix": "fenix",
         "git-hooks": "git-hooks",
+        "hexrgb": "hexrgb",
         "home-manager": "home-manager",
+        "lean4-mode": "lean4-mode",
         "llama-cpp": "llama-cpp",
         "mobile-nixos": "mobile-nixos",
         "nix-on-droid": "nix-on-droid",
         "nixpkgs": "nixpkgs",
         "nur": "nur",
+        "origami.el": "origami.el",
         "purescript-overlay": "purescript-overlay",
         "solaar": "solaar",
         "tt-schemes": "tt-schemes"

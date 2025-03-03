@@ -2,6 +2,7 @@
   pkgs,
   lib,
   emacs,
+  inputs,
   ...
 }:
 
@@ -13,11 +14,7 @@ let
     extraEmacsPackages = epkgs: [
       (pkgs.stdenv.mkDerivation {
         name = "hexrgb.el";
-        src = pkgs.fetchurl {
-          url = "https://www.emacswiki.org/emacs/download/hexrgb.el";
-          hash = "sha256-qFKdT3IjhUAgNaCVTjCe2cT8rOqfPSdbVCL14/JCC6I=";
-        };
-        unpackCmd = "mkdir el && cp $curSrc el/hexrgb.el";
+        src = inputs.hexrgb;
         buildPhase = "${emacs}/bin/emacs -Q -nw -batch -f batch-byte-compile hexrgb.el";
         installPhase = "mkdir -p $out/share/emacs/site-lisp && install *.el* $out/share/emacs/site-lisp";
       })
@@ -50,12 +47,7 @@ let
         treemacs = withDependency super.doom-modeline super.treemacs;
         origami = withDependency super.fringe-helper (
           super.origami.overrideAttrs (old: {
-            src = pkgs.fetchFromGitHub {
-              owner = "elp-revive";
-              repo = "origami.el";
-              rev = "2a26a428a0046af282e2ef4ec574d7383f8ccc86";
-              hash = "sha256-vSTW2cO8WI5EgM0Tdph3WM2wFoF3aQhrsBaH+EOQNA0=";
-            };
+            src = inputs."origami.el";
 
             postPatch =
               (old.postPatch or "")
@@ -68,13 +60,7 @@ let
         lean4-mode = super.melpaBuild rec {
           pname = "lean4-mode";
           version = "1.1.2";
-
-          src = pkgs.fetchFromGitHub {
-            owner = "leanprover-community";
-            repo = pname;
-            tag = version;
-            hash = "sha256-DLgdxd0m3SmJ9heJ/pe5k8bZCfvWdaKAF0BDYEkwlMQ=";
-          };
+          src = inputs.lean4-mode;
 
           buildInputs = with super; [
             dash

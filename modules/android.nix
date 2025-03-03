@@ -3,6 +3,7 @@
   lib,
   pkgs,
   emacs-overlay,
+  inputs,
   ...
 }:
 
@@ -12,6 +13,7 @@ let
   emacsPkgs = patchedPkgs.extend emacs-overlay;
   emacsWithPackages = emacsPkgs.callPackage ./emacs/package.nix {
     emacs = emacsPkgs.emacs30-nox;
+    inherit inputs;
   };
 in
 {

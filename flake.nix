@@ -100,6 +100,28 @@
       repo = "git-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    hexrgb = {
+      type = "github";
+      owner = "emacsmirror";
+      repo = "hexrgb";
+      flake = false;
+    };
+
+    "origami.el" = {
+      type = "github";
+      owner = "elp-revive";
+      repo = "origami.el";
+      flake = false;
+    };
+
+    lean4-mode = {
+      type = "github";
+      owner = "leanprover-community";
+      repo = "lean4-mode";
+      ref = "1.1.2";
+      flake = false;
+    };
   };
 
   outputs =
@@ -134,6 +156,7 @@
           root
           kurnevsky
         ]) common-home)
+        { _module.args.inputs = inputs; }
         # Keep flake inputs from being garbage collected
         { system.extraDependencies = collectFlakeInputs inputs.self; }
       ];
