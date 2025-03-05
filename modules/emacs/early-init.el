@@ -252,13 +252,17 @@ Allow `make-network-process' call?" name host service type family local remote))
      ("env" t)
      ("delta" t)
      ("/bin/sh" t)
+     ("tty" (member 'epa-file-handler backtrace))
      ((pred (string= "/run/current-system/sw/bin/zsh")) t)
+     ((pred (string= (executable-find "gpg2"))) (member 'epa-file-handler backtrace))
      ((pred (string= (executable-find "aspell"))) t)
      ((pred (string= (executable-find "direnv"))) t)))
 
 (sec-wrap-function 'call-process
   `(lambda (orig &rest args)
-     (let ((program (car args)))
+     (let ((program (car args))
+            (backtrace))
+       (mapbacktrace (lambda (_evald fun _args _flags) (setq backtrace (cons fun backtrace))))
        (if (or ,sec-allow-call-process (yes-or-no-p (format "Program: %.1024s
 Allow `call-process' call?" program)))
          (apply orig args)
@@ -266,7 +270,9 @@ Allow `call-process' call?" program)))
 
 (sec-wrap-function 'call-process-region
   `(lambda (orig &rest args)
-     (let ((program (car (cdr (cdr args)))))
+     (let ((program (car (cdr (cdr args))))
+            (backtrace))
+       (mapbacktrace (lambda (_evald fun _args _flags) (setq backtrace (cons fun backtrace))))
        (if (or ,sec-allow-call-process (yes-or-no-p (format "Program: %.1024s
 Allow `call-process-region' call?" program)))
          (apply orig args)
