@@ -235,7 +235,7 @@ Allow `make-network-process' call?" name host service type family local remote))
 
 (defvar sec-allow-call-process
   '(pcase program
-     ((rx bos "/nix/store/" (* nonl) "/emacsclient") t)
+     ((rx bos "/nix/store/" (* nonl) "/emacsclient") (member 'with-editor-emacsclient-version backtrace))
      ("git" t)
      ("tar" t)
      ("diff" t)
@@ -246,7 +246,7 @@ Allow `make-network-process' call?" name host service type family local remote))
      ("gcc" t)
      ("g++" t)
      ("locale" t)
-     ("ssh" t)
+     ("ssh" (member 'tramp-call-process backtrace))
      ("chown" t)
      ("bzr" t)
      ("env" t)
