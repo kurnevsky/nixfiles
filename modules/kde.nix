@@ -86,6 +86,11 @@
       translate-google
     ];
 
+  # ENABLE_HDR_WSI=1 mpv --hwdec=auto-safe --vo=gpu-next --target-colorspace-hint --gpu-api=vulkan --gpu-context=waylandvk file
+  hardware.graphics.extraPackages = with pkgs; [
+    vulkan-hdr-layer-kwin6
+  ];
+
   xdg.portal = {
     enable = true;
     # Add the GTK portal which seems to be always needed for GTK applications
