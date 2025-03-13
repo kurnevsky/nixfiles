@@ -33,6 +33,7 @@
       type = "github";
       owner = "nix-community";
       repo = "nur";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     mobile-nixos = {
