@@ -76,7 +76,8 @@
         anki
         blender
         calibre
-        claws-mail
+        # TODO: broken
+        # claws-mail
         cloud-mdir-sync
         dosbox
         eiskaltdcpp
