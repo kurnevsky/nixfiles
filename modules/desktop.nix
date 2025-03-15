@@ -318,7 +318,7 @@
         ## Scala
         coursier
         sbt
-        scala_3
+        scala-next
         metals
         ## JavaScript
         nodejs
