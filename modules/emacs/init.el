@@ -437,7 +437,9 @@ ARGS is `kill-buffer' arguments."
 (use-package puni
   :bind (("<delete>" . puni-forward-delete-char)
           ("C-M-<up>" . puni-beginning-of-sexp)
-          ("C-M-<down>" . puni-end-of-sexp)))
+          ("C-M-<down>" . puni-end-of-sexp))
+  :custom
+  (puni-confirm-when-delete-unbalanced-active-region nil))
 
 (use-package hl-line
   :ensure nil
