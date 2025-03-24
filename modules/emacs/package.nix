@@ -43,6 +43,7 @@ let
         magit-delta = withDependency super.dash super.magit-delta;
         org-roam = withoutDependency super.org super.org-roam;
         org-ql = withoutDependency super.org super.org-ql;
+        org-modern = withoutDependency super.org super.org-modern;
         org-super-agenda = withoutDependency super.org super.org-super-agenda;
         treemacs = withDependency super.doom-modeline super.treemacs;
         origami = withDependency super.fringe-helper (
