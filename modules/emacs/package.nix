@@ -92,7 +92,7 @@ let
           (
             name:
             super.${name}.overrideAttrs (_super: {
-              LSP_USE_PLISTS = true;
+              env.LSP_USE_PLISTS = true;
             })
           );
   };
