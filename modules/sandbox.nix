@@ -197,11 +197,7 @@ in
               kdePackages.plasma-integration
               kdePackages.breeze
             ];
-            pams = [
-              "pulse"
-              "pipewire-0"
-            ];
-            etcs = [ "pulse" ];
+            pipewire = true;
             graphics = true;
             unsetenvs = [
               "MAIL"
@@ -245,11 +241,7 @@ in
                 "devices"
               ];
               graphics = true;
-              pams = [
-                "pulse"
-                "pipewire-0"
-              ];
-              etcs = [ "pulse" ];
+              pipewire = true;
               # xdg-screensaver creates a lockfile in /tmp
               shared-tmp = true;
               unsetenvs = [ "MAIL" ];
@@ -293,11 +285,7 @@ in
                 "devices"
               ];
               graphics = true;
-              pams = [
-                "pulse"
-                "pipewire-0"
-              ];
-              etcs = [ "pulse" ];
+              pipewire = true;
               unsetenvs = [ "MAIL" ];
               setenvs = [
                 {
@@ -355,13 +343,11 @@ in
                 "bus"
               ];
               graphics = true;
+              pipewire = true;
               pams = [
                 "gnupg"
-                "pulse"
-                "pipewire-0"
               ];
               etcs = [
-                "pulse"
                 "ssl/certs/ca-certificates.crt"
               ];
               localtime = true;
@@ -444,13 +430,11 @@ in
                 "devices"
               ];
               graphics = true;
+              pipewire = true;
               pams = [
                 "gnupg"
-                "pulse"
-                "pipewire-0"
               ];
               etcs = [
-                "pulse"
                 "ssl/certs/ca-certificates.crt"
               ];
               localtime = true;
@@ -517,11 +501,7 @@ in
                 "devices"
               ];
               graphics = true;
-              pams = [
-                "pulse"
-                "pipewire-0"
-              ];
-              etcs = [ "pulse" ];
+              pipewire = true;
               localtime = true;
               resolv-conf = true;
               unsetenvs = [
@@ -555,11 +535,7 @@ in
             devs = [ "dri" ];
             camera = true;
             graphics = true;
-            pams = [
-              "pulse"
-              "pipewire-0"
-            ];
-            etcs = [ "pulse" ];
+            pipewire = true;
             localtime = true;
             resolv-conf = true;
             unsetenvs = [
@@ -585,12 +561,8 @@ in
               kdePackages.breeze
             ];
             graphics = true;
-            pams = [
-              "pulse"
-              "pipewire-0"
-            ];
+            pipewire = true;
             etcs = [
-              "pulse"
               "ssl/certs/ca-certificates.crt"
             ];
             localtime = true;
@@ -645,11 +617,7 @@ in
                 "devices"
               ];
               graphics = true;
-              pams = [
-                "pulse"
-                "pipewire-0"
-              ];
-              etcs = [ "pulse" ];
+              pipewire = true;
               localtime = true;
               resolv-conf = true;
               unsetenvs = [
@@ -701,12 +669,8 @@ in
                 "devices"
               ];
               graphics = true;
-              pams = [
-                "pulse"
-                "pipewire-0"
-              ];
+              pipewire = true;
               etcs = [
-                "pulse"
                 "passwd"
                 "ssl/certs/ca-certificates.crt"
               ];
@@ -928,10 +892,7 @@ in
               ];
               graphics = true;
               etcs = [ "ssl/certs/ca-certificates.crt" ];
-              pams = [
-                "pulse"
-                "pipewire-0"
-              ];
+              pipewire = true;
               localtime = true;
               unsetenvs = [ "MAIL" ];
               setenvs = [
@@ -978,14 +939,10 @@ in
                 ];
                 graphics = true;
                 etcs = [
-                  "pulse"
                   "passwd"
                 ];
                 localtime = true;
-                pams = [
-                  "pulse"
-                  "pipewire-0"
-                ];
+                pipewire = true;
                 unsetenvs = [
                   "MAIL"
                   "SHELL"
@@ -1029,12 +986,8 @@ in
                 "dev"
                 "devices"
               ];
-              pams = [
-                "pulse"
-                "pipewire-0"
-              ];
+              pipewire = true;
               etcs = [
-                "pulse"
                 "ssl/certs/ca-certificates.crt"
               ];
               localtime = true;
@@ -1079,9 +1032,8 @@ in
             ];
             pams = [
               "gnupg"
-              "pulse"
-              "pipewire-0"
             ];
+            pipewire = true;
             graphics = true;
             unsetenvs = [
               "MAIL"
