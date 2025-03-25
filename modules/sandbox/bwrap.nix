@@ -39,6 +39,7 @@ drv:
   opengl ? false,
   opengl32 ? false,
   pipewire ? false,
+  pulse ? pipewire,
   bin-sh ? false,
   localtime ? false,
   resolv-conf ? false,
@@ -265,7 +266,8 @@ writeShellScriptBin target-name ''
        --ro-bind /run/current-system/sw /run/current-system/sw \
        ${lib.optionalString opengl "--ro-bind /run/opengl-driver /run/opengl-driver"} \
        ${lib.optionalString opengl32 "--ro-bind /run/opengl-driver-32 /run/opengl-driver-32"} \
-       ${lib.optionalString pipewire "--bind /run/pipewire /run/pipewire"} \
+       ${lib.optionalString pipewire "--bind /run/pipewire /run/pipewire --bind /var/run/pipewire /var/run/pipewire"} \
+       ${lib.optionalString pulse "--bind /run/pulse /run/pulse --bind /var/run/pulse /var/run/pulse"} \
        \
        ${
          lib.concatMapStringsSep " " (x: ''--bind-try "$XDG_RUNTIME_DIR"/${x} "$XDG_RUNTIME_DIR"/${x}'') pams
