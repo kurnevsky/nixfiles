@@ -110,10 +110,11 @@ let
     lib.generators.toINI { } {
       Application = {
         name = "com.sandbox.${target-name}";
-        runtime = "runtime/com.nixpak.Platform/${
+        runtime = "runtime/com.sandbox.Platform/${
           flatpakArchitectures.${system} or "unknown-arch-${system}"
         }/1";
       };
+      Instance.instance-id = target-name;
       Context.shared = "${lib.concatStringsSep ";" sharedNamespaces};";
     }
   );
@@ -242,6 +243,10 @@ writeShellScriptBin target-name ''
     rm "$FIFO_TMP"
   ''}
 
+  ${lib.optionalString flatpak ''
+    mkdir -p "$XDG_RUNTIME_DIR/.flatpak/${target-name}/"
+  ''}
+
   exec ${bubblewrap}/bin/bwrap \
        "''${deps[@]}" \
        \
@@ -313,11 +318,12 @@ writeShellScriptBin target-name ''
          lib.optionalString (system-dbus != [ ]) ''--bind "$SANDBOX_SYSTEM_BUS" /run/dbus/system_bus_socket''
        } \
        ${lib.optionalString flatpak ''
+         --info-fd 5 5>"$XDG_RUNTIME_DIR/.flatpak/${target-name}/bwrapinfo.json" \
          --bind "$XDG_RUNTIME_DIR/doc" "$XDG_RUNTIME_DIR/doc" \
          --ro-bind ${flatpak-info} /.flatpak-info \
          --ro-bind ${flatpak-info} "$XDG_RUNTIME_DIR"/flatpak-info \
        ''} \
-       ${lib.optionalString (seccomp != [ ]) "--seccomp 5 5< ${sandbox-seccomp}/seccomp.bpf"} \
+       ${lib.optionalString (seccomp != [ ]) "--seccomp 6 6< ${sandbox-seccomp}/seccomp.bpf"} \
        \
        ${drv}/bin/${name} ${lib.concatStringsSep " " args} "$@"
 ''
