@@ -27,8 +27,6 @@ let
         withDependency =
           d: p:
           p.overrideAttrs (old: {
-            # TODO: https://github.com/NixOS/nixpkgs/issues/388829
-            __structuredAttrs = false;
             packageRequires = old.packageRequires ++ [ d ];
             propagatedBuildInputs = old.propagatedBuildInputs ++ [ d ];
             propagatedUserEnvPkgs = old.propagatedUserEnvPkgs ++ [ d ];
@@ -36,7 +34,6 @@ let
         withoutDependency =
           d: p:
           p.overrideAttrs (old: {
-            __structuredAttrs = false;
             packageRequires = lib.lists.remove d old.packageRequires;
             propagatedBuildInputs = lib.lists.remove d old.propagatedBuildInputs;
             propagatedUserEnvPkgs = lib.lists.remove d old.propagatedUserEnvPkgs;
