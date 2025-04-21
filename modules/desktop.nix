@@ -80,7 +80,7 @@
         cloud-mdir-sync
         dosbox
         eiskaltdcpp
-        gimp
+        gimp3-with-plugins
         openconnect
         (callPackage ./pan-globalprotect-okta.nix { })
         gnome-themes-extra
