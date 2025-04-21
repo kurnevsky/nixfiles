@@ -220,9 +220,15 @@
         {
           environment.systemPackages = [
             (llamaOverride pkgs config (
-              inputs.llama-cpp.packages.${pkgs.system}.rocm.override {
+              (inputs.llama-cpp.packages.${pkgs.system}.rocm.override {
                 rocmGpuTargets = gpuTargets;
-              }
+              }).overrideAttrs
+                (old: {
+                  # TODO: upstream
+                  cmakeFlags = old.cmakeFlags ++ [
+                    (pkgs.lib.cmakeFeature "CMAKE_HIP_COMPILER" "${pkgs.rocmPackages.clr.hipClangPath}/clang++")
+                  ];
+                })
             ))
           ];
         };

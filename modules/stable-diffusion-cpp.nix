@@ -38,7 +38,7 @@ stdenv.mkDerivation {
       (lib.cmakeBool "SD_HIPBLAS" useRocm)
     ]
     ++ lib.optionals useRocm [
-      (lib.cmakeFeature "CMAKE_HIP_COMPILER" "${rocmPackages.llvm.clang}/bin/clang")
+      (lib.cmakeFeature "CMAKE_HIP_COMPILER" "${rocmPackages.clr.hipClangPath}/clang++")
       (lib.cmakeFeature "CMAKE_HIP_ARCHITECTURES" gpuTargets)
       (lib.cmakeFeature "AMDGPU_TARGETS" gpuTargets)
     ];
