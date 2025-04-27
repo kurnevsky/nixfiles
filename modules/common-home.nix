@@ -32,7 +32,7 @@
         share = false;
         ignoreDups = false;
       };
-      initExtra = ''
+      initContent = ''
         if [[ $TERM != "dumb" && -z "$MC_SID" && (-z $INSIDE_EMACS || $INSIDE_EMACS == "vterm") ]]; then
           eval "$(${pkgs.starship}/bin/starship init zsh)"
         fi

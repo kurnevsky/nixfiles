@@ -91,7 +91,7 @@ in
         {
           # Override default prompt as it doesn't work good in Midnigt Commander
           # This has to be done before common-home.nix
-          programs.zsh.initExtra = ''
+          programs.zsh.initContent = ''
             PROMPT='[%n@%m %~]$ '
           '';
         }
@@ -113,7 +113,7 @@ in
             zsh = {
               syntaxHighlighting.enable = true;
               autosuggestion.enable = true;
-              initExtra = ''
+              initContent = ''
                 setopt ${lib.concatStringsSep " " (import ./zsh-options.nix)}
 
                 ${builtins.readFile ./interactive-init.zsh}
