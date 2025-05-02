@@ -51,13 +51,6 @@ let
         origami = withDependency super.fringe-helper (
           super.origami.overrideAttrs (old: {
             src = inputs."origami.el";
-
-            postPatch =
-              (old.postPatch or "")
-              + ''
-                substituteInPlace origami.el \
-                  --replace-fail ",(face-attribute 'highlight :background)" 'nil'
-              '';
           })
         );
         lean4-mode = super.melpaBuild rec {
