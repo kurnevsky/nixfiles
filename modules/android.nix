@@ -2,7 +2,6 @@
   config,
   lib,
   pkgs,
-  emacs-overlay,
   inputs,
   ...
 }:
@@ -10,7 +9,7 @@
 let
   applyOverlays = pkgs: lib.foldl (pkg: pkg.extend) pkgs (import ./overlays.nix).nixpkgs.overlays;
   patchedPkgs = applyOverlays pkgs;
-  emacsPkgs = patchedPkgs.extend emacs-overlay;
+  emacsPkgs = patchedPkgs.extend inputs.emacs-overlay.overlay;
   emacsWithPackages = emacsPkgs.callPackage ./emacs/package.nix {
     emacs = emacsPkgs.emacs30-nox;
     inherit inputs;

@@ -309,7 +309,7 @@
         modules = [
           ./modules/android.nix
           ./machines/android/configuration.nix
-          { _module.args.emacs-overlay = inputs.emacs-overlay.overlay; }
+          { _module.args.inputs = inputs; }
         ];
       };
       packages = forAllSystems (_system: {
