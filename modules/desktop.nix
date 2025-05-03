@@ -960,7 +960,7 @@
         };
         services.gpg-agent = {
           enable = true;
-          pinentryPackage = pkgs.pinentry-qt;
+          pinentry.package = pkgs.pinentry-qt;
         };
         # To make sure that it's not overridden by WM
         xdg.mimeApps.enable = true;

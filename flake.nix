@@ -90,7 +90,7 @@
 
     llama-cpp = {
       type = "github";
-      owner = "ggerganov";
+      owner = "ggml-org";
       repo = "llama.cpp";
       inputs.nixpkgs.follows = "nixpkgs";
     };
