@@ -774,7 +774,7 @@
                   };
                 };
               cursor.style = "Beam";
-              live_config_reload = false;
+              general.live_config_reload = false;
               hints.enabled = [
                 {
                   regex = ''(ipfs:|ipns:|magnet:|mailto:|gemini:|gopher:|https:|http:|news:|file:|git:|ssh:|ftp:)[^\u0000-\u001F\u007F-\u009F<>"\\s{-}\\^⟨⟩`]+'';
