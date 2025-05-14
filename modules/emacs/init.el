@@ -1457,13 +1457,15 @@ which LANG was detected but these are ignored."
   (lsp-inline-completion-idle-delay 1)
   :config
   (lsp-enable-which-key-integration)
-  (defun lsp-activate-if-already-activated (server-id)
-    (when (lsp-find-workspace server-id (buffer-file-name))
-      (lsp)))
-  (add-hook 'rust-mode-hook (-partial #'lsp-activate-if-already-activated 'rust-analyzer))
-  (add-hook 'rust-ts-mode-hook (-partial #'lsp-activate-if-already-activated 'rust-analyzer))
-  (add-hook 'scala-mode-hook (-partial #'lsp-activate-if-already-activated 'metals))
-  (add-hook 'scala-ts-mode-hook (-partial #'lsp-activate-if-already-activated 'metals))
+  (defun lsp-activate-if-already-activated ()
+    (let ((lsp-warn-no-matched-clients nil))
+      (when (lsp--filter-clients (-andfn
+                                   #'lsp--supports-buffer?
+                                   (-not #'lsp--client-add-on?)
+                                   #'lsp--server-binary-present?
+                                   (lambda (client) (lsp-find-workspace (lsp--client-server-id client) (buffer-file-name)))))
+        (lsp))))
+  (add-hook 'prog-mode-hook #'lsp-activate-if-already-activated)
   (add-hook 'lsp-inline-completion-mode-hook (lambda () (lsp-inline-completion-company-integration-mode 1)))
   ;; Hack for metals to send ranges in hover request.
   (el-patch-defun lsp--text-document-position-params (&optional identifier position)
