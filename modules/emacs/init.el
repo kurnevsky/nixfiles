@@ -1399,7 +1399,9 @@ which LANG was detected but these are ignored."
 
 (use-package terraform-mode)
 
-(use-package lean4-mode)
+(use-package lean4-mode
+  :custom
+  (lean4-mode-hook nil))
 
 (use-package idris-mode
   :custom
