@@ -418,14 +418,17 @@ in
           (lib.pipe
             {
               name = "chromium";
-              extra-deps = with pkgs; [
-                gnome-themes-extra
-                adwaita-icon-theme
-                hicolor-icon-theme
-                kdePackages.plasma-integration
-                kdePackages.kde-gtk-config
-                kdePackages.breeze
-              ];
+              extra-deps =
+                with pkgs;
+                [
+                  gnome-themes-extra
+                  adwaita-icon-theme
+                  hicolor-icon-theme
+                  kdePackages.plasma-integration
+                  kdePackages.kde-gtk-config
+                  kdePackages.breeze
+                ]
+                ++ map (e: e.crxPath) (builtins.attrValues pkgs.chromium-extensions);
               devs = [ "dri" ];
               camera = true;
               syses = [
@@ -484,6 +487,7 @@ in
             [
               withFonts
               withOpengl
+              (withHomeManager "chromium")
             ]
           )
         ];
@@ -1200,7 +1204,7 @@ in
               lib.concatMapStrings (
                 files:
                 lib.concatMapStrings (path: ''
-                  [ -d ${files}/${path} ] && find ${files}/${path} -type l | xargs -r readlink -f >> $out
+                  [ -d ${files}/${path} ] && find ${files}/${path} -type l -print0 | xargs -0 -r readlink -f >> $out
                 '') paths
               ) home-files
             );
@@ -1214,6 +1218,7 @@ in
         '';
         "sandbox/mpv".source = "${home-deps-drv [ ".config/mpv" ]}/store-paths";
         "sandbox/firefox".source = "${home-deps-drv [ ".mozilla" ]}/store-paths";
+        "sandbox/chromium".source = "${home-deps-drv [ ".config/chromium" ]}/store-paths";
         "sandbox/toxic".source = "${home-deps-drv [ ".config/tox" ]}/store-paths";
         "sandbox/feh".source = "${home-deps-drv [ ".config/feh" ]}/store-paths";
         "sandbox/vdirsyncer".source = "${home-deps-drv [ ".config/vdirsyncer" ]}/store-paths";

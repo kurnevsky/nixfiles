@@ -861,6 +861,11 @@
               ];
             };
           };
+          chromium = {
+            enable = true;
+            package = pkgs.sandboxed.ungoogled-chromium;
+            extensions = builtins.attrValues pkgs.chromium-extensions;
+          };
           mbsync = {
             enable = true;
             package = pkgs.sandboxed.isync;
