@@ -425,6 +425,7 @@ in
                   adwaita-icon-theme
                   hicolor-icon-theme
                   kdePackages.plasma-integration
+                  kdePackages.plasma-browser-integration
                   kdePackages.kde-gtk-config
                   kdePackages.breeze
                 ]
@@ -444,6 +445,7 @@ in
               ];
               etcs = [
                 "ssl/certs/ca-certificates.crt"
+                "chromium/native-messaging-hosts/org.kde.plasma.browser_integration.json"
               ];
               localtime = true;
               resolv-conf = true;
@@ -469,6 +471,7 @@ in
                 "talk=org.kde.kwalletd5"
                 "talk=org.kde.kwalletd6"
                 "talk=org.freedesktop.PowerManagement"
+                "own=org.kde.plasma.browser_integration"
                 "own='org.mpris.MediaPlayer2.chromium.*'"
               ];
               ro-whitelist = [

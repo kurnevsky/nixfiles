@@ -415,6 +415,7 @@
     adb.enable = true;
     java.enable = true;
     fuse.userAllowOther = true;
+    chromium.enable = true;
   };
 
   gtk.iconCache.enable = true;
