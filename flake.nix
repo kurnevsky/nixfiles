@@ -95,6 +95,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    stable-diffusion-cpp = {
+      type = "git";
+      url = "https://github.com/leejet/stable-diffusion.cpp.git";
+      submodules = true;
+      flake = false;
+    };
+
     git-hooks = {
       type = "github";
       owner = "cachix";

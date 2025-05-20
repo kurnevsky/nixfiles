@@ -1,8 +1,9 @@
 {
+  inputs,
   lib,
   stdenv,
   config,
-  fetchFromGitHub,
+  git,
   cmake,
   rocmPackages,
   useRocm ? config.rocmSupport,
@@ -13,15 +14,12 @@ stdenv.mkDerivation {
   pname = "stable-diffusion-cpp";
   version = "0";
 
-  src = fetchFromGitHub {
-    owner = "leejet";
-    repo = "stable-diffusion.cpp";
-    rev = "dcf91f9e0f2cbf9da472ee2a556751ed4bab2d2a";
-    hash = "sha256-NHIjLZNfx9G6olp0VWBthuf7jIQC/qVRw6q9A6H866E=";
-    fetchSubmodules = true;
-  };
+  src = inputs.stable-diffusion-cpp;
 
-  nativeBuildInputs = [ cmake ];
+  nativeBuildInputs = [
+    cmake
+    git
+  ];
 
   buildInputs = lib.optionals useRocm (
     with rocmPackages;

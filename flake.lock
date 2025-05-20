@@ -643,6 +643,7 @@
         "origami.el": "origami.el",
         "purescript-overlay": "purescript-overlay",
         "solaar": "solaar",
+        "stable-diffusion-cpp": "stable-diffusion-cpp",
         "tt-schemes": "tt-schemes"
       }
     },
@@ -745,6 +746,24 @@
         "ref": "0.1.2",
         "repo": "Solaar-Flake",
         "type": "github"
+      }
+    },
+    "stable-diffusion-cpp": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1741494610,
+        "narHash": "sha256-8XIuulPGM5u/OtDDOnZgZo1St3lxhn9oGUw7D3YkoDE=",
+        "ref": "refs/heads/master",
+        "rev": "10c6501bd05a697e014f1bee3a84e5664290c489",
+        "revCount": 211,
+        "submodules": true,
+        "type": "git",
+        "url": "https://github.com/leejet/stable-diffusion.cpp.git"
+      },
+      "original": {
+        "submodules": true,
+        "type": "git",
+        "url": "https://github.com/leejet/stable-diffusion.cpp.git"
       }
     },
     "systems": {

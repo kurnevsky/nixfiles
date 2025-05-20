@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  inputs,
+  config,
+  pkgs,
+  ...
+}:
 
 {
   boot = {
@@ -64,6 +69,7 @@
       pkgs.callPackage ../../modules/stable-diffusion-cpp.nix {
         useRocm = true;
         gpuTargets = "gfx1100";
+        inherit inputs;
       }
     ))
   ];
