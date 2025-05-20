@@ -126,6 +126,11 @@
             sha256 = "sha256:11k7cxcjafs8ziaxl4bilbfwbgl2yf1p6v1bvwszadcr14xyvgsj";
             version = "1.1.4";
           };
+          refined-github = createChromiumExtension {
+            id = "hlepfoohegkhhmjieoechaddaejaokhf";
+            sha256 = "sha256:08chhqp83xdzhv5fd6xvgh61k17srfij3yj2hm6851f2qvria8zw";
+            version = "25.4.8";
+          };
         };
     })
   ];
