@@ -49,7 +49,7 @@ let
         org-super-agenda = withoutDependency super.org super.org-super-agenda;
         treemacs = withDependency super.doom-modeline super.treemacs;
         origami = withDependency super.fringe-helper (
-          super.origami.overrideAttrs (old: {
+          super.origami.overrideAttrs (_old: {
             src = inputs."origami.el";
           })
         );
