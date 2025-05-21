@@ -219,6 +219,7 @@ in
             whitelist = [
               "~/.config/pulse/"
               "~/.config/deadbeef/"
+              "~/.local/state/deadbeef/"
             ];
             blacklist = [
               "~/.gnupg/"
