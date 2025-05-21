@@ -1,3 +1,5 @@
+{ inputs, ... }:
+
 {
   # system.replaceRuntimeDependencies can be used to make fast fixes
   nixpkgs.overlays = [
@@ -36,7 +38,7 @@
         ];
       };
       viu = super.viu.override { withSixel = true; };
-      cloud-mdir-sync = super.callPackage ./cloud-mdir-sync.nix { };
+      cloud-mdir-sync = super.callPackage ./cloud-mdir-sync.nix { inherit inputs; };
     })
     (_self: super: {
       tor-browser-bundle-bin = super.symlinkJoin {

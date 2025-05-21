@@ -43,6 +43,22 @@
         "type": "github"
       }
     },
+    "cloud-mdir-sync": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1733325766,
+        "narHash": "sha256-AKlcHyj8F2oWySQzxYp4JbWP2BkKQOTSiBKeHX7htog=",
+        "owner": "jgunthorpe",
+        "repo": "cloud_mdir_sync",
+        "rev": "5f94e58a043fef57be41c01c21ae5efb955098c6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jgunthorpe",
+        "repo": "cloud_mdir_sync",
+        "type": "github"
+      }
+    },
     "darwin": {
       "inputs": {
         "nixpkgs": [
@@ -629,6 +645,7 @@
       "inputs": {
         "agenix": "agenix",
         "base16": "base16",
+        "cloud-mdir-sync": "cloud-mdir-sync",
         "emacs-overlay": "emacs-overlay",
         "fenix": "fenix",
         "git-hooks": "git-hooks",

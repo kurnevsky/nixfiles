@@ -7,7 +7,8 @@
 }:
 
 let
-  applyOverlays = pkgs: lib.foldl (pkg: pkg.extend) pkgs (import ./overlays.nix).nixpkgs.overlays;
+  applyOverlays =
+    pkgs: lib.foldl (pkg: pkg.extend) pkgs (import ./overlays.nix { inherit inputs; }).nixpkgs.overlays;
   patchedPkgs = applyOverlays pkgs;
   emacsPkgs = patchedPkgs.extend inputs.emacs-overlay.overlay;
   emacsWithPackages = emacsPkgs.callPackage ./emacs/package.nix {
