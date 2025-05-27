@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  inputs,
+  config,
+  pkgs,
+  ...
+}:
 
 {
   boot = {
@@ -82,7 +87,7 @@
         eiskaltdcpp
         gimp3-with-plugins
         openconnect
-        (callPackage ./pan-globalprotect-okta.nix { })
+        (callPackage ./pan-globalprotect-okta.nix { inherit inputs; })
         gnome-themes-extra
         adwaita-icon-theme
         gparted

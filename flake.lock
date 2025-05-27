@@ -619,6 +619,22 @@
         "type": "github"
       }
     },
+    "pan-globalprotect-okta": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1685623000,
+        "narHash": "sha256-jMIbrh7uUm95RKHfnFzp7C8azRtYJ7eC7Bw2cWDYBPo=",
+        "owner": "arthepsy",
+        "repo": "pan-globalprotect-okta",
+        "rev": "0bcdf9851e53ae1fd59ec760b6f5cd9f6c9ecb40",
+        "type": "github"
+      },
+      "original": {
+        "owner": "arthepsy",
+        "repo": "pan-globalprotect-okta",
+        "type": "github"
+      }
+    },
     "purescript-overlay": {
       "inputs": {
         "flake-compat": "flake-compat_2",
@@ -658,6 +674,7 @@
         "nixpkgs": "nixpkgs",
         "nur": "nur",
         "origami.el": "origami.el",
+        "pan-globalprotect-okta": "pan-globalprotect-okta",
         "purescript-overlay": "purescript-overlay",
         "solaar": "solaar",
         "stable-diffusion-cpp": "stable-diffusion-cpp",

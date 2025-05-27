@@ -109,6 +109,13 @@
       flake = false;
     };
 
+    pan-globalprotect-okta = {
+      type = "github";
+      owner = "arthepsy";
+      repo = "pan-globalprotect-okta";
+      flake = false;
+    };
+
     git-hooks = {
       type = "github";
       owner = "cachix";

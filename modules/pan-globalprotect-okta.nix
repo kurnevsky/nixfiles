@@ -1,4 +1,4 @@
-{ fetchFromGitHub, python3Packages }:
+{ inputs, python3Packages }:
 
 python3Packages.buildPythonPackage rec {
   pname = "pan-globalprotect-okta";
@@ -6,12 +6,7 @@ python3Packages.buildPythonPackage rec {
 
   format = "other";
 
-  src = fetchFromGitHub {
-    owner = "arthepsy";
-    repo = "pan-globalprotect-okta";
-    rev = "da771a46c6e21b15c1fe4a0325222097028cffc5";
-    sha256 = "sha256-ptS++IhGeQjBuwK/VzODDwmFvWYljBlkL+52X8BuUS4=";
-  };
+  src = inputs.pan-globalprotect-okta;
 
   propagatedBuildInputs = with python3Packages; [
     requests
