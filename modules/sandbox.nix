@@ -131,7 +131,10 @@ let
         "SHELL"
       ];
       ro-media = true;
-      ro-whitelist = [ "~/" ];
+      ro-whitelist = [
+        "/etc/nixos/"
+        "~/"
+      ];
       blacklist = [
         "~/.gnupg/"
         "~/.ssh/"
@@ -163,7 +166,10 @@ in
             ];
             shared-tmp = true;
             media = true;
-            whitelist = [ "~/" ];
+            whitelist = [
+              "/etc/nixos/"
+              "~/"
+            ];
             blacklist = [
               "~/.gnupg/"
               "~/.ssh/"
