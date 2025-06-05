@@ -36,6 +36,9 @@
   (tool-bar-mode -1))
 ;; Set font.
 (set-face-attribute 'default nil :font "Iosevka Normal:size=15")
+(set-face-attribute 'variable-pitch nil :font "Iosevka Quasi-Proportional:size=15")
+(set-face-attribute 'line-number nil :inherit 'fixed-pitch)
+(set-face-attribute 'line-number-current-line nil :inherit 'fixed-pitch)
 (add-to-list 'default-frame-alist '(font . "Iosevka Normal:size=15"))
 ;; It causes compilation call at startup.
 (setq comp--delayed-sources nil)
@@ -518,6 +521,8 @@ ARGS is `kill-buffer' arguments."
 
 (use-package jinx
   :demand t
+  :custom
+  (jinx-languages "en_US ru_RU")
   :config
   (global-jinx-mode))
 
