@@ -622,7 +622,7 @@ in
         telegram-desktop = wrap self.telegram-desktop [
           (lib.pipe
             {
-              name = "telegram-desktop";
+              name = "Telegram";
               extra-deps = with pkgs; [
                 gnome-themes-extra
                 adwaita-icon-theme
