@@ -1466,11 +1466,12 @@ which LANG was detected but these are ignored."
   (lsp-enable-which-key-integration)
   (defun lsp-activate-if-already-activated ()
     (let ((lsp-warn-no-matched-clients nil))
-      (when (lsp--filter-clients (-andfn
-                                   #'lsp--supports-buffer?
-                                   (-not #'lsp--client-add-on?)
-                                   #'lsp--server-binary-present?
-                                   (lambda (client) (lsp-find-workspace (lsp--client-server-id client) (buffer-file-name)))))
+      (when (and (buffer-file-name)
+              (lsp--filter-clients (-andfn
+                                     #'lsp--supports-buffer?
+                                     (-not #'lsp--client-add-on?)
+                                     #'lsp--server-binary-present?
+                                     (lambda (client) (lsp-find-workspace (lsp--client-server-id client) (buffer-file-name))))))
         (lsp))))
   (add-hook 'prog-mode-hook #'lsp-activate-if-already-activated)
   (add-hook 'lsp-inline-completion-mode-hook (lambda () (lsp-inline-completion-company-integration-mode 1)))
