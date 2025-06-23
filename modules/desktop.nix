@@ -163,6 +163,18 @@
         graphicsmagick
         graphicsmagick-imagemagick-compat
         hdparm
+        (pkgs.symlinkJoin {
+          name = "jira-cli";
+          paths = [
+            (pkgs.writeShellScriptBin "jira" ''
+              ${pkgs.coreutils}/bin/env \
+                JIRA_AUTH_TYPE=bearer \
+                JIRA_API_TOKEN="$(pass auth-source/jira)" \
+                ${jira-cli-go}/bin/jira "$@"
+            '')
+            jira-cli-go
+          ];
+        })
         inetutils
         innoextract
         iotop
