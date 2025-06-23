@@ -40,8 +40,8 @@
 (set-face-attribute 'line-number nil :inherit 'fixed-pitch)
 (set-face-attribute 'line-number-current-line nil :inherit 'fixed-pitch)
 (add-to-list 'default-frame-alist '(font . "Iosevka Normal:size=15"))
-;; It causes compilation call at startup.
-(setq comp--delayed-sources nil)
+;; Maximize frames.
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
 ;; Don't do backup files.
 (setq make-backup-files nil)
 ;; Don't create lock files.
