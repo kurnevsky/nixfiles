@@ -21,13 +21,13 @@
   },
   "sponsorblock": {
     "id": "mnjggcdmjocbbbhaepdhchncahnbgone",
-    "sha256": "sha256:0vwzda6dsy9cm8ml9ahxbs3j6zqjjkjfz55zmfixr0xm0aab1c9j",
-    "version": "5.12.4"
+    "sha256": "sha256:17nfwl5rb9fv4gf6nbln0qla90c54hdsvm2xl14pk59864lgz6a4",
+    "version": "5.12.4.1"
   },
   "ublock-origin-lite": {
     "id": "ddkjiahejlhfcafbddmgiahcphecmpfh",
-    "sha256": "sha256:078xq012b9vanr5zm1hgx6qcmiwshpwggnjgzby7zki2rafivyjz",
-    "version": "2025.612.1428"
+    "sha256": "sha256:0gax3y6p7scm9napcwmzdcg61w49ywjpzhd2pwynwsaqyar1kkkb",
+    "version": "2025.619.2143"
   },
   "find-plus": {
     "id": "fddffkdncgkkdjobemgbpojjeffmmofb",
