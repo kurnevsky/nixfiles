@@ -877,6 +877,7 @@
                 passff
                 istilldontcareaboutcookies
                 refined-github
+                canvasblocker
               ];
             };
           };
