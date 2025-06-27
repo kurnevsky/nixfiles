@@ -475,17 +475,10 @@ ARGS is `kill-buffer' arguments."
              (lsp--capability "documentHighlightProvider")))))
   (global-highlight-thing-mode))
 
-(use-package highlight-indent-guides
-  :hook (prog-mode . highlight-indent-guides-mode)
+(use-package indent-bars
+  :hook (prog-mode . indent-bars-mode)
   :custom
-  (highlight-indent-guides-method 'character)
-  (highlight-indent-guides-responsive 'stack)
-  :config
-  ;; Display property might be deleted if a major mode defines
-  ;; font-lock-extra-managed-props via font-lock-defaults.
-  (add-hook 'after-change-major-mode-hook (lambda ()
-                                            (when (derived-mode-p 'prog-mode)
-                                              (add-to-list 'font-lock-extra-managed-props 'display)))))
+  (indent-bars-color '(highlight :face-bg t :blend 0.125)))
 
 (use-package eat)
 
@@ -1306,9 +1299,6 @@ which LANG was detected but these are ignored."
   :config
   (advice-add #'flycheck-may-enable-mode :after-while (lambda ()
                                                         (not (and polymode-mode (buffer-base-buffer)))))
-  ;; Doesn't work well with polymode.
-  (add-hook 'polymode-init-inner-hook (lambda ()
-                                        (set (make-local-variable 'highlight-indent-guides-responsive) nil)))
   ;; Fix highlight thing
   (add-hook 'polymode-before-switch-buffer-hook (lambda (_old _new)
                                                   (highlight-thing-remove-last))))
