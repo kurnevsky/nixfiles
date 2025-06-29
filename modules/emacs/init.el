@@ -37,8 +37,6 @@
 ;; Set font.
 (set-face-attribute 'default nil :font "Iosevka Normal:size=15")
 (set-face-attribute 'variable-pitch nil :font "Iosevka Quasi-Proportional:size=15")
-(set-face-attribute 'line-number nil :inherit 'fixed-pitch)
-(set-face-attribute 'line-number-current-line nil :inherit 'fixed-pitch)
 (add-to-list 'default-frame-alist '(font . "Iosevka Normal:size=15"))
 ;; Maximize frames.
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
@@ -250,8 +248,8 @@ ARGS is `kill-buffer' arguments."
         `( ;; Make it slightly different from highlighting
            (hl-line :background ,base005)
            ;; Fix line numbers zoom via setting inherit
-           (line-number :foreground base03 :background base16-settings-fringe-bg :inherit default)
-           (line-number-current-line :background base16-settings-fringe-bg :inherit default)
+           (line-number :foreground base03 :background base16-settings-fringe-bg :inherit fixed-pitch)
+           (line-number-current-line :background base16-settings-fringe-bg :inherit fixed-pitch)
            ;; Minibuffer completion
            (completions-common-part :foreground base0C)
            ;; Ediff
