@@ -83,6 +83,9 @@
         calibre
         claws-mail
         cloud-mdir-sync
+        (czkawka.wrapper.override {
+          extraPackages = [ ffmpeg-full ];
+        })
         dosbox
         eiskaltdcpp
         gimp3-with-plugins
@@ -198,6 +201,7 @@
         parallel
         pass
         pciutils
+        pgpdump
         playerctl
         psmisc
         pulseaudio
@@ -206,6 +210,8 @@
         reptyr
         rclone
         ripgrep
+        rkdeveloptool-pine64
+        minicom
         rsync
         shntool
         skim
@@ -215,6 +221,7 @@
         tmux
         torsocks
         translate-shell
+        umu-launcher
         unixtools.xxd
         usbutils
         v4l-utils
