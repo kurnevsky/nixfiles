@@ -10,6 +10,8 @@ python3Packages.buildPythonPackage rec {
 
   src = inputs.cloud-mdir-sync;
 
+  format = "setuptools";
+
   propagatedBuildInputs = with python3Packages; [
     aiohttp
     keyring

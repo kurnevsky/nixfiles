@@ -114,9 +114,8 @@
             ru
           ]
         ))
-        (hunspellWithDicts (
-          with hunspellDicts;
-          [
+        (hunspell.withDicts (
+          dicts: with dicts; [
             en_US
             ru_RU
           ]
