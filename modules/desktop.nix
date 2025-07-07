@@ -162,6 +162,7 @@
         fuseiso
         gdb
         gnupg
+        gpclient
         graphicsmagick
         graphicsmagick-imagemagick-compat
         hdparm
