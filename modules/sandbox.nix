@@ -308,6 +308,7 @@ in
                 "talk=org.freedesktop.ScreenSaver"
                 "talk=org.freedesktop.secrets"
                 "talk=org.kde.kwalletd5"
+                "talk=org.kde.kwalletd6"
                 "talk=org.kde.StatusNotifierWatcher"
                 "talk=org.mpris.MediaPlayer2.Player"
                 "own=org.mpris.MediaPlayer2.vlc"
@@ -606,6 +607,7 @@ in
               "talk=org.freedesktop.ScreenSaver"
               "talk=org.freedesktop.secrets"
               "talk=org.kde.kwalletd5"
+              "talk=org.kde.kwalletd6"
               "talk=org.freedesktop.Notifications"
               "talk=org.kde.StatusNotifierWatcher"
               "own=org.gajim.Gajim"
@@ -715,6 +717,8 @@ in
                 "talk=org.freedesktop.secrets"
                 "talk=org.gtk.Settings"
                 "talk=org.freedesktop.portal.Desktop"
+                "talk=org.kde.kwalletd5"
+                "talk=org.kde.kwalletd6"
               ];
               ro-whitelist = [ "~/.config/gtk-3.0/" ];
               whitelist = [
