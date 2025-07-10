@@ -12,21 +12,13 @@ My personal [NixOS](https://nixos.org/) configuration.
 |-----------------------------------------------------------------------------------------------------|---------------------------------------------------|
 | `nixos-rebuild switch --keep-going -L`                                                              | apply configuration                               |
 | `nixos-rebuild switch --keep-going --option substitute false -L`                                    | apply configuration offline                       |
-| `nixos-rebuild switch --upgrade --recreate-lock-file --keep-going -L`                               | apply configuration and update dependencies       |
 | `nixos-rebuild switch --keep-going -L --option extra-substituters 'ssh://somehost'`                 | apply configuration using ssh store               |
 | `nixos-rebuild switch --keep-going -L --option builders 'ssh://somehost - - N' --option max-jobs 0` | apply configuration using ssh builder with N jobs |
+| `nixos-rebuild switch --keep-going --target-host 'ssh://somehost' --sudo -L`                        | apply configuration to a remote host              |
 | `all_proxy=socks5://127.0.0.1:1080 nixos-rebuild switch -L`                                         | apply configuration using proxy                   |
 | `nix-collect-garbage --delete-old`                                                                  | collect garbage                                   |
 
-To use `nix-output-monitor` the following command can be executed as root:
-
-```sh
-nom build \
-  --keep-going \
-  --option extra-substituters 'ssh://somehost' \
-  --builders 'ssh://somehost x86_64-linux,aarch64-linux - 32' \
-  "/etc/nixos#nixosConfigurations.${HOST}.config.system.build.toplevel"
-```
+To use `nix-output-monitor` add `--log-format internal-json |& nom --json` at the end of your command.
 
 ### Nix-on-droid commands
 
