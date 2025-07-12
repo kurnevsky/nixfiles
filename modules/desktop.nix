@@ -90,6 +90,7 @@
         eiskaltdcpp
         gimp3-with-plugins
         openconnect
+        scrcpy
         (callPackage ./pan-globalprotect-okta.nix { inherit inputs; })
         gnome-themes-extra
         adwaita-icon-theme
