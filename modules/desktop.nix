@@ -255,6 +255,7 @@
         element-desktop
         ## Tox
         toxic
+        qtox
         # Multimedia
         ## Image
         feh

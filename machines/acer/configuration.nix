@@ -53,6 +53,7 @@
     mc
     firefox
     vlc
+    qtox
     telegram-desktop
     xorg.xmodmap
   ];
