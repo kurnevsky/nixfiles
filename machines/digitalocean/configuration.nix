@@ -75,17 +75,17 @@
       peers = [
         {
           publicKey = "aRD0dqodCPyqTklk0KinKiTXYTnIBXZ0WFKy/q0dhQo=";
-          presharedKeyFile = config.age.secrets.wg-preshared-home.path or "/secrets/wg/home.psk";
+          presharedKeyFile = config.age.secrets.wg-preshared-dell.path or "/secrets/wg/home.psk";
           allowedIPs = [ "192.168.14.2/32" ];
         }
         {
           publicKey = "v69zSw9Ny+ym3DReKRh0gt+Ecc2rcTyKsieqnVZ/PwE=";
-          presharedKeyFile = config.age.secrets.wg-preshared-work.path or "/secrets/wg/work.psk";
+          presharedKeyFile = config.age.secrets.wg-preshared-evo.path or "/secrets/wg/work.psk";
           allowedIPs = [ "192.168.14.3/32" ];
         }
         {
           publicKey = "7Do1rDKMm8dZLgChf8pkS57Cg2A/jEj0JhNEfu0YTHM=";
-          presharedKeyFile = config.age.secrets.wg-preshared-parents.path or "/secrets/wg/parents.psk";
+          presharedKeyFile = config.age.secrets.wg-preshared-acer.path or "/secrets/wg/parents.psk";
           allowedIPs = [ "192.168.14.4/32" ];
         }
         {

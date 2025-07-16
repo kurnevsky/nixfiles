@@ -286,6 +286,7 @@
             (for-all-home-users (with users; [ parents ]) common-home)
             ./modules/zswap.nix
             ./modules/overlays.nix
+            ./modules/shadowsocks.nix
             ./machines/acer/hardware-configuration.nix
             ./machines/acer/configuration.nix
           ];

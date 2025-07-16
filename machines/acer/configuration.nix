@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 
 {
   boot = {
@@ -107,12 +107,12 @@
     };
     hans.clients.digitalocean = {
       server = "kurnevsky.net";
-      passwordFile = "/secrets/hans";
+      passwordFile = config.age.secrets.hans.path or "/secrets/hans";
       extraConfig = "-d icmp -m 1200";
     };
     iodine.clients.digitalocean = {
       server = "i.kurnevsky.net";
-      passwordFile = "/secrets/iodine";
+      passwordFile = config.age.secrets.iodine.path or "/secrets/iodine";
     };
     desktopManager.plasma6.enable = true;
     displayManager = {
@@ -170,7 +170,7 @@
         uid = 1001;
         isNormalUser = true;
         shell = pkgs.zsh;
-        hashedPasswordFile = "/secrets/parents";
+        hashedPasswordFile = config.age.secrets.parents.path or "/secrets/parents";
         extraGroups = [
           "audio"
           "video"
@@ -207,15 +207,20 @@
             Description = "WireGuard tunnel wg0";
           };
           wireguardConfig = {
-            PrivateKeyFile = "/secrets/wg/private.key";
+            PrivateKeyFile = config.age.secrets.wg-private.path or "/secrets/wg/private.key";
             ListenPort = 51871;
           };
           wireguardPeers = [
             {
               PublicKey = "5JHCxIYeZ50k7YJM+kLAbqGW4LAXpI5lycYEWSVxkBE=";
-              PresharedKeyFile = "/secrets/wg/preshared.psk";
+              PresharedKeyFile = config.age.secrets.wg-preshared.path or "/secrets/wg/preshared.psk";
               AllowedIPs = "192.168.14.0/24";
-              Endpoint = "kurnevsky.net:51871";
+              # Direct connection
+              # Endpoint = "kurnevsky.net:51871";
+              # Websocat connection
+              # Endpoint = "127.0.0.1:42930";
+              # Shadowsocks connection
+              Endpoint = "127.0.0.1:51870";
               PersistentKeepalive = 25;
             }
           ];
@@ -231,6 +236,38 @@
           }
         ];
       };
+    };
+  };
+
+  age.secrets = {
+    kurnevsky.file = ../../secrets/kurnevsky-acer.age;
+    parents.file = ../../secrets/parents-acer.age;
+    github.file = ../../secrets/github.age;
+    store.file = ../../secrets/store-acer.age;
+    hans = {
+      file = ../../secrets/hans.age;
+      owner = "hans";
+      group = "hans";
+    };
+    iodine = {
+      file = ../../secrets/iodine.age;
+      owner = "iodined";
+      group = "iodined";
+    };
+    shadowsocks = {
+      file = ../../secrets/shadowsocks.age;
+      mode = "440";
+      group = "secrets-shadowsocks";
+    };
+    wg-private = {
+      file = ../../secrets/wg-private-acer.age;
+      owner = "systemd-network";
+      group = "systemd-network";
+    };
+    wg-preshared = {
+      file = ../../secrets/wg-preshared-acer.age;
+      owner = "systemd-network";
+      group = "systemd-network";
     };
   };
 

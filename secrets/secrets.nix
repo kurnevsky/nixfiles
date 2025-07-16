@@ -6,11 +6,13 @@ let
   pc = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBfLzi6a22sanF3oeEheHjEjvvYRmJBUYFGXnj6NgSAJ";
   pinephone = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFQ8G294HKMYY/cdc5dxMdJxHqTyA8jlZ7zTDrSK2sg2";
   digitalocean = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMZRXGjEQLetY1TuKTIY/F08MLbVZs5QWjSMIe8PRIfU";
+  acer = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKi+GXCNLPnjSXaZaNAPEUF6Ve3ydpnXjyo3OZMzEHG0";
   desktop = [
     evo
     pc
   ];
   all = desktop ++ [
+    acer
     pinephone
     digitalocean
   ];
@@ -23,6 +25,10 @@ in
   "kurnevsky-pc.age".publicKeys = [ pc ];
   "ww-pc.age".publicKeys = [ pc ];
   "store-pc.age".publicKeys = [ pc ];
+
+  "kurnevsky-acer.age".publicKeys = [ acer ];
+  "parents-acer.age".publicKeys = [ acer ];
+  "store-acer.age".publicKeys = [ acer ];
 
   "kurnevsky-digitalocean.age".publicKeys = [ digitalocean ];
   "store-digitalocean.age".publicKeys = [ digitalocean ];
@@ -46,6 +52,12 @@ in
   "wg-private-pc.age".publicKeys = [ pc ];
   "wg-preshared-pc.age".publicKeys = [
     pc
+    digitalocean
+  ];
+
+  "wg-private-acer.age".publicKeys = [ acer ];
+  "wg-preshared-acer.age".publicKeys = [
+    acer
     digitalocean
   ];
 
