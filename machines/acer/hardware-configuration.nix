@@ -36,7 +36,6 @@
     "/boot" = {
       device = "/dev/disk/by-uuid/e86db406-3793-400d-bbef-d42654f5608d";
       fsType = "ext4";
-      options = [ "umask=0077" ];
     };
   };
 
