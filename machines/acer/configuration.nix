@@ -52,6 +52,9 @@
   environment.systemPackages = with pkgs; [
     mc
     firefox
+    ungoogled-chromium
+    ffmpeg-full
+    mpv
     vlc
     qtox
     telegram-desktop
