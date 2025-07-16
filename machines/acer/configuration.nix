@@ -116,7 +116,7 @@
     };
     desktopManager.plasma6.enable = true;
     displayManager = {
-      defaultSession = "plasma";
+      defaultSession = "plasmax11";
       autoLogin = {
         enable = true;
         user = "parents";
