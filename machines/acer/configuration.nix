@@ -124,6 +124,7 @@
       sddm = {
         enable = true;
         autoNumlock = true;
+        settings.Users.HideUsers = "kurnevsky";
       };
     };
     libinput = {
