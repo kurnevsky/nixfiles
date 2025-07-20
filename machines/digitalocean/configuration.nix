@@ -133,7 +133,7 @@
       ];
     };
     stalwart-mail = {
-      enable = false;
+      enable = true;
       settings = {
         storage.blob = "db";
         store = {
