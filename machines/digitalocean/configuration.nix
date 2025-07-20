@@ -97,6 +97,10 @@
           publicKey = "B2b19WtF3eKODKHKtA3Nb/z5/5+/VLhKe6IOtxzru1U=";
           allowedIPs = [ "192.168.14.7/32" ];
         }
+        {
+          publicKey = "+CKl9jJnxex0fbWoLH2z1QSfdjXdkYz/1Juc3ps3WSE=";
+          allowedIPs = [ "192.168.14.8/32" ];
+        }
       ];
     };
   };
