@@ -93,6 +93,10 @@
           presharedKeyFile = config.age.secrets.wg-preshared-pc.path or "/secrets/wg/pc.psk";
           allowedIPs = [ "192.168.14.5/32" ];
         }
+        {
+          publicKey = "B2b19WtF3eKODKHKtA3Nb/z5/5+/VLhKe6IOtxzru1U=";
+          allowedIPs = [ "192.168.14.7/32" ];
+        }
       ];
     };
   };
