@@ -115,12 +115,12 @@
       persistentKeys = true;
     };
     hans.clients.digitalocean = {
-      server = "kurnevsky.net";
+      server = "kropki.org";
       passwordFile = config.age.secrets.hans.path or "/secrets/hans";
       extraConfig = "-d icmp -m 1200";
     };
     iodine.clients.digitalocean = {
-      server = "i.kurnevsky.net";
+      server = "i.kropki.org";
       passwordFile = config.age.secrets.iodine.path or "/secrets/iodine";
     };
     desktopManager.plasma6.enable = true;
@@ -226,7 +226,7 @@
               PresharedKeyFile = config.age.secrets.wg-preshared.path or "/secrets/wg/preshared.psk";
               AllowedIPs = "192.168.14.0/24";
               # Direct connection
-              # Endpoint = "kurnevsky.net:51871";
+              # Endpoint = "kropki.org:51871";
               # Websocat connection
               # Endpoint = "127.0.0.1:42930";
               # Shadowsocks connection

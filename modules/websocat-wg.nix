@@ -10,7 +10,7 @@
       DynamicUser = true;
       PrivateTmp = true;
       ProtectSystem = "strict";
-      ExecStart = "${pkgs.websocat}/bin/websocat --exit-on-eof --binary udp-listen:127.0.0.1:42930 wss://kurnevsky.net/wswg";
+      ExecStart = "${pkgs.websocat}/bin/websocat --exit-on-eof --binary udp-listen:127.0.0.1:42930 wss://kropki.org/wswg";
     };
   };
 }

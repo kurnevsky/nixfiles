@@ -206,7 +206,7 @@
       enable = false;
       settings.global = {
         database_backend = "rocksdb";
-        server_name = "kurnevsky.net";
+        server_name = "kropki.org";
       };
     };
     mautrix-telegram = {
@@ -214,7 +214,7 @@
       settings = {
         homeserver = {
           address = "http://localhost:6167";
-          domain = "kurnevsky.net";
+          domain = "kropki.org";
         };
         appservice = rec {
           hostname = "localhost";
@@ -225,7 +225,7 @@
           startup_sync = true;
           sync_direct_chats = true;
           sync_create_limit = 0;
-          permissions."@evgeny:kurnevsky.net" = "admin";
+          permissions."@kurnevsky:kropki.org" = "admin";
           mute_bridging = true;
           tag_only_on_create = false;
         };
@@ -236,7 +236,7 @@
     heisenbridge = {
       enable = false;
       homeserver = "http://localhost:6167";
-      owner = "@evgeny:kurnevsky.net";
+      owner = "@kurnevsky:kropki.org";
       namespaces.users = [
         {
           regex = "@irc_.*";
@@ -337,9 +337,28 @@
           forceSSL = true;
           kTLS = true;
           root = "/kropki";
-          locations."/ws" = {
-            proxyPass = "http://localhost:8080";
-            proxyWebsockets = true;
+          locations = {
+            "/ws" = {
+              proxyPass = "http://localhost:8080";
+              proxyWebsockets = true;
+            };
+            "/wssh" = {
+              proxyPass = "http://localhost:58546";
+              proxyWebsockets = true;
+            };
+            "/wswg" = {
+              proxyPass = "http://localhost:57411";
+              proxyWebsockets = true;
+            };
+            "/_matrix" = {
+              proxyPass = "http://localhost:6167";
+              proxyWebsockets = true;
+            };
+            "/static/" = {
+              alias = "/srv/www/";
+              tryFiles = "$uri =404";
+              extraConfig = "expires 24h;";
+            };
           };
         };
         "stalwart.kropki.org" = {
@@ -354,12 +373,12 @@
           };
         };
         matrix-federation = {
-          serverName = "kurnevsky.net";
+          serverName = "kropki.org";
           http3 = true;
           quic = true;
           onlySSL = true;
-          sslCertificate = "${config.security.acme.certs."kurnevsky.net".directory}/fullchain.pem";
-          sslCertificateKey = "${config.security.acme.certs."kurnevsky.net".directory}/key.pem";
+          sslCertificate = "${config.security.acme.certs."kropki.org".directory}/fullchain.pem";
+          sslCertificateKey = "${config.security.acme.certs."kropki.org".directory}/key.pem";
           kTLS = true;
           listen = lib.cartesianProduct {
             addr = [
@@ -385,7 +404,7 @@
     iodine.server = {
       enable = true;
       ip = "172.18.42.1/24";
-      domain = "i.kurnevsky.net";
+      domain = "i.kropki.org";
       extraConfig = "-n 82.196.15.215";
       passwordFile = config.age.secrets.iodine.path or "/secrets/iodine";
     };

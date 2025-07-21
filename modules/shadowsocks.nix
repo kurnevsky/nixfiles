@@ -2,7 +2,7 @@
 
 let
   shadowsocksConfig = {
-    server = "kurnevsky.net";
+    server = "kropki.org";
     server_port = 29135;
     method = "chacha20-ietf-poly1305";
     mode = "tcp_and_udp";

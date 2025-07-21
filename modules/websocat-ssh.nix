@@ -10,7 +10,7 @@
       DynamicUser = true;
       PrivateTmp = true;
       ProtectSystem = "strict";
-      ExecStart = "${pkgs.websocat}/bin/websocat --exit-on-eof --binary tcp-listen:127.0.0.1:26203 wss://kurnevsky.net/wssh";
+      ExecStart = "${pkgs.websocat}/bin/websocat --exit-on-eof --binary tcp-listen:127.0.0.1:26203 wss://kropki.org/wssh";
     };
   };
 }
