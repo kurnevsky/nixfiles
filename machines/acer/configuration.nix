@@ -104,7 +104,7 @@
         Peers = [
           "tls://yggno.de:18227"
           "tls://box.paulll.cc:13338"
-          "tls://pl1.servers.devices.cwinfo.net:11129"
+          "tls://ygg.mkg20001.io:443"
         ];
         AllowedPublicKeys = [
           "9734b6eccb555f3791e6229c741c1355b05d5741c82ad16d58d5e4085b8d3ee3"

@@ -474,7 +474,7 @@
         Peers = [
           "tls://yggno.de:18227"
           "tls://box.paulll.cc:13338"
-          "tls://pl1.servers.devices.cwinfo.net:11129"
+          "tls://ygg.mkg20001.io:443"
         ];
         MulticastInterfaces = [
           {
