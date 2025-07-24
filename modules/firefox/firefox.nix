@@ -235,8 +235,6 @@
 
   # [SECTION 4500]: RFP (RESIST FINGERPRINTING)
 
-  # 4501: enable privacy.resistFingerprinting
-  "privacy.resistFingerprinting" = true;
   # 4503: disable mozAddonManager Web API
   "privacy.resistFingerprinting.block_mozAddonManager" = true;
   # 4510: disable showing about:blank as soon as possible during startup
