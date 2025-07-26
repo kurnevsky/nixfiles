@@ -35,6 +35,7 @@ in
   "kropki.age".publicKeys = [ digitalocean ];
   "stalwart.age".publicKeys = [ digitalocean ];
 
+  "miniflux.age".publicKeys = [ digitalocean ];
   "tox.age".publicKeys = [ digitalocean ];
 
   "motion.age".publicKeys = desktop;

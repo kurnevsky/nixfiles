@@ -194,7 +194,6 @@
         metasploit
         mu
         nettools
-        newsboat
         nmap
         openssl
         pandoc
@@ -246,6 +245,9 @@
         firefox
         ungoogled-chromium
         tor-browser-bundle-bin
+        # RSS
+        newsboat
+        rssguard
         # Messengers
         gajim
         telegram-desktop

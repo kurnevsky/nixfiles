@@ -111,6 +111,7 @@
     certs = {
       "kurnevsky.net".group = "acme";
       "kropki.org".group = "acme";
+      "rss.kropki.org".group = "acme";
       "stalwart.kropki.org".group = "acme";
     };
   };
@@ -139,6 +140,19 @@
           ensureDBOwnership = true;
         }
       ];
+    };
+    miniflux = {
+      enable = true;
+      config = {
+        LISTEN_ADDR = "127.0.0.1:34449";
+        BASE_URL = "https://rss.kropki.org";
+        HTTPS = 1;
+        FORCE_REFRESH_INTERVAL = 15;
+        POLLING_FREQUENCY = 30;
+        POLLING_SCHEDULER = "entry_frequency";
+        SCHEDULER_ENTRY_FREQUENCY_FACTOR = 2;
+      };
+      adminCredentialsFile = config.age.secrets.miniflux.path or "/secrets/miniflux";
     };
     stalwart-mail = {
       enable = true;
@@ -361,16 +375,30 @@
             };
           };
         };
+        "rss.kropki.org" = {
+          http3 = true;
+          quic = true;
+          enableACME = true;
+          forceSSL = true;
+          kTLS = true;
+          locations = {
+            "/".proxyPass = "http://localhost:34449";
+            "/reactflux/" = {
+              alias = "${pkgs.callPackage ./reactflux.nix { baseurl = "/reactflux"; }}/";
+              index = "index.html";
+              tryFiles = "$uri uri/ /index.html =404";
+              extraConfig = "expires 24h;";
+            };
+            "= /reactflux".return = "301 $request_uri/";
+          };
+        };
         "stalwart.kropki.org" = {
           http3 = true;
           quic = true;
           enableACME = true;
           forceSSL = true;
           kTLS = true;
-          locations."/" = {
-            proxyPass = "http://localhost:30452";
-            proxyWebsockets = true;
-          };
+          locations."/".proxyPass = "http://localhost:30452";
         };
         matrix-federation = {
           serverName = "kropki.org";
@@ -454,6 +482,7 @@
         ExecStart = "${pkgs.callPackage ./kropki-server.nix { }}/bin/kropki";
       };
     };
+    tt-rss.wantedBy = pkgs.lib.mkForce [ ];
   };
 
   users = {
@@ -502,6 +531,7 @@
       mode = "440";
       group = "secrets-tox";
     };
+    miniflux.file = ../../secrets/miniflux.age;
     stalwart.file = ../../secrets/stalwart.age;
     kropki.file = ../../secrets/kropki.age;
   };
