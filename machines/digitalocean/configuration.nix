@@ -210,10 +210,11 @@
           set-body-length = true;
         };
         certificate.default = {
-          cert = "%{file:/var/lib/acme/kropki.org/fullchain.pem}%";
-          private-key = "%{file:/var/lib/acme/kropki.org/key.pem}%";
+          cert = "%{file:${config.security.acme.certs."kropki.org".directory}/fullchain.pem}%";
+          private-key = "%{file:${config.security.acme.certs."kropki.org".directory}/key.pem}%";
           default = true;
         };
+        email.encryption.append = true;
       };
     };
     matrix-continuwuity = {
