@@ -224,30 +224,6 @@
         registration_token_file = config.age.secrets.continuwuity.path or "/secrets/continuwuity";
       };
     };
-    mautrix-telegram = {
-      enable = false;
-      settings = {
-        homeserver = {
-          address = "http://localhost:6167";
-          domain = "kropki.org";
-        };
-        appservice = rec {
-          hostname = "localhost";
-          port = 29317;
-          address = "http://${hostname}:${toString port}";
-        };
-        bridge = {
-          startup_sync = true;
-          sync_direct_chats = true;
-          sync_create_limit = 0;
-          permissions."@kurnevsky:kropki.org" = "admin";
-          mute_bridging = true;
-          tag_only_on_create = false;
-        };
-      };
-      environmentFile = "/secrets/mautrix-telegram";
-      serviceDependencies = [ "continuwuity.service" ];
-    };
     heisenbridge = {
       enable = false;
       homeserver = "http://localhost:6167";
