@@ -37,6 +37,7 @@ in
 
   "miniflux.age".publicKeys = [ digitalocean ];
   "tox.age".publicKeys = [ digitalocean ];
+  "continuwuity.age".publicKeys = [ digitalocean ];
 
   "motion.age".publicKeys = desktop;
 

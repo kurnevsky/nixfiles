@@ -216,11 +216,12 @@
         };
       };
     };
-    matrix-conduit = {
-      enable = false;
+    matrix-continuwuity = {
+      enable = true;
       settings.global = {
-        database_backend = "rocksdb";
         server_name = "kropki.org";
+        allow_registration = true;
+        registration_token_file = config.age.secrets.continuwuity.path or "/secrets/continuwuity";
       };
     };
     mautrix-telegram = {
@@ -245,7 +246,7 @@
         };
       };
       environmentFile = "/secrets/mautrix-telegram";
-      serviceDependencies = [ "conduit.service" ];
+      serviceDependencies = [ "continuwuity.service" ];
     };
     heisenbridge = {
       enable = false;
@@ -303,7 +304,6 @@
             };
           in
           {
-            default = true;
             http3 = true;
             quic = true;
             enableACME = true;
@@ -325,26 +325,10 @@
                   fastcgi_index index.php;
                 '';
               };
-              "/wssh" = {
-                proxyPass = "http://localhost:58546";
-                proxyWebsockets = true;
-              };
-              "/wswg" = {
-                proxyPass = "http://localhost:57411";
-                proxyWebsockets = true;
-              };
-              "/_matrix" = {
-                proxyPass = "http://localhost:6167";
-                proxyWebsockets = true;
-              };
-              "/static/" = {
-                alias = "/srv/www/";
-                tryFiles = "$uri =404";
-                extraConfig = "expires 24h;";
-              };
             };
           };
         "kropki.org" = {
+          default = true;
           http3 = true;
           quic = true;
           enableACME = true;
@@ -530,6 +514,11 @@
       file = ../../secrets/tox.age;
       mode = "440";
       group = "secrets-tox";
+    };
+    continuwuity = {
+      file = ../../secrets/continuwuity.age;
+      owner = "continuwuity";
+      group = "continuwuity";
     };
     miniflux.file = ../../secrets/miniflux.age;
     stalwart.file = ../../secrets/stalwart.age;
