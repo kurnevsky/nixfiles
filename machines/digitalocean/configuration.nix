@@ -166,28 +166,31 @@
           };
         };
         lookup.default.hostname = "kropki.org";
-        server.listener = {
-          smtp = {
-            bind = "[::]:25";
-            protocol = "smtp";
-          };
-          submission = {
-            bind = [ "[::]:587" ];
-            protocol = "smtp";
-          };
-          submissions = {
-            bind = [ "[::]:465" ];
-            protocol = "smtp";
-            tls.implicit = true;
-          };
-          imaptls = {
-            bind = [ "[::]:993" ];
-            protocol = "imap";
-            tls.implicit = true;
-          };
-          jmap = {
-            bind = [ "[::]:30452" ];
-            protocol = "http";
+        server = {
+          hostname = "mail.kropki.org";
+          listener = {
+            smtp = {
+              bind = "[::]:25";
+              protocol = "smtp";
+            };
+            submission = {
+              bind = [ "[::]:587" ];
+              protocol = "smtp";
+            };
+            submissions = {
+              bind = [ "[::]:465" ];
+              protocol = "smtp";
+              tls.implicit = true;
+            };
+            imaptls = {
+              bind = [ "[::]:993" ];
+              protocol = "imap";
+              tls.implicit = true;
+            };
+            jmap = {
+              bind = [ "[::]:30452" ];
+              protocol = "http";
+            };
           };
         };
         authentication.fallback-admin = {
