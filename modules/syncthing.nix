@@ -30,7 +30,6 @@
       };
       options = {
         localAnnounceEnabled = true;
-        localAnnouncePort = 21027;
         relaysEnabled = true;
       };
     };
