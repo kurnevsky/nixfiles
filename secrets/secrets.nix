@@ -21,10 +21,14 @@ in
   "kurnevsky-evo.age".publicKeys = [ evo ];
   "ww-evo.age".publicKeys = [ evo ];
   "store-evo.age".publicKeys = [ evo ];
+  "syncthing-key-evo.age".publicKeys = [ evo ];
+  "syncthing-cert-evo.age".publicKeys = [ evo ];
 
   "kurnevsky-pc.age".publicKeys = [ pc ];
   "ww-pc.age".publicKeys = [ pc ];
   "store-pc.age".publicKeys = [ pc ];
+  "syncthing-key-pc.age".publicKeys = [ pc ];
+  "syncthing-cert-pc.age".publicKeys = [ pc ];
 
   "kurnevsky-acer.age".publicKeys = [ acer ];
   "parents-acer.age".publicKeys = [ acer ];
@@ -34,6 +38,8 @@ in
   "store-digitalocean.age".publicKeys = [ digitalocean ];
   "kropki.age".publicKeys = [ digitalocean ];
   "stalwart.age".publicKeys = [ digitalocean ];
+  "syncthing-key-digitalocean.age".publicKeys = [ digitalocean ];
+  "syncthing-cert-digitalocean.age".publicKeys = [ digitalocean ];
 
   "miniflux.age".publicKeys = [ digitalocean ];
   "tox.age".publicKeys = [ digitalocean ];

@@ -147,6 +147,16 @@
       owner = "systemd-network";
       group = "systemd-network";
     };
+    syncthing-key = {
+      file = ../../secrets/syncthing-key-pc.age;
+      owner = "kurnevsky";
+      group = "users";
+    };
+    syncthing-cert = {
+      file = ../../secrets/syncthing-cert-pc.age;
+      owner = "kurnevsky";
+      group = "users";
+    };
   };
 
   system.stateVersion = "22.11";

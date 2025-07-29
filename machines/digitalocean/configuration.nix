@@ -500,6 +500,16 @@
       owner = "continuwuity";
       group = "continuwuity";
     };
+    syncthing-key = {
+      file = ../../secrets/syncthing-key-digitalocean.age;
+      owner = "kurnevsky";
+      group = "users";
+    };
+    syncthing-cert = {
+      file = ../../secrets/syncthing-cert-digitalocean.age;
+      owner = "kurnevsky";
+      group = "users";
+    };
     miniflux.file = ../../secrets/miniflux.age;
     stalwart.file = ../../secrets/stalwart.age;
     kropki.file = ../../secrets/kropki.age;

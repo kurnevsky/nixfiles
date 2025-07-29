@@ -202,6 +202,7 @@
         ./modules/desktop.nix
         ./modules/kde.nix
         ./modules/sandbox.nix
+        ./modules/syncthing.nix
         ./modules/shadowsocks.nix
         ./modules/websocat-ssh.nix
         ./modules/websocat-wg.nix
@@ -297,6 +298,7 @@
             ./modules/shadowsocks-server.nix
             ./modules/websocat-ssh-server.nix
             ./modules/websocat-wg-server.nix
+            ./modules/syncthing.nix
             ./modules/zswap.nix
             ./machines/digitalocean/configuration.nix
             ./machines/digitalocean/hardware-configuration.nix
