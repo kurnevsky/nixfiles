@@ -94,6 +94,7 @@
         adwaita-icon-theme
         gparted
         inkscape
+        keepassxc
         languagetool
         lapce
         libreoffice-fresh
@@ -182,6 +183,7 @@
         iotop
         isync
         jq
+        keyutils
         kubectl
         kubelogin-oidc
         libnotify
@@ -883,6 +885,7 @@
                 sponsorblock
                 ublock-origin
                 brandon1024-find
+                keepassxc-browser
                 passff
                 istilldontcareaboutcookies
                 refined-github

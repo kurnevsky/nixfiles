@@ -358,6 +358,7 @@ in
               pams = [
                 "gnupg"
                 "pulse"
+                "app/org.keepassxc.KeePassXC"
               ];
               etcs = [
                 "ssl/certs/ca-certificates.crt"
