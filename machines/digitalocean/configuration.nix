@@ -459,6 +459,7 @@
         group = "kropki";
         isSystemUser = true;
       };
+      kurnevsky.linger = true;
     };
     groups = {
       acme.members = [
@@ -519,6 +520,12 @@
 
   home-manager.users = {
     root.home.stateVersion = "21.11";
-    kurnevsky.home.stateVersion = "21.11";
+    kurnevsky = {
+      home.stateVersion = "21.11";
+      services.syncthing.settings.options = {
+        localAnnounceEnabled = pkgs.lib.mkForce false;
+        localAnnouncePort = pkgs.lib.mkForce null;
+      };
+    };
   };
 }
