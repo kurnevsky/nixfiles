@@ -727,8 +727,6 @@
     let
       home-config = {
         home.file = {
-          ".face.icon".source = ../resources/face.icon;
-          ".wallpaper.jpg".source = ../resources/wallpaper.jpg;
           ".config/tox/toxic.conf".source = ./toxic.conf;
           ".config/mpv/scripts/next_unexpanded.lua".source = ./next_unexpanded.lua;
         };
@@ -898,102 +896,6 @@
             package = pkgs.sandboxed.ungoogled-chromium;
             extensions = builtins.attrValues pkgs.chromium-extensions;
           };
-          mbsync = {
-            enable = true;
-            package = pkgs.sandboxed.isync;
-          };
-          vdirsyncer = {
-            enable = true;
-            package = pkgs.sandboxed.vdirsyncer;
-          };
-          khal = {
-            enable = true;
-            locale = {
-              timeformat = "%H:%M";
-              dateformat = "%Y-%m-%d";
-              longdateformat = "%Y-%m-%d %a";
-              datetimeformat = "%Y-%m-%d %H:%M";
-              longdatetimeformat = "%Y-%m-%d %H:%M";
-            };
-          };
-        };
-        accounts = {
-          email.accounts = {
-            gmail = {
-              mbsync = {
-                enable = true;
-                patterns = [
-                  "*"
-                  "![Gmail]/All Mail"
-                ];
-                create = "both";
-                expunge = "both";
-                extraConfig.account.AuthMech = "PLAIN";
-              };
-              primary = true;
-              maildir.path = "gmail";
-              userName = "kurnevsky@gmail.com";
-              imap.host = "imap.gmail.com";
-              passwordCommand = "${pkgs.pass}/bin/pass show web/google.com | grep Isync | cut -d ' ' -f 2";
-            };
-            evolution =
-              let
-                user = "ykurneuski@evolution.com";
-              in
-              {
-                mbsync = {
-                  enable = true;
-                  create = "both";
-                  expunge = "both";
-                  extraConfig.account.AuthMech = "XOAUTH2";
-                };
-                maildir.path = "evolution";
-                userName = user;
-                imap.host = "outlook.office365.com";
-                passwordCommand = "${pkgs.cloud-mdir-sync}/bin/cms-oauth --cms_sock=$XDG_RUNTIME_DIR/cms.sock --proto=IMAP --user ${user} --output=token";
-              };
-          };
-          calendar = {
-            basePath = "Calendar";
-            accounts = {
-              evo = {
-                khal = {
-                  enable = true;
-                  readOnly = true;
-                };
-                vdirsyncer = {
-                  enable = true;
-                  urlCommand = [
-                    "pass"
-                    "evo/outlook-ical"
-                  ];
-                };
-                remote.type = "http";
-                local = {
-                  type = "filesystem";
-                  fileExt = ".ics";
-                };
-              };
-              google = {
-                khal = {
-                  enable = true;
-                  readOnly = true;
-                };
-                vdirsyncer = {
-                  enable = true;
-                  urlCommand = [
-                    "pass"
-                    "auth-source/google-calendar"
-                  ];
-                };
-                remote.type = "http";
-                local = {
-                  type = "filesystem";
-                  fileExt = ".ics";
-                };
-              };
-            };
-          };
         };
         services.gpg-agent = {
           enable = true;
@@ -1005,7 +907,110 @@
     in
     {
       users = {
-        kurnevsky = home-config;
+        kurnevsky = pkgs.lib.recursiveUpdate home-config {
+          home.file = {
+            ".face.icon".source = ../resources/face.icon;
+            ".wallpaper.jpg".source = ../resources/wallpaper.jpg;
+          };
+          programs = {
+            mbsync = {
+              enable = true;
+              package = pkgs.sandboxed.isync;
+            };
+            vdirsyncer = {
+              enable = true;
+              package = pkgs.sandboxed.vdirsyncer;
+            };
+            khal = {
+              enable = true;
+              locale = {
+                timeformat = "%H:%M";
+                dateformat = "%Y-%m-%d";
+                longdateformat = "%Y-%m-%d %a";
+                datetimeformat = "%Y-%m-%d %H:%M";
+                longdatetimeformat = "%Y-%m-%d %H:%M";
+              };
+            };
+          };
+          accounts = {
+            email.accounts = {
+              gmail = {
+                mbsync = {
+                  enable = true;
+                  patterns = [
+                    "*"
+                    "![Gmail]/All Mail"
+                  ];
+                  create = "both";
+                  expunge = "both";
+                  extraConfig.account.AuthMech = "PLAIN";
+                };
+                primary = true;
+                maildir.path = "gmail";
+                userName = "kurnevsky@gmail.com";
+                imap.host = "imap.gmail.com";
+                passwordCommand = "${pkgs.pass}/bin/pass show web/google.com | grep Isync | cut -d ' ' -f 2";
+              };
+              evolution =
+                let
+                  user = "ykurneuski@evolution.com";
+                in
+                {
+                  mbsync = {
+                    enable = true;
+                    create = "both";
+                    expunge = "both";
+                    extraConfig.account.AuthMech = "XOAUTH2";
+                  };
+                  maildir.path = "evolution";
+                  userName = user;
+                  imap.host = "outlook.office365.com";
+                  passwordCommand = "${pkgs.cloud-mdir-sync}/bin/cms-oauth --cms_sock=$XDG_RUNTIME_DIR/cms.sock --proto=IMAP --user ${user} --output=token";
+                };
+            };
+            calendar = {
+              basePath = "Calendar";
+              accounts = {
+                evo = {
+                  khal = {
+                    enable = true;
+                    readOnly = true;
+                  };
+                  vdirsyncer = {
+                    enable = true;
+                    urlCommand = [
+                      "pass"
+                      "evo/outlook-ical"
+                    ];
+                  };
+                  remote.type = "http";
+                  local = {
+                    type = "filesystem";
+                    fileExt = ".ics";
+                  };
+                };
+                google = {
+                  khal = {
+                    enable = true;
+                    readOnly = true;
+                  };
+                  vdirsyncer = {
+                    enable = true;
+                    urlCommand = [
+                      "pass"
+                      "auth-source/google-calendar"
+                    ];
+                  };
+                  remote.type = "http";
+                  local = {
+                    type = "filesystem";
+                    fileExt = ".ics";
+                  };
+                };
+              };
+            };
+          };
+        };
         ww = home-config;
       };
     };

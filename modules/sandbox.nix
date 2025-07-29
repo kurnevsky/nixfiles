@@ -1219,7 +1219,9 @@ in
               lib.concatMapStrings (
                 files:
                 lib.concatMapStrings (path: ''
-                  [ -d ${files}/${path} ] && find ${files}/${path} -type l -print0 | xargs -0 -r readlink -f >> $out
+                  if [ -d ${files}/${path} ]; then
+                    find ${files}/${path} -type l -print0 | xargs -0 -r readlink -f >> $out
+                  fi
                 '') paths
               ) home-files
             );
