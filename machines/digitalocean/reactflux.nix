@@ -12,13 +12,13 @@
 
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "ReactFlux";
-  version = "2025.07.28";
+  version = "2025.07.30";
 
   src = fetchFromGitHub {
     owner = "electh";
     repo = "ReactFlux";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-0+jHHD7hk5T86kXcHCz20g9caPST/sfbKCsW5iqRvV8=";
+    hash = "sha256-Ew+SKdkQX8h/TL1i9O6+WqeVqDfYBpvGUO0n3s5YbT0=";
   };
 
   nativeBuildInputs = [
