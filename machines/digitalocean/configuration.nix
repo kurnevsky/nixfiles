@@ -522,9 +522,16 @@
     root.home.stateVersion = "21.11";
     kurnevsky = {
       home.stateVersion = "21.11";
-      services.syncthing.settings.options = {
-        localAnnounceEnabled = pkgs.lib.mkForce false;
-        localAnnouncePort = pkgs.lib.mkForce null;
+      services.syncthing.settings = {
+        folders."/home/kurnevsky/Sync".versioning = {
+          type = "simple";
+          cleanupIntervalS = 86400;
+          params.cleanoutDays = "32";
+        };
+        options = {
+          localAnnounceEnabled = pkgs.lib.mkForce false;
+          localAnnouncePort = pkgs.lib.mkForce null;
+        };
       };
     };
   };
