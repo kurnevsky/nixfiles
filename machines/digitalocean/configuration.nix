@@ -526,7 +526,10 @@
         folders."/home/kurnevsky/Sync".versioning = {
           type = "simple";
           cleanupIntervalS = 86400;
-          params.cleanoutDays = "32";
+          params = {
+            params.cleanoutDays = "32";
+            keep = "64";
+          };
         };
         options = {
           localAnnounceEnabled = pkgs.lib.mkForce false;
