@@ -20,7 +20,6 @@
       );
       firefox = super.firefox.override {
         nativeMessagingHosts = [
-          super.passff-host
           super.keepassxc
           super.kdePackages.plasma-browser-integration
         ];

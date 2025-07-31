@@ -884,7 +884,6 @@
                 ublock-origin
                 brandon1024-find
                 keepassxc-browser
-                passff
                 istilldontcareaboutcookies
                 refined-github
                 canvasblocker
