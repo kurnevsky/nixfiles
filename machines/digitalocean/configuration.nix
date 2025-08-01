@@ -197,20 +197,47 @@
           user = "admin";
           secret = "%{env:ADMIN_SECRET}%";
         };
+        auth.dkim.sign = [
+          {
+            "if" = "listener != 'smtp'";
+            "then" = "['ed25519']";
+          }
+          { "else" = false; }
+        ];
         signature.ed25519 = {
           private-key = "%{env:DKIM_KEY}%";
           domain = "kropki.org";
           selector = "default";
           headers = [
             "From"
-            "To"
-            "Date"
             "Subject"
+            "Date"
             "Message-ID"
+            "To"
+            "Cc"
+            "MIME-Version"
+            "Content-Type"
+            "Content-Transfer-Encoding"
+            "Content-ID"
+            "Content-Description"
+            "Resent-Date"
+            "Resent-From"
+            "Resent-Sender"
+            "Resent-To"
+            "Resent-Cc"
+            "Resent-Message-ID"
+            "In-Reply-To"
+            "References"
+            "List-Id"
+            "List-Help"
+            "List-Unsubscribe"
+            "List-Subscribe"
+            "List-Post"
+            "List-Owner"
+            "List-Archive"
           ];
           algorithm = "ed25519-sha256";
-          canonicalization = "simple/simple";
-          set-body-length = true;
+          canonicalization = "relaxed/relaxed";
         };
         certificate.default = {
           cert = "%{file:${config.security.acme.certs."kropki.org".directory}/fullchain.pem}%";
