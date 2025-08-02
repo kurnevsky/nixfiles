@@ -17,8 +17,6 @@ rustPlatform.buildRustPackage {
 
   buildAndTestSubdir = "server";
 
-  useFetchCargoVendor = true;
-
   cargoHash = "sha256-4QcUXC6T7h4YJZdOP2y/LwOKjH6gCuHMb/qbYd31hEU=";
 
   meta = with lib; {
