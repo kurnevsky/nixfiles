@@ -60,6 +60,13 @@
       inputs.home-manager.follows = "home-manager";
     };
 
+    disko = {
+      type = "github";
+      owner = "nix-community";
+      repo = "disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     base16 = {
       type = "github";
       owner = "SenchoPens";
@@ -168,6 +175,7 @@
         inputs.base16.nixosModule
         { scheme = "${inputs.tt-schemes}/base24/one-dark.yaml"; }
         inputs.agenix.nixosModules.default
+        inputs.disko.nixosModules.disko
         ./modules/agenix.nix
         inputs.home-manager.nixosModules.home-manager
         ./modules/common.nix
@@ -303,6 +311,15 @@
             ./machines/digitalocean/configuration.nix
             ./machines/digitalocean/hardware-configuration.nix
             ./machines/digitalocean/networking.nix
+          ];
+        };
+        vps = inputs.nixpkgs.lib.nixosSystem {
+          system = "aarch64-linux";
+          modules = commonModules ++ [
+            ./modules/zswap.nix
+            ./machines/vps/configuration.nix
+            ./machines/vps/hardware-configuration.nix
+            ./machines/vps/disko.nix
           ];
         };
         pinephone-vm = inputs.nixpkgs.lib.nixosSystem {
