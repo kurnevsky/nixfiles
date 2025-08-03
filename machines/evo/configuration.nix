@@ -26,19 +26,6 @@
     (import ../../modules/with-native-optimizations.nix config.networking.hostName whisper-cpp)
   ];
 
-  fileSystems = {
-    "/".options = [
-      "noatime"
-      "nodiratime"
-      "compress=zstd:3"
-    ];
-    "/home".options = [
-      "noatime"
-      "nodiratime"
-      "compress=zstd:3"
-    ];
-  };
-
   networking.hostName = "evo";
 
   systemd.network.networks."99-wg0".address = [ "192.168.14.3/32" ];
