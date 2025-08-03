@@ -24,7 +24,7 @@ To use `nix-output-monitor` add `--log-format internal-json |& nom --json` at th
 
 Specifying `binfmt.emulatedSystems` allows to build packages remotely for a different architecture using qemu. Nix-on-droid can be called like:
 
-`nix-on-droid switch --flake ~/.config/nixfiles#default --max-jobs 0 --builders 'ssh://nix-ssh@somehost x86_64-linux,aarch64-linux - N'`
+`nix-on-droid switch --flake ~/.config/nixfiles#default --max-jobs 0 --builders 'ssh://nix-ssh@somehost x86_64-linux,aarch64-linux - N - big-parallel'`
 
 ## Sandboxing
 
