@@ -278,6 +278,7 @@
           modules = desktopModules ++ [
             ./machines/evo/configuration.nix
             ./machines/evo/hardware-configuration.nix
+            ./machines/evo/disko.nix
             llamaDefault
           ];
         };
@@ -286,6 +287,7 @@
           modules = desktopModules ++ [
             ./machines/pc/configuration.nix
             ./machines/pc/hardware-configuration.nix
+            ./machines/pc/disko.nix
             (llamaRocm "gfx1100")
           ];
         };

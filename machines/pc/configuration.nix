@@ -11,10 +11,7 @@
       efi.canTouchEfiVariables = true;
       systemd-boot.enable = true;
     };
-    initrd = {
-      kernelModules = [ "amdgpu" ];
-      luks.devices.root.allowDiscards = true;
-    };
+    initrd.kernelModules = [ "amdgpu" ];
     extraModulePackages = with config.boot.kernelPackages; [
       acpi_call
       v4l2loopback
@@ -26,36 +23,6 @@
     tmp.tmpfsSize = "87%";
     binfmt.emulatedSystems = [ "aarch64-linux" ];
   };
-
-  fileSystems = {
-    "/".options = [
-      "noatime"
-      "nodiratime"
-      "compress=zstd:3"
-    ];
-    "/home".options = [
-      "noatime"
-      "nodiratime"
-      "compress=zstd:3"
-    ];
-    "/home/kurnevsky/data".options = [
-      "noatime"
-      "nodiratime"
-      "compress=zstd:3"
-      "nofail"
-    ];
-  };
-
-  swapDevices = [
-    {
-      device = "/dev/nvme0n1p2";
-      randomEncryption = {
-        enable = true;
-        allowDiscards = true;
-      };
-      discardPolicy = "both";
-    }
-  ];
 
   environment.systemPackages = with pkgs; [
     radeontop
