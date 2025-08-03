@@ -1,12 +1,3 @@
-let
-  btrfsOptions = [
-    "compress=zstd:3"
-    "noatime"
-    "nodiratime"
-    "ssd"
-    "space_cache=v2"
-  ];
-in
 {
   disko.devices = {
     disk = {
@@ -34,20 +25,30 @@ in
               size = "100%";
               content = {
                 type = "btrfs";
-                subvolumes = {
-                  "@root" = {
-                    mountpoint = "/";
-                    mountOptions = btrfsOptions;
+                subvolumes =
+                  let
+                    options = [
+                      "compress=zstd:3"
+                      "noatime"
+                      "nodiratime"
+                      "ssd"
+                      "space_cache=v2"
+                    ];
+                  in
+                  {
+                    "@root" = {
+                      mountpoint = "/";
+                      mountOptions = options;
+                    };
+                    "@home" = {
+                      mountpoint = "/home";
+                      mountOptions = options;
+                    };
+                    "@nix" = {
+                      mountpoint = "/nix";
+                      mountOptions = options;
+                    };
                   };
-                  "@home" = {
-                    mountpoint = "/home";
-                    mountOptions = btrfsOptions;
-                  };
-                  "@nix" = {
-                    mountpoint = "/nix";
-                    mountOptions = btrfsOptions;
-                  };
-                };
               };
             };
           };
