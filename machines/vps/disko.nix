@@ -41,8 +41,8 @@
                   mountpoint = "/home";
                   mountOptions = options;
                 };
-                "/nix" = {
-                  mountpoint = "/nix";
+                "/nix-store" = {
+                  mountpoint = "/nix/store";
                   mountOptions = options;
                 };
               };
