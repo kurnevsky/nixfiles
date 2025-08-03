@@ -10,6 +10,7 @@
             esp = {
               size = "512M";
               type = "ef00";
+              label = "esp";
               content = {
                 type = "filesystem";
                 format = "vfat";
@@ -18,6 +19,8 @@
             };
             root = {
               size = "100%";
+              type = "8300";
+              label = "root";
               content = {
                 type = "btrfs";
                 subvolumes =
@@ -31,15 +34,15 @@
                     ];
                   in
                   {
-                    "@root" = {
+                    "/root" = {
                       mountpoint = "/";
                       mountOptions = options;
                     };
-                    "@home" = {
+                    "/home" = {
                       mountpoint = "/home";
                       mountOptions = options;
                     };
-                    "@nix" = {
+                    "/nix" = {
                       mountpoint = "/nix";
                       mountOptions = options;
                     };

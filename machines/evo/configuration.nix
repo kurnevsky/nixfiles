@@ -10,10 +10,7 @@
         device = "nodev";
       };
     };
-    initrd = {
-      kernelModules = [ "i915" ];
-      luks.devices.root.allowDiscards = true;
-    };
+    initrd.kernelModules = [ "i915" ];
     extraModulePackages = with config.boot.kernelPackages; [
       acpi_call
       v4l2loopback
@@ -41,17 +38,6 @@
       "compress=zstd:3"
     ];
   };
-
-  swapDevices = [
-    {
-      device = "/dev/nvme0n1p2";
-      randomEncryption = {
-        enable = true;
-        allowDiscards = true;
-      };
-      discardPolicy = "both";
-    }
-  ];
 
   networking.hostName = "evo";
 
