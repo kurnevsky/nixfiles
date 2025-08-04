@@ -209,6 +209,7 @@
         ))
         ./modules/desktop.nix
         ./modules/kde.nix
+        ./modules/syncthing-desktop.nix
         ./modules/sandbox.nix
         ./modules/syncthing.nix
         ./modules/shadowsocks.nix
