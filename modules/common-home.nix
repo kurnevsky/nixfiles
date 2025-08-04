@@ -73,6 +73,10 @@
       compression = true;
       hashKnownHosts = true;
     };
+    gpg = {
+      enable = true;
+      settings.keyserver = "hkps://keys.openpgp.org";
+    };
     git = {
       userName = "Evgeny Kurnevsky";
       userEmail = "kurnevsky@gmail.com";
