@@ -9,6 +9,7 @@
   imports = [
     ./pocket-id.nix
     ./stalwart.nix
+    ./miniflux.nix
   ];
 
   boot.tmp.cleanOnBoot = true;
@@ -109,7 +110,6 @@
     certs = {
       "kurnevsky.net".group = "acme";
       "kropki.org".group = "acme";
-      "rss.kropki.org".group = "acme";
     };
   };
 
@@ -132,19 +132,6 @@
           ensureDBOwnership = true;
         }
       ];
-    };
-    miniflux = {
-      enable = true;
-      config = {
-        LISTEN_ADDR = "127.0.0.1:34449";
-        BASE_URL = "https://rss.kropki.org";
-        HTTPS = 1;
-        FORCE_REFRESH_INTERVAL = 15;
-        POLLING_FREQUENCY = 30;
-        POLLING_SCHEDULER = "entry_frequency";
-        SCHEDULER_ENTRY_FREQUENCY_FACTOR = 2;
-      };
-      adminCredentialsFile = config.age.secrets.miniflux.path or "/secrets/miniflux";
     };
     matrix-continuwuity = {
       enable = true;
@@ -263,23 +250,6 @@
               tryFiles = "$uri =404";
               extraConfig = "expires 24h;";
             };
-          };
-        };
-        "rss.kropki.org" = {
-          http3 = true;
-          quic = true;
-          enableACME = true;
-          forceSSL = true;
-          kTLS = true;
-          locations = {
-            "/".proxyPass = "http://localhost:34449";
-            "/reactflux/" = {
-              alias = "${pkgs.callPackage ./reactflux.nix { baseurl = "/reactflux"; }}/";
-              index = "index.html";
-              tryFiles = "$uri uri/ /index.html =404";
-              extraConfig = "expires 24h;";
-            };
-            "= /reactflux".return = "301 $request_uri/";
           };
         };
         matrix-federation = {
@@ -424,7 +394,6 @@
       owner = "kurnevsky";
       group = "users";
     };
-    miniflux.file = ../../secrets/miniflux.age;
     kropki.file = ../../secrets/kropki.age;
   };
 
