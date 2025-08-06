@@ -6,7 +6,10 @@
 }:
 
 {
-  imports = [ ./pocket-id.nix ];
+  imports = [
+    ./pocket-id.nix
+    ./stalwart.nix
+  ];
 
   boot.tmp.cleanOnBoot = true;
 
@@ -30,18 +33,10 @@
     firewall = {
       enable = true;
       allowedTCPPorts = [
-        # SMTP
-        25
         # HTTP
         80
         # HTTPS
         443
-        # SMTPS
-        465
-        # SMTPS
-        587
-        # IMAPS
-        993
         # Matrix federation
         8448
         # Shadowsocks
@@ -115,7 +110,6 @@
       "kurnevsky.net".group = "acme";
       "kropki.org".group = "acme";
       "rss.kropki.org".group = "acme";
-      "stalwart.kropki.org".group = "acme";
     };
   };
 
@@ -126,16 +120,11 @@
       package = pkgs.postgresql_17;
       ensureDatabases = [
         "tt_rss"
-        "stalwart-mail"
         "kropki"
       ];
       ensureUsers = [
         {
           name = "tt_rss";
-          ensureDBOwnership = true;
-        }
-        {
-          name = "stalwart-mail";
           ensureDBOwnership = true;
         }
         {
@@ -156,99 +145,6 @@
         SCHEDULER_ENTRY_FREQUENCY_FACTOR = 2;
       };
       adminCredentialsFile = config.age.secrets.miniflux.path or "/secrets/miniflux";
-    };
-    stalwart-mail = {
-      enable = true;
-      settings = {
-        storage.blob = "db";
-        store = {
-          db = {
-            type = "postgresql";
-            host = "/var/run/postgresql";
-            database = "stalwart-mail";
-          };
-        };
-        lookup.default.hostname = "kropki.org";
-        server = {
-          hostname = "mail.kropki.org";
-          listener = {
-            smtp = {
-              bind = "[::]:25";
-              protocol = "smtp";
-            };
-            submission = {
-              bind = [ "[::]:587" ];
-              protocol = "smtp";
-            };
-            submissions = {
-              bind = [ "[::]:465" ];
-              protocol = "smtp";
-              tls.implicit = true;
-            };
-            imaptls = {
-              bind = [ "[::]:993" ];
-              protocol = "imap";
-              tls.implicit = true;
-            };
-            jmap = {
-              bind = [ "[::]:30452" ];
-              protocol = "http";
-            };
-          };
-        };
-        authentication.fallback-admin = {
-          user = "admin";
-          secret = "%{env:ADMIN_SECRET}%";
-        };
-        auth.dkim.sign = [
-          {
-            "if" = "listener != 'smtp'";
-            "then" = "['ed25519']";
-          }
-          { "else" = false; }
-        ];
-        signature.ed25519 = {
-          private-key = "%{env:DKIM_KEY}%";
-          domain = "kropki.org";
-          selector = "default";
-          headers = [
-            "From"
-            "Subject"
-            "Date"
-            "Message-ID"
-            "To"
-            "Cc"
-            "MIME-Version"
-            "Content-Type"
-            "Content-Transfer-Encoding"
-            "Content-ID"
-            "Content-Description"
-            "Resent-Date"
-            "Resent-From"
-            "Resent-Sender"
-            "Resent-To"
-            "Resent-Cc"
-            "Resent-Message-ID"
-            "In-Reply-To"
-            "References"
-            "List-Id"
-            "List-Help"
-            "List-Unsubscribe"
-            "List-Subscribe"
-            "List-Post"
-            "List-Owner"
-            "List-Archive"
-          ];
-          algorithm = "ed25519-sha256";
-          canonicalization = "relaxed/relaxed";
-        };
-        certificate.default = {
-          cert = "%{file:${config.security.acme.certs."kropki.org".directory}/fullchain.pem}%";
-          private-key = "%{file:${config.security.acme.certs."kropki.org".directory}/key.pem}%";
-          default = true;
-        };
-        email.encryption.append = true;
-      };
     };
     matrix-continuwuity = {
       enable = true;
@@ -386,14 +282,6 @@
             "= /reactflux".return = "301 $request_uri/";
           };
         };
-        "stalwart.kropki.org" = {
-          http3 = true;
-          quic = true;
-          enableACME = true;
-          forceSSL = true;
-          kTLS = true;
-          locations."/".proxyPass = "http://localhost:30452";
-        };
         matrix-federation = {
           serverName = "kropki.org";
           http3 = true;
@@ -455,10 +343,6 @@
   };
 
   systemd.services = {
-    stalwart-mail.serviceConfig = {
-      RestrictAddressFamilies = [ "AF_UNIX" ];
-      EnvironmentFile = "${config.age.secrets.stalwart.path or "/secrets/stalwart"}";
-    };
     tox-node.serviceConfig.SupplementaryGroups = "secrets-tox";
     kropki = {
       description = "Kropki server";
@@ -494,7 +378,6 @@
     groups = {
       acme.members = [
         "nginx"
-        "stalwart-mail"
       ];
       hans = { };
       secrets-tox = { };
@@ -542,7 +425,6 @@
       group = "users";
     };
     miniflux.file = ../../secrets/miniflux.age;
-    stalwart.file = ../../secrets/stalwart.age;
     kropki.file = ../../secrets/kropki.age;
   };
 
