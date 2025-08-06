@@ -4,7 +4,10 @@
   config,
   ...
 }:
+
 {
+  imports = [ ./pocket-id.nix ];
+
   boot.tmp.cleanOnBoot = true;
 
   swapDevices = [
