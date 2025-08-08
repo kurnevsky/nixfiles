@@ -792,7 +792,18 @@ in
         feh = wrap self.feh [ (withHomeManager "feh" (viewer-cfg "feh")) ];
         imv = wrap self.imv [
           (withOpengl (
-            viewer-cfg "imv"
+            viewer-cfg "imv-wayland"
+            // {
+              devs = [ "dri" ];
+              syses = [
+                # Necessary for hardware acceleration
+                "dev"
+                "devices"
+              ];
+            }
+          ))
+          (withOpengl (
+            viewer-cfg "imv-x11"
             // {
               devs = [ "dri" ];
               syses = [
