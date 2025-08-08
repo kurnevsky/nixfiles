@@ -437,6 +437,7 @@ in
                   kdePackages.plasma-browser-integration
                   kdePackages.kde-gtk-config
                   kdePackages.breeze
+                  keepassxc
                 ]
                 ++ map (e: e.crxPath) (builtins.attrValues pkgs.chromium-extensions);
               devs = [ "dri" ];
@@ -451,6 +452,7 @@ in
               pams = [
                 "gnupg"
                 "pulse"
+                "app/org.keepassxc.KeePassXC"
               ];
               etcs = [
                 "ssl/certs/ca-certificates.crt"
