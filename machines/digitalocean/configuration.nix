@@ -10,6 +10,8 @@
     ./pocket-id.nix
     ./stalwart.nix
     ./miniflux.nix
+    ./oauth2-proxy.nix
+    ./wakapi.nix
   ];
 
   boot.tmp.cleanOnBoot = true;
