@@ -910,6 +910,11 @@
           home.file = {
             ".face.icon".source = ../resources/face.icon;
             ".wallpaper.jpg".source = ../resources/wallpaper.jpg;
+            ".wakatime.cfg".text = ''
+              [settings]
+              api_url = https://waka.kropki.org/api
+              api_key_vault_cmd = secret-tool lookup id wakapi
+            '';
           };
           programs = {
             mbsync = {
