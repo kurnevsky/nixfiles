@@ -356,7 +356,6 @@ in
               graphics = true;
               pipewire = true;
               pams = [
-                "gnupg"
                 "pulse"
                 "app/org.keepassxc.KeePassXC"
               ];
@@ -393,7 +392,6 @@ in
                 "own='org.mozilla.firefox.*'"
               ];
               ro-whitelist = [
-                "~/.password-store/"
                 "~/.config/gtk-3.0/"
                 "~/.config/kdeglobals"
                 # if firefox finds /.flatpak-info it reads configs from this hardcoded path
@@ -412,7 +410,6 @@ in
                 "~/Downloads/"
                 "~/.cache/fontconfig/"
                 "~/.config/pulse/"
-                "~/.gnupg/"
               ];
               flatpak = true;
             }
@@ -1124,11 +1121,9 @@ in
             extra-deps = with pkgs; [
               coreutils-full
               cloud-mdir-sync
-              pass
-              gnupg
+              libsecret
             ];
             pams = [
-              "gnupg"
               "cms.sock"
             ];
             etcs = [ "ssl/certs/ca-certificates.crt" ];
@@ -1138,13 +1133,14 @@ in
               "SHELL"
             ];
             unshare-net = false;
+            dbus = [
+              "talk=org.freedesktop.secrets"
+            ];
             ro-whitelist = [
-              "~/.password-store/"
               "~/.config/isyncrc"
             ];
             whitelist = [
               "~/Maildir/"
-              "~/.gnupg/"
             ];
           }
         ];
