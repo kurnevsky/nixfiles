@@ -48,12 +48,18 @@
     enableACME = true;
     forceSSL = true;
     kTLS = true;
-    locations."/" = {
-      proxyPass = "http://localhost:3000";
-      extraConfig = ''
-        auth_request_set $preferred_username $upstream_http_x_auth_request_preferred_username;
-        proxy_set_header X-Preferred-Username $preferred_username;
-      '';
+    locations = {
+      "/" = {
+        proxyPass = "http://localhost:3000";
+        extraConfig = ''
+          auth_request_set $preferred_username $upstream_http_x_auth_request_preferred_username;
+          proxy_set_header X-Preferred-Username $preferred_username;
+        '';
+      };
+      "/api/" = {
+        proxyPass = "http://localhost:3000";
+        extraConfig = "auth_request off;";
+      };
     };
   };
 
