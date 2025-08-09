@@ -107,8 +107,6 @@
       ttl = 180 * 24 * 60 * 60;
     in
     {
-      enableSshSupport = true;
-      sshKeys = [ "53D3B2AAF43FA184A31ACEC71295A713D5B9A123" ];
       defaultCacheTtl = ttl;
       maxCacheTtl = ttl;
       defaultCacheTtlSsh = ttl;
