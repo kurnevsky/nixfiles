@@ -415,7 +415,7 @@
       # Fixes aspell when it's used as build time dependency,
       # e.g. enchant in emacs
       ASPELL_CONF = "dict-dir /run/current-system/sw/lib/aspell";
-      RCLONE_PASSWORD_COMMAND = "pass rclone";
+      RCLONE_PASSWORD_COMMAND = "${pkgs.libsecret}/bin/secret-tool lookup id rclone";
     };
 
     sessionVariables.NIXOS_OZONE_WL = "1";
@@ -969,7 +969,7 @@
                 maildir.path = "gmail";
                 userName = "kurnevsky@gmail.com";
                 imap.host = "imap.gmail.com";
-                passwordCommand = "${pkgs.pass}/bin/pass show web/google.com | grep Isync | cut -d ' ' -f 2";
+                passwordCommand = "${pkgs.libsecret}/bin/secret-tool lookup id google";
               };
               evolution =
                 let
