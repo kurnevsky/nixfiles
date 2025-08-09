@@ -1,10 +1,6 @@
 { config, pkgs, ... }:
 
 {
-  imports = [
-    ./kwallet-secrets.nix
-  ];
-
   services = {
     desktopManager.plasma6.enable = true;
     displayManager = {
