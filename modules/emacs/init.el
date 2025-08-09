@@ -1329,6 +1329,12 @@ which LANG was detected but these are ignored."
   (push 'scala treesit-auto-langs)
   (global-treesit-auto-mode))
 
+(use-package wakatime-mode
+  :demand t
+  :config
+  (when (file-exists-p "~/.wakatime.cfg")
+    (global-wakatime-mode)))
+
 (use-package conf-mode
   :ensure nil
   :mode ("/Cargo.lock\\'" . conf-toml-mode))

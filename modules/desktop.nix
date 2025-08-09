@@ -229,6 +229,7 @@
         viu
         vorbis-tools
         vulkan-tools
+        wakatime-cli
         wavpack
         waypipe
         websocat

@@ -134,6 +134,11 @@
      ("gptel-curl"
        (pcase command
          (`("curl" . ,_) t)))
+     ;; Wakatime
+     ("Shell"
+       (pcase command
+         (`("/run/current-system/sw/bin/zsh" "-c" ,_) t)
+         (`("/bin/sh" "-c" ,_) t)))
      ;; Treemacs
      ("Process Future"
        (pcase command
