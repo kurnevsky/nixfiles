@@ -95,6 +95,22 @@
         gparted
         inkscape
         keepassxc
+        git-credential-keepassxc
+        (pkgs.writeShellScriptBin "keepassxc-get" ''
+          if [ "$#" -ne 2 ]; then
+            echo "Usage: $0 <password|totp> <url>"
+            exit 1
+          fi
+          if [ "$1" == "password" ]; then
+            echo "url=$2" | git-credential-keepassxc get | sed -n 's/^password=//p'
+          elif [ "$1" == "totp" ]; then
+            echo "url=$2" | git-credential-keepassxc totp | sed -n 's/^totp=//p'
+          else
+            echo "Error: First argument must be 'password' or 'totp'"
+            exit 1
+          fi
+        '')
+        libsecret
         languagetool
         lapce
         libreoffice-fresh
