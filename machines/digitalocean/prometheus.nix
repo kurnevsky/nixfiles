@@ -24,6 +24,14 @@
           }
         ];
       }
+      {
+        job_name = "miniflux";
+        static_configs = [
+          {
+            targets = [ "localhost:34449" ];
+          }
+        ];
+      }
     ];
     exporters = {
       node = {

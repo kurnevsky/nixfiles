@@ -24,6 +24,7 @@
         OAUTH2_REDIRECT_URL = "https://rss.kropki.org/oauth2/oidc/callback";
         OAUTH2_OIDC_DISCOVERY_ENDPOINT = "https://id.kropki.org";
         OAUTH2_USER_CREATION = 1;
+        METRICS_COLLECTOR = 1;
       };
     };
 
@@ -35,6 +36,7 @@
       kTLS = true;
       locations = {
         "/".proxyPass = "http://localhost:34449";
+        "= /metrics".return = 403;
         "/reactflux/" = {
           alias = "${pkgs.callPackage ./reactflux.nix { baseurl = "/reactflux"; }}/";
           index = "index.html";
