@@ -43,6 +43,7 @@ in
 
   "miniflux.age".publicKeys = [ digitalocean ];
   "wakapi.age".publicKeys = [ digitalocean ];
+  "prometheus-wakapi.age".publicKeys = [ digitalocean ];
   "tox.age".publicKeys = [ digitalocean ];
   "continuwuity.age".publicKeys = [ digitalocean ];
   "oauth2-proxy.age".publicKeys = [ digitalocean ];

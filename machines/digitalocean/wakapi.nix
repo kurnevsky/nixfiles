@@ -34,6 +34,7 @@
         trusted_header_auth_key = "X-Preferred-Username";
         trusted_header_auth_allow_signup = true;
         trust_reverse_proxy_ips = "127.0.0.1,::1";
+        expose_metrics = true;
       };
     };
     # it adds unwanted authentication
@@ -60,6 +61,7 @@
         proxyPass = "http://localhost:3000";
         extraConfig = "auth_request off;";
       };
+      "= /api/metrics".return = 403;
     };
   };
 

@@ -7,6 +7,7 @@
   services.prometheus = {
     enable = true;
     listenAddress = "127.0.0.1";
+    checkConfig = "syntax-only";
     scrapeConfigs = [
       {
         job_name = "node";
@@ -29,6 +30,16 @@
         static_configs = [
           {
             targets = [ "localhost:34449" ];
+          }
+        ];
+      }
+      {
+        job_name = "wakapi";
+        metrics_path = "/api/metrics";
+        bearer_token_file = config.age.secrets.prometheus-wakapi.path or "/secrets/prometheus-wakapi";
+        static_configs = [
+          {
+            targets = [ "localhost:3000" ];
           }
         ];
       }
@@ -56,4 +67,10 @@
   };
 
   services.oauth2-proxy.nginx.virtualHosts."prometheus.kropki.org" = { };
+
+  age.secrets.prometheus-wakapi = {
+    file = ../../secrets/prometheus-wakapi.age;
+    owner = "prometheus";
+    group = "prometheus";
+  };
 }
