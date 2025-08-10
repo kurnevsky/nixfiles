@@ -1,0 +1,34 @@
+{
+  config,
+  ...
+}:
+
+{
+  services.prometheus = {
+    enable = true;
+    listenAddress = "127.0.0.1";
+    scrapeConfigs = [
+      {
+        job_name = "postgres";
+        static_configs = [{
+          targets = [ "localhost:${toString config.services.prometheus.exporters.postgres.port}" ];
+        }];
+      }
+    ];
+    exporters.postgres = {
+      enable = true;
+      listenAddress = "127.0.0.1";
+    };
+  };
+
+  services.nginx.virtualHosts."prometheus.kropki.org" = {
+    http3 = true;
+    quic = true;
+    enableACME = true;
+    forceSSL = true;
+    kTLS = true;
+    locations."/".proxyPass = "http://localhost:${builtins.toString config.services.prometheus.port}";
+  };
+
+  services.oauth2-proxy.nginx.virtualHosts."prometheus.kropki.org" = { };
+}

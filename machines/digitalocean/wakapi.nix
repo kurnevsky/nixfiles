@@ -63,8 +63,5 @@
     };
   };
 
-  services.oauth2-proxy.nginx = {
-    domain = "oauth2.kropki.org";
-    virtualHosts."waka.kropki.org" = { };
-  };
+  services.oauth2-proxy.nginx.virtualHosts."waka.kropki.org" = { };
 }

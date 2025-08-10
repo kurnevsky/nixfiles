@@ -37,4 +37,6 @@
   };
 
   age.secrets.oauth2-proxy.file = ../../secrets/oauth2-proxy.age;
+
+  services.oauth2-proxy.nginx.domain = "oauth2.kropki.org";
 }

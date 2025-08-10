@@ -12,6 +12,7 @@
     ./miniflux.nix
     ./oauth2-proxy.nix
     ./wakapi.nix
+    ./prometheus.nix
   ];
 
   boot.tmp.cleanOnBoot = true;
