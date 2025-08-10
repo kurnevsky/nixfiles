@@ -10,21 +10,26 @@
     scrapeConfigs = [
       {
         job_name = "node";
-        static_configs = [{
-          targets = [ "localhost:${toString config.services.prometheus.exporters.node.port}" ];
-        }];
+        static_configs = [
+          {
+            targets = [ "localhost:${toString config.services.prometheus.exporters.node.port}" ];
+          }
+        ];
       }
       {
         job_name = "postgres";
-        static_configs = [{
-          targets = [ "localhost:${toString config.services.prometheus.exporters.postgres.port}" ];
-        }];
+        static_configs = [
+          {
+            targets = [ "localhost:${toString config.services.prometheus.exporters.postgres.port}" ];
+          }
+        ];
       }
     ];
     exporters = {
       node = {
         enable = true;
         listenAddress = "127.0.0.1";
+        enabledCollectors = [ "systemd" ];
       };
       postgres = {
         enable = true;
