@@ -47,6 +47,7 @@ in
   "tox.age".publicKeys = [ digitalocean ];
   "continuwuity.age".publicKeys = [ digitalocean ];
   "oauth2-proxy.age".publicKeys = [ digitalocean ];
+  "grafana.age".publicKeys = [ digitalocean ];
 
   "motion.age".publicKeys = desktop;
 

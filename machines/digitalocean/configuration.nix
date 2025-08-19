@@ -13,6 +13,7 @@
     ./oauth2-proxy.nix
     ./wakapi.nix
     ./prometheus.nix
+    ./grafana.nix
   ];
 
   boot.tmp.cleanOnBoot = true;
