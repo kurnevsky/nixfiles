@@ -97,6 +97,11 @@
       name = "wakatime.json";
       sha256 = "sha256:0zgl7r2x1l48m9vf5ffdm6jjmqvpm8gz1lakjz1xl9g8sqny84im";
     };
+    "grafana-dashboards/stalwart.json".source = builtins.fetchurl {
+      url = "https://grafana.com/api/dashboards/23498/revisions/1/download";
+      name = "stalwart.json";
+      sha256 = "sha256:1kplgy2as1jf76vvcr31ydkgllr9bkfs98sqr1an6qf853dpmrh2";
+    };
   };
 
   age.secrets.grafana = {

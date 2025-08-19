@@ -121,6 +121,7 @@
           default = true;
         };
         email.encryption.append = true;
+        metrics.prometheus.enable = true;
       };
     };
 
@@ -130,7 +131,10 @@
       enableACME = true;
       forceSSL = true;
       kTLS = true;
-      locations."/".proxyPass = "http://localhost:30452";
+      locations = {
+        "/".proxyPass = "http://localhost:30452";
+        "= /metrics/prometheus".return = 403;
+      };
     };
   };
 

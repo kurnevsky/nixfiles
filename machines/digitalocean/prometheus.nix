@@ -43,6 +43,26 @@
           }
         ];
       }
+      {
+        job_name = "stalwart";
+        metrics_path = "/metrics/prometheus";
+        # Add a 'stalwart' prefix to every metric
+        metric_relabel_configs = [
+          {
+            source_labels = [ "__name__" ];
+            separator = "_";
+            regex = "(.*)";
+            replacement = "stalwart_$1";
+            target_label = "__name__";
+            action = "replace";
+          }
+        ];
+        static_configs = [
+          {
+            targets = [ "localhost:30452" ];
+          }
+        ];
+      }
     ];
     exporters = {
       node = {
