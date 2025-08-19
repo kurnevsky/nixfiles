@@ -52,6 +52,7 @@
       };
       postgres = {
         enable = true;
+        runAsLocalSuperUser = true;
         listenAddress = "127.0.0.1";
       };
     };

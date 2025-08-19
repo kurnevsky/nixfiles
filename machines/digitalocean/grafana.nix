@@ -56,6 +56,15 @@
             editable = false;
           }
         ];
+
+        dashboards.settings.providers = [{
+          name = "Dashboards";
+          disableDeletion = true;
+          options = {
+            path = "/etc/grafana-dashboards";
+            foldersFromFilesStructure = true;
+          };
+        }];
       };
     };
 
@@ -69,6 +78,24 @@
         proxyWebsockets = true;
         proxyPass = "http://${toString config.services.grafana.settings.server.http_addr}:${toString config.services.grafana.settings.server.http_port}";
       };
+    };
+  };
+
+  environment.etc = {
+    "grafana-dashboards/node.json".source = builtins.fetchurl {
+      url = "https://grafana.com/api/dashboards/1860/revisions/41/download";
+      name = "node.json";
+      sha256 = "sha256:0fwm95q12pjsc342ckdbvbixv8p7s87riliv314073xj8v220b0k";
+    };
+    "grafana-dashboards/postgres.json".source = builtins.fetchurl {
+      url = "https://grafana.com/api/dashboards/9628/revisions/8/download";
+      name = "postgres.json";
+      sha256 = "sha256:1iwwqglszdl3wmsl86z9fjd8wlp019aq9hsz4pgxxjjv0qsaq6sj";
+    };
+    "grafana-dashboards/wakatime.json".source = builtins.fetchurl {
+      url = "https://grafana.com/api/dashboards/12790/revisions/2/download";
+      name = "wakatime.json";
+      sha256 = "sha256:0zgl7r2x1l48m9vf5ffdm6jjmqvpm8gz1lakjz1xl9g8sqny84im";
     };
   };
 
