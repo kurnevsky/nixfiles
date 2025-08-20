@@ -26,6 +26,8 @@
         DB_CONNECTION_STRING = "user=pocket-id dbname=pocket-id host=/run/postgresql";
         UI_CONFIG_DISABLED = true;
         HOST = "127.0.0.1";
+        METRICS_ENABLED = true;
+        OTEL_METRICS_EXPORTER = "prometheus";
       };
     };
 

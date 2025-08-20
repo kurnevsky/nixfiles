@@ -63,6 +63,14 @@
           }
         ];
       }
+      {
+        job_name = "pocket-id";
+        static_configs = [
+          {
+            targets = [ "localhost:9464" ];
+          }
+        ];
+      }
     ];
     exporters = {
       node = {
