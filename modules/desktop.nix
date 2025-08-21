@@ -620,7 +620,7 @@
       pizauth =
         let
           cfg = pkgs.writeText "pizauth.conf" ''
-            token_event_cmd = "${pkgs.pizauth}/bin/pizauth dump | base64 -w 0 | ${pkgs.libsecret}/bin/secret-tool store --label=pizauth id pizauth";
+            token_event_cmd = "${pkgs.pizauth}/bin/pizauth dump | base64 -w 0 | ${pkgs.libsecret}/bin/secret-tool store --label=Pizauth id pizauth";
 
             account "evo" {
               auth_uri = "https://login.microsoftonline.com/common/oauth2/v2.0/authorize";
