@@ -1120,11 +1120,12 @@ in
             bin-sh = true;
             extra-deps = with pkgs; [
               coreutils-full
-              cloud-mdir-sync
+              pizauth
               libsecret
+              readline
             ];
             pams = [
-              "cms.sock"
+              "pizauth"
             ];
             etcs = [ "ssl/certs/ca-certificates.crt" ];
             resolv-conf = true;

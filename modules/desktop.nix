@@ -82,7 +82,6 @@
         blender
         calibre
         claws-mail
-        cloud-mdir-sync
         (czkawka.wrapper.override {
           extraPackages = [ ffmpeg-full ];
         })
@@ -218,6 +217,7 @@
         pass
         pciutils
         pgpdump
+        pizauth
         playerctl
         psmisc
         pulseaudio
@@ -617,20 +617,36 @@
       docker.wantedBy = pkgs.lib.mkForce [ ];
       # It caches java path there.
       bloop.serviceConfig.ExecStartPre = "${pkgs.coreutils}/bin/rm -rf %h/.bloop/";
-      cloud-mdir-sync =
+      pizauth =
         let
-          cfg = pkgs.writeText "cms.cfg" ''
-            account = Office365_Account(user="ykurneuski@evolution.com")
-            CredentialServer("/run/user/1000/cms.sock", accounts=[account], protocols=["IMAP"])
+          cfg = pkgs.writeText "pizauth.conf" ''
+            token_event_cmd = "${pkgs.pizauth}/bin/pizauth dump | base64 -w 0 | ${pkgs.libsecret}/bin/secret-tool store --label=pizauth id pizauth";
+
+            account "evo" {
+              auth_uri = "https://login.microsoftonline.com/common/oauth2/v2.0/authorize";
+              token_uri = "https://login.microsoftonline.com/common/oauth2/v2.0/token";
+              client_id = "122f4826-adf9-465d-8e84-e9d00bc9f234";
+              scopes = [ "https://outlook.office.com/IMAP.AccessAsUser.All", "offline_access" ];
+              auth_uri_fields = { "login_hint": "ykurneuski@evolution.com" };
+            }
           '';
         in
         {
-          description = "cloud-mdir-sync service";
+          description = "Pizauth service";
           after = [ "network-online.target" ];
           wants = [ "network-online.target" ];
           serviceConfig = {
+            Type = "forking";
             Restart = "on-failure";
-            ExecStart = "${pkgs.cloud-mdir-sync}/bin/cloud-mdir-sync -c ${cfg}";
+            ExecStart = "${pkgs.pizauth}/bin/pizauth server -c ${cfg}";
+            ExecStartPost = pkgs.writeShellScript "pizauth-post.sh" ''
+              while true; do
+                ${pkgs.pizauth}/bin/pizauth status && break
+                sleep 0.1
+              done
+              ${pkgs.libsecret}/bin/secret-tool lookup id pizauth | base64 -d | ${pkgs.pizauth}/bin/pizauth restore
+            '';
+            ExecStop = "${pkgs.pizauth}/bin/pizauth shutdown";
           };
         };
     };
@@ -929,7 +945,7 @@
             ".wakatime.cfg".text = ''
               [settings]
               api_url = https://waka.kropki.org/api
-              api_key_vault_cmd = secret-tool lookup id wakapi
+              api_key_vault_cmd = ${pkgs.libsecret}/bin/secret-tool lookup id wakapi
             '';
           };
           programs = {
@@ -985,7 +1001,7 @@
                   maildir.path = "evolution";
                   userName = user;
                   imap.host = "outlook.office365.com";
-                  passwordCommand = "${pkgs.cloud-mdir-sync}/bin/cms-oauth --cms_sock=$XDG_RUNTIME_DIR/cms.sock --proto=IMAP --user ${user} --output=token";
+                  passwordCommand = "${pkgs.pizauth}/bin/pizauth show evo";
                 };
             };
             calendar = {

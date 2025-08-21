@@ -108,13 +108,6 @@
       flake = false;
     };
 
-    cloud-mdir-sync = {
-      type = "github";
-      owner = "jgunthorpe";
-      repo = "cloud_mdir_sync";
-      flake = false;
-    };
-
     pan-globalprotect-okta = {
       type = "github";
       owner = "arthepsy";
