@@ -1164,7 +1164,7 @@ in
             bin-sh = true;
             extra-deps = with pkgs; [
               coreutils-full
-              pass
+              libsecret
               gnupg
             ];
             pams = [ "gnupg" ];
@@ -1175,14 +1175,15 @@ in
               "SHELL"
             ];
             unshare-net = false;
+            dbus = [
+              "talk=org.freedesktop.secrets"
+            ];
             ro-whitelist = [
-              "~/.password-store/"
               "~/.config/vdirsyncer/"
             ];
             whitelist = [
               "~/Calendar/"
               "~/.local/share/vdirsyncer/"
-              "~/.gnupg/"
             ];
           })
         ];
