@@ -322,8 +322,8 @@
         python3
         (pkgs.writeShellScriptBin "famulus" ''
           ${pkgs.coreutils}/bin/env \
-            MISTRAL_API_KEY="$(pass auth-source/mistral)" \
-            OPENAI_API_KEY="$(pass auth-source/groq)" \
+            MISTRAL_API_KEY="$(${pkgs.libsecret}/bin/secret-tool lookup id mistral)" \
+            OPENAI_API_KEY="$(${pkgs.libsecret}/bin/secret-tool lookup id groq)" \
             ${callPackage ./famulus.nix { }}/bin/famulus "$@"
         '')
         ## C/C++
