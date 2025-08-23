@@ -48,8 +48,10 @@ in
   "continuwuity.age".publicKeys = [ digitalocean ];
   "oauth2-proxy.age".publicKeys = [ digitalocean ];
   "grafana.age".publicKeys = [ digitalocean ];
+  "scrutiny.age".publicKeys = [ digitalocean ];
 
   "motion.age".publicKeys = desktop;
+  "scrutiny-collector.age".publicKeys = desktop;
 
   "hans.age".publicKeys = all;
   "iodine.age".publicKeys = all;

@@ -14,6 +14,7 @@
     ./wakapi.nix
     ./prometheus.nix
     ./grafana.nix
+    ./scrutiny.nix
   ];
 
   boot.tmp.cleanOnBoot = true;

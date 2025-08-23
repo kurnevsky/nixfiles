@@ -6,6 +6,10 @@
 }:
 
 {
+  imports = [
+    ./scrutiny-collector.nix
+  ];
+
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
     kernelParams = [ "threadirqs" ];
