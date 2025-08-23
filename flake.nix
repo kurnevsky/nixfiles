@@ -44,6 +44,21 @@
       flake = false;
     };
 
+    pinenote-service = {
+      type = "github";
+      owner = "WeraPea";
+      repo = "pinenote-service";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    pinenote-nixos = {
+      type = "github";
+      owner = "WeraPea";
+      repo = "pinenote-nixos";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.pinenote-service.follows = "pinenote-service";
+    };
+
     nix-on-droid = {
       type = "github";
       owner = "t184256";
@@ -337,6 +352,13 @@
             ./modules/pinephone.nix
             ./machines/pinephone/configuration.nix
             ./machines/pinephone/hardware-configuration.nix
+          ];
+        };
+        pinenote = inputs.nixpkgs.lib.nixosSystem {
+          system = "aarch64-linux";
+          modules = commonModules ++ [
+            inputs.pinenote-nixos.nixosModules.default
+            ./machines/pinenote/configuration.nix
           ];
         };
       };

@@ -20,6 +20,7 @@
       "acpi_call"
     ];
     tmp.tmpfsSize = "75%";
+    binfmt.emulatedSystems = [ "aarch64-linux" ];
   };
 
   environment.systemPackages = with pkgs; [
