@@ -681,11 +681,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1750984075,
-        "narHash": "sha256-rNB0ilt2a7XEhaqCQOLlHi3RcpIUX1M7SO3HnBK2t2M=",
+        "lastModified": 1755982154,
+        "narHash": "sha256-IUw0fUuo12796AgLkrvmWAX5rTW6W5rkU/DCILhfthk=",
         "owner": "WeraPea",
         "repo": "pinenote-nixos",
-        "rev": "e5d60d2d8407b80c15464b3d4810d7448972f9ae",
+        "rev": "de04bc2e360f59b1617017f2d89fc9ac576ca2c1",
         "type": "github"
       },
       "original": {
