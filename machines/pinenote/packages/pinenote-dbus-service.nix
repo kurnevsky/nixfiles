@@ -11,11 +11,6 @@ pkgs.rustPlatform.buildRustPackage {
     hash = "sha256-JgjjSL7Kg/HecOGy+Oja+3CIi04enfJpCI2TWsnS/o8=";
   };
 
-  postPatch = ''
-    substituteInPlace src/ebc_ioctl.rs \
-      --replace-fail 'ptr_screen_content: *const u8,' 'ptr_screen_content: *const i8,'
-  '';
-
   postInstall = ''
     install -D -m 0644 dbus_security_configuration/pinenote.conf $out/etc/dbus-1/system.d/pinenote.conf
   '';
