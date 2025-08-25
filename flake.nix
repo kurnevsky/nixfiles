@@ -44,21 +44,6 @@
       flake = false;
     };
 
-    pinenote-service = {
-      type = "github";
-      owner = "WeraPea";
-      repo = "pinenote-service";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    pinenote-nixos = {
-      type = "github";
-      owner = "WeraPea";
-      repo = "pinenote-nixos";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.pinenote-service.follows = "pinenote-service";
-    };
-
     nix-on-droid = {
       type = "github";
       owner = "t184256";
@@ -354,11 +339,18 @@
             ./machines/pinephone/hardware-configuration.nix
           ];
         };
+        pinenote-vm = inputs.nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = commonModules ++ [
+            ./machines/pinenote/configuration.nix
+            ./machines/pinenote-vm/configuration.nix
+          ];
+        };
         pinenote = inputs.nixpkgs.lib.nixosSystem {
           system = "aarch64-linux";
           modules = commonModules ++ [
-            inputs.pinenote-nixos.nixosModules.default
             ./machines/pinenote/configuration.nix
+            ./machines/pinenote/boot.nix
           ];
         };
       };
@@ -373,6 +365,7 @@
       packages = forAllSystems (_system: {
         # nix build -L '/etc/nixos#phone-vm' && ./result -enable-kvm -smp 2
         phone-vm = inputs.self.nixosConfigurations.pinephone-vm.config.mobile.outputs.uefi.vm;
+        note-vm = inputs.self.nixosConfigurations.pinenote-vm.config.system.build.vm;
       });
       checks = forAllSystems (system: {
         pre-commit-check = inputs.git-hooks.lib.${system}.run {

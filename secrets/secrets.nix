@@ -5,6 +5,7 @@ let
   evo = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP6yeYMiSNfRevRu+wO5JKyL5gt3CeHc6tAjdDgRSHW5";
   pc = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBfLzi6a22sanF3oeEheHjEjvvYRmJBUYFGXnj6NgSAJ";
   pinephone = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFQ8G294HKMYY/cdc5dxMdJxHqTyA8jlZ7zTDrSK2sg2";
+  pinenote = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJrU/bW9L1mDvY7jfyoyP8YloGEaSYW4tpE6K8ggI8UV";
   digitalocean = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMZRXGjEQLetY1TuKTIY/F08MLbVZs5QWjSMIe8PRIfU";
   acer = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKi+GXCNLPnjSXaZaNAPEUF6Ve3ydpnXjyo3OZMzEHG0";
   desktop = [
@@ -14,6 +15,7 @@ let
   all = desktop ++ [
     acer
     pinephone
+    pinenote
     digitalocean
   ];
 in
@@ -29,6 +31,9 @@ in
   "store-pc.age".publicKeys = [ pc ];
   "syncthing-key-pc.age".publicKeys = [ pc ];
   "syncthing-cert-pc.age".publicKeys = [ pc ];
+
+  "kurnevsky-pinenote.age".publicKeys = [ pinenote ];
+  "store-pinenote.age".publicKeys = [ pinenote ];
 
   "kurnevsky-acer.age".publicKeys = [ acer ];
   "parents-acer.age".publicKeys = [ acer ];
