@@ -41,12 +41,12 @@
   },
   "refined-github": {
     "id": "hlepfoohegkhhmjieoechaddaejaokhf",
-    "sha256": "sha256:19zcz2i9pk3n2qivbpr5i4p15dk88pxxwcclyv0w39wwq0dsb8q6",
-    "version": "25.8.4"
+    "sha256": "sha256:0y336pyfxhi5xyxijsh4nrg0s6raj205sknwk5xvbb1pdwp2cb8r",
+    "version": "25.8.23"
   },
   "keepassxc-browser": {
     "id": "oboonakemofpalcgghocfoadofidjkkk",
-    "sha256": "sha256:0x0brjxpw4rzgjmn2kw2lf1ggixnz58lh6aldfvxjvdd9whfcqgx",
-    "version": "1.9.9.1"
+    "sha256": "sha256:13gs2kfy7f3z4r158gv85f165gkwxw9qi7jbxa72abvjnj4g3r62",
+    "version": "1.9.9.3"
   }
 }

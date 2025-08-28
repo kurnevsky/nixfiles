@@ -70,8 +70,11 @@
     };
     ssh = {
       enable = true;
-      compression = true;
-      hashKnownHosts = true;
+      enableDefaultConfig = false;
+      matchBlocks."*" = {
+        compression = true;
+        hashKnownHosts = true;
+      };
     };
     gpg = {
       enable = true;

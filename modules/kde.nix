@@ -79,7 +79,6 @@
       # TODO: broken
       # kamoso
       wl-clipboard
-      plasma-pass
       # shortcuts
       brightness-min
       brightness-max
