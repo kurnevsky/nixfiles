@@ -41,6 +41,7 @@ pkgs.stdenvNoCC.mkDerivation {
     cp bin/wbf_to_custom.py $out/bin/
     cp bin/waveform_extract.sh $out/bin/
     cp bin/rockchip_ebc_custom_ioctl.py $out/bin/
+    cp bin/sway_dbus_integration.py $out/bin/
 
     wrapProgram $out/bin/waveform_extract.sh \
       --prefix PATH : ${

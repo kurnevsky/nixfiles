@@ -8,6 +8,7 @@
   imports = [
     ./hardware.nix
     ./gnome.nix
+    # ./sway.nix
   ];
 
   boot.tmp.cleanOnBoot = true;
@@ -40,10 +41,10 @@
 
   services = {
     journald.storage = "volatile";
-    logind.extraConfig = ''
-      HandlePowerKey=suspend
-      HandlePowerKeyLongPress=poweroff
-    '';
+    logind.settings = {
+      HandlePowerKey = "suspend";
+      HandlePowerKeyLongPress = "poweroff";
+    };
   };
 
   # fonts = {
