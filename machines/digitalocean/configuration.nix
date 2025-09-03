@@ -20,6 +20,7 @@
     ./matrix.nix
     ./yggdrasil.nix
     ./syncthing.nix
+    ./hans.nix
     ./kropki.nix
   ];
 
@@ -37,7 +38,6 @@
     nat = {
       enable = true;
       internalInterfaces = [
-        "icmp"
         "dns0"
       ];
     };
@@ -56,7 +56,6 @@
         443
       ];
       trustedInterfaces = [
-        "icmp"
         "dns0"
       ];
     };
@@ -180,12 +179,6 @@
         };
       };
     };
-    hans.server = {
-      enable = true;
-      ip = "172.18.43.0";
-      extraConfig = "-d icmp -m 1200";
-      passwordFile = config.age.secrets.hans.path or "/secrets/hans";
-    };
     iodine.server = {
       enable = true;
       ip = "172.18.42.1/24";
@@ -197,30 +190,14 @@
 
   systemd.services.tt-rss.wantedBy = pkgs.lib.mkForce [ ];
 
-  users = {
-    users = {
-      hans = {
-        group = "hans";
-        isSystemUser = true;
-      };
-    };
-    groups = {
-      acme.members = [
-        "nginx"
-      ];
-      hans = { };
-    };
-  };
+  users.groups.acme.members = [
+    "nginx"
+  ];
 
   age.secrets = {
     kurnevsky.file = ../../secrets/kurnevsky-digitalocean.age;
     github.file = ../../secrets/github.age;
     store.file = ../../secrets/store-digitalocean.age;
-    hans = {
-      file = ../../secrets/hans.age;
-      owner = "hans";
-      group = "hans";
-    };
     iodine = {
       file = ../../secrets/iodine.age;
       owner = "iodined";
