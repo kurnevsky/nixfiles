@@ -22,6 +22,7 @@
     ./syncthing.nix
     ./hans.nix
     ./iodine.nix
+    ./nginx.nix
     ./kropki.nix
     ./tt-rss.nix
   ];
@@ -38,30 +39,7 @@
   networking = {
     hostName = "digitalocean";
     nat.enable = true;
-    firewall = {
-      enable = true;
-      allowedTCPPorts = [
-        # HTTP
-        80
-        # HTTPS
-        443
-      ];
-      allowedUDPPorts = [
-        # DNS
-        53
-        # QUIC
-        443
-      ];
-    };
-  };
-
-  security.acme = {
-    acceptTerms = true;
-    defaults.email = "kurnevsky@gmail.com";
-    certs = {
-      "kurnevsky.net".group = "acme";
-      "kropki.org".group = "acme";
-    };
+    firewall.enable = true;
   };
 
   services = {
@@ -70,33 +48,7 @@
       enable = true;
       package = pkgs.postgresql_17;
     };
-    nginx = {
-      enable = true;
-      package = pkgs.nginxQuic;
-      recommendedTlsSettings = true;
-      recommendedOptimisation = true;
-      recommendedGzipSettings = true;
-      recommendedProxySettings = true;
-      proxyTimeout = "300s";
-      virtualHosts."kropki.org" = {
-        default = true;
-        http3 = true;
-        quic = true;
-        enableACME = true;
-        forceSSL = true;
-        kTLS = true;
-        locations."/static/" = {
-          alias = "/srv/www/";
-          tryFiles = "$uri =404";
-          extraConfig = "expires 24h;";
-        };
-      };
-    };
   };
-
-  users.groups.acme.members = [
-    "nginx"
-  ];
 
   age.secrets = {
     kurnevsky.file = ../../secrets/kurnevsky-digitalocean.age;

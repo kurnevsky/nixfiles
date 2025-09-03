@@ -8,9 +8,15 @@
     nat.internalInterfaces = [
       "dns0"
     ];
-    firewall.trustedInterfaces = [
-      "dns0"
-    ];
+    firewall = {
+      allowedUDPPorts = [
+        # DNS
+        53
+      ];
+      trustedInterfaces = [
+        "dns0"
+      ];
+    };
   };
 
   services.iodine.server = {
