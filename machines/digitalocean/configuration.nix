@@ -19,6 +19,7 @@
     ./tox.nix
     ./matrix.nix
     ./yggdrasil.nix
+    ./syncthing.nix
     ./kropki.nix
   ];
 
@@ -202,7 +203,6 @@
         group = "hans";
         isSystemUser = true;
       };
-      kurnevsky.linger = true;
     };
     groups = {
       acme.members = [
@@ -242,22 +242,6 @@
 
   home-manager.users = {
     root.home.stateVersion = "21.11";
-    kurnevsky = {
-      home.stateVersion = "21.11";
-      services.syncthing.settings = {
-        folders."/home/kurnevsky/Sync".versioning = {
-          type = "simple";
-          cleanupIntervalS = 86400;
-          params = {
-            params.cleanoutDays = "32";
-            keep = "64";
-          };
-        };
-        options = {
-          localAnnounceEnabled = pkgs.lib.mkForce false;
-          localAnnouncePort = pkgs.lib.mkForce null;
-        };
-      };
-    };
+    kurnevsky.home.stateVersion = "21.11";
   };
 }
