@@ -85,12 +85,7 @@
         enableACME = true;
         forceSSL = true;
         kTLS = true;
-        root = "/kropki";
         locations = {
-          "/ws" = {
-            proxyPass = "http://localhost:8080";
-            proxyWebsockets = true;
-          };
           "/wssh" = {
             proxyPass = "http://localhost:58546";
             proxyWebsockets = true;

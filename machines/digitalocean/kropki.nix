@@ -5,16 +5,25 @@
 }:
 
 {
-  services.postgresql = {
-    ensureDatabases = [
-      "kropki"
-    ];
-    ensureUsers = [
-      {
-        name = "kropki";
-        ensureDBOwnership = true;
-      }
-    ];
+  services = {
+    postgresql = {
+      ensureDatabases = [
+        "kropki"
+      ];
+      ensureUsers = [
+        {
+          name = "kropki";
+          ensureDBOwnership = true;
+        }
+      ];
+    };
+    nginx.virtualHosts."kropki.org" = {
+      root = "/kropki";
+      locations."/ws" = {
+        proxyPass = "http://localhost:8080";
+        proxyWebsockets = true;
+      };
+    };
   };
 
   systemd.services.kropki = {
