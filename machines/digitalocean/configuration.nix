@@ -16,6 +16,7 @@
     ./grafana.nix
     ./scrutiny.nix
     ./wireguard.nix
+    ./tox.nix
   ];
 
   boot.tmp.cleanOnBoot = true;
@@ -47,8 +48,6 @@
         8448
         # Shadowsocks
         29135
-        # Tox
-        33445
         # Yggdrasil
         42853
       ];
@@ -59,8 +58,6 @@
         443
         # Shadowsocks
         29135
-        # Tox
-        33445
         # Yggdrasil
         42853
       ];
@@ -270,17 +267,9 @@
       };
       persistentKeys = true;
     };
-    tox-node = {
-      enable = true;
-      keysFile = config.age.secrets.tox.path or "/secrets/tox";
-      tcpAddresses = [ ];
-      lanDiscovery = false;
-      motd = "Hi from tox-rs!";
-    };
   };
 
   systemd.services = {
-    tox-node.serviceConfig.SupplementaryGroups = "secrets-tox";
     kropki = {
       description = "Kropki server";
       after = [ "network.target" ];
@@ -317,7 +306,6 @@
         "nginx"
       ];
       hans = { };
-      secrets-tox = { };
       kropki = { };
     };
   };
@@ -340,11 +328,6 @@
       file = ../../secrets/shadowsocks.age;
       mode = "440";
       group = "secrets-shadowsocks";
-    };
-    tox = {
-      file = ../../secrets/tox.age;
-      mode = "440";
-      group = "secrets-tox";
     };
     continuwuity = {
       file = ../../secrets/continuwuity.age;
