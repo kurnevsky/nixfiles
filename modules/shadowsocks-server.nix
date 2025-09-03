@@ -11,6 +11,17 @@ let
   shadowsocksConfigFile = pkgs.writeText "shadowsocks.json" (builtins.toJSON shadowsocksConfig);
 in
 {
+  networking.firewall = {
+    allowedTCPPorts = [
+      # Shadowsocks
+      29135
+    ];
+    allowedUDPPorts = [
+      # Shadowsocks
+      29135
+    ];
+  };
+
   systemd.services.shadowsocks-server = {
     description = "Shadowsocks server service";
     after = [ "network-online.target" ];
@@ -31,4 +42,10 @@ in
   };
 
   users.groups.secrets-shadowsocks = { };
+
+  age.secrets.shadowsocks = {
+    file = ../secrets/shadowsocks.age;
+    mode = "440";
+    group = "secrets-shadowsocks";
+  };
 }

@@ -45,8 +45,6 @@
         80
         # HTTPS
         443
-        # Shadowsocks
-        29135
         # Yggdrasil
         42853
       ];
@@ -55,8 +53,6 @@
         53
         # QUIC
         443
-        # Shadowsocks
-        29135
         # Yggdrasil
         42853
       ];
@@ -274,11 +270,6 @@
       file = ../../secrets/iodine.age;
       owner = "iodined";
       group = "iodined";
-    };
-    shadowsocks = {
-      file = ../../secrets/shadowsocks.age;
-      mode = "440";
-      group = "secrets-shadowsocks";
     };
     syncthing-key = {
       file = ../../secrets/syncthing-key-digitalocean.age;
