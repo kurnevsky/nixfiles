@@ -17,6 +17,7 @@
     ./scrutiny.nix
     ./wireguard.nix
     ./tox.nix
+    ./matrix.nix
   ];
 
   boot.tmp.cleanOnBoot = true;
@@ -44,8 +45,6 @@
         80
         # HTTPS
         443
-        # Matrix federation
-        8448
         # Shadowsocks
         29135
         # Yggdrasil
@@ -94,29 +93,6 @@
         {
           name = "kropki";
           ensureDBOwnership = true;
-        }
-      ];
-    };
-    matrix-continuwuity = {
-      enable = true;
-      settings.global = {
-        server_name = "kropki.org";
-        allow_registration = true;
-        registration_token_file = config.age.secrets.continuwuity.path or "/secrets/continuwuity";
-      };
-    };
-    heisenbridge = {
-      enable = false;
-      homeserver = "http://localhost:6167";
-      owner = "@kurnevsky:kropki.org";
-      namespaces.users = [
-        {
-          regex = "@irc_.*";
-          exclusive = true;
-        }
-        {
-          regex = "@heisenbridge:.*";
-          exclusive = true;
         }
       ];
     };
@@ -205,36 +181,11 @@
               proxyPass = "http://localhost:57411";
               proxyWebsockets = true;
             };
-            "/_matrix" = {
-              proxyPass = "http://localhost:6167";
-              proxyWebsockets = true;
-            };
             "/static/" = {
               alias = "/srv/www/";
               tryFiles = "$uri =404";
               extraConfig = "expires 24h;";
             };
-          };
-        };
-        matrix-federation = {
-          serverName = "kropki.org";
-          http3 = true;
-          quic = true;
-          onlySSL = true;
-          sslCertificate = "${config.security.acme.certs."kropki.org".directory}/fullchain.pem";
-          sslCertificateKey = "${config.security.acme.certs."kropki.org".directory}/key.pem";
-          kTLS = true;
-          listen = lib.cartesianProduct {
-            addr = [
-              "0.0.0.0"
-              "[::0]"
-            ];
-            port = [ 8448 ];
-            ssl = [ true ];
-          };
-          locations."/_matrix" = {
-            proxyPass = "http://localhost:6167";
-            proxyWebsockets = true;
           };
         };
       };
@@ -328,11 +279,6 @@
       file = ../../secrets/shadowsocks.age;
       mode = "440";
       group = "secrets-shadowsocks";
-    };
-    continuwuity = {
-      file = ../../secrets/continuwuity.age;
-      owner = "continuwuity";
-      group = "continuwuity";
     };
     syncthing-key = {
       file = ../../secrets/syncthing-key-digitalocean.age;
