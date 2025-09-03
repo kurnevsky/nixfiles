@@ -21,6 +21,7 @@
     ./yggdrasil.nix
     ./syncthing.nix
     ./hans.nix
+    ./iodine.nix
     ./kropki.nix
   ];
 
@@ -35,12 +36,7 @@
 
   networking = {
     hostName = "digitalocean";
-    nat = {
-      enable = true;
-      internalInterfaces = [
-        "dns0"
-      ];
-    };
+    nat.enable = true;
     firewall = {
       enable = true;
       allowedTCPPorts = [
@@ -54,9 +50,6 @@
         53
         # QUIC
         443
-      ];
-      trustedInterfaces = [
-        "dns0"
       ];
     };
   };
@@ -179,13 +172,6 @@
         };
       };
     };
-    iodine.server = {
-      enable = true;
-      ip = "172.18.42.1/24";
-      domain = "i.kropki.org";
-      extraConfig = "-n 82.196.15.215";
-      passwordFile = config.age.secrets.iodine.path or "/secrets/iodine";
-    };
   };
 
   systemd.services.tt-rss.wantedBy = pkgs.lib.mkForce [ ];
@@ -198,11 +184,6 @@
     kurnevsky.file = ../../secrets/kurnevsky-digitalocean.age;
     github.file = ../../secrets/github.age;
     store.file = ../../secrets/store-digitalocean.age;
-    iodine = {
-      file = ../../secrets/iodine.age;
-      owner = "iodined";
-      group = "iodined";
-    };
     syncthing-key = {
       file = ../../secrets/syncthing-key-digitalocean.age;
       owner = "kurnevsky";
