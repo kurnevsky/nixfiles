@@ -1,6 +1,11 @@
 { pkgs, ... }:
 
 {
+  services.nginx.virtualHosts."kropki.org".locations."/wssh" = {
+    proxyPass = "http://localhost:58546";
+    proxyWebsockets = true;
+  };
+
   systemd.services.websocat-ssh-server = {
     description = "Websocat to ssh service";
     after = [ "network-online.target" ];

@@ -85,20 +85,10 @@
         enableACME = true;
         forceSSL = true;
         kTLS = true;
-        locations = {
-          "/wssh" = {
-            proxyPass = "http://localhost:58546";
-            proxyWebsockets = true;
-          };
-          "/wswg" = {
-            proxyPass = "http://localhost:57411";
-            proxyWebsockets = true;
-          };
-          "/static/" = {
-            alias = "/srv/www/";
-            tryFiles = "$uri =404";
-            extraConfig = "expires 24h;";
-          };
+        locations."/static/" = {
+          alias = "/srv/www/";
+          tryFiles = "$uri =404";
+          extraConfig = "expires 24h;";
         };
       };
     };

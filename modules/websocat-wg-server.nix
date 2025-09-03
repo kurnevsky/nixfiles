@@ -1,6 +1,11 @@
 { pkgs, ... }:
 
 {
+  services.nginx.virtualHosts."kropki.org".locations."/wswg" = {
+    proxyPass = "http://localhost:57411";
+    proxyWebsockets = true;
+  };
+
   systemd.services.websocat-wg-server = {
     description = "Websocat to wireguard service";
     after = [ "network-online.target" ];
