@@ -18,6 +18,7 @@
     ./wireguard.nix
     ./tox.nix
     ./matrix.nix
+    ./yggdrasil.nix
   ];
 
   boot.tmp.cleanOnBoot = true;
@@ -45,16 +46,12 @@
         80
         # HTTPS
         443
-        # Yggdrasil
-        42853
       ];
       allowedUDPPorts = [
         # DNS
         53
         # QUIC
         443
-        # Yggdrasil
-        42853
       ];
       trustedInterfaces = [
         "icmp"
@@ -198,21 +195,6 @@
       domain = "i.kropki.org";
       extraConfig = "-n 82.196.15.215";
       passwordFile = config.age.secrets.iodine.path or "/secrets/iodine";
-    };
-    yggdrasil = {
-      enable = true;
-      settings = {
-        Peers = [
-          "tls://45.147.198.155:6010"
-          "tls://ygg.mkg20001.io:443"
-          "quic://vpn.itrus.su:7993"
-        ];
-        Listen = [
-          "tls://0.0.0.0:42853"
-          "quic://0.0.0.0:42853"
-        ];
-      };
-      persistentKeys = true;
     };
   };
 
