@@ -42,7 +42,6 @@
       ExecStart = "${pkgs.callPackage ./kropki-server.nix { }}/bin/kropki";
     };
   };
-  tt-rss.wantedBy = pkgs.lib.mkForce [ ];
 
   users = {
     users.kropki = {

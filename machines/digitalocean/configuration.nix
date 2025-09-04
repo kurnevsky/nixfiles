@@ -15,13 +15,7 @@
 
   networking.hostName = "digitalocean";
 
-  services = {
-    do-agent.enable = true;
-    postgresql = {
-      enable = true;
-      package = pkgs.postgresql_17;
-    };
-  };
+  services.do-agent.enable = true;
 
   age.secrets = {
     kurnevsky.file = ../../secrets/kurnevsky-digitalocean.age;

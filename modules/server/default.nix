@@ -5,6 +5,9 @@
 
 {
   imports = [
+    ./shadowsocks-server.nix
+    ./websocat-ssh-server.nix
+    ./websocat-wg-server.nix
     ./pocket-id.nix
     ./stalwart.nix
     ./miniflux.nix
