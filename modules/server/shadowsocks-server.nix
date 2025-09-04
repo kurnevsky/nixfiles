@@ -44,7 +44,7 @@ in
   users.groups.secrets-shadowsocks = { };
 
   age.secrets.shadowsocks = {
-    file = ../secrets/shadowsocks.age;
+    file = ../../secrets/shadowsocks.age;
     mode = "440";
     group = "secrets-shadowsocks";
   };

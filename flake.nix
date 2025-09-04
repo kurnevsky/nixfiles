@@ -326,9 +326,7 @@
         digitalocean = inputs.nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = commonModules ++ [
-            ./modules/shadowsocks-server.nix
-            ./modules/websocat-ssh-server.nix
-            ./modules/websocat-wg-server.nix
+            ./modules/server/default.nix
             ./modules/syncthing.nix
             ./modules/zswap.nix
             ./machines/digitalocean/configuration.nix
