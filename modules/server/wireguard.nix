@@ -27,17 +27,17 @@
       peers = [
         {
           publicKey = "aRD0dqodCPyqTklk0KinKiTXYTnIBXZ0WFKy/q0dhQo=";
-          presharedKeyFile = config.age.secrets.wg-preshared-dell.path or "/secrets/wg/home.psk";
+          presharedKeyFile = config.age.secrets.wg-preshared-dell.path or "/secrets/wg/dell.psk";
           allowedIPs = [ "192.168.14.2/32" ];
         }
         {
           publicKey = "v69zSw9Ny+ym3DReKRh0gt+Ecc2rcTyKsieqnVZ/PwE=";
-          presharedKeyFile = config.age.secrets.wg-preshared-evo.path or "/secrets/wg/work.psk";
+          presharedKeyFile = config.age.secrets.wg-preshared-evo.path or "/secrets/wg/evo.psk";
           allowedIPs = [ "192.168.14.3/32" ];
         }
         {
           publicKey = "7Do1rDKMm8dZLgChf8pkS57Cg2A/jEj0JhNEfu0YTHM=";
-          presharedKeyFile = config.age.secrets.wg-preshared-acer.path or "/secrets/wg/parents.psk";
+          presharedKeyFile = config.age.secrets.wg-preshared-acer.path or "/secrets/wg/acer.psk";
           allowedIPs = [ "192.168.14.4/32" ];
         }
         {
@@ -54,6 +54,34 @@
           allowedIPs = [ "192.168.14.8/32" ];
         }
       ];
+    };
+  };
+
+  age.secrets = {
+    wg-private = {
+      file = ../../secrets/wg-private-vps.age;
+      owner = "systemd-network";
+      group = "systemd-network";
+    };
+    wg-preshared-dell = {
+      file = ../../secrets/wg-preshared-dell.age;
+      owner = "systemd-network";
+      group = "systemd-network";
+    };
+    wg-preshared-evo = {
+      file = ../../secrets/wg-preshared-evo.age;
+      owner = "systemd-network";
+      group = "systemd-network";
+    };
+    wg-preshared-acer = {
+      file = ../../secrets/wg-preshared-acer.age;
+      owner = "systemd-network";
+      group = "systemd-network";
+    };
+    wg-preshared-pc = {
+      file = ../../secrets/wg-preshared-pc.age;
+      owner = "systemd-network";
+      group = "systemd-network";
     };
   };
 }

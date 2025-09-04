@@ -63,6 +63,12 @@ in
   "iodine.age".publicKeys = all;
   "shadowsocks.age".publicKeys = all;
 
+  "wg-private-vps.age".publicKeys = [ vps ];
+
+  "wg-preshared-dell.age".publicKeys = [
+    vps
+  ];
+
   "wg-private-evo.age".publicKeys = [ evo ];
   "wg-preshared-evo.age".publicKeys = [
     evo
