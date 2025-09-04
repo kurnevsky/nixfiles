@@ -8,13 +8,13 @@
 let
   keys = [
     # PC
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOXwha6y5rgUyl0yVm9YNZNqxZPZ4YG9JgoAVw5sse2P kurnevsky@gmail.com"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOXwha6y5rgUyl0yVm9YNZNqxZPZ4YG9JgoAVw5sse2P"
     # Dell
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHqAQVhK6ozN935PQhAGv2UTNcuatFtJ6neguBA7FOvQ kurnevsky@gmail.com"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHqAQVhK6ozN935PQhAGv2UTNcuatFtJ6neguBA7FOvQ"
     # Evo
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGsrYtfECDepESxUHHWdQI2BrqVRanY790pyvgYYI3Rm ykurneuski@evolution.com"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGsrYtfECDepESxUHHWdQI2BrqVRanY790pyvgYYI3Rm"
     # Android
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJRMyUWZM8dmi9iVFRgpZRrZiKaGfiHvt6iOPMFWb1LW kurnevsky@gmail.com"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJRMyUWZM8dmi9iVFRgpZRrZiKaGfiHvt6iOPMFWb1LW"
   ];
 in
 {
