@@ -1,13 +1,13 @@
 {
-  boot = {
-    loader = {
-      efi.canTouchEfiVariables = true;
-      systemd-boot.enable = true;
-    };
-    tmp.cleanOnBoot = true;
+  boot.loader = {
+    efi.canTouchEfiVariables = true;
+    systemd-boot.enable = true;
   };
 
-  networking.useDHCP = false;
+  networking = {
+    hostName = "vps";
+    useDHCP = false;
+  };
 
   systemd.network = {
     enable = true;
@@ -20,6 +20,21 @@
         Gateway = [ "fe80::1" ];
       };
       linkConfig.RequiredForOnline = "routable";
+    };
+  };
+
+  age.secrets = {
+    kurnevsky.file = ../../secrets/kurnevsky-vps.age;
+    store.file = ../../secrets/store-vps.age;
+    syncthing-key = {
+      file = ../../secrets/syncthing-key-vps.age;
+      owner = "kurnevsky";
+      group = "users";
+    };
+    syncthing-cert = {
+      file = ../../secrets/syncthing-cert-vps.age;
+      owner = "kurnevsky";
+      group = "users";
     };
   };
 

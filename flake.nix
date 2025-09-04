@@ -323,20 +323,11 @@
             ./machines/acer/configuration.nix
           ];
         };
-        digitalocean = inputs.nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          modules = commonModules ++ [
-            ./modules/server/default.nix
-            ./modules/syncthing.nix
-            ./modules/zswap.nix
-            ./machines/digitalocean/configuration.nix
-            ./machines/digitalocean/hardware-configuration.nix
-            ./machines/digitalocean/networking.nix
-          ];
-        };
         vps = inputs.nixpkgs.lib.nixosSystem {
           system = "aarch64-linux";
           modules = commonModules ++ [
+            ./modules/server/default.nix
+            ./modules/syncthing.nix
             ./modules/zswap.nix
             ./machines/vps/configuration.nix
             ./machines/vps/hardware-configuration.nix

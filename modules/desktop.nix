@@ -510,12 +510,12 @@
       openMulticastPort = true;
       persistentKeys = true;
     };
-    hans.clients.digitalocean = {
+    hans.clients.vps = {
       server = "kropki.org";
       passwordFile = config.age.secrets.hans.path or "/secrets/hans";
       extraConfig = "-d icmp -m 1200";
     };
-    iodine.clients.digitalocean = {
+    iodine.clients.vps = {
       server = "i.kropki.org";
       passwordFile = config.age.secrets.iodine.path or "/secrets/iodine";
     };
@@ -655,8 +655,8 @@
         };
     };
     services = {
-      iodine-digitalocean.wantedBy = pkgs.lib.mkForce [ ];
-      hans-digitalocean.wantedBy = pkgs.lib.mkForce [ ];
+      iodine-vps.wantedBy = pkgs.lib.mkForce [ ];
+      hans-vps.wantedBy = pkgs.lib.mkForce [ ];
       i2pd.wantedBy = pkgs.lib.mkForce [ ];
       monero = {
         wantedBy = pkgs.lib.mkForce [ ];

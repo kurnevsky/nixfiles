@@ -114,12 +114,12 @@
       openMulticastPort = true;
       persistentKeys = true;
     };
-    hans.clients.digitalocean = {
+    hans.clients.vps = {
       server = "kropki.org";
       passwordFile = config.age.secrets.hans.path or "/secrets/hans";
       extraConfig = "-d icmp -m 1200";
     };
-    iodine.clients.digitalocean = {
+    iodine.clients.vps = {
       server = "i.kropki.org";
       passwordFile = config.age.secrets.iodine.path or "/secrets/iodine";
     };
@@ -156,11 +156,11 @@
         users = [ "parents" ];
         commands = [
           {
-            command = "/run/current-system/sw/bin/systemctl start iodine-digitalocean.service";
+            command = "/run/current-system/sw/bin/systemctl start iodine-vps.service";
             options = [ "NOPASSWD" ];
           }
           {
-            command = "/run/current-system/sw/bin/systemctl start hans-digitalocean.service";
+            command = "/run/current-system/sw/bin/systemctl start hans-vps.service";
             options = [ "NOPASSWD" ];
           }
         ];
@@ -193,8 +193,8 @@
 
   systemd = {
     services = {
-      iodine-digitalocean.wantedBy = pkgs.lib.mkForce [ ];
-      hans-digitalocean.wantedBy = pkgs.lib.mkForce [ ];
+      iodine-vps.wantedBy = pkgs.lib.mkForce [ ];
+      hans-vps.wantedBy = pkgs.lib.mkForce [ ];
       eurodollar = {
         description = "Setkeycodes for € and $ keys";
         wantedBy = [ "multi-user.target" ];

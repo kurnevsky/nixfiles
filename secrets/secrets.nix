@@ -1,12 +1,13 @@
 # To edit:
 # agenix --identity /etc/ssh/ssh_host_ed25519_key -e file.age
+# To re-encrypt single secret use `EDITOR=:`
 
 let
   evo = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP6yeYMiSNfRevRu+wO5JKyL5gt3CeHc6tAjdDgRSHW5";
   pc = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBfLzi6a22sanF3oeEheHjEjvvYRmJBUYFGXnj6NgSAJ";
   pinephone = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFQ8G294HKMYY/cdc5dxMdJxHqTyA8jlZ7zTDrSK2sg2";
   pinenote = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJrU/bW9L1mDvY7jfyoyP8YloGEaSYW4tpE6K8ggI8UV";
-  digitalocean = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMZRXGjEQLetY1TuKTIY/F08MLbVZs5QWjSMIe8PRIfU";
+  vps = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN1EBLGp80pLSSm1s69+BT91TrmEN1LThcATLz4xR+6d";
   acer = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKi+GXCNLPnjSXaZaNAPEUF6Ve3ydpnXjyo3OZMzEHG0";
   desktop = [
     evo
@@ -16,7 +17,7 @@ let
     acer
     pinephone
     pinenote
-    digitalocean
+    vps
   ];
 in
 {
@@ -39,21 +40,21 @@ in
   "parents-acer.age".publicKeys = [ acer ];
   "store-acer.age".publicKeys = [ acer ];
 
-  "kurnevsky-digitalocean.age".publicKeys = [ digitalocean ];
-  "store-digitalocean.age".publicKeys = [ digitalocean ];
-  "kropki.age".publicKeys = [ digitalocean ];
-  "stalwart.age".publicKeys = [ digitalocean ];
-  "syncthing-key-digitalocean.age".publicKeys = [ digitalocean ];
-  "syncthing-cert-digitalocean.age".publicKeys = [ digitalocean ];
+  "kurnevsky-vps.age".publicKeys = [ vps ];
+  "store-vps.age".publicKeys = [ vps ];
+  "kropki.age".publicKeys = [ vps ];
+  "stalwart.age".publicKeys = [ vps ];
+  "syncthing-key-vps.age".publicKeys = [ vps ];
+  "syncthing-cert-vps.age".publicKeys = [ vps ];
 
-  "miniflux.age".publicKeys = [ digitalocean ];
-  "wakapi.age".publicKeys = [ digitalocean ];
-  "prometheus-wakapi.age".publicKeys = [ digitalocean ];
-  "tox.age".publicKeys = [ digitalocean ];
-  "continuwuity.age".publicKeys = [ digitalocean ];
-  "oauth2-proxy.age".publicKeys = [ digitalocean ];
-  "grafana.age".publicKeys = [ digitalocean ];
-  "scrutiny.age".publicKeys = [ digitalocean ];
+  "miniflux.age".publicKeys = [ vps ];
+  "wakapi.age".publicKeys = [ vps ];
+  "prometheus-wakapi.age".publicKeys = [ vps ];
+  "tox.age".publicKeys = [ vps ];
+  "continuwuity.age".publicKeys = [ vps ];
+  "oauth2-proxy.age".publicKeys = [ vps ];
+  "grafana.age".publicKeys = [ vps ];
+  "scrutiny.age".publicKeys = [ vps ];
 
   "motion.age".publicKeys = desktop;
   "scrutiny-collector.age".publicKeys = desktop;
@@ -65,19 +66,19 @@ in
   "wg-private-evo.age".publicKeys = [ evo ];
   "wg-preshared-evo.age".publicKeys = [
     evo
-    digitalocean
+    vps
   ];
 
   "wg-private-pc.age".publicKeys = [ pc ];
   "wg-preshared-pc.age".publicKeys = [
     pc
-    digitalocean
+    vps
   ];
 
   "wg-private-acer.age".publicKeys = [ acer ];
   "wg-preshared-acer.age".publicKeys = [
     acer
-    digitalocean
+    vps
   ];
 
   "github.age".publicKeys = all;
