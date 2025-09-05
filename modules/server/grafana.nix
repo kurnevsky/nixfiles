@@ -102,6 +102,11 @@
       name = "stalwart.json";
       sha256 = "sha256:1kplgy2as1jf76vvcr31ydkgllr9bkfs98sqr1an6qf853dpmrh2";
     };
+    "grafana-dashboards/prosody.json".source = builtins.fetchurl {
+      url = "https://raw.githubusercontent.com/deuill/coreos-home-server/bf2bc3377e60367e8512d9d132ef198ba1a41827/service/prosody/service/grafana-dashboard.json";
+      name = "prosody.json";
+      sha256 = "sha256:17iwr37i99aw78bi987zqpcb3pl5995x4apjw13603scyzvkhjbk";
+    };
   };
 
   age.secrets.grafana = {
