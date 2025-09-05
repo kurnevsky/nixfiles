@@ -57,12 +57,6 @@
           database = "prosody";
           username = "prosody";
         }
-
-        oauth_external_discovery_url = "https://id.kropki.org/.well-known/openid-configuration";
-        oauth_external_validation_endpoint = "https://id.kropki.org/api/oidc/userinfo";
-        oauth_external_client_id = "test";
-        oauth_external_client_secret = "$TEST";
-        oauth_external_scope = "openid profile email groups";
       '';
     };
   };
