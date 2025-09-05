@@ -181,35 +181,6 @@
         { _module.args.inputs = inputs; }
         # Keep flake inputs from being garbage collected
         { system.extraDependencies = collectFlakeInputs inputs.self; }
-        (
-          { pkgs, ... }:
-          let
-            patchesDrv = pkgs.applyPatches {
-              src = pkgs.path;
-              patches = [
-                (pkgs.fetchpatch {
-                  url = "https://patch-diff.githubusercontent.com/raw/NixOS/nixpkgs/pull/437045.patch";
-                  hash = "sha256-lHEs1FYEQBFAOj1hXOisNVS5XrLOT4EE09I3eVvbK0o=";
-                })
-                (pkgs.fetchpatch {
-                  url = "https://patch-diff.githubusercontent.com/raw/NixOS/nixpkgs/pull/425219.patch";
-                  hash = "sha256-fa29ssw9zPt2T4nKaQTvQQfzltrGrQdJb508yZY1Naw=";
-                })
-              ];
-            };
-            patchedPkgs = import patchesDrv { inherit (pkgs.stdenv.targetPlatform) system; };
-          in
-          {
-            nixpkgs.overlays = [
-              (_self: super: {
-                inherit (patchedPkgs) vdirsyncer anki;
-                python313Packages = super.python313Packages // {
-                  vdirsyncer = patchedPkgs.python313Packages.vdirsyncer;
-                };
-              })
-            ];
-          }
-        )
       ];
       desktopModules = commonModules ++ [
         {
