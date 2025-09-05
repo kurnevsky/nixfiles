@@ -71,6 +71,14 @@
           }
         ];
       }
+      {
+        job_name = "prosody";
+        static_configs = [
+          {
+            targets = [ "localhost:5280" ];
+          }
+        ];
+      }
     ];
     exporters = {
       node = {

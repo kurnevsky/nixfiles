@@ -50,6 +50,7 @@
         "127.0.0.1"
         "::1"
       ];
+      extraModules = [ "http_openmetrics" ];
       extraConfig = ''
         storage = "sql";
         sql = {
@@ -57,6 +58,8 @@
           database = "prosody";
           username = "prosody";
         }
+        statistics = "internal";
+        statistics_interval = "manual";
       '';
     };
   };
