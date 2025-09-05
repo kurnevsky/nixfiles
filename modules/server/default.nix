@@ -19,6 +19,7 @@
     ./wireguard.nix
     ./tox.nix
     ./matrix.nix
+    ./prosody.nix
     ./yggdrasil.nix
     ./syncthing.nix
     ./hans.nix
