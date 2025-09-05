@@ -271,7 +271,7 @@
         newsboat
         rssguard
         # Messengers
-        gajim
+        kaidan
         telegram-desktop
         ## Matrix
         element-desktop
