@@ -54,6 +54,7 @@
         "127.0.0.1"
         "::1"
       ];
+      modules.server_contact_info = true;
       extraModules = [ "http_openmetrics" ];
       extraConfig = ''
         storage = "sql";
@@ -64,6 +65,11 @@
         }
         c2s_direct_tls_ports = { 5223 };
         s2s_direct_tls_ports = { 5270 };
+        contact_info = {
+          abuse = { "mailto:kurnevsky@kropki.org", "xmpp:kurnevsky@kropki.org" };
+          admin = { "mailto:kurnevsky@kropki.org", "xmpp:kurnevsky@kropki.org" };
+          security = { "mailto:kurnevsky@kropki.org", "xmpp:kurnevsky@kropki.org" };
+        }
         statistics = "internal";
         statistics_interval = "manual";
       '';
