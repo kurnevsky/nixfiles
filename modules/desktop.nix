@@ -13,6 +13,7 @@
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
     kernelParams = [ "threadirqs" ];
+    kernelModules = [ "ntsync" ];
     kernel.sysctl."kernel.sysrq" = 1;
     tmp.useTmpfs = true;
     supportedFilesystems = [ "ntfs" ];
