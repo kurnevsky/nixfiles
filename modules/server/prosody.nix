@@ -11,8 +11,12 @@
     5000
     # Client connections
     5222
+    # Client connections (direct TLS)
+    5223
     # Server-to-server connections
     5269
+    # Server-to-server connections (direct TLS)
+    5270
     # HTTPS
     5281
   ];
@@ -58,11 +62,18 @@
           database = "prosody";
           username = "prosody";
         }
+        c2s_direct_tls_ports = { 5223 };
+        s2s_direct_tls_ports = { 5270 };
         statistics = "internal";
         statistics_interval = "manual";
       '';
     };
   };
+
+  security.acme.certs."kropki.org".extraDomainNames = [
+    "conference.kropki.org"
+    "upload.kropki.org"
+  ];
 
   users.groups.acme.members = [
     "prosody"
