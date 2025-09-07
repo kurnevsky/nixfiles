@@ -9,14 +9,14 @@
   modules-left = [
     "custom/smenu"
     "custom/okb"
-    #   "custom/mvws_prev",
-    #   "custom/gows_prev",
-    #   "custom/gows_next",
-    #   "custom/mvws_next",
-    #   "custom/windown",
-    #   "custom/winright",
-    #   "custom/splitv",
-    #   "custom/splith",
+    "custom/mvws_prev"
+    "custom/gows_prev"
+    "custom/gows_next"
+    "custom/mvws_next"
+    "custom/windown"
+    "custom/winright"
+    "custom/splitv"
+    "custom/splith"
   ];
 
   modules-center = [
@@ -24,19 +24,19 @@
   ];
 
   modules-right = [
-    #     "custom/ebc_dump_buffers",
-    #     "custom/ebc_cycle_driver_mode",
-    #     "custom/ebc_refresh",
-    #     "custom/blc_down",
+    "custom/ebc_dump_buffers"
+    "custom/ebc_cycle_driver_mode"
+    "custom/ebc_refresh"
+    "custom/blc_down"
     "backlight/slider#cool"
-    #     "custom/blc_up",
-    #     "custom/blw_down",
+    "custom/blc_up"
+    "custom/blw_down"
     "backlight/slider#warm"
-    #     "custom/blw_up",
-    #     "idle_inhibitor",
+    "custom/blw_up"
+    "idle_inhibitor"
     "battery"
     "tray"
-    #     // "clock#time",
+    # "clock#time"
     "custom/kill"
   ];
 
@@ -83,33 +83,33 @@
     tooltip-format = "{:%e %B %Y}";
   };
 
-  # "cpu": {
-  #     "interval": 5,
-  #     "format": "  {usage}%", // Icon: microchip
-  #     "states": {
-  #       "warning": 70,
-  #       "critical": 90
-  #     }
-  # },
+  "cpu" = {
+    interval = 5;
+    format = "  {usage}%";
+    states = {
+      warning = 70;
+      critical = 90;
+    };
+  };
 
-  # "memory": {
-  #     "interval": 5,
-  #     "format": "  {}%", // Icon: memory
-  #     "states": {
-  #         "warning": 70,
-  #         "critical": 90
-  #     }
-  # },
+  "memory" = {
+    interval = 5;
+    format = "  {}%";
+    states = {
+      warning = 70;
+      critical = 90;
+    };
+  };
 
   "sway/mode" = {
     format = "<span style=\"italic\">  {}</span>";
     tooltip = false;
   };
 
-  # "sway/window": {
-  #     "format": "{}",
-  #     "max-length": 120
-  # },
+  "sway/window" = {
+    format = "{}";
+    max-length = 120;
+  };
 
   temperature = {
     critical-threshold = 80;
@@ -134,85 +134,85 @@
     tooltip = false;
   };
 
-  # "custom/winleft": {
-  #   "format": "",
-  #   "interval": "once",
-  #   "on-click": "swaymsg move left",
-  #   "min-length": 5,
-  #   "tooltip": false,
-  # },
+  "custom/winleft" = {
+    format = "";
+    interval = "once";
+    on-click = "swaymsg move left";
+    min-length = 5;
+    tooltip = false;
+  };
 
-  # "custom/winright": {
-  #   "format": "",
-  #   "interval": "once",
-  #   "on-click": "swaymsg move right",
-  #   "min-length": 5,
-  #   "tooltip": false,
-  # },
+  "custom/winright" = {
+    format = "";
+    interval = "once";
+    on-click = "swaymsg move right";
+    min-length = 5;
+    tooltip = false;
+  };
 
-  # "custom/winup": {
-  #   "format": "",
-  #   "interval": "once",
-  #   "on-click": "swaymsg move up",
-  #   "min-length": 5,
-  #   "tooltip": false,
-  # },
+  "custom/winup" = {
+    format = ";";
+    interval = "once";
+    on-click = "swaymsg move up";
+    min-length = 5;
+    tooltip = false;
+  };
 
-  # "custom/windown": {
-  #   "format": "",
-  #   "interval": "once",
-  #   "on-click": "swaymsg move down",
-  #   "min-length": 5,
-  #   "tooltip": false,
-  # },
+  "custom/windown" = {
+    format = "";
+    interval = "once";
+    on-click = "swaymsg move down";
+    min-length = 5;
+    tooltip = false;
+  };
 
-  # "custom/splitv": {
-  #   "format": "/|",
-  #   "interval": "once",
-  #   "on-click": "swaymsg splitv",
-  #   "min-length": 5,
-  #   "tooltip": false,
-  # },
+  "custom/splitv" = {
+    format = "/;";
+    interval = "once";
+    on-click = "swaymsg splitv";
+    min-length = 5;
+    tooltip = false;
+  };
 
-  # "custom/splith": {
-  #   "format": "/-",
-  #   "interval": "once",
-  #   "on-click": "swaymsg splith",
-  #   "min-length": 5,
-  #   "tooltip": false,
-  # },
+  "custom/splith" = {
+    format = "/;";
+    interval = "once";
+    on-click = "swaymsg splith";
+    min-length = 5;
+    tooltip = false;
+  };
 
-  # "custom/mvws_prev": {
-  #   "format": "",
-  #   "interval": "once",
-  #   "on-click": "sway_workspace move prev",
-  #   "min-length": 5,
-  #   "tooltip": false,
-  # },
+  "custom/mvws_prev" = {
+    format = "";
+    interval = "once";
+    on-click = "sway_workspace move prev";
+    min-length = 5;
+    tooltip = false;
+  };
 
-  # "custom/gows_prev": {
-  #   "format": "<",
-  #   "interval": "once",
-  #   "on-click": "sway_workspace goto prev",
-  #   "min-length": 5,
-  #   "tooltip": false,
-  # },
+  "custom/gows_prev" = {
+    format = "<";
+    interval = "once";
+    on-click = "sway_workspace goto prev";
+    min-length = 5;
+    tooltip = false;
+  };
 
-  # "custom/gows_next": {
-  #   "format": ">",
-  #   "interval": "once",
-  #   "on-click": "sway_workspace goto next",
-  #   "min-length": 5,
-  #   "tooltip": false,
-  # },
+  "custom/gows_next" = {
+    format = ">";
+    interval = "once";
+    on-click = "sway_workspace goto next";
+    min-length = 5;
+    tooltip = false;
+  };
 
-  # "custom/mvws_next": {
-  #   "format": "",
-  #   "interval": "once",
-  #   "on-click": "sway_workspace move next",
-  #   "min-length": 5,
-  #   "tooltip": false,
-  # },
+  "custom/mvws_next" = {
+    format = "";
+    interval = "once";
+    on-click = "sway_workspace move next";
+    min-length = 5;
+    tooltip = false;
+  };
 
   "custom/okb" = {
     format = "";
@@ -238,94 +238,94 @@
     tooltip = false;
   };
 
-  # "custom/ws2": {
-  #   "format": "2",
-  #   "interval": "once",
-  #   "on-click": "swaymsg workspace number 2",
-  #   "min-length": 5,
-  #   "tooltip": false,
-  # },
+  "custom/ws2" = {
+    format = "2";
+    interval = "once";
+    on-click = "swaymsg workspace number 2";
+    min-length = 5;
+    tooltip = false;
+  };
 
-  # "custom/ws3": {
-  #   "format": "3",
-  #   "interval": "once",
-  #   "on-click": "swaymsg workspace number 3",
-  #   "min-length": 5,
-  #   "tooltip": false,
-  # },
+  "custom/ws3" = {
+    format = "3";
+    interval = "once";
+    on-click = "swaymsg workspace number 3";
+    min-length = 5;
+    tooltip = false;
+  };
 
-  # "custom/ws4": {
-  #   "format": "4",
-  #   "interval": "once",
-  #   "on-click": "swaymsg workspace number 4",
-  #   "min-length": 5,
-  #   "tooltip": false,
-  # },
+  "custom/ws4" = {
+    format = "4";
+    interval = "once";
+    on-click = "swaymsg workspace number 4";
+    min-length = 5;
+    tooltip = false;
+  };
 
-  # "custom/ws5": {
-  #   "format": "5",
-  #   "interval": "once",
-  #   "on-click": "swaymsg workspace number 5",
-  #   "min-length": 5,
-  #   "tooltip": false,
-  # },
+  "custom/ws5" = {
+    format = "5";
+    interval = "once";
+    on-click = "swaymsg workspace number 5";
+    min-length = 5;
+    tooltip = false;
+  };
 
-  # "custom/blc_down": {
-  #   "format": "",
-  #   "interval": "once",
-  #   "on-click": "brightnessctl --device=backlight_cool set 10%-",
-  #   "min-length": 5,
-  #   "tooltip": false,
-  # },
+  "custom/blc_down" = {
+    format = "";
+    interval = "once";
+    on-click = "brightnessctl --device=backlight_cool set 10%-";
+    min-length = 5;
+    tooltip = false;
+  };
 
-  # "custom/blc_up": {
-  #   "format": "",
-  #   "interval": "once",
-  #   "on-click": "brightnessctl --device=backlight_cool set 10%+",
-  #   "min-length": 5,
-  #   "tooltip": false,
-  # },
+  "custom/blc_up" = {
+    format = "";
+    interval = "once";
+    on-click = "brightnessctl --device=backlight_cool set 10%+";
+    min-length = 5;
+    tooltip = false;
+  };
 
-  # "custom/blw_down": {
-  #   "format": "",
-  #   "interval": "once",
-  #   "on-click": "brightnessctl --device=backlight_warm set 10%-",
-  #   "min-length": 5,
-  #   "tooltip": false,
-  # },
+  "custom/blw_down" = {
+    format = "";
+    interval = "once";
+    on-click = "brightnessctl --device=backlight_warm set 10%-";
+    min-length = 5;
+    tooltip = false;
+  };
 
-  # "custom/blw_up": {
-  #   "format": "",
-  #   "interval": "once",
-  #   "on-click": "brightnessctl --device=backlight_warm set 10%+",
-  #   "min-length": 5,
-  #   "tooltip": false,
-  # },
+  "custom/blw_up" = {
+    format = "";
+    interval = "once";
+    on-click = "brightnessctl --device=backlight_warm set 10%+";
+    min-length = 5;
+    tooltip = false;
+  };
 
-  # "idle_inhibitor": {
-  #   "format": "{icon}",
-  #   "format-icons": {
-  #     "activated": "",
-  #     "deactivated": ""
-  #   },
-  #   "min-length": 5,
-  # },
+  "idle_inhibitor" = {
+    format = "{icon}";
+    format-icons = {
+      activated = "";
+      deactivated = "";
+    };
+    min-length = 5;
+  };
 
-  # "custom/ebc_dump_buffers": {
-  #   "format": "🐃",
-  #   "interval": "once",
-  #   "on-click": "rockchip_ebc_dump_buffers.py",
-  #   "min-length": 5,
-  #   "tooltip": false,
-  # },
+  "custom/ebc_dump_buffers" = {
+    format = "🐃";
+    interval = "once";
+    on-click = "rockchip_ebc_dump_buffers.py";
+    min-length = 5;
+    tooltip = false;
+  };
 
-  # "custom/ebc_cycle_driver_mode": {
-  #   "format": "🚲",
-  #   "interval": "once",
-  #   "on-click": "python -c 'import rockchip_ebc_custom_ioctl as reci; reci.cycle_driver_mode()'",
-  #   "min-length": 5,
-  #   "tooltip": false,
-  # },
+  "custom/ebc_cycle_driver_mode" = {
+    format = "🚲";
+    interval = "once";
+    on-click = "python -c 'import rockchip_ebc_custom_ioctl as reci; reci.cycle_driver_mode()'";
+    min-length = 5;
+    tooltip = false;
+  };
 
   "custom/ebc_refresh" = {
     format = "";
@@ -367,21 +367,21 @@
     tooltip = false;
   };
 
-  # "custom/key_pageup": {
-  #   "format": "",
-  #   "interval": "once",
-  #   "on-click": "swaymsg resize grow width 10px; swaymsg resize grow height 10px",
-  #   "min-length": 5,
-  #   "tooltip": false,
-  # },
+  "custom/key_pageup" = {
+    format = "";
+    interval = "once";
+    on-click = "swaymsg resize grow width 10px; swaymsg resize grow height 10px";
+    min-length = 5;
+    tooltip = false;
+  };
 
-  # "custom/key_pagedown": {
-  #   "format": "",
-  #   "interval": "once",
-  #   "on-click": "swaymsg resize shrink width 10px; swaymsg resize shrink height 10px",
-  #   "min-length": 5,
-  #   "tooltip": false,
-  # },
+  "custom/key_pagedown" = {
+    format = "";
+    interval = "once";
+    on-click = "swaymsg resize shrink width 10px; swaymsg resize shrink height 10px";
+    min-length = 5;
+    tooltip = false;
+  };
 
   "custom/battery_watts" = {
     exec = "battery_watts.sh";

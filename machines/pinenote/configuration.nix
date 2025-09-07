@@ -41,7 +41,7 @@
 
   services = {
     journald.storage = "volatile";
-    logind.settings = {
+    logind.settings.Login = {
       HandlePowerKey = "suspend";
       HandlePowerKeyLongPress = "poweroff";
     };
