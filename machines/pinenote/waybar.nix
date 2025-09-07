@@ -57,15 +57,15 @@
       critical = 15;
     };
     # Connected to AC
-    format = " {icon} {capacity}%";
+    format = " {icon} {capacity}%"; # Icon: bolt
     # Not connected to AC
     format-discharging = "{capacity}% {icon}";
     format-icons = [
-      ""
-      ""
-      ""
-      ""
-      ""
+      "" # Icon: battery-full
+      "" # Icon: battery-three-quarters
+      "" # Icon: battery-half
+      "" # Icon: battery-quarter
+      "" # Icon: battery-empty
     ];
     min-length = 5;
     tooltip = true;
@@ -79,13 +79,13 @@
 
   "clock#date" = {
     interval = 10;
-    format = "  {:%e %b %Y}";
+    format = "  {:%e %b %Y}"; # Icon: calendar-alt
     tooltip-format = "{:%e %B %Y}";
   };
 
   "cpu" = {
     interval = 5;
-    format = "  {usage}%";
+    format = "  {usage}%"; # Icon: microchip
     states = {
       warning = 70;
       critical = 90;
@@ -94,7 +94,7 @@
 
   "memory" = {
     interval = 5;
-    format = "  {}%";
+    format = "  {}%"; # Icon: memory
     states = {
       warning = 70;
       critical = 90;
@@ -102,7 +102,7 @@
   };
 
   "sway/mode" = {
-    format = "<span style=\"italic\">  {}</span>";
+    format = "<span style=\"italic\">  {}</span>"; # Icon: nf-linux-nixos
     tooltip = false;
   };
 
@@ -116,11 +116,11 @@
     interval = 5;
     format = "{icon}  {temperatureC}°C";
     format-icons = [
-      ""
-      ""
-      ""
-      ""
-      ""
+      "" # Icon: temperature-empty
+      "" # Icon: temperature-quarter
+      "" # Icon: temperature-half
+      "" # Icon: temperature-three-quarters
+      "" # Icon: temperature-full
     ];
     tooltip = true;
     hwmon-path = "/sys/class/hwmon/hwmon3/temp1_input";
@@ -151,7 +151,7 @@
   };
 
   "custom/winup" = {
-    format = ";";
+    format = "";
     interval = "once";
     on-click = "swaymsg move up";
     min-length = 5;
@@ -167,7 +167,7 @@
   };
 
   "custom/splitv" = {
-    format = "/;";
+    format = "/|";
     interval = "once";
     on-click = "swaymsg splitv";
     min-length = 5;
@@ -175,7 +175,7 @@
   };
 
   "custom/splith" = {
-    format = "/;";
+    format = "/-";
     interval = "once";
     on-click = "swaymsg splith";
     min-length = 5;

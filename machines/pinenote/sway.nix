@@ -51,6 +51,7 @@
   ];
 
   home-manager.users.kurnevsky = {
+    xdg.configFile."waybar/style.css".source = ./waybar/style.css;
     wayland.windowManager.sway = {
       enable = true;
       systemd = {

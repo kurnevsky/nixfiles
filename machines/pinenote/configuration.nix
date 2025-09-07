@@ -7,8 +7,8 @@
 {
   imports = [
     ./hardware.nix
-    ./gnome.nix
-    # ./sway.nix
+    # ./gnome.nix
+    ./sway.nix
   ];
 
   boot.tmp.cleanOnBoot = true;
@@ -47,13 +47,11 @@
     };
   };
 
-  # fonts = {
-  #   packages = with pkgs; [
-  #     comic-mono
-  #   ];
-  #   fontconfig.enable = true;
-  #   fontconfig.defaultFonts.monospace = [ "Comic Mono" ];
-  # };
+  fonts.packages = with pkgs; [
+    nerd-fonts.symbols-only
+    noto-fonts
+    noto-fonts-color-emoji
+  ];
 
   fileSystems = {
     "/" = {
