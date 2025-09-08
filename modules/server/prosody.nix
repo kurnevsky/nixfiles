@@ -75,7 +75,7 @@
         }
         turn_external_host = "turn.kropki.org";
         turn_external_port = 47354;
-        turn_external_secret = "$TURN_SECRET";
+        turn_external_secret = ENV_TURN_SECRET;
         statistics = "internal";
         statistics_interval = "manual";
       '';
