@@ -18,6 +18,7 @@
     ./scrutiny.nix
     ./wireguard.nix
     ./tox.nix
+    ./turn-rs.nix
     ./matrix.nix
     ./prosody.nix
     ./yggdrasil.nix

@@ -55,6 +55,7 @@ in
   "oauth2-proxy.age".publicKeys = [ vps ];
   "grafana.age".publicKeys = [ vps ];
   "scrutiny.age".publicKeys = [ vps ];
+  "turn.age".publicKeys = [ vps ];
 
   "motion.age".publicKeys = desktop;
   "scrutiny-collector.age".publicKeys = desktop;

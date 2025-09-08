@@ -79,6 +79,14 @@
           }
         ];
       }
+      {
+        job_name = "turn";
+        static_configs = [
+          {
+            targets = [ "localhost:3002" ];
+          }
+        ];
+      }
     ];
     exporters = {
       node = {

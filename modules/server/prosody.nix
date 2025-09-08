@@ -55,7 +55,10 @@
         "::1"
       ];
       modules.server_contact_info = true;
-      extraModules = [ "http_openmetrics" ];
+      extraModules = [
+        "http_openmetrics"
+        "turn_external"
+      ];
       extraConfig = ''
         storage = "sql";
         sql = {
@@ -70,11 +73,17 @@
           admin = { "mailto:kurnevsky@kropki.org", "xmpp:kurnevsky@kropki.org" };
           security = { "mailto:kurnevsky@kropki.org", "xmpp:kurnevsky@kropki.org" };
         }
+        turn_external_host = "turn.kropki.org";
+        turn_external_port = 47354;
+        turn_external_secret = "$TURN_SECRET";
         statistics = "internal";
         statistics_interval = "manual";
       '';
     };
   };
+
+  systemd.services.prosody.serviceConfig.EnvironmentFile =
+    config.age.secrets.turn.path or "/secrets/turn";
 
   security.acme.certs."kropki.org".extraDomainNames = [
     "conference.kropki.org"
