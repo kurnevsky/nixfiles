@@ -83,7 +83,7 @@
   };
 
   systemd.services.prosody.serviceConfig.EnvironmentFile =
-    config.age.secrets.turn.path or "/secrets/turn";
+    config.age.secrets.prosody-turn.path or "/secrets/prosody-turn";
 
   security.acme.certs."kropki.org".extraDomainNames = [
     "conference.kropki.org"
@@ -93,4 +93,6 @@
   users.groups.acme.members = [
     "prosody"
   ];
+
+  age.secrets.prosody-turn.file = ../../secrets/prosody-turn.age;
 }
