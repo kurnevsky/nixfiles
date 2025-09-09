@@ -23,6 +23,11 @@
     };
   };
 
+  services.coturn.listening-ips = [
+    "49.12.217.127"
+    "2a01:4f8:c013:71a5::1"
+  ];
+
   age.secrets = {
     kurnevsky.file = ../../secrets/kurnevsky-vps.age;
     store.file = ../../secrets/store-vps.age;

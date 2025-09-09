@@ -73,7 +73,7 @@
           admin = { "mailto:kurnevsky@kropki.org", "xmpp:kurnevsky@kropki.org" };
           security = { "mailto:kurnevsky@kropki.org", "xmpp:kurnevsky@kropki.org" };
         }
-        turn_external_host = "turn.kropki.org";
+        turn_external_host = "kropki.org";
         turn_external_port = 47354;
         turn_external_secret = ENV_TURN_SECRET;
         statistics = "internal";
