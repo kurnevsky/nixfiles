@@ -25,6 +25,7 @@
     ./syncthing.nix
     ./hans.nix
     ./iodine.nix
+    ./ntfy.nix
     ./nginx.nix
     ./kropki.nix
     ./tt-rss.nix
