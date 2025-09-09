@@ -79,6 +79,25 @@
           }
         ];
       }
+      {
+        job_name = "coturn";
+        # Add a 'coturn' prefix to every metric
+        metric_relabel_configs = [
+          {
+            source_labels = [ "__name__" ];
+            separator = "_";
+            regex = "(.*)";
+            replacement = "coturn_$1";
+            target_label = "__name__";
+            action = "replace";
+          }
+        ];
+        static_configs = [
+          {
+            targets = [ "localhost:9641" ];
+          }
+        ];
+      }
     ];
     exporters = {
       node = {
