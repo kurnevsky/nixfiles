@@ -17,8 +17,6 @@
     5269
     # Server-to-server connections (direct TLS)
     5270
-    # HTTPS
-    5281
   ];
 
   services = {
@@ -49,8 +47,16 @@
         ssl.key = "${config.security.acme.certs."kropki.org".directory}/key.pem";
       };
       muc = [ { domain = "conference.kropki.org"; } ];
-      httpFileShare.domain = "upload.kropki.org";
+      # httpFileShare = {
+      #   domain = "upload.kropki.org";
+      #   http_external_url = "https://upload.kropki.org/";
+      # };
+      xmppComplianceSuite = false;
       httpInterfaces = [
+        "127.0.0.1"
+        "::1"
+      ];
+      httpsInterfaces = [
         "127.0.0.1"
         "::1"
       ];
@@ -66,6 +72,7 @@
           database = "prosody";
           username = "prosody";
         }
+        trusted_proxies = { "127.0.0.1", "::1" };
         c2s_direct_tls_ports = { 5223 };
         s2s_direct_tls_ports = { 5270 };
         contact_info = {
@@ -78,7 +85,24 @@
         turn_external_secret = ENV_TURN_SECRET;
         statistics = "internal";
         statistics_interval = "manual";
+
+        Component "upload.kropki.org" "http_file_share"
+          modules_disabled = { "s2s" }
+          http_external_url = "https://upload.kropki.org/"
+          http_file_share_daily_quota = 104857600
+          http_file_share_expires_after = "1 week"
+          http_file_share_size_limit = 10485760
       '';
+    };
+
+    nginx.virtualHosts."upload.kropki.org" = {
+      http3 = true;
+      quic = true;
+      forceSSL = true;
+      kTLS = true;
+      sslCertificate = "${config.security.acme.certs."kropki.org".directory}/fullchain.pem";
+      sslCertificateKey = "${config.security.acme.certs."kropki.org".directory}/key.pem";
+      locations."/".proxyPass = "http://localhost:5280";
     };
   };
 
