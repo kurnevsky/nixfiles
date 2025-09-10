@@ -1186,20 +1186,11 @@ which LANG was detected but these are ignored."
       'forge-alist
       `(,host ,(concat host "/api/v4") ,host forge-gitlab-repository))))
 
-(use-package pass
-  :mode (".password-store/.*\\.gpg\\'" . pass-view-mode))
-
 (use-package auth-source
   :ensure nil
   :custom
+  (auth-sources '("secrets:Passwords"))
   (auth-source-save-behavior nil))
-
-(use-package auth-source-pass
-  :ensure nil
-  :demand t
-  :after auth-source
-  :config
-  (auth-source-pass-enable))
 
 (use-package age
   :demand t
@@ -1654,7 +1645,7 @@ identifier and the position respectively."
                    :host "api.groq.com"
                    :endpoint "/openai/v1/chat/completions"
                    :stream t
-                   :key (lambda () (nth 1 (auth-source-user-and-password "groq")))
+                   :key (lambda () (secrets-get-secret "Passwords" "Groq"))
                    :models '("mixtral-8x7b-32768"
                               "llama3-70b-8192")))
   (gptel-directives
