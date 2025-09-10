@@ -35,6 +35,7 @@
     prosody = {
       enable = true;
       package = pkgs.prosody.override {
+        withCommunityModules = [ "http_altconnect" ];
         withExtraLuaPackages = lua: [ lua.luadbi-postgresql ];
       };
       admins = [ "kurnevsky@kropki.org" ];
@@ -47,11 +48,10 @@
         ssl.key = "${config.security.acme.certs."kropki.org".directory}/key.pem";
       };
       muc = [ { domain = "conference.kropki.org"; } ];
-      # httpFileShare = {
-      #   domain = "upload.kropki.org";
-      #   http_external_url = "https://upload.kropki.org/";
-      # };
-      xmppComplianceSuite = false;
+      httpFileShare = {
+        domain = "upload.kropki.org";
+        http_external_url = "https://upload.kropki.org/";
+      };
       httpInterfaces = [
         "127.0.0.1"
         "::1"
@@ -62,6 +62,7 @@
       ];
       modules.server_contact_info = true;
       extraModules = [
+        "websocket"
         "http_openmetrics"
         "turn_external"
       ];
@@ -83,27 +84,36 @@
         turn_external_host = "kropki.org";
         turn_external_port = 47354;
         turn_external_secret = ENV_TURN_SECRET;
+        http_external_url = "https://upload.kropki.org/"
+        consider_websocket_secure = true;
         statistics = "internal";
         statistics_interval = "manual";
-
-        Component "upload.kropki.org" "http_file_share"
-          modules_disabled = { "s2s" }
-          http_external_url = "https://upload.kropki.org/"
-          http_file_share_daily_quota = 104857600
-          http_file_share_expires_after = "1 week"
-          http_file_share_size_limit = 10485760
       '';
     };
 
-    nginx.virtualHosts."upload.kropki.org" = {
-      http3 = true;
-      quic = true;
-      forceSSL = true;
-      kTLS = true;
-      sslCertificate = "${config.security.acme.certs."kropki.org".directory}/fullchain.pem";
-      sslCertificateKey = "${config.security.acme.certs."kropki.org".directory}/key.pem";
-      locations."/".proxyPass = "http://localhost:5280";
-    };
+    nginx.virtualHosts =
+      let
+        localhost = "http://localhost:5280";
+      in
+      {
+        "kropki.org".locations = {
+          "= /xmpp-websocket" = {
+            proxyPass = localhost;
+            proxyWebsockets = true;
+          };
+          "= /.well-known/host-meta".proxyPass = localhost;
+          "= /.well-known/host-meta.json".proxyPass = localhost;
+        };
+        "upload.kropki.org" = {
+          http3 = true;
+          quic = true;
+          forceSSL = true;
+          kTLS = true;
+          sslCertificate = "${config.security.acme.certs."kropki.org".directory}/fullchain.pem";
+          sslCertificateKey = "${config.security.acme.certs."kropki.org".directory}/key.pem";
+          locations."/".proxyPass = localhost;
+        };
+      };
   };
 
   systemd.services.prosody.serviceConfig.EnvironmentFile =

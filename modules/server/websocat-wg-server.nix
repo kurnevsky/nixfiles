@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 {
-  services.nginx.virtualHosts."kropki.org".locations."/wswg" = {
+  services.nginx.virtualHosts."kropki.org".locations."= /wswg" = {
     proxyPass = "http://localhost:57411";
     proxyWebsockets = true;
   };
