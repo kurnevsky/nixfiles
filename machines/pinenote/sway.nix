@@ -47,11 +47,35 @@
   nixpkgs.overlays = [
     (_self: super: {
       pinenote-service = super.callPackage ./packages/pinenote-service.nix { };
+      pinenote = {
+        toggle-menu = pkgs.callPackage ./packages/toggle-menu.nix { };
+        launch-lisgd = pkgs.callPackage ./packages/launch-lisgd.nix { };
+        sway-rotate = pkgs.callPackage ./packages/sway-rotate.nix { };
+      };
     })
   ];
 
+  programs.dconf.enable = true;
+
+  environment.systemPackages = with pkgs; [
+    alacritty
+    papirus-icon-theme
+    nwg-menu
+    networkmanagerapplet
+    xfce.thunar
+  ];
+
+  gtk.iconCache.enable = true;
+
   home-manager.users.kurnevsky = {
     xdg.configFile."waybar/style.css".source = ./waybar/style.css;
+    gtk = {
+      enable = true;
+      iconTheme = {
+        name = "Papirus";
+        package = pkgs.papirus-icon-theme;
+      };
+    };
     wayland.windowManager.sway = {
       enable = true;
       systemd = {
@@ -82,12 +106,23 @@
         input."11551:149:w9013_2D1F:0095_Stylus".map_to_output = "DPI-1";
         bars = [ { command = "${lib.getExe pkgs.waybar}"; } ];
       };
+      extraConfig = ''
+        exec --no-startup-id ${pkgs.networkmanagerapplet}/bin/nm-applet --indicator &
+        exec --no-startup-id ${pkgs.squeekboard}/bin/squeekboard &
+
+        exec --no-startup-id ${pkgs.pinenote.sway-rotate}/bin/sway_rotate.sh rotnormal
+
+        exec_always --no-startup-id ${pkgs.pinenote.launch-lisgd}/bin/launch_lisgd.sh
+        exec_always --no-startup-id ${pkgs.util-linux}/bin/flock -n .sway_dbus_integration.lock ${pkgs.hrdl-utils}/bin/sway_dbus_integration.py
+        exec rot8 --hooks ${pkgs.pinenote.launch-lisgd}/bin/launch_lisgd.sh --display DPI-1 --invert-x
+      '';
     };
     programs = {
       waybar = {
         enable = true;
-        settings.mainBar = import ./waybar.nix;
+        settings.mainBar = import ./waybar.nix { inherit pkgs; };
       };
     };
+    xdg.configFile."nwg-panel/menu-start.css".source = ./menu-start.css;
   };
 }

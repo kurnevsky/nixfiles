@@ -48,6 +48,8 @@
       pinenote-firmware
       raspberrypiWirelessFirmware
     ];
+
+    graphics.enable = true;
   };
 
   systemd.services.pinenote-init-convert-waveform = {

@@ -32,7 +32,7 @@ pkgs.stdenvNoCC.mkDerivation {
   ];
 
   patchPhase = ''
-    sed -i 's/\/usr\/lib\//\/lib\//g' bin/waveform_extract.sh
+    substituteInPlace bin/waveform_extract.sh --replace-fail '/usr/lib/' '/lib/'
   '';
 
   installPhase = ''
@@ -42,6 +42,7 @@ pkgs.stdenvNoCC.mkDerivation {
     cp bin/waveform_extract.sh $out/bin/
     cp bin/rockchip_ebc_custom_ioctl.py $out/bin/
     cp bin/sway_dbus_integration.py $out/bin/
+    cp bin/toggle_onscreen_keyboard.py $out/bin/
 
     wrapProgram $out/bin/waveform_extract.sh \
       --prefix PATH : ${

@@ -1,4 +1,9 @@
 {
+  pkgs,
+  ...
+}:
+
+{
   layer = "top";
 
   position = "top";
@@ -129,7 +134,7 @@
   "custom/kill" = {
     format = "";
     interval = "once";
-    on-click = "swaymsg kill";
+    on-click = "${pkgs.sway}/bin/swaymsg kill";
     min-length = 5;
     tooltip = false;
   };
@@ -137,7 +142,7 @@
   "custom/winleft" = {
     format = "";
     interval = "once";
-    on-click = "swaymsg move left";
+    on-click = "${pkgs.sway}/bin/swaymsg move left";
     min-length = 5;
     tooltip = false;
   };
@@ -145,7 +150,7 @@
   "custom/winright" = {
     format = "";
     interval = "once";
-    on-click = "swaymsg move right";
+    on-click = "${pkgs.sway}/bin/swaymsg move right";
     min-length = 5;
     tooltip = false;
   };
@@ -153,7 +158,7 @@
   "custom/winup" = {
     format = "";
     interval = "once";
-    on-click = "swaymsg move up";
+    on-click = "${pkgs.sway}/bin/swaymsg move up";
     min-length = 5;
     tooltip = false;
   };
@@ -161,7 +166,7 @@
   "custom/windown" = {
     format = "";
     interval = "once";
-    on-click = "swaymsg move down";
+    on-click = "${pkgs.sway}/bin/swaymsg move down";
     min-length = 5;
     tooltip = false;
   };
@@ -169,7 +174,7 @@
   "custom/splitv" = {
     format = "/|";
     interval = "once";
-    on-click = "swaymsg splitv";
+    on-click = "${pkgs.sway}/bin/swaymsg splitv";
     min-length = 5;
     tooltip = false;
   };
@@ -177,7 +182,7 @@
   "custom/splith" = {
     format = "/-";
     interval = "once";
-    on-click = "swaymsg splith";
+    on-click = "${pkgs.sway}/bin/swaymsg splith";
     min-length = 5;
     tooltip = false;
   };
@@ -191,7 +196,7 @@
   };
 
   "custom/gows_prev" = {
-    format = "<";
+    format = "&lt;";
     interval = "once";
     on-click = "sway_workspace goto prev";
     min-length = 5;
@@ -199,7 +204,7 @@
   };
 
   "custom/gows_next" = {
-    format = ">";
+    format = "&gt;";
     interval = "once";
     on-click = "sway_workspace goto next";
     min-length = 5;
@@ -225,7 +230,7 @@
   "custom/smenu" = {
     format = "";
     interval = "once";
-    on-click = "toggle_menu.sh";
+    on-click = "${pkgs.pinenote.toggle-menu}/bin/toggle_menu.sh";
     min-length = 5;
     tooltip = false;
   };
@@ -233,7 +238,7 @@
   "custom/ws1" = {
     format = "1";
     interval = "once";
-    on-click = "swaymsg workspace number 1";
+    on-click = "${pkgs.sway}/bin/swaymsg workspace number 1";
     min-length = 5;
     tooltip = false;
   };
@@ -241,7 +246,7 @@
   "custom/ws2" = {
     format = "2";
     interval = "once";
-    on-click = "swaymsg workspace number 2";
+    on-click = "${pkgs.sway}/bin/swaymsg workspace number 2";
     min-length = 5;
     tooltip = false;
   };
@@ -249,7 +254,7 @@
   "custom/ws3" = {
     format = "3";
     interval = "once";
-    on-click = "swaymsg workspace number 3";
+    on-click = "${pkgs.sway}/bin/swaymsg workspace number 3";
     min-length = 5;
     tooltip = false;
   };
@@ -257,7 +262,7 @@
   "custom/ws4" = {
     format = "4";
     interval = "once";
-    on-click = "swaymsg workspace number 4";
+    on-click = "${pkgs.sway}/bin/swaymsg workspace number 4";
     min-length = 5;
     tooltip = false;
   };
@@ -265,7 +270,7 @@
   "custom/ws5" = {
     format = "5";
     interval = "once";
-    on-click = "swaymsg workspace number 5";
+    on-click = "${pkgs.sway}/bin/swaymsg workspace number 5";
     min-length = 5;
     tooltip = false;
   };
@@ -273,7 +278,7 @@
   "custom/blc_down" = {
     format = "";
     interval = "once";
-    on-click = "brightnessctl --device=backlight_cool set 10%-";
+    on-click = "${pkgs.brightnessctl}/bin/brightnessctl --device=backlight_cool set 10%-";
     min-length = 5;
     tooltip = false;
   };
@@ -281,7 +286,7 @@
   "custom/blc_up" = {
     format = "";
     interval = "once";
-    on-click = "brightnessctl --device=backlight_cool set 10%+";
+    on-click = "${pkgs.brightnessctl}/bin/brightnessctl --device=backlight_cool set 10%+";
     min-length = 5;
     tooltip = false;
   };
@@ -289,7 +294,7 @@
   "custom/blw_down" = {
     format = "";
     interval = "once";
-    on-click = "brightnessctl --device=backlight_warm set 10%-";
+    on-click = "${pkgs.brightnessctl}/bin/brightnessctl --device=backlight_warm set 10%-";
     min-length = 5;
     tooltip = false;
   };
@@ -297,7 +302,7 @@
   "custom/blw_up" = {
     format = "";
     interval = "once";
-    on-click = "brightnessctl --device=backlight_warm set 10%+";
+    on-click = "${pkgs.brightnessctl}/bin/brightnessctl --device=backlight_warm set 10%+";
     min-length = 5;
     tooltip = false;
   };
@@ -330,7 +335,7 @@
   "custom/ebc_refresh" = {
     format = "";
     interval = "once";
-    on-click = "dbus-send --type=method_call --dest=org.pinenote.ebc_custom / org.pinenote.ebc_custom.GlobalRefresh";
+    on-click = "${pkgs.dbus}/bin/dbus-send --type=method_call --dest=org.pinenote.ebc_custom / org.pinenote.ebc_custom.GlobalRefresh";
     min-length = 5;
     tooltip = false;
   };
@@ -338,7 +343,7 @@
   "custom/rotate_0" = {
     format = "R0";
     interval = "once";
-    on-click = "sway_rotate.sh rotnormal";
+    on-click = "${pkgs.pinenote.sway-rotate}/bin/sway_rotate.sh rotnormal";
     min-length = 5;
     tooltip = false;
   };
@@ -346,7 +351,7 @@
   "custom/rotate_90" = {
     format = "R90";
     interval = "once";
-    on-click = "sway_rotate.sh rotright";
+    on-click = "${pkgs.pinenote.sway-rotate}/bin/sway_rotate.sh rotright";
     min-length = 5;
     tooltip = false;
   };
@@ -354,7 +359,7 @@
   "custom/rotate_180" = {
     format = "R180";
     interval = "once";
-    on-click = "sway_rotate.sh rotinvert";
+    on-click = "${pkgs.pinenote.sway-rotate}/bin/sway_rotate.sh rotinvert";
     min-length = 5;
     tooltip = false;
   };
@@ -362,7 +367,7 @@
   "custom/rotate_270" = {
     format = "R270";
     interval = "once";
-    on-click = "sway_rotate.sh rotleft";
+    on-click = "${pkgs.pinenote.sway-rotate}/bin/sway_rotate.sh rotleft";
     min-length = 5;
     tooltip = false;
   };
@@ -370,7 +375,7 @@
   "custom/key_pageup" = {
     format = "";
     interval = "once";
-    on-click = "swaymsg resize grow width 10px; swaymsg resize grow height 10px";
+    on-click = "${pkgs.sway}/bin/swaymsg resize grow width 10px; ${pkgs.sway}/bin/swaymsg resize grow height 10px";
     min-length = 5;
     tooltip = false;
   };
@@ -378,15 +383,7 @@
   "custom/key_pagedown" = {
     format = "";
     interval = "once";
-    on-click = "swaymsg resize shrink width 10px; swaymsg resize shrink height 10px";
-    min-length = 5;
-    tooltip = false;
-  };
-
-  "custom/battery_watts" = {
-    exec = "battery_watts.sh";
-    format = " {}W";
-    interval = 10;
+    on-click = "${pkgs.sway}/bin/swaymsg resize shrink width 10px; ${pkgs.sway}/bin/swaymsg resize shrink height 10px";
     min-length = 5;
     tooltip = false;
   };

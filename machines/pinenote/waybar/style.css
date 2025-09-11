@@ -33,12 +33,12 @@ window#waybar {
 }
 
 #backlight-slider slider {
-    min-height: 0px;
-    min-width: 0px;
-    opacity: 0;
-    background-size: 20px;
-    border: none;
-    box-shadow: none;
+  min-height: 0px;
+  min-width: 0px;
+  opacity: 0;
+  background-size: 20px;
+  border: none;
+  box-shadow: none;
 }
 
 #backlight-slider.cool slider {
@@ -48,14 +48,14 @@ window#waybar {
 }
 
 #backlight-slider trough {
-   min-height: 10px;
-   min-width: 120px;
-   border-radius: 5px;
-   background-color: dimgrey;
+  min-height: 10px;
+  min-width: 120px;
+  border-radius: 5px;
+  background-color: dimgrey;
 }
 
 #backlight-slider highlight {
-   min-width: 10px;
-   border-radius: 5px;
-   background-color: white;
+  min-width: 10px;
+  border-radius: 5px;
+  background-color: white;
 }
