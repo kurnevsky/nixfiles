@@ -64,6 +64,8 @@
     nwg-menu
     networkmanagerapplet
     xfce.thunar
+    xournalpp
+    koreader
   ];
 
   gtk.iconCache.enable = true;
