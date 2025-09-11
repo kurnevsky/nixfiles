@@ -189,7 +189,7 @@
   "custom/mvws_prev" = {
     format = "";
     interval = "once";
-    on-click = "sway_workspace move prev";
+    on-click = "${pkgs.pinenote.sway-workspace}/bin/sway_workspace.sh move prev";
     min-length = 5;
     tooltip = false;
   };
@@ -197,7 +197,7 @@
   "custom/gows_prev" = {
     format = "&lt;";
     interval = "once";
-    on-click = "sway_workspace goto prev";
+    on-click = "${pkgs.pinenote.sway-workspace}/bin/sway_workspace.sh goto prev";
     min-length = 5;
     tooltip = false;
   };
@@ -205,7 +205,7 @@
   "custom/gows_next" = {
     format = "&gt;";
     interval = "once";
-    on-click = "sway_workspace goto next";
+    on-click = "${pkgs.pinenote.sway-workspace}/bin/sway_workspace.sh goto next";
     min-length = 5;
     tooltip = false;
   };
@@ -213,7 +213,7 @@
   "custom/mvws_next" = {
     format = "";
     interval = "once";
-    on-click = "sway_workspace move next";
+    on-click = "${pkgs.pinenote.sway-workspace}/bin/sway_workspace.sh move next";
     min-length = 5;
     tooltip = false;
   };
@@ -306,7 +306,7 @@
     tooltip = false;
   };
 
-  "idle_inhibitor" = {
+  idle_inhibitor = {
     format = "{icon}";
     format-icons = {
       activated = "";

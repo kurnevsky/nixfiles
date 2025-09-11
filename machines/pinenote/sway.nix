@@ -51,6 +51,7 @@
         toggle-menu = pkgs.callPackage ./packages/toggle-menu.nix { };
         launch-lisgd = pkgs.callPackage ./packages/launch-lisgd.nix { };
         sway-rotate = pkgs.callPackage ./packages/sway-rotate.nix { };
+        sway-workspace = pkgs.callPackage ./packages/sway-workspace.nix { };
       };
     })
   ];
