@@ -29,7 +29,6 @@
   ];
 
   modules-right = [
-    "custom/ebc_dump_buffers"
     "custom/ebc_cycle_driver_mode"
     "custom/ebc_refresh"
     "custom/blc_down"
@@ -314,14 +313,6 @@
       deactivated = "";
     };
     min-length = 5;
-  };
-
-  "custom/ebc_dump_buffers" = {
-    format = "🐃";
-    interval = "once";
-    on-click = "rockchip_ebc_dump_buffers.py";
-    min-length = 5;
-    tooltip = false;
   };
 
   "custom/ebc_cycle_driver_mode" = {
