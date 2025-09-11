@@ -5,6 +5,7 @@ let
   pythonEnv = pkgs.python3.withPackages (
     ps: with ps; [
       numpy
+      pydbus
       dbus-next
       i3ipc
     ]
@@ -25,7 +26,11 @@ pkgs.stdenvNoCC.mkDerivation {
     sha256 = "sha256-9T+xe252nqMK63KlrFawb1KyQ+JXFVnIfgBI0ZdWrjQ=";
   };
 
-  nativeBuildInputs = with pkgs; [ makeWrapper ];
+  nativeBuildInputs = with pkgs; [
+    makeWrapper
+    wrapGAppsNoGuiHook
+    gobject-introspection
+  ];
   buildInputs = with pkgs; [
     pythonEnv
     hexdump

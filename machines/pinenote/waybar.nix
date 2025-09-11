@@ -222,7 +222,7 @@
   "custom/okb" = {
     format = "";
     interval = "once";
-    on-click = "toggle_onscreen_keyboard.py";
+    on-click = "${pkgs.hrdl-utils}/bin/toggle_onscreen_keyboard.py";
     min-length = 5;
     tooltip = false;
   };
