@@ -34,6 +34,7 @@
           ENABLE_AUTO_REGISTRATION = true;
           UPDATE_AVATAR = true;
         };
+        metrics.ENABLED = true;
       };
     };
 
@@ -46,7 +47,10 @@
       extraConfig = ''
         client_max_body_size 512M;
       '';
-      locations."/".proxyPass = "http://localhost:3003";
+      locations = {
+        "/".proxyPass = "http://localhost:3003";
+        "= /metrics".return = 403;
+      };
     };
   };
 }

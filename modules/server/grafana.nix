@@ -107,6 +107,11 @@
       name = "prosody.json";
       sha256 = "sha256:17iwr37i99aw78bi987zqpcb3pl5995x4apjw13603scyzvkhjbk";
     };
+    "grafana-dashboards/forgejo.json".source = builtins.fetchurl {
+      url = "https://grafana.com/api/dashboards/17802/revisions/3/download";
+      name = "forgejo.json";
+      sha256 = "sha256:08gl3rf3mjd8mawrn1ryh9q5d3p599a9lgdw0035p9f93v8xm559";
+    };
   };
 
   age.secrets.grafana = {

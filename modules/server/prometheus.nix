@@ -98,6 +98,14 @@
           }
         ];
       }
+      {
+        job_name = "forgejo";
+        static_configs = [
+          {
+            targets = [ "localhost:3003" ];
+          }
+        ];
+      }
     ];
     exporters = {
       node = {
