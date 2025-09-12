@@ -26,6 +26,7 @@
     ./hans.nix
     ./iodine.nix
     ./ntfy.nix
+    ./forgejo.nix
     ./nginx.nix
     ./kropki.nix
     ./tt-rss.nix
