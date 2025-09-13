@@ -27,6 +27,7 @@
     ./iodine.nix
     ./ntfy.nix
     ./forgejo.nix
+    ./navidrome.nix
     ./nginx.nix
     ./kropki.nix
     ./tt-rss.nix
