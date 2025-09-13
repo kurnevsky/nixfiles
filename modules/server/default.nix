@@ -33,10 +33,7 @@
     ./tt-rss.nix
   ];
 
-  boot = {
-    kernelPackages = pkgs.linuxKernel.packages.linux_hardened;
-    tmp.cleanOnBoot = true;
-  };
+  boot.tmp.cleanOnBoot = true;
 
   networking = {
     nat.enable = true;
