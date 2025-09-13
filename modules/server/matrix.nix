@@ -17,6 +17,13 @@
         server_name = "kropki.org";
         allow_registration = true;
         registration_token_file = config.age.secrets.continuwuity.path or "/secrets/continuwuity";
+        turn_uris = [
+          "turns:kropki.org:47354?transport=udp"
+          "turns:kropki.org:47354?transport=tcp"
+          "turn:kropki.org:47354?transport=udp"
+          "turn:kropki.org:47354?transport=tcp"
+        ];
+        turn_secret_file = config.age.secrets.coturn.path or "/secrets/coturn";
       };
     };
     heisenbridge = {
@@ -62,6 +69,8 @@
       };
     };
   };
+
+  users.users.continuwuity.extraGroups = [ "turnserver" ];
 
   age.secrets.continuwuity = {
     file = ../../secrets/continuwuity.age;

@@ -31,5 +31,6 @@
     file = ../../secrets/coturn.age;
     owner = "turnserver";
     group = "turnserver";
+    mode = "440";
   };
 }
