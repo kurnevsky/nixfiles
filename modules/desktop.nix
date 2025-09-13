@@ -124,7 +124,8 @@
         qemu
         radare2
         tesseract
-        tigervnc
+        # TODO: broken
+        # tigervnc
         ubpm
         wineWowPackages.stagingFull
         winetricks
@@ -162,12 +163,14 @@
         clinfo
         cuetools
         curlHTTP3
-        davfs2
+        # TODO: broken
+        # davfs2
         dbus
         dmidecode
         docker-compose
         dosfstools
-        dsniff
+        # TODO: broken
+        # dsniff
         e2fsprogs
         efibootmgr
         exfat
@@ -298,7 +301,8 @@
         openmw
         wesnoth
         # Databases
-        cassandra_4
+        # TODO: broken
+        # cassandra
         grafana-loki
         kcat
         # Wallets

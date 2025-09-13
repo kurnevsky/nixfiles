@@ -26,8 +26,8 @@
   },
   "ublock-origin-lite": {
     "id": "ddkjiahejlhfcafbddmgiahcphecmpfh",
-    "sha256": "sha256:1pw8xls08n7dfrj5hbv1lmk2jk4kpappxksjz07kacijkw6284ir",
-    "version": "2025.906.1308"
+    "sha256": "sha256:0cpjssdljh3vjhzzd793w9zf9gk1lpkymz6jyf0iz4flyvwvr3r9",
+    "version": "2025.911.1335"
   },
   "find-plus": {
     "id": "fddffkdncgkkdjobemgbpojjeffmmofb",
@@ -46,7 +46,7 @@
   },
   "keepassxc-browser": {
     "id": "oboonakemofpalcgghocfoadofidjkkk",
-    "sha256": "sha256:1n9mk6jj23dljg6dm4dpmwpnl2x06y2zf5dm2psbmbb2sfklld4n",
-    "version": "1.9.9.5"
+    "sha256": "sha256:0hzcxgdv7xa97qvm1yc64agyg6pvhds0nfwhkx36ndk28db93w1p",
+    "version": "1.9.9.6"
   }
 }
