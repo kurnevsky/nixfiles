@@ -469,6 +469,7 @@
     java.enable = true;
     fuse.userAllowOther = true;
     chromium.enable = true;
+    ssh.startAgent = true;
   };
 
   gtk.iconCache.enable = true;
@@ -947,6 +948,7 @@
     in
     {
       users = {
+        root.programs.ssh.extraOptionOverrides.IdentityAgent = "/run/user/1000/ssh-agent";
         kurnevsky = pkgs.lib.recursiveUpdate home-config {
           home.file = {
             ".face.icon".source = ../resources/face.icon;
