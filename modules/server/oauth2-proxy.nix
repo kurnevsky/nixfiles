@@ -15,7 +15,7 @@
     setXauthrequest = true;
     cookie = {
       domain = "kropki.org";
-      refresh = "1h";
+      refresh = "30m";
       secure = true;
     };
     email.domains = [ "*" ];
