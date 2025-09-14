@@ -57,6 +57,7 @@ in
   "scrutiny.age".publicKeys = [ vps ];
   "coturn.age".publicKeys = [ vps ];
   "prosody-turn.age".publicKeys = [ vps ];
+  "storage.age".publicKeys = [ vps ];
 
   "motion.age".publicKeys = desktop;
   "scrutiny-collector.age".publicKeys = desktop;
