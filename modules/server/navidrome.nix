@@ -33,6 +33,10 @@
           proxyPass = "http://localhost:4533";
           extraConfig = "auth_request off;";
         };
+        "/rest/" = {
+          proxyPass = "http://localhost:4533";
+          extraConfig = "auth_request off;";
+        };
         "= /metrics".return = 403;
       };
     };
