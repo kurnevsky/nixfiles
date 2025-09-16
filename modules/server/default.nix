@@ -30,6 +30,7 @@
     ./navidrome.nix
     ./nginx.nix
     ./kropki.nix
+    ./rustic.nix
     ./tt-rss.nix
   ];
 
