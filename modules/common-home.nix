@@ -107,7 +107,7 @@
   };
   services.gpg-agent =
     let
-      ttl = 180 * 24 * 60 * 60;
+      ttl = 0;
     in
     {
       defaultCacheTtl = ttl;
