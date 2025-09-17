@@ -940,7 +940,12 @@
         };
         services.gpg-agent = {
           enable = true;
-          pinentry.package = pkgs.pinentry-qt;
+          # Recent pinentry has a check for XDG_SESSION_DESKTOP wich can't be overrided by allow-external-password-cache
+          pinentry.package = pkgs.writeShellScriptBin "pinentry-curses" ''
+            ${pkgs.coreutils}/bin/env \
+              XDG_SESSION_DESKTOP= \
+              ${pkgs.pinentry-curses}/bin/pinentry-curses "$@"
+          '';
         };
         # To make sure that it's not overridden by WM
         xdg.mimeApps.enable = true;
