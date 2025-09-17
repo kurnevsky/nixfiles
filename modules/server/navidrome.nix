@@ -6,6 +6,7 @@
         BaseUrl = "https://music.kropki.org";
         ReverseProxyWhitelist = "127.0.0.1/0";
         ReverseProxyUserHeader = "X-Preferred-Username";
+        "Scanner.PurgeMissing" = "always";
         EnableTranscodingConfig = true;
         "Prometheus.Enabled" = true;
       };
