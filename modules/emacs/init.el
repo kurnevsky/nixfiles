@@ -90,7 +90,7 @@
 (setq undo-outer-limit (* 16 1024 1024))
 ;; Increase the amount of data which Emacs reads from the process.
 (setq read-process-output-max (* 1024 1024))
-;; Don’t consider case significant in completion.
+;; Don't consider case significant in completion.
 (setq completion-ignore-case t)
 (setq read-buffer-completion-ignore-case t)
 (setq read-file-name-completion-ignore-case t)
