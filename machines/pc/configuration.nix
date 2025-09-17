@@ -39,6 +39,13 @@
         inherit inputs;
       }
     ))
+    (import ../../modules/with-native-optimizations.nix config.networking.hostName (
+      llama-cpp.override {
+        rocmSupport = true;
+        rocmGpuTargets = "gfx1100";
+        vulkanSupport = true;
+      }
+    ))
   ];
 
   networking.hostName = "pc";

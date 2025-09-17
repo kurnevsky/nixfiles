@@ -94,13 +94,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    llama-cpp = {
-      type = "github";
-      owner = "ggml-org";
-      repo = "llama.cpp";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     stable-diffusion-cpp = {
       type = "git";
       url = "https://github.com/leejet/stable-diffusion.cpp.git";
@@ -219,40 +212,6 @@
           }
         )
       ];
-      llamaOverride =
-        pkgs: config: llama:
-        import ./modules/with-native-optimizations.nix config.networking.hostName (
-          llama.overrideAttrs (old: {
-            postInstall = (old.postInstall or "") + ''
-              find $out/bin -type f ! -wholename '*/llama*' -exec ${pkgs.util-linux}/bin/rename "" 'llama-' {} \;
-            '';
-          })
-        );
-      llamaDefault =
-        { pkgs, config, ... }:
-        {
-          environment.systemPackages = [
-            (llamaOverride pkgs config inputs.llama-cpp.packages.${pkgs.system}.default)
-          ];
-        };
-      llamaRocm =
-        gpuTargets:
-        { pkgs, config, ... }:
-        {
-          environment.systemPackages = [
-            (llamaOverride pkgs config (
-              (inputs.llama-cpp.packages.${pkgs.system}.rocm.override {
-                rocmGpuTargets = gpuTargets;
-              }).overrideAttrs
-                (old: {
-                  # TODO: upstream
-                  cmakeFlags = old.cmakeFlags ++ [
-                    (pkgs.lib.cmakeFeature "CMAKE_HIP_COMPILER" "${pkgs.rocmPackages.clr.hipClangPath}/clang++")
-                  ];
-                })
-            ))
-          ];
-        };
     in
     {
       formatter = forAllSystems (system: inputs.nixpkgs.legacyPackages.${system}.nixfmt-rfc-style);
@@ -262,7 +221,6 @@
           modules = desktopModules ++ [
             ./machines/dell/configuration.nix
             ./machines/dell/hardware-configuration.nix
-            llamaDefault
           ];
         };
         evo = inputs.nixpkgs.lib.nixosSystem {
@@ -271,7 +229,6 @@
             ./machines/evo/configuration.nix
             ./machines/evo/hardware-configuration.nix
             ./machines/evo/disko.nix
-            llamaDefault
           ];
         };
         pc = inputs.nixpkgs.lib.nixosSystem {
@@ -280,7 +237,6 @@
             ./machines/pc/configuration.nix
             ./machines/pc/hardware-configuration.nix
             ./machines/pc/disko.nix
-            (llamaRocm "gfx1100")
           ];
         };
         acer = inputs.nixpkgs.lib.nixosSystem {

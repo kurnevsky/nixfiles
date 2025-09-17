@@ -193,24 +193,6 @@
     },
     "flake-parts": {
       "inputs": {
-        "nixpkgs-lib": "nixpkgs-lib"
-      },
-      "locked": {
-        "lastModified": 1730504689,
-        "narHash": "sha256-hgmguH29K2fvs9szpq2r3pz2/8cJd2LPS+b4tfNFCwE=",
-        "owner": "hercules-ci",
-        "repo": "flake-parts",
-        "rev": "506278e768c2a08bec68eb62932193e341f55c90",
-        "type": "github"
-      },
-      "original": {
-        "owner": "hercules-ci",
-        "repo": "flake-parts",
-        "type": "github"
-      }
-    },
-    "flake-parts_2": {
-      "inputs": {
         "nixpkgs-lib": [
           "nur",
           "nixpkgs"
@@ -380,27 +362,6 @@
         "type": "github"
       }
     },
-    "llama-cpp": {
-      "inputs": {
-        "flake-parts": "flake-parts",
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1757702392,
-        "narHash": "sha256-suYYPeepRquphH7YoY+X3oZ1XkJxFv11jariYuxO+Ug=",
-        "owner": "ggml-org",
-        "repo": "llama.cpp",
-        "rev": "40be51152d4dc2d47444a4ed378285139859895b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "ggml-org",
-        "repo": "llama.cpp",
-        "type": "github"
-      }
-    },
     "mobile-nixos": {
       "flake": false,
       "locked": {
@@ -519,18 +480,6 @@
         "type": "github"
       }
     },
-    "nixpkgs-lib": {
-      "locked": {
-        "lastModified": 1730504152,
-        "narHash": "sha256-lXvH/vOfb4aGYyvFmZK/HlsNsr/0CVWlwYvo2rxJk3s=",
-        "type": "tarball",
-        "url": "https://github.com/NixOS/nixpkgs/archive/cc2f28000298e1269cea6612cd06ec9979dd5d7f.tar.gz"
-      },
-      "original": {
-        "type": "tarball",
-        "url": "https://github.com/NixOS/nixpkgs/archive/cc2f28000298e1269cea6612cd06ec9979dd5d7f.tar.gz"
-      }
-    },
     "nixpkgs-stable": {
       "locked": {
         "lastModified": 1751274312,
@@ -587,7 +536,7 @@
     },
     "nur": {
       "inputs": {
-        "flake-parts": "flake-parts_2",
+        "flake-parts": "flake-parts",
         "nixpkgs": [
           "nixpkgs"
         ]
@@ -671,7 +620,6 @@
         "hexrgb": "hexrgb",
         "home-manager": "home-manager",
         "lean4-mode": "lean4-mode",
-        "llama-cpp": "llama-cpp",
         "mobile-nixos": "mobile-nixos",
         "nix-on-droid": "nix-on-droid",
         "nixpkgs": "nixpkgs",
