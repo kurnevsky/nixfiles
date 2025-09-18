@@ -135,15 +135,7 @@
     enableACME = true;
     forceSSL = true;
     kTLS = true;
-    locations."/" = {
-      proxyPass = "http://localhost:${builtins.toString config.services.prometheus.port}";
-
-      extraConfig = ''
-        auth_request_set $user $upstream_http_x_auth_request_user;
-        auth_request_set $email $upstream_http_x_auth_request_email;
-        auth_request_set $auth_cookie $upstream_http_set_cookie;
-      '';
-    };
+    locations."/".proxyPass = "http://localhost:${builtins.toString config.services.prometheus.port}";
   };
 
   services.oauth2-proxy.nginx.virtualHosts."prometheus.kropki.org" = { };

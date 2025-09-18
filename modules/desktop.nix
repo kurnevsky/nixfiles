@@ -124,8 +124,7 @@
         qemu
         radare2
         tesseract
-        # TODO: broken
-        # tigervnc
+        tigervnc
         ubpm
         wineWowPackages.stagingFull
         winetricks
@@ -163,8 +162,7 @@
         clinfo
         cuetools
         curlHTTP3
-        # TODO: broken
-        # davfs2
+        davfs2
         dbus
         dmidecode
         docker-compose

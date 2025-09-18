@@ -24,10 +24,6 @@
           extraConfig = ''
             auth_request_set $preferred_username $upstream_http_x_auth_request_preferred_username;
             proxy_set_header X-Preferred-Username $preferred_username;
-
-            auth_request_set $user $upstream_http_x_auth_request_user;
-            auth_request_set $email $upstream_http_x_auth_request_email;
-            auth_request_set $auth_cookie $upstream_http_set_cookie;
           '';
         };
         "/share/" = {

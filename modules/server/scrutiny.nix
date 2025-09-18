@@ -25,20 +25,14 @@
           proxyPass = "http://${config.services.scrutiny.settings.web.listen.host}:${builtins.toString config.services.scrutiny.settings.web.listen.port}";
         in
         {
-          "/" = {
-            inherit proxyPass;
-            extraConfig = ''
-              auth_request_set $user $upstream_http_x_auth_request_user;
-              auth_request_set $email $upstream_http_x_auth_request_email;
-              auth_request_set $auth_cookie $upstream_http_set_cookie;
-            '';
-          };
+          "/" = { inherit proxyPass; };
           "/api/" = {
             inherit proxyPass;
             extraConfig = ''
               satisfy any;
 
               auth_request_set $auth_cookie $upstream_http_set_cookie;
+              add_header Set-Cookie $auth_cookie;
             '';
             basicAuthFile = config.age.secrets.scrutiny.path or "/secrets/scrutiny";
           };
