@@ -20,7 +20,7 @@
     };
     email.domains = [ "*" ];
     extraConfig = {
-      whitelist-domain = ["*.kropki.org"];
+      whitelist-domain = [ "*.kropki.org" ];
       insecure-oidc-allow-unverified-email = true;
       code-challenge-method = "S256";
       insecure-oidc-skip-nonce = false;
@@ -39,4 +39,15 @@
   age.secrets.oauth2-proxy.file = ../../secrets/oauth2-proxy.age;
 
   services.oauth2-proxy.nginx.domain = "oauth2.kropki.org";
+
+  systemd.services.oauth2-proxy = {
+    requires = [
+      "nginx.service"
+      "pocket-id.service"
+    ];
+    after = [
+      "nginx.service"
+      "pocket-id.service"
+    ];
+  };
 }

@@ -21,4 +21,9 @@
   age.secrets.storage.file = ../../secrets/storage.age;
 
   services.navidrome.settings.MusicFolder = "/mnt/music";
+
+  systemd.services.navidrome = {
+    requires = [ "mnt.mount" ];
+    after = [ "mnt.mount" ];
+  };
 }
