@@ -42,9 +42,38 @@
       ];
     };
     nginx.virtualHosts = {
-      "kropki.org".locations."/_matrix" = {
-        proxyPass = "http://localhost:6167";
-        proxyWebsockets = true;
+      "kropki.org".locations = {
+        "/_matrix" = {
+          proxyPass = "http://localhost:6167";
+          proxyWebsockets = true;
+        };
+        "= /.well-known/matrix/server" = {
+          return =
+            let
+              json = {
+                "m.server" = "kropki.org";
+              };
+            in
+            "200 '${builtins.toJSON json}'";
+          extraConfig = "add_header Content-Type application/json;";
+        };
+        "= /.well-known/matrix/client" = {
+          return =
+            let
+              json = {
+                "m.homeserver".base_url = "https://kropki.org";
+                "org.matrix.msc3575.proxy".url = "https://kropki.org";
+                "org.matrix.msc4143.rtc_foci" = [
+                  {
+                    type = "livekit";
+                    livekit_service_url = "https://kropki.org/livekit/jwt";
+                  }
+                ];
+              };
+            in
+            "200 '${builtins.toJSON json}'";
+          extraConfig = "add_header Content-Type application/json;";
+        };
       };
       matrix-federation = {
         serverName = "kropki.org";

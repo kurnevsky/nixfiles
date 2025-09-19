@@ -19,6 +19,7 @@
     ./wireguard.nix
     ./tox.nix
     ./coturn.nix
+    ./livekit.nix
     ./matrix.nix
     ./prosody.nix
     ./yggdrasil.nix

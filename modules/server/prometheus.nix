@@ -114,6 +114,14 @@
           }
         ];
       }
+      {
+        job_name = "livekit";
+        static_configs = [
+          {
+            targets = [ "localhost:31049" ];
+          }
+        ];
+      }
     ];
     exporters = {
       node = {
