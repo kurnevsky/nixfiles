@@ -35,7 +35,10 @@
     prosody = {
       enable = true;
       package = pkgs.prosody.override {
-        withCommunityModules = [ "http_altconnect" ];
+        withCommunityModules = [
+          "http_altconnect"
+          "unified_push"
+        ];
         withExtraLuaPackages = lua: [ lua.luadbi-postgresql ];
       };
       admins = [ "kurnevsky@kropki.org" ];
@@ -61,7 +64,10 @@
         "127.0.0.1"
         "::1"
       ];
-      modules.server_contact_info = true;
+      modules = {
+        bosh = true;
+        server_contact_info = true;
+      };
       extraModules = [
         "websocket"
         "http_openmetrics"
@@ -86,6 +92,7 @@
         turn_external_port = 47354;
         turn_external_secret = ENV_TURN_SECRET;
         http_external_url = "https://kropki.org/"
+        consider_bosh_secure = true;
         consider_websocket_secure = true;
         statistics = "internal";
         statistics_interval = "manual";
@@ -109,6 +116,8 @@
             proxyPass = localhost;
             proxyWebsockets = true;
           };
+          "= /http-bind".proxyPass = localhost;
+          "/push".proxyPass = localhost;
           "= /.well-known/host-meta".proxyPass = localhost;
           "= /.well-known/host-meta.json".proxyPass = localhost;
         };
