@@ -6,12 +6,12 @@
 {
   networking.firewall = {
     allowedTCPPorts = [
-      47354
-      47356
+      config.services.coturn.listening-port
+      config.services.coturn.tls-listening-port
     ];
     allowedUDPPorts = [
-      47354
-      47356
+      config.services.coturn.listening-port
+      config.services.coturn.tls-listening-port
     ];
   };
 
@@ -19,8 +19,6 @@
     enable = true;
     use-auth-secret = true;
     realm = "kropki.org";
-    listening-port = 47354;
-    tls-listening-port = 47356;
     cert = "${config.security.acme.certs."kropki.org".directory}/fullchain.pem";
     pkey = "${config.security.acme.certs."kropki.org".directory}/key.pem";
     static-auth-secret-file = config.age.secrets.coturn.path or "/secrets/coturn";

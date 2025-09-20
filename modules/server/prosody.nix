@@ -89,7 +89,7 @@
           security = { "mailto:kurnevsky@kropki.org", "xmpp:kurnevsky@kropki.org" };
         }
         turn_external_host = "kropki.org";
-        turn_external_port = 47354;
+        turn_external_port = ${builtins.toString config.services.coturn.listening-port};
         turn_external_secret = ENV_TURN_SECRET;
         http_external_url = "https://kropki.org/"
         consider_bosh_secure = true;

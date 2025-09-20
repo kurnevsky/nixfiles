@@ -18,10 +18,10 @@
         allow_registration = true;
         registration_token_file = config.age.secrets.continuwuity.path or "/secrets/continuwuity";
         turn_uris = [
-          "turns:kropki.org:47354?transport=udp"
-          "turns:kropki.org:47354?transport=tcp"
-          "turn:kropki.org:47354?transport=udp"
-          "turn:kropki.org:47354?transport=tcp"
+          "turns:kropki.org:${builtins.toString config.services.coturn.listening-port}?transport=udp"
+          "turns:kropki.org:${builtins.toString config.services.coturn.listening-port}?transport=tcp"
+          "turn:kropki.org:${builtins.toString config.services.coturn.listening-port}?transport=udp"
+          "turn:kropki.org:${builtins.toString config.services.coturn.listening-port}?transport=tcp"
         ];
         turn_secret_file = config.age.secrets.coturn.path or "/secrets/coturn";
       };
