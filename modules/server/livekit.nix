@@ -9,7 +9,10 @@
       enable = true;
       openFirewall = true;
       keyFile = config.age.secrets.livekit.path or "/secrets/livekit";
-      settings.prometheus_port = 31049;
+      settings = {
+        room.auto_create = false;
+        prometheus.port = 31049;
+      };
     };
 
     lk-jwt-service = {

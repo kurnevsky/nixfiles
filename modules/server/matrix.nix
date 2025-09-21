@@ -55,7 +55,12 @@
               };
             in
             "200 '${builtins.toJSON json}'";
-          extraConfig = "add_header Content-Type application/json;";
+          extraConfig = ''
+            add_header Content-Type application/json;
+            add_header Access-Control-Allow-Methods GET;
+            add_header Access-Control-Allow-Origin *;
+            add_header Access-Control-Max-Age 7200;
+          '';
         };
         "= /.well-known/matrix/client" = {
           return =
@@ -72,7 +77,12 @@
               };
             in
             "200 '${builtins.toJSON json}'";
-          extraConfig = "add_header Content-Type application/json;";
+          extraConfig = ''
+            add_header Content-Type application/json;
+            add_header Access-Control-Allow-Methods GET;
+            add_header Access-Control-Allow-Origin *;
+            add_header Access-Control-Max-Age 7200;
+          '';
         };
       };
       matrix-federation = {
