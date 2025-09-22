@@ -30,6 +30,7 @@
   home-manager.users.root.xdg.configFile."rustic/rustic.toml".text = ''
     [global]
     no-progress = true
+    opentelemetry = "http://localhost:${builtins.toString config.services.prometheus.port}/api/v1/otlp/v1/metrics"
 
     [repository]
     repository = "/mnt/rustic"

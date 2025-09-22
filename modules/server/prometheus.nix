@@ -8,6 +8,7 @@
     enable = true;
     listenAddress = "127.0.0.1";
     checkConfig = "syntax-only";
+    extraFlags = [ "--web.enable-otlp-receiver" ];
     scrapeConfigs = [
       {
         job_name = "node";
