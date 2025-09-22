@@ -20,6 +20,7 @@
       enable = true;
       settings = {
         ANALYTICS_DISABLED = true;
+        APP_NAME = "Kropki ID";
         APP_URL = "https://id.kropki.org";
         TRUST_PROXY = true;
         DB_PROVIDER = "postgres";
