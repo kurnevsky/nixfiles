@@ -21,7 +21,7 @@
         DISABLE_LOCAL_AUTH = 1;
         OAUTH2_PROVIDER = "oidc";
         OAUTH2_CLIENT_ID = "b44fec60-0c21-4b1b-9a32-472b547a5341";
-        OAUTH2_CLIENT_SECRET_FILE = config.age.secrets.miniflux.path or "/secrets/miniflux";
+        OAUTH2_CLIENT_SECRET_FILE = "/run/credentials/miniflux.service/oauth2-client-secret";
         OAUTH2_REDIRECT_URL = "https://rss.kropki.org/oauth2/oidc/callback";
         OAUTH2_OIDC_DISCOVERY_ENDPOINT = "https://id.kropki.org";
         OAUTH2_USER_CREATION = 1;
@@ -51,9 +51,9 @@
 
   security.acme.certs."rss.kropki.org".group = "acme";
 
-  age.secrets.miniflux = {
-    file = ../../secrets/miniflux.age;
-    owner = "miniflux";
-    group = "miniflux";
-  };
+  systemd.services.miniflux.serviceConfig.LoadCredential = [
+    "oauth2-client-secret:${config.age.secrets.miniflux.path or "/secrets/miniflux"}"
+  ];
+
+  age.secrets.miniflux.file = ../../secrets/miniflux.age;
 }
