@@ -327,6 +327,7 @@
         groovy
         mono
         nodePackages.mermaid-cli
+        graphviz
         perl
         python3
         (pkgs.writeShellScriptBin "famulus" ''

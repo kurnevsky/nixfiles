@@ -1385,6 +1385,8 @@ which LANG was detected but these are ignored."
 
 (use-package mermaid-mode)
 
+(use-package graphviz-dot-mode)
+
 (use-package bats-mode)
 
 (use-package terraform-mode)
