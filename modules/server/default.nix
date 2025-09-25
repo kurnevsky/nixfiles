@@ -31,6 +31,7 @@
     ./navidrome.nix
     ./nginx.nix
     ./kropki.nix
+    ./i2pd.nix
     ./rustic.nix
     ./tt-rss.nix
   ];
