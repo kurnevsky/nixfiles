@@ -273,6 +273,8 @@
         newsboat
         rssguard
         # Messengers
+        dino
+        irssi
         kaidan
         telegram-desktop
         ## Matrix
