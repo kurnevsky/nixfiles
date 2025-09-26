@@ -33,6 +33,7 @@
     ./kropki.nix
     ./i2pd.nix
     ./rustic.nix
+    ./anki-sync-server.nix
     ./tt-rss.nix
   ];
 

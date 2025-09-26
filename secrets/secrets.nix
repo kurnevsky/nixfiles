@@ -60,6 +60,7 @@ in
   "prosody-turn.age".publicKeys = [ vps ];
   "rustic.age".publicKeys = [ vps ];
   "storage.age".publicKeys = [ vps ];
+  "anki.age".publicKeys = [ vps ];
 
   "motion.age".publicKeys = desktop;
   "scrutiny-collector.age".publicKeys = desktop;
