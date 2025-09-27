@@ -121,6 +121,7 @@
           default = true;
         };
         email.encryption.append = true;
+        session.rcpt.sub-addressing = true;
         metrics.prometheus.enable = true;
       };
     };
