@@ -121,7 +121,13 @@
           default = true;
         };
         email.encryption.append = true;
-        session.rcpt.sub-addressing = true;
+        session.rcpt.sub-addressing = [
+          {
+            "if" = "matches('^([^.]+)\.([^.]+)@(.+)$', rcpt)";
+            "then" = "$1 + '@' + $3";
+          }
+          { "else" = false; }
+        ];
         metrics.prometheus.enable = true;
       };
     };
