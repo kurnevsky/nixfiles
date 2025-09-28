@@ -419,7 +419,8 @@
       ];
 
     variables = {
-      EMAIL = "kurnevsky@gmail.com";
+      # Used by emacs
+      EMAIL = "kurnevsky@kropki.org";
       ALTERNATE_EDITOR = "nano";
       VIEWER = "less";
       # Fixes aspell when it's used as build time dependency,
@@ -988,6 +989,19 @@
           };
           accounts = {
             email.accounts = {
+              kropki = {
+                mbsync = {
+                  enable = true;
+                  create = "both";
+                  expunge = "both";
+                  extraConfig.account.AuthMech = "PLAIN";
+                };
+                primary = true;
+                maildir.path = "kropki";
+                userName = "kurnevsky";
+                imap.host = "kropki.org";
+                passwordCommand = "${pkgs.libsecret}/bin/secret-tool lookup id kropki";
+              };
               gmail = {
                 mbsync = {
                   enable = true;
@@ -999,7 +1013,6 @@
                   expunge = "both";
                   extraConfig.account.AuthMech = "PLAIN";
                 };
-                primary = true;
                 maildir.path = "gmail";
                 userName = "kurnevsky@gmail.com";
                 imap.host = "imap.gmail.com";

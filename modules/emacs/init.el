@@ -1143,7 +1143,7 @@ which LANG was detected but these are ignored."
   :custom
   (org-roam-capture-templates '(("d" "default" plain "%?"
                                   :target (file+head "${slug}.org.gpg"
-                                            "# -*- mode:org; epa-file-encrypt-to: (\"kurnevsky@gmail.com\") -*-\n#+title: ${title}\n")
+                                            "# -*- mode:org; epa-file-encrypt-to: (\"kurnevsky@kropki.org\") -*-\n#+title: ${title}\n")
                                   :unnarrowed t))))
 
 (use-package org-ql)
@@ -1664,6 +1664,21 @@ identifier and the position respectively."
     :models '("llama3-70b-8192"))
   (add-hook 'gptel-post-response-functions 'gptel-end-of-response))
 
+(use-package sendmail
+  :ensure nil
+  :custom
+  (send-mail-function 'smtpmail-send-it))
+
+(use-package smtpmail
+  :ensure nil
+  :custom
+  (smtpmail-smtp-server "kropki.org")
+  (smtpmail-smtp-service 587)
+  (smtpmail-servers-requiring-authorization ".*")
+  :config
+  (advice-add 'smtpmail-fqdn :override
+    (lambda () "localhost")))
+
 (use-package mu4e
   :commands mu4e
   :custom
@@ -1689,16 +1704,16 @@ identifier and the position respectively."
       (shr-render-region (point-min) (point-max))
       (goto-char (point-min))))
   (defvar mu4e-sent-folder-alternatives '("/[Gmail]/Sent Mail" ;; gmail
-                                           "/Sent Items" ;; outlook
+                                           "/Sent Items" ;; outlook, stalwart
                                            ))
   (defvar mu4e-drafts-folder-alternatives '("/[Gmail]/Drafts" ;; gmail
-                                             "/Drafts" ;; outlook
+                                             "/Drafts" ;; outlook, stalwart
                                              ))
   (defvar mu4e-trash-folder-alternatives '("/[Gmail]/Trash" ;; gmail
-                                            "/Deleted Items" ;; outlook
+                                            "/Deleted Items" ;; outtlook, stalwart
                                             ))
   (defvar mu4e-refile-folder-alternatives '("/[Gmail]/Archive" ;; gmail
-                                             "/Archive" ;; outlook
+                                             "/Archive" ;; outlook, stalwart
                                              ))
   (defun choose-mu4e-alternative (name alternatives)
     (string-remove-prefix "~/Maildir"
