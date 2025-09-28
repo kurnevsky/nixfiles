@@ -46,7 +46,7 @@
       forceSSL = true;
       kTLS = true;
       locations."/static/" = {
-        alias = "/srv/www/";
+        alias = "/srv/www/static/";
         tryFiles = "$uri =404";
         extraConfig = "expires 24h;";
       };

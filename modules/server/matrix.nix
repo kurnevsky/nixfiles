@@ -56,10 +56,11 @@
             in
             "200 '${builtins.toJSON json}'";
           extraConfig = ''
+            expires 24h;
             add_header Content-Type application/json;
             add_header Access-Control-Allow-Methods GET;
             add_header Access-Control-Allow-Origin *;
-            add_header Access-Control-Max-Age 7200;
+            add_header Access-Control-Max-Age 86400;
           '';
         };
         "= /.well-known/matrix/client" = {
@@ -78,10 +79,11 @@
             in
             "200 '${builtins.toJSON json}'";
           extraConfig = ''
+            expires 24h;
             add_header Content-Type application/json;
             add_header Access-Control-Allow-Methods GET;
             add_header Access-Control-Allow-Origin *;
-            add_header Access-Control-Max-Age 7200;
+            add_header Access-Control-Max-Age 86400;
           '';
         };
       };

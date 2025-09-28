@@ -10,6 +10,7 @@
     ./websocat-wg-server.nix
     ./pocket-id.nix
     ./stalwart.nix
+    ./wkd.nix
     ./miniflux.nix
     ./oauth2-proxy.nix
     ./wakapi.nix
