@@ -1674,6 +1674,7 @@ identifier and the position respectively."
   :custom
   (smtpmail-smtp-server "kropki.org")
   (smtpmail-smtp-service 587)
+  (smtpmail-smtp-user "kurnevsky")
   (smtpmail-servers-requiring-authorization ".*")
   :config
   (advice-add 'smtpmail-fqdn :override
