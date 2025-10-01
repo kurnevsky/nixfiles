@@ -42,6 +42,26 @@
         };
         matrix.delivery_receipts = true;
         backfill.enabled = true;
+        encryption = {
+          allow = true;
+          default = true;
+          require = true;
+          pickle_key = "$ENCRYPTION_PICKLE_KEY";
+          delete_keys = {
+            dont_store_outbound = true;
+            ratchet_on_decrypt = true;
+            delete_fully_used_on_decrypt = true;
+            delete_prev_on_new_session = true;
+            delete_on_device_delete = true;
+            periodically_delete_expired = true;
+            delete_outdated_inbound = true;
+          };
+          verification_levels = {
+            receive = "cross-signed-tofu";
+            send = "cross-signed-tofu";
+            share = "cross-signed-tofu";
+          };
+        };
       };
     };
   };
