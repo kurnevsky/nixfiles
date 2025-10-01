@@ -22,6 +22,7 @@
     ./coturn.nix
     ./livekit.nix
     ./matrix.nix
+    ./mautrix-whatsapp.nix
     ./prosody.nix
     ./yggdrasil.nix
     ./syncthing.nix
