@@ -25,7 +25,7 @@
   };
 
   environment.systemPackages = with pkgs; [
-    radeontop
+    amdgpu_top
     (import ../../modules/with-native-optimizations.nix config.networking.hostName (
       whisper-cpp.override {
         rocmSupport = true;
