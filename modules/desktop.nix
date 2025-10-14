@@ -91,7 +91,8 @@
           extraPackages = [ ffmpeg-full ];
         })
         dosbox
-        eiskaltdcpp
+        # TODO: broken
+        # eiskaltdcpp
         gimp3-with-plugins
         scrcpy
         gnome-themes-extra
@@ -161,7 +162,7 @@
         bubblewrap
         clinfo
         cuetools
-        curlHTTP3
+        curl
         davfs2
         dbus
         dmidecode
@@ -301,10 +302,10 @@
         openmw
         wesnoth
         # Databases
-        # TODO: broken
-        # cassandra
+        cassandra
         grafana-loki
-        kcat
+        # TODO: broken
+        # kcat
         # Wallets
         electrum
         monero-cli

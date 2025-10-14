@@ -21,13 +21,13 @@
   },
   "sponsorblock": {
     "id": "mnjggcdmjocbbbhaepdhchncahnbgone",
-    "sha256": "sha256:0xz44wpask19gfsbja211qr1dpczdxl9pashryfy5zn3qxx1pn5i",
-    "version": "6.0.1"
+    "sha256": "sha256:16yywnmx1rff8z5ady8qams80hvsy8sj7abgqwzs1842ipa1bqsy",
+    "version": "6.0.2"
   },
   "ublock-origin-lite": {
     "id": "ddkjiahejlhfcafbddmgiahcphecmpfh",
-    "sha256": "sha256:0jvf3wv8cfjwb0dh224rw1xi4zr0mmcvdqm30b62ry40kwc0597b",
-    "version": "2025.928.1920"
+    "sha256": "sha256:1apprnb8s0afg0byl73nr752n0ac0fm2acf8bjbyvrjh6ris1wf3",
+    "version": "2025.1012.1712"
   },
   "find-plus": {
     "id": "fddffkdncgkkdjobemgbpojjeffmmofb",
@@ -46,7 +46,7 @@
   },
   "keepassxc-browser": {
     "id": "oboonakemofpalcgghocfoadofidjkkk",
-    "sha256": "sha256:0hzcxgdv7xa97qvm1yc64agyg6pvhds0nfwhkx36ndk28db93w1p",
-    "version": "1.9.9.6"
+    "sha256": "sha256:107ylaaqfxh7c0qqxcyrx8n3m5lzlrdzgy26w8795nwk4x4785kh",
+    "version": "1.9.10"
   }
 }
