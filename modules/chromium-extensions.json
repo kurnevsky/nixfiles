@@ -11,8 +11,8 @@
   },
   "plasma-integration": {
     "id": "cimiefiiaegbelhefglklhhakcgmhkai",
-    "sha256": "sha256:0nix7ilqdk12fx5afqn1dswq9ana096d440zr7p8y9ijvjgd9vlv",
-    "version": "2.0"
+    "sha256": "sha256:1s5lkmlp0qsi4mazcvymzazc9s5fzjz7gjl68rij0jg3zxs1cqn3",
+    "version": "2.1"
   },
   "privacy-badger": {
     "id": "pkehgijcmpdhfbdbbnkijodmdjhbjlgp",
@@ -21,8 +21,8 @@
   },
   "sponsorblock": {
     "id": "mnjggcdmjocbbbhaepdhchncahnbgone",
-    "sha256": "sha256:16yywnmx1rff8z5ady8qams80hvsy8sj7abgqwzs1842ipa1bqsy",
-    "version": "6.0.2"
+    "sha256": "sha256:0371vhrzj1ffxf3zqdy7ns55nb1icrfv24dma4h1j6yrw8f89ac7",
+    "version": "6.0.3"
   },
   "ublock-origin-lite": {
     "id": "ddkjiahejlhfcafbddmgiahcphecmpfh",
