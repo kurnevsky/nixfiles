@@ -558,6 +558,11 @@
           port = 6668;
           destination = "irc.ilita.i2p";
         };
+        ssh = {
+          address = "127.0.0.1";
+          port = 6677;
+          destination = "kropkivvl72y7cjridmcdekzzbxm2pmtoy36bq6yczum3edq6o3q.b32.i2p";
+        };
       };
       yggdrasil.enable = true;
     };
