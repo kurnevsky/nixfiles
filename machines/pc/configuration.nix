@@ -24,29 +24,32 @@
     binfmt.emulatedSystems = [ "aarch64-linux" ];
   };
 
-  environment.systemPackages = with pkgs; [
-    amdgpu_top
-    (import ../../modules/with-native-optimizations.nix config.networking.hostName (
-      whisper-cpp.override {
-        rocmSupport = true;
-        rocmGpuTargets = "gfx1100";
-      }
-    ))
-    (import ../../modules/with-native-optimizations.nix config.networking.hostName (
-      pkgs.callPackage ../../modules/stable-diffusion-cpp.nix {
-        useRocm = true;
-        gpuTargets = "gfx1100";
-        inherit inputs;
-      }
-    ))
-    (import ../../modules/with-native-optimizations.nix config.networking.hostName (
-      llama-cpp.override {
-        rocmSupport = true;
-        rocmGpuTargets = "gfx1100";
-        vulkanSupport = true;
-      }
-    ))
-  ];
+  environment = {
+    systemPackages = with pkgs; [
+      amdgpu_top
+      (import ../../modules/with-native-optimizations.nix config.networking.hostName (
+        whisper-cpp.override {
+          rocmSupport = true;
+          rocmGpuTargets = "gfx1100";
+        }
+      ))
+      (import ../../modules/with-native-optimizations.nix config.networking.hostName (
+        pkgs.callPackage ../../modules/stable-diffusion-cpp.nix {
+          useRocm = true;
+          gpuTargets = "gfx1100";
+          inherit inputs;
+        }
+      ))
+      (import ../../modules/with-native-optimizations.nix config.networking.hostName (
+        llama-cpp.override {
+          rocmSupport = true;
+          rocmGpuTargets = [ "gfx1100" ];
+          vulkanSupport = true;
+        }
+      ))
+    ];
+    variables.RUSTICL_ENABLE = "radeonsi";
+  };
 
   networking.hostName = "pc";
 
@@ -60,9 +63,6 @@
       vaapiIntel
       intel-media-driver
       libvdpau-va-gl
-      intel-compute-runtime
-      rocmPackages.clr.icd
-      rocmPackages.clr
       mesa.opencl
     ];
   };
