@@ -281,6 +281,7 @@
         irssi
         kaidan
         telegram-desktop
+        simplex-chat-desktop
         ## Matrix
         element-desktop
         ## Tox
@@ -307,8 +308,7 @@
         # Databases
         cassandra
         grafana-loki
-        # TODO: broken
-        # kcat
+        kcat
         # Wallets
         electrum
         monero-cli

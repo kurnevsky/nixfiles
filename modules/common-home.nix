@@ -81,18 +81,13 @@
       settings.keyserver = "hkps://keys.openpgp.org";
     };
     git = {
-      userName = "Evgeny Kurnevsky";
-      userEmail = "kurnevsky@gmail.com";
-      signing = {
-        key = null;
-        signByDefault = true;
-      };
-      aliases = {
-        lol = "log --graph --decorate --pretty=oneline --abbrev-commit --all";
-      };
-      delta.enable = true;
-      lfs.enable = true;
-      extraConfig = {
+      settings = {
+        user = {
+          name = "Evgeny Kurnevsky";
+          email = "kurnevsky@gmail.com";
+        };
+        tag.gpgSign = true;
+        alias.lol = "log --graph --decorate --pretty=oneline --abbrev-commit --all";
         init.defaultBranch = "master";
         push.default = "simple";
         merge.conflictstyle = "diff3";
@@ -102,6 +97,11 @@
         gitlab.user = "kurnevsky";
         gitlab."gitlab.evolution.com/api/v4".user = "ykurneuski";
       };
+      lfs.enable = true;
+    };
+    delta = {
+      enable = true;
+      enableGitIntegration = true;
     };
     nix-index.enable = true;
   };
