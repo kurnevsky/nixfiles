@@ -61,6 +61,7 @@
     "C.UTF-8/UTF-8"
     "en_US.UTF-8/UTF-8"
     "ru_RU.UTF-8/UTF-8"
+    "pl_PL.UTF-8/UTF-8"
   ];
 
   console = {
@@ -136,12 +137,14 @@
           dicts: with dicts; [
             en
             ru
+            pl
           ]
         ))
         (hunspell.withDicts (
           dicts: with dicts; [
             en_US
             ru_RU
+            pl_PL
           ]
         ))
         aircrack-ng

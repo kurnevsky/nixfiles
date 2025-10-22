@@ -262,7 +262,7 @@
             };
             kxkbrc = {
               Layout = {
-                LayoutList = "us,ru";
+                LayoutList = "us,ru,pl";
                 Options = "grp:caps_toggle,grp_led:caps";
                 SwitchMode = "Global";
                 Use = true;
