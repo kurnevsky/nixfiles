@@ -10,7 +10,7 @@
         device = "nodev";
       };
     };
-    initrd.kernelModules = [ "i915" ];
+    initrd.kernelModules = [ "amdgpu" ];
     extraModulePackages = with config.boot.kernelPackages; [
       acpi_call
       v4l2loopback
@@ -33,12 +33,9 @@
   systemd.network.networks."99-wg0".address = [ "192.168.14.3/32" ];
 
   hardware = {
-    cpu.intel.updateMicrocode = true;
+    cpu.amd.updateMicrocode = true;
     graphics.extraPackages = with pkgs; [
-      vaapiIntel
-      intel-media-driver
       libvdpau-va-gl
-      intel-compute-runtime
       mesa.opencl
     ];
   };
@@ -48,10 +45,9 @@
       enable = true;
       fileSystems = [ "/" ];
     };
-    throttled.enable = true;
     fprintd.enable = true;
     xserver = {
-      videoDrivers = [ "intel" ];
+      videoDrivers = [ "amdgpu" ];
       deviceSection = ''
         Option "TearFree" "true"
       '';
@@ -112,11 +108,11 @@
     };
   };
 
-  system.stateVersion = "21.11";
+  system.stateVersion = "25.05";
 
   home-manager.users = {
-    root.home.stateVersion = "21.11";
-    kurnevsky.home.stateVersion = "21.11";
-    ww.home.stateVersion = "21.11";
+    root.home.stateVersion = "25.05";
+    kurnevsky.home.stateVersion = "25.05";
+    ww.home.stateVersion = "25.05";
   };
 }
