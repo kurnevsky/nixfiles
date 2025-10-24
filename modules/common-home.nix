@@ -86,7 +86,7 @@
           name = "Evgeny Kurnevsky";
           email = "kurnevsky@gmail.com";
         };
-        tag.gpgSign = true;
+        commit.gpgSign = true;
         alias.lol = "log --graph --decorate --pretty=oneline --abbrev-commit --all";
         init.defaultBranch = "master";
         push.default = "simple";
