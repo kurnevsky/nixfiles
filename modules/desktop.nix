@@ -171,8 +171,7 @@
         dmidecode
         docker-compose
         dosfstools
-        # TODO: broken
-        # dsniff
+        dsniff
         e2fsprogs
         efibootmgr
         exfat
@@ -272,7 +271,7 @@
         # Browsers
         firefox
         ungoogled-chromium
-        tor-browser-bundle-bin
+        tor-browser
         # RSS
         newsboat
         rssguard
@@ -297,12 +296,12 @@
         vlc
         ## Audio
         deadbeef-with-plugins
-        mpc_cli
+        mpc
         ncmpc
         # Games
         cataclysm-dda
         hedgewars
-        minetest
+        luanti
         openmw
         wesnoth
         # Databases
@@ -310,7 +309,8 @@
         grafana-loki
         kcat
         # Wallets
-        electrum
+        # TODO: broken
+        # electrum
         monero-cli
         feather
         # Audio

@@ -40,17 +40,6 @@
       viu = super.viu.override { withSixel = true; };
     })
     (_self: super: {
-      tor-browser-bundle-bin = super.symlinkJoin {
-        inherit (super.tor-browser-bundle-bin) name;
-        paths = [ super.tor-browser-bundle-bin ];
-        buildInputs = [ super.makeWrapper ];
-        postBuild = ''
-          wrapProgram "$out/bin/tor-browser" \
-            --set MOZ_ENABLE_WAYLAND 1
-        '';
-      };
-    })
-    (_self: super: {
       telegram-desktop = super.telegram-desktop.override {
         unwrapped = super.telegram-desktop.unwrapped.overrideAttrs (old: {
           patches = (old.patches or [ ]) ++ [

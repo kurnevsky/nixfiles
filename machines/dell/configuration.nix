@@ -59,7 +59,7 @@
     cpu.intel.updateMicrocode = true;
     graphics.extraPackages = with pkgs; [
       # Discrete GPU can be used with DRI_PRIME=1 LIBVA_DRIVER_NAME=radeonsi
-      vaapiIntel
+      intel-vaapi-driver
       libvdpau-va-gl
       mesa.opencl
     ];

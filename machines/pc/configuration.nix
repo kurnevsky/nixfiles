@@ -60,7 +60,7 @@
   hardware = {
     cpu.intel.updateMicrocode = true;
     graphics.extraPackages = with pkgs; [
-      vaapiIntel
+      intel-vaapi-driver
       intel-media-driver
       libvdpau-va-gl
       mesa.opencl
