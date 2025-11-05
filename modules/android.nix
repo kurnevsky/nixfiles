@@ -57,7 +57,7 @@ in
     unzip
     diffutils
     findutils
-    utillinux
+    util-linux
     which
     ripgrep
     pass
