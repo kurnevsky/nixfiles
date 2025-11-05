@@ -7,7 +7,7 @@
   closureInfo,
   xdg-dbus-proxy,
   writeText,
-  system,
+  stdenv,
 }:
 
 drv:
@@ -113,7 +113,7 @@ let
       Application = {
         name = "com.sandbox.${target-name}";
         runtime = "runtime/com.sandbox.Platform/${
-          flatpakArchitectures.${system} or "unknown-arch-${system}"
+          flatpakArchitectures.${stdenv.hostPlatform.system} or "unknown-arch-${stdenv.hostPlatform.system}"
         }/1";
       };
       Instance.instance-id = target-name;

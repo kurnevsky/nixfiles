@@ -36,13 +36,13 @@
   },
   "i-still-dont-care-about-cookies": {
     "id": "edibdbjcniadpccecjdfdjjppcpchdlm",
-    "sha256": "sha256:0i5l4xr92swpg37b2r4d4a3zfn5f57i33an05bfym61n2yp5slvn",
-    "version": "1.1.5"
+    "sha256": "sha256:1av6wn14hivwlyw0v6rmk9c808hfxhk9ppxv42lbmpwywa8ap137",
+    "version": "1.1.7"
   },
   "refined-github": {
     "id": "hlepfoohegkhhmjieoechaddaejaokhf",
-    "sha256": "sha256:0fmlmyvvgflknsmv4mkp2sy64s5m4v5jfk079xcg0032qq553n4q",
-    "version": "25.10.2"
+    "sha256": "sha256:070m2q9fv7lbx1daji5djhmwhyf4i8g6br94qn7xzkbqqrd1036w",
+    "version": "25.11.4"
   },
   "keepassxc-browser": {
     "id": "oboonakemofpalcgghocfoadofidjkkk",
