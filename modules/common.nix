@@ -45,7 +45,6 @@ in
         "evo:aBUuIOLObUPUBWBIW0XGyMZW2Wor5z3ZNtaRynZ35UY="
         "vps:jFnutzjWmSNY5q/frkSkijlCh8GfdNa1Mpm5Y0N15sQ="
       ];
-      trusted-users = [ "nix-ssh" ];
     };
     extraOptions = ''
       !include ${config.age.secrets.github.path or "/secrets/github"}
@@ -57,6 +56,7 @@ in
     sshServe = {
       enable = true;
       write = true;
+      trusted = true;
       inherit keys;
     };
   };
