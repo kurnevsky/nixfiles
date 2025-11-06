@@ -20,10 +20,7 @@
   security.acme = {
     acceptTerms = true;
     defaults.email = "kurnevsky@gmail.com";
-    certs = {
-      "kurnevsky.net".group = "acme";
-      "kropki.org".group = "acme";
-    };
+    certs."kropki.org".group = "acme";
   };
 
   users.groups.acme.members = [
