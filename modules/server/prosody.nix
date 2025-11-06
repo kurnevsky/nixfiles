@@ -121,11 +121,22 @@
           "= /.well-known/host-meta".proxyPass = localhost;
           "= /.well-known/host-meta.json".proxyPass = localhost;
         };
+        "conference.kropki.org" = {
+          http3 = true;
+          quic = true;
+          forceSSL = true;
+          kTLS = true;
+          useACMEHost = "kropki.org";
+          sslCertificate = "${config.security.acme.certs."kropki.org".directory}/fullchain.pem";
+          sslCertificateKey = "${config.security.acme.certs."kropki.org".directory}/key.pem";
+          locations."/".proxyPass = localhost;
+        };
         "upload.kropki.org" = {
           http3 = true;
           quic = true;
           forceSSL = true;
           kTLS = true;
+          useACMEHost = "kropki.org";
           sslCertificate = "${config.security.acme.certs."kropki.org".directory}/fullchain.pem";
           sslCertificateKey = "${config.security.acme.certs."kropki.org".directory}/key.pem";
           locations."/".proxyPass = localhost;
