@@ -3,28 +3,19 @@
 {
   boot.tmp.cleanOnBoot = true;
 
-  environment = {
-    systemPackages =
-      with pkgs;
-      [
-        (pass-wayland.withExtensions (
-          ext: with ext; [
-            pass-otp
-            pass-update
-          ]
-        ))
-        gnupg
-        firefox-mobile
-        telegram-desktop
-        wesnoth
-        megapixels
+  environment.systemPackages = with pkgs; [
+    (pass-wayland.withExtensions (
+      ext: with ext; [
+        pass-otp
+        pass-update
       ]
-      ++ (with pkgs.kdePackages; [
-        qmlkonsole
-        okular
-      ]);
-    plasma5.excludePackages = with pkgs.kdePackages; [ konsole ];
-  };
+    ))
+    gnupg
+    firefox-mobile
+    telegram-desktop
+    wesnoth
+    megapixels
+  ];
 
   i18n.supportedLocales = [
     "C.UTF-8/UTF-8"
@@ -68,20 +59,23 @@
     sensor.iio.enable = true;
   };
 
-  services.xserver = {
-    enable = true;
-    desktopManager.plasma5.mobile.enable = true;
-    displayManager = {
-      lightdm = {
+  services = {
+    displayManager.autoLogin = {
+      enable = true;
+      user = "kurnevsky";
+    };
+    xserver = {
+      enable = true;
+      desktopManager.phosh = {
+        enable = true;
+        user = "kurnevsky";
+        group = "users";
+      };
+      displayManager.lightdm = {
         enable = true;
         extraSeatDefaults = ''
           session-cleanup-script=${pkgs.procps}/bin/pkill -P1 -fx ${pkgs.lightdm}/sbin/lightdm
         '';
-      };
-      defaultSession = "plasma-mobile";
-      autoLogin = {
-        enable = true;
-        user = "kurnevsky";
       };
     };
   };
