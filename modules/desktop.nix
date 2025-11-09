@@ -293,6 +293,7 @@
         oculante
         ## Video
         mpv
+        video2x
         vlc
         ## Audio
         deadbeef-with-plugins

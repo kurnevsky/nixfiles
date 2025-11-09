@@ -24,7 +24,23 @@
           super.kdePackages.plasma-browser-integration
         ];
       };
-      mpv = super.mpv.override { scripts = with super.mpvScripts; [ mpris ]; };
+      mpv = super.mpv.override {
+        mpv = super.mpv-unwrapped.override {
+          vapoursynthSupport = true;
+          # --hwdec=auto-copy --vf=vapoursynth=rife.vpy:buffered-frames=8:concurrent-frames=32 --hr-seek-framedrop=no --video-sync=display-resample
+          vapoursynth = super.vapoursynth.withPlugins [
+            (super.callPackage ./rife-ncnn.nix { })
+          ];
+        };
+        extraMakeWrapperArgs = [
+          # Add paths to required libraries
+          "--prefix"
+          "LD_LIBRARY_PATH"
+          ":"
+          "/run/opengl-driver/lib:${super.lib.makeLibraryPath [ super.ocl-icd ]}"
+        ];
+        scripts = with super.mpvScripts; [ mpris ];
+      };
       _7zz = super._7zz.override { enableUnfree = true; };
       p7zip = super.p7zip.override { enableUnfree = true; };
       isync = super.symlinkJoin {
