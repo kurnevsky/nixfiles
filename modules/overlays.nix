@@ -30,6 +30,7 @@
           # --hwdec=auto-copy --vf=vapoursynth=rife.vpy:buffered-frames=8:concurrent-frames=32 --hr-seek-framedrop=no --video-sync=display-resample
           vapoursynth = super.vapoursynth.withPlugins [
             (super.callPackage ./rife-ncnn.nix { })
+            (super.callPackage ./vs-miscfilters-obsolete.nix { })
           ];
         };
         extraMakeWrapperArgs = [
