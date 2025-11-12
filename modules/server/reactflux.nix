@@ -12,13 +12,13 @@
 
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "ReactFlux";
-  version = "2025.11.01";
+  version = "2025.11.08";
 
   src = fetchFromGitHub {
     owner = "electh";
     repo = "ReactFlux";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-zfWIOgIrmI4zoV+4VkVACP5H+4tMs+m7DSfGoXS9V3w=";
+    hash = "sha256-QrIvn7WWOuSbjjNS7SutI3eA2rV0hlbk/HtHWAaMTNs=";
   };
 
   nativeBuildInputs = [
@@ -36,6 +36,9 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     substituteInPlace src/scripts/version-info.js \
       --replace-fail 'execSync("git rev-parse --short HEAD").toString().trim()' '"-"' \
       --replace-fail 'execSync("git log -1 --format=%cd --date=iso").toString().trim()' '"${finalAttrs.version}"'
+
+    substituteInPlace src/App.jsx \
+      --replace-fail 'useVersionCheck()' '{ hasUpdate: false }'
   '';
 
   buildPhase = ''
