@@ -71,6 +71,11 @@
     earlySetup = true;
   };
 
+  # TODO: https://github.com/NixOS/nixpkgs/pull/460637
+  nixpkgs.config.permittedInsecurePackages = [
+    "jitsi-meet-1.0.8792"
+  ];
+
   environment = {
     systemPackages =
       with pkgs;
