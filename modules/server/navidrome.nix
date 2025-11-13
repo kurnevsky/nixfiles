@@ -4,7 +4,7 @@
       enable = true;
       settings = {
         BaseUrl = "https://music.kropki.org";
-        ReverseProxyWhitelist = "127.0.0.1/0";
+        ReverseProxyWhitelist = "::1/128,127.0.0.1/8";
         ReverseProxyUserHeader = "X-Preferred-Username";
         "Scanner.PurgeMissing" = "always";
         EnableTranscodingConfig = true;
