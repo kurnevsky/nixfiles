@@ -38,6 +38,7 @@ in
       description = "Motion Service user";
       extraGroups = [ "video" ];
       home = homeDir;
+      homeMode = "755";
       createHome = true;
       isSystemUser = true;
     };
