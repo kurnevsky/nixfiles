@@ -69,6 +69,8 @@ in
   "anki.age".publicKeys = [ vps ];
 
   "motion.age".publicKeys = desktop;
+  "motion-xmpp.age".publicKeys = desktop;
+  "motion-xmpp-recipients.age".publicKeys = desktop;
   "scrutiny-collector.age".publicKeys = desktop;
 
   "hans.age".publicKeys = all;

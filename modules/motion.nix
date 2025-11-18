@@ -2,10 +2,15 @@
 
 let
   homeDir = "/var/lib/motion";
+  on-save = pkgs.writeShellScriptBin "on-save" ''
+    echo "Motion detected!" | ${pkgs.lib.getExe pkgs.go-sendxmpp} -f ${
+      config.age.secrets.motion-xmpp.path or "/secrets/motion-xmpp"
+    } -h "$1" -r ${config.age.secrets.motion-xmpp-recipients.path or "/secrets/motion-xmpp-recipients"}
+  '';
   motion-config = pkgs.writeText "motion.conf" ''
-    videodevice /dev/video1
-    width 1280
-    height 720
+    video_device /dev/video1
+    width 1920
+    height 1080
     locate_motion_mode on
     locate_motion_style redbox
     threshold_tune on
@@ -21,6 +26,7 @@ let
     stream_port 8081
     stream_localhost off
     stream_auth_method 2
+    on_picture_save ${pkgs.lib.getExe on-save} %f
   '';
 in
 {
@@ -58,5 +64,23 @@ in
       cat ${motion-config} ${config.age.secrets.motion.path or "/secrets/motion"} > /tmp/motion.conf
       exec ${pkgs.motion}/bin/motion -n -c /tmp/motion.conf
     '';
+  };
+
+  age.secrets = {
+    motion = {
+      file = ../secrets/motion.age;
+      mode = "440";
+      group = "secrets-motion";
+    };
+    motion-xmpp = {
+      file = ../secrets/motion-xmpp.age;
+      mode = "440";
+      group = "secrets-motion";
+    };
+    motion-xmpp-recipients = {
+      file = ../secrets/motion-xmpp-recipients.age;
+      mode = "440";
+      group = "secrets-motion";
+    };
   };
 }

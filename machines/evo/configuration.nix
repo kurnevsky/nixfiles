@@ -66,11 +66,6 @@
     ww.file = ../../secrets/ww-evo.age;
     github.file = ../../secrets/github.age;
     store.file = ../../secrets/store-evo.age;
-    motion = {
-      file = ../../secrets/motion.age;
-      mode = "440";
-      group = "secrets-motion";
-    };
     hans = {
       file = ../../secrets/hans.age;
       owner = "hans";
