@@ -123,6 +123,15 @@
           }
         ];
       }
+      {
+        job_name = "air-1";
+        scrape_interval = "10s";
+        static_configs = [
+          {
+            targets = [ "localhost:9926" ];
+          }
+        ];
+      }
     ];
     exporters = {
       node = {
