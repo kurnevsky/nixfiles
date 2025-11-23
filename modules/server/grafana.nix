@@ -114,6 +114,7 @@
       name = "forgejo.json";
       sha256 = "sha256:08gl3rf3mjd8mawrn1ryh9q5d3p599a9lgdw0035p9f93v8xm559";
     };
+    "grafana-dashboards/air-1.json".source = ./air-1.json;
   };
 
   age.secrets.grafana = {
