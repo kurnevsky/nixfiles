@@ -41,6 +41,8 @@
           auth_url = "https://id.kropki.org/authorize";
           token_url = "https://id.kropki.org/api/oidc/token";
           api_url = "https://id.kropki.org/api/oidc/userinfo";
+          role_attribute_path = "grafana_role";
+          allow_assign_grafana_admin = true;
           use_pkce = true;
           use_refresh_token = true;
         };
