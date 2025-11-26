@@ -51,11 +51,10 @@
         ssl.key = "${config.security.acme.certs."kropki.org".directory}/key.pem";
       };
       muc = [ { domain = "conference.kropki.org"; } ];
-      # httpFileShare = {
-      #   domain = "upload.kropki.org";
-      #   http_external_url = "https://upload.kropki.org/";
-      # };
-      xmppComplianceSuite = false;
+      httpFileShare = {
+        domain = "upload.kropki.org";
+        http_external_url = "https://upload.kropki.org/";
+      };
       httpInterfaces = [
         "127.0.0.1"
         "::1"
@@ -96,13 +95,6 @@
         consider_websocket_secure = true;
         statistics = "internal";
         statistics_interval = "manual";
-
-        Component "upload.kropki.org" "http_file_share"
-          modules_disabled = { "s2s" }
-          http_external_url = "https://upload.kropki.org/"
-          http_file_share_daily_quota = 104857600
-          http_file_share_expires_after = "1 week"
-          http_file_share_size_limit = 10485760
       '';
     };
 
