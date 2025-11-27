@@ -16,6 +16,7 @@
         POLLING_FREQUENCY = 30;
         POLLING_SCHEDULER = "entry_frequency";
         SCHEDULER_ENTRY_FREQUENCY_FACTOR = 2;
+        POLLING_PARSING_ERROR_LIMIT = 0;
         HTTP_CLIENT_USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64; rv:142.0) Gecko/20100101 Firefox/142.0";
         CREATE_ADMIN = 0;
         DISABLE_LOCAL_AUTH = 1;
