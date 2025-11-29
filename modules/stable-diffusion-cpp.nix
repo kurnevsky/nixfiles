@@ -5,9 +5,15 @@
   config,
   git,
   cmake,
+
   rocmPackages,
-  useRocm ? config.rocmSupport,
+  rocmSupport ? config.rocmSupport,
   gpuTargets ? builtins.concatStringsSep ";" rocmPackages.clr.gpuTargets,
+
+  shaderc,
+  vulkan-headers,
+  vulkan-loader,
+  vulkanSupport ? false,
 }:
 
 stdenv.mkDerivation {
@@ -21,27 +27,32 @@ stdenv.mkDerivation {
     git
   ];
 
-  buildInputs = lib.optionals useRocm (
+  buildInputs = lib.optionals rocmSupport (
     with rocmPackages;
     [
       clr
       hipblas
       rocblas
     ]
-  );
+  ) ++ lib.optionals vulkanSupport [
+    shaderc
+    vulkan-headers
+    vulkan-loader
+  ];
 
   cmakeFlags =
     [
-      (lib.cmakeBool "GGML_HIP" useRocm)
-      (lib.cmakeBool "SD_HIPBLAS" useRocm)
+      (lib.cmakeBool "GGML_HIP" rocmSupport)
+      (lib.cmakeBool "SD_HIPBLAS" rocmSupport)
+      (lib.cmakeBool "SD_VULKAN" vulkanSupport)
     ]
-    ++ lib.optionals useRocm [
+    ++ lib.optionals rocmSupport [
       (lib.cmakeFeature "CMAKE_HIP_COMPILER" "${rocmPackages.clr.hipClangPath}/clang++")
       (lib.cmakeFeature "CMAKE_HIP_ARCHITECTURES" gpuTargets)
       (lib.cmakeFeature "AMDGPU_TARGETS" gpuTargets)
     ];
 
-  env = lib.optionalAttrs useRocm {
+  env = lib.optionalAttrs rocmSupport {
     ROCM_PATH = "${rocmPackages.clr}";
     HIP_DEVICE_LIB_PATH = "${rocmPackages.rocm-device-libs}/amdgcn/bitcode";
   };

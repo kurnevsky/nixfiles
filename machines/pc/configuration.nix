@@ -35,7 +35,8 @@
       ))
       (import ../../modules/with-native-optimizations.nix config.networking.hostName (
         pkgs.callPackage ../../modules/stable-diffusion-cpp.nix {
-          useRocm = true;
+          vulkanSupport = false;
+          rocmSupport = true;
           gpuTargets = "gfx1100";
           inherit inputs;
         }
