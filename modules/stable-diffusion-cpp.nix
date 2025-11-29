@@ -41,7 +41,7 @@ stdenv.mkDerivation {
       (lib.cmakeFeature "AMDGPU_TARGETS" gpuTargets)
     ];
 
-  env = lib.optionals useRocm {
+  env = lib.optionalAttrs useRocm {
     ROCM_PATH = "${rocmPackages.clr}";
     HIP_DEVICE_LIB_PATH = "${rocmPackages.rocm-device-libs}/amdgcn/bitcode";
   };
