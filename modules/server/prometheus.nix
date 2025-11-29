@@ -128,7 +128,7 @@
         scrape_interval = "10s";
         static_configs = [
           {
-            targets = [ "localhost:9926" ];
+            targets = [ "pc:9926" ];
           }
         ];
       }
