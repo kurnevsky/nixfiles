@@ -278,7 +278,6 @@
         # Messengers
         dino
         irssi
-        kaidan
         telegram-desktop
         simplex-chat-desktop
         ## Matrix
