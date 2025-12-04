@@ -196,6 +196,23 @@
             ];
           }
         )
+        (
+          { pkgs, ... }:
+          let
+            patchesDrv = pkgs.applyPatches {
+              src = pkgs.path;
+              patches = [
+                (pkgs.fetchpatch {
+                  url = "https://patch-diff.githubusercontent.com/raw/NixOS/nixpkgs/pull/467572.diff";
+                  hash = "sha256-QHiFjSTZaz/FJRoFeX2HE9idn164lah8WvJW+1wKlHs=";
+                })
+              ];
+            };
+            patchedPkgs = import patchesDrv { inherit (pkgs.stdenv.targetPlatform) system; };
+          in {
+            nixpkgs.overlays = [ (_self: _super: { inherit (patchedPkgs) linuxKernel; }) ];
+          }
+        )
       ];
       desktopModules = commonModules ++ [
         {
