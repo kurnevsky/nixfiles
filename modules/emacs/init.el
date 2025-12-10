@@ -1584,7 +1584,7 @@ identifier and the position respectively."
   :init
   (setq lsp-metals-server-command "env")
   :custom
-  (lsp-metals-server-args '("JAVA_TOOL_OPTIONS=-Dmetals.allow-multiline-string-formatting=off -Dmetals.icons=unicode" "metals"))
+  (lsp-metals-server-args '("JAVA_TOOL_OPTIONS=-Dmetals.allow-multiline-string-formatting=off -Dmetals.icons=unicode -Dmetals.startMcpServer=true" "metals"))
   (lsp-metals-super-method-lenses-enabled t)
   (lsp-metals-enable-semantic-highlighting t)
   (lsp-metals-treeview-views '("metalsPackages" "metalsBuild")))
