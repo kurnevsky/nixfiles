@@ -57,6 +57,25 @@
       viu = super.viu.override { withSixel = true; };
     })
     (_self: super: {
+      opencode = super.opencode.overrideAttrs (old: rec {
+        node_modules = old.node_modules.overrideAttrs (old_modules: {
+          patches = (old_modules.patches or [ ]) ++ [
+            ./opencode.patch
+          ];
+
+          outputHash = "sha256-sZNJOkMDw2/rO95oVKrMKfV86Of8qFzb6elFLppSRsI=";
+        });
+
+        configurePhase = ''
+          runHook preConfigure
+
+          cp -R ${node_modules}/. .
+
+          runHook postConfigure
+        '';
+      });
+    })
+    (_self: super: {
       telegram-desktop = super.telegram-desktop.override {
         unwrapped = super.telegram-desktop.unwrapped.overrideAttrs (old: {
           patches = (old.patches or [ ]) ++ [

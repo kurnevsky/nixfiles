@@ -221,6 +221,7 @@
         mu
         nettools
         nmap
+        opencode
         openssl
         pandoc
         parallel
