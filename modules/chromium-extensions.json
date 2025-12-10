@@ -1,8 +1,8 @@
 {
   "dark-reader": {
     "id": "eimadpbcbfnmbkopoojfekhnkhdbieeh",
-    "sha256": "sha256:0yc40bbyw2d8r3s57dd9ynqbg3ah5y1vc9hk0b599xbixsmwzwj7",
-    "version": "4.9.115"
+    "sha256": "sha256:0bv3x2mwxdcr36qyfmgj6v5zmrywv2wfg8qrkai7vxws1lbv3d91",
+    "version": "4.9.117"
   },
   "decentraleyes": {
     "id": "ldpochfccmkkmhdbclfhpagapcfdljkj",
@@ -26,8 +26,8 @@
   },
   "ublock-origin-lite": {
     "id": "ddkjiahejlhfcafbddmgiahcphecmpfh",
-    "sha256": "sha256:08scy2mcv5qn25x7nakwdqxcv0xbq3ih91kvhpj09wgri6va07m8",
-    "version": "2025.1123.1640"
+    "sha256": "sha256:1bmnr25g43zz7hrbvbvq1vx2jiv03lr30gvvmivpn69zy7yg6l7a",
+    "version": "2025.1207.2142"
   },
   "find-plus": {
     "id": "fddffkdncgkkdjobemgbpojjeffmmofb",
@@ -36,8 +36,8 @@
   },
   "i-still-dont-care-about-cookies": {
     "id": "edibdbjcniadpccecjdfdjjppcpchdlm",
-    "sha256": "sha256:14arvysgjadb37pml9b35zc6jsmnigjc7hz0pdwkiyfi7aasasdg",
-    "version": "1.1.8"
+    "sha256": "sha256:0zf320qf2n7ivrab2qwf9i0fxh8wbsf1gn9ldmy2kpa30g1wvdj6",
+    "version": "1.1.9"
   },
   "refined-github": {
     "id": "hlepfoohegkhhmjieoechaddaejaokhf",

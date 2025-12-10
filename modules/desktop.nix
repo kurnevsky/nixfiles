@@ -171,7 +171,8 @@
         dmidecode
         docker-compose
         dosfstools
-        dsniff
+        # TODO: broken
+        # dsniff
         e2fsprogs
         efibootmgr
         exfat
