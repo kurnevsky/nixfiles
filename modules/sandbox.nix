@@ -1187,6 +1187,26 @@ in
             ];
           })
         ];
+        opencode = wrap self.opencode [
+          {
+            name = "opencode";
+            whole-store = true;
+            etcs = [ "ssl/certs/ca-certificates.crt" ];
+            resolv-conf = true;
+            unsetenvs = [
+              "MAIL"
+              "SHELL"
+            ];
+            unshare-net = false;
+            whitelist = [
+              "~/.config/opencode/"
+              "~/.cache/opencode/"
+              "~/.local/share/opencode/"
+              "~/.local/state/opencode/"
+              "\$(pwd)"
+            ];
+          }
+        ];
         claws-mail = wrap self.claws-mail [
           (withFonts {
             name = "claws-mail";

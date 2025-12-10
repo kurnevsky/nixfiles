@@ -34,6 +34,7 @@ drv:
   shared-tmp ? false,
   camera ? false,
   args ? [ ],
+  whole-store ? false,
   extra-deps ? [ ],
   runtime-deps ? [ ],
   opengl ? false,
@@ -201,7 +202,9 @@ writeShellScriptBin target-name ''
     mapfile -t xauthority < <(echo -n "''${XAUTHORITY-}" | ${gnused}/bin/sed 's/.*/--ro-bind\n&\n&/')
   ''}
 
-  mapfile -t deps < <(${gnused}/bin/sed 's/.*/--ro-bind\n&\n&/' ${cinfo}/store-paths ${lib.concatStringsSep " " runtime-deps})
+  ${lib.optionalString (!whole-store) ''
+    mapfile -t deps < <(${gnused}/bin/sed 's/.*/--ro-bind\n&\n&/' ${cinfo}/store-paths ${lib.concatStringsSep " " runtime-deps})
+  ''}
 
   ${lib.optionalString (dbus != [ ] || system-dbus != [ ]) ''
     FIFO_TMP=$(mktemp -u)
@@ -250,7 +253,7 @@ writeShellScriptBin target-name ''
   ''}
 
   exec ${bubblewrap}/bin/bwrap \
-       "''${deps[@]}" \
+       ${if whole-store then "--ro-bind /nix/store/ /nix/store/" else ''"''${deps[@]}"''} \
        \
        ${lib.optionalString bin-sh "--ro-bind /bin/sh /bin/sh"} \
        \
