@@ -1625,31 +1625,15 @@ identifier and the position respectively."
 
 (use-package sideline-lsp)
 
-(use-package llama-cpp
-  :custom
-  (llama-cpp-chat-prompt "You are Echo, an advanced AI system.")
-  (llama-cpp-port 8081)
-  :config
-  (defun llama-cpp-magit-write-message ()
-    (interactive)
-    (with-temp-buffer
-      (magit-git-insert "diff" "--staged" "-U8")
-      (diff-mode)
-      (llama-cpp-code-region-task
-        (point-min)
-        (point-max)
-        "Write git commit message for the following diff. Your answer should contain only commit message with no additional explanation."))))
-
 (use-package gptel
   :custom
-  (gptel-model "llama3-70b-8192")
+  (gptel-model 'llama-3.3-70b-versatile)
   (gptel-backend (gptel-make-openai "Groq"
                    :host "api.groq.com"
                    :endpoint "/openai/v1/chat/completions"
                    :stream t
                    :key (lambda () (secrets-get-secret "Passwords" "Groq"))
-                   :models '("mixtral-8x7b-32768"
-                              "llama3-70b-8192")))
+                   :models '(llama-3.3-70b-versatile)))
   (gptel-directives
     '((default . "You are Echo, an advanced AI system.")
        (programming . "Provide code and only code as output without any additional text, prompt or note.")
@@ -1661,7 +1645,7 @@ identifier and the position respectively."
     :stream t
     :protocol "http"
     :host "localhost:8081"
-    :models '("llama3-70b-8192"))
+    :models '(gemma3))
   (add-hook 'gptel-post-response-functions 'gptel-end-of-response))
 
 (use-package sendmail
