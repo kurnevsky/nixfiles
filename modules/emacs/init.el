@@ -1648,6 +1648,8 @@ identifier and the position respectively."
     :models '(gemma3))
   (add-hook 'gptel-post-response-functions 'gptel-end-of-response))
 
+(use-package agent-shell)
+
 (use-package sendmail
   :ensure nil
   :custom
