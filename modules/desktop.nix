@@ -84,6 +84,7 @@
         })
         (pkgs.pkgsCross.mingw32.callPackage ./vkd3d-proton.nix { })
         (pkgs.pkgsCross.mingwW64.callPackage ./vkd3d-proton.nix { })
+        (callPackage ./mcptools.nix { })
         anki
         blender
         calibre
