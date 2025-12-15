@@ -172,8 +172,7 @@
         dmidecode
         docker-compose
         dosfstools
-        # TODO: broken
-        # dsniff
+        dsniff
         e2fsprogs
         efibootmgr
         exfat
@@ -254,7 +253,8 @@
         usbutils
         v4l-utils
         vdpauinfo
-        viu
+        # TODO: broken
+        # viu
         vorbis-tools
         vulkan-tools
         wakatime-cli

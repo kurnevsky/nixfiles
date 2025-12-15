@@ -63,7 +63,7 @@
             ./opencode.patch
           ];
 
-          outputHash = "sha256-sZNJOkMDw2/rO95oVKrMKfV86Of8qFzb6elFLppSRsI=";
+          outputHash = "sha256-j3K0cSBQaOhjHQcfodxGV1FV35zhpELFE56TK/6uS5s=";
         });
 
         configurePhase = ''
