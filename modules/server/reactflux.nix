@@ -12,13 +12,13 @@
 
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "ReactFlux";
-  version = "2025.11.08";
+  version = "2025.12.16";
 
   src = fetchFromGitHub {
     owner = "electh";
     repo = "ReactFlux";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-QrIvn7WWOuSbjjNS7SutI3eA2rV0hlbk/HtHWAaMTNs=";
+    hash = "sha256-0Vg1fhJL/d3KZ2O2vnS8hpZ8Tfw0CsRWnOXmckLXeCM=";
   };
 
   nativeBuildInputs = [
@@ -29,7 +29,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
   pnpmDeps = pnpm.fetchDeps {
     inherit (finalAttrs) pname version src;
     fetcherVersion = 1;
-    hash = "sha256-T8O294qACrJSmUSRY6kt9DZ3GKPPZ9TQo4bCX0MXUEI=";
+    hash = "sha256-7HaEDEiFBPjMtx+OHucCqQ7SaE0RAhYPLDssQbwsDoQ=";
   };
 
   postPatch = ''
