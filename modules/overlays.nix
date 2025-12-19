@@ -75,6 +75,22 @@
         '';
       });
     })
+    (self: super: {
+      tor-browser = self.symlinkJoin {
+        name = "tor-browser";
+        paths = [
+          (self.writeShellScriptBin "tor-browser" ''
+            ${self.coreutils}/bin/env \
+              TOR_SKIP_LAUNCH=1 \
+              TOR_SOCKS_PORT=9050 \
+              TOR_CONTROL_PORT=9051 \
+              TOR_CONTROL_COOKIE_AUTH_FILE=/var/lib/tor/control_auth_cookie \
+              ${super.tor-browser}/bin/tor-browser "$@"
+          '')
+          super.tor-browser
+        ];
+      };
+    })
     (_self: super: {
       telegram-desktop = super.telegram-desktop.override {
         unwrapped = super.telegram-desktop.unwrapped.overrideAttrs (old: {

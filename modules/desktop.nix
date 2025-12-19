@@ -36,6 +36,24 @@
     useDHCP = false;
     useNetworkd = true;
     networkmanager.enable = true;
+    nftables = {
+      enable = true;
+      ruleset = ''
+        table inet user_restrictions {
+          chain output {
+            # Priority 0 ensures this runs in standard filter hook order
+            type filter hook output priority 0; policy accept;
+
+            ct state established,related accept
+
+            meta skuid ${toString config.users.users.ww.uid} oifname "lo" tcp dport 9050 accept
+            meta skuid ${toString config.users.users.ww.uid} oifname "lo" tcp dport 9051 accept
+
+            meta skuid ${toString config.users.users.ww.uid} drop
+          }
+        }
+      '';
+    };
     firewall = {
       enable = true;
       allowedUDPPorts = [
@@ -772,6 +790,7 @@
       };
       hans.group = "hans";
     };
+    extraUsers.tor.homeMode = "755";
     groups.hans = { };
   };
 

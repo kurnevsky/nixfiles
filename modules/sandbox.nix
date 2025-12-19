@@ -1095,6 +1095,7 @@ in
               "own='org.mozilla.firefox.*'"
             ];
             ro-whitelist = [
+              "/var/lib/tor/control_auth_cookie"
               "~/.config/gtk-3.0/"
               "~/.config/kdeglobals"
               # if firefox finds /.flatpak-info it reads configs from this hardcoded path
