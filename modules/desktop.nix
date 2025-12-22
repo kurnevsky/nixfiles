@@ -375,8 +375,8 @@
         haskell-language-server
         hlint
         ## PureScript
-        nodePackages.purescript-language-server
-        nodePackages.purs-tidy
+        purescript-language-server
+        purs-tidy
         purescript
         spago-unstable
         purs-backend-es
@@ -615,18 +615,18 @@
     mpd = {
       enable = true;
       startWhenNeeded = true;
-      extraConfig = ''
-        audio_output {
-          type "httpd"
-          name "My HTTP Stream"
-          encoder "vorbis"
-          port "8000"
-          bind_to_address "0.0.0.0"
-          bitrate "192"
-          format "44100:16:1"
-          max_clients "0"
+      settings.audio_output = [
+        {
+          type = "httpd";
+          name = "My HTTP Stream";
+          encoder = "vorbis";
+          port = 8000;
+          bind_to_address = "0.0.0.0";
+          bitrate = 192;
+          format = "44100:16:1";
+          max_clients = 0;
         }
-      '';
+      ];
     };
     bloop.install = true;
   };

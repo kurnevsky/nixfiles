@@ -60,11 +60,17 @@
       opencode = super.opencode.overrideAttrs (old: rec {
         node_modules = old.node_modules.overrideAttrs (old_modules: {
           patches = (old_modules.patches or [ ]) ++ [
-            ./opencode.patch
+            ./opencode/safety.patch
+            ./opencode/line-numbers.patch
           ];
 
-          outputHash = "sha256-j3K0cSBQaOhjHQcfodxGV1FV35zhpELFE56TK/6uS5s=";
+          outputHash = "sha256-NaLKlLke9K2/1+2NhrWIlsNRFL674PraWmBCbzkEk6c=";
         });
+
+        patches = (old.patches or [ ]) ++ [
+          ./opencode/safety.patch
+          ./opencode/line-numbers.patch
+        ];
 
         configurePhase = ''
           runHook preConfigure
