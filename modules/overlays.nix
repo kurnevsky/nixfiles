@@ -25,7 +25,7 @@
         ];
       };
       mpv = super.mpv.override {
-        mpv = super.mpv-unwrapped.override {
+        mpv-unwrapped = super.mpv-unwrapped.override {
           vapoursynthSupport = true;
           # --hwdec=auto-copy --vf=vapoursynth=rife.vpy:buffered-frames=8:concurrent-frames=32 --hr-seek-framedrop=no --video-sync=display-resample
           vapoursynth = super.vapoursynth.withPlugins [
@@ -54,7 +54,6 @@
           super.isync
         ];
       };
-      viu = super.viu.override { withSixel = true; };
     })
     (_self: super: {
       opencode = super.opencode.overrideAttrs (old: rec {
@@ -64,7 +63,7 @@
             ./opencode/line-numbers.patch
           ];
 
-          outputHash = "sha256-NaLKlLke9K2/1+2NhrWIlsNRFL674PraWmBCbzkEk6c=";
+          outputHash = "sha256-+HEd3I11VqejTi7cikbTL5+DmNGyvUC4Cm4ysfujwes=";
         });
 
         patches = (old.patches or [ ]) ++ [

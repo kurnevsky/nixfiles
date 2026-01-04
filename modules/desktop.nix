@@ -190,7 +190,8 @@
         dmidecode
         docker-compose
         dosfstools
-        dsniff
+        # TODO: broken
+        # dsniff
         e2fsprogs
         efibootmgr
         exfat
@@ -271,8 +272,7 @@
         usbutils
         v4l-utils
         vdpauinfo
-        # TODO: broken
-        # viu
+        viu
         vorbis-tools
         vulkan-tools
         wakatime-cli
@@ -310,7 +310,8 @@
         ## Image
         feh
         imv
-        oculante
+        # TODO: broken
+        # oculante
         ## Video
         mpv
         video2x
