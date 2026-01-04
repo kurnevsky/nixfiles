@@ -11,13 +11,13 @@ rustPlatform.buildRustPackage {
   src = fetchFromGitHub {
     owner = "pointsgame";
     repo = "oppai-rs";
-    rev = "09bc14813d69535059f04bdc43d1fae276161283";
-    hash = "sha256-ZNIccjvqSiVlwy7T72ilwSXIkdubvhjlH4EpmerZFn0=";
+    rev = "eb983e0ebf7e0ecb413db0aeddee12f00283741a";
+    hash = "sha256-e9K8lSmf7UOFlWKrrLUBgSAystSw60TacpnptET5GJQ=";
   };
 
   buildAndTestSubdir = "server";
 
-  cargoHash = "sha256-CnS8WZ/2BRIT38LSLm+MAfAdo6TNGHY9p5AlnIohvzg=";
+  cargoHash = "sha256-JlfOTSU0Cbn1EABl3dxIwNlC4nqC/wd5E07I08SYRdA=";
 
   meta = with lib; {
     description = "Kropki server";
