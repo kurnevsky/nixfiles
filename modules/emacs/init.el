@@ -1619,12 +1619,13 @@ identifier and the position respectively."
                    :key (lambda () (secrets-get-secret "Passwords" "Groq"))
                    :models '(llama-3.3-70b-versatile)))
   (gptel-directives
-    '((default . "You are Echo, an advanced AI system.")
+    '((default . "You are an advanced AI system.")
        (programming . "Provide code and only code as output without any additional text, prompt or note.")
        (writing . "You are a writing assistant.")
-       (chat . "You are Echo, an advanced AI system. Respond concisely.")))
+       (chat . "You are an advanced AI system. Respond concisely.")))
   :config
   (setq gptel-expert-commands t)
+  (gptel-make-gh-copilot "Copilot")
   (gptel-make-openai "llama-cpp"
     :stream t
     :protocol "http"
