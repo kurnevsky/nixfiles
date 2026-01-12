@@ -1624,14 +1624,37 @@ identifier and the position respectively."
        (writing . "You are a writing assistant.")
        (chat . "You are an advanced AI system. Respond concisely.")))
   :config
+  (delete (assoc "ChatGPT" gptel--known-backends) gptel--known-backends)
   (setq gptel-expert-commands t)
   (gptel-make-gh-copilot "Copilot")
+  (gptel-make-openai "Mistral"
+    :host "api.mistral.ai"
+    :endpoint "/v1/chat/completions"
+    :protocol "https"
+    :key (lambda () (secrets-get-secret "Passwords" "Mistral"))
+    :models '(mistral-large-latest
+               codestral-latest))
   (gptel-make-openai "llama-cpp"
     :stream t
     :protocol "http"
     :host "localhost:8081"
     :models '(gemma3))
   (add-hook 'gptel-post-response-functions 'gptel-end-of-response))
+
+(use-package gptel-agent
+  :config
+  (gptel-agent-update))
+
+(use-package mcp
+  :demand t
+  :after gptel
+  :custom (mcp-hub-servers
+            `(("metals" . (:url "http://localhost:32963/sse"))))
+  :hook (after-init . mcp-hub-start-all-server))
+
+(use-package gptel-integrations
+  :demand t
+  :after mcp)
 
 (use-package agent-shell)
 
