@@ -12,10 +12,10 @@ index 863efb840..8135641cf 100644
  - Only use emojis if the user explicitly requests it. Avoid adding emojis to files unless asked.
  - The edit will FAIL if `oldString` is not found in the file with an error "oldString not found in content".
 diff --git a/packages/opencode/src/tool/read.ts b/packages/opencode/src/tool/read.ts
-index 27426ad24..c6b9a39b6 100644
+index 2ed3accbd..1ee15642b 100644
 --- a/packages/opencode/src/tool/read.ts
 +++ b/packages/opencode/src/tool/read.ts
-@@ -126,24 +126,9 @@ export const ReadTool = Tool.define("read", {
+@@ -58,16 +58,13 @@ export const ReadTool = Tool.define("read", {
      const raw = lines.slice(offset, offset + limit).map((line) => {
        return line.length > MAX_LINE_LENGTH ? line.substring(0, MAX_LINE_LENGTH) + "..." : line
      })
@@ -24,25 +24,19 @@ index 27426ad24..c6b9a39b6 100644
 -    })
      const preview = raw.slice(0, 20).join("\n")
  
--    let output = "<file>\n"
+     let output = "<file>\n"
 -    output += content.join("\n")
--
--    const totalLines = lines.length
--    const lastReadLine = offset + content.length
--    const hasMoreLines = totalLines > lastReadLine
--
--    if (hasMoreLines) {
--      output += `\n\n(File has more lines. Use 'offset' parameter to read beyond line ${lastReadLine})`
--    } else {
--      output += `\n\n(End of file - total ${totalLines} lines)`
--    }
--    output += "\n</file>"
-+    let output = raw.join("\n")
++    output += raw.join("\n")
  
-     // just warms the lsp client
-     LSP.touchFile(filepath, false)
+-    if (lines.length > offset + content.length) {
+-      output += `\n\n(File has more lines. Use 'offset' parameter to read beyond line ${offset + content.length})`
++    if (lines.length > offset + raw.length) {
++      output += `\n\n(File has more lines. Use 'offset' parameter to read beyond line ${offset + raw.length})`
+     }
+     output += "\n</file>"
+ 
 diff --git a/packages/opencode/src/tool/read.txt b/packages/opencode/src/tool/read.txt
-index b5bffee26..821c1606e 100644
+index 3904c0939..579cf7892 100644
 --- a/packages/opencode/src/tool/read.txt
 +++ b/packages/opencode/src/tool/read.txt
 @@ -6,7 +6,7 @@ Usage:
@@ -51,6 +45,6 @@ index b5bffee26..821c1606e 100644
  - Any lines longer than 2000 characters will be truncated
 -- Results are returned using cat -n format, with line numbers starting at 1
 +- Results are returned as plain text without line numbers
- - You have the capability to call multiple tools in a single response. It is always better to speculatively read multiple files as a batch that are potentially useful.
+ - This tool cannot read binary files, including images
+ - You have the capability to call multiple tools in a single response. It is always better to speculatively read multiple files as a batch that are potentially useful. 
  - If you read a file that exists but has empty contents you will receive a system reminder warning in place of file contents.
- - You can read image files using this tool.

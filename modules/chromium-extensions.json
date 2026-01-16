@@ -26,8 +26,8 @@
   },
   "ublock-origin-lite": {
     "id": "ddkjiahejlhfcafbddmgiahcphecmpfh",
-    "sha256": "sha256:0pl654jgfmmxcwk9alnfrcri1p3wkbfr1q5qfdmm6c4lacn3l04w",
-    "version": "2025.1230.2048"
+    "sha256": "sha256:1klh9qdky7k2cxbm2zrwwymri29wf3bhvincgy53fd0x12zdzzan",
+    "version": "2026.111.1925"
   },
   "find-plus": {
     "id": "fddffkdncgkkdjobemgbpojjeffmmofb",
@@ -41,8 +41,8 @@
   },
   "refined-github": {
     "id": "hlepfoohegkhhmjieoechaddaejaokhf",
-    "sha256": "sha256:0iryic7i9lgg6j0vpyb1q0drms25ai5hwd754w27mzhrm576riz0",
-    "version": "25.12.12"
+    "sha256": "sha256:0sqhvmrbi4598lmbxza2ndpfnsvw3skaiha8vrshhxqrr4qklris",
+    "version": "26.1.6"
   },
   "keepassxc-browser": {
     "id": "oboonakemofpalcgghocfoadofidjkkk",

@@ -167,6 +167,7 @@
           ]
         ))
         aircrack-ng
+        android-tools
         ansible
         ansible-lint
         appimage-run
@@ -310,8 +311,7 @@
         ## Image
         feh
         imv
-        # TODO: broken
-        # oculante
+        oculante
         ## Video
         mpv
         video2x
@@ -331,8 +331,7 @@
         grafana-loki
         kcat
         # Wallets
-        # TODO: broken
-        # electrum
+        electrum
         monero-cli
         feather
         # Audio
@@ -413,7 +412,7 @@
         ## Nix
         alejandra
         deadnix
-        nixfmt-rfc-style
+        nixfmt
         nil
         nix-diff
         nixpkgs-review
@@ -492,7 +491,6 @@
   programs = {
     nix-ld.enable = true;
     dconf.enable = true;
-    adb.enable = true;
     java.enable = true;
     fuse.userAllowOther = true;
     chromium.enable = true;

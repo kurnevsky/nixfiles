@@ -1653,6 +1653,7 @@ identifier and the position respectively."
   :hook (after-init . mcp-hub-start-all-server))
 
 (use-package gptel-integrations
+  :ensure nil
   :demand t
   :after mcp)
 
