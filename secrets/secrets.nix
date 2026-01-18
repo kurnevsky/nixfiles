@@ -67,6 +67,7 @@ in
   "rustic.age".publicKeys = [ vps ];
   "storage.age".publicKeys = [ vps ];
   "anki.age".publicKeys = [ vps ];
+  "pocket-id.age".publicKeys = [ vps ];
 
   "motion.age".publicKeys = desktop;
   "motion-xmpp.age".publicKeys = desktop;

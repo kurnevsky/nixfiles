@@ -27,16 +27,4 @@
   };
 
   age.secrets.anki.file = ../../secrets/anki.age;
-
-  # TODO
-  nixpkgs.overlays = [
-    (_self: super: {
-      anki-sync-server = super.anki-sync-server.overrideAttrs (old: {
-        checkFlags = old.checkFlags ++ [
-          "--skip=sync::http_client::io_monitor::test::http_success"
-          "--skip=test::test_run"
-        ];
-      });
-    })
-  ];
 }

@@ -6,30 +6,33 @@
 
   nodejs,
   pnpm,
+  pnpmConfigHook,
+  fetchPnpmDeps,
 
   baseurl,
 }:
 
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "ReactFlux";
-  version = "2025.12.16";
+  version = "2026.01.17";
 
   src = fetchFromGitHub {
     owner = "electh";
     repo = "ReactFlux";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-0Vg1fhJL/d3KZ2O2vnS8hpZ8Tfw0CsRWnOXmckLXeCM=";
+    hash = "sha256-Nb1yuxrLsNnSGToos94q529zcvLvYDqr8Q51SFInfsE=";
   };
 
   nativeBuildInputs = [
     nodejs
-    pnpm.configHook
+    pnpmConfigHook
+    pnpm
   ];
 
-  pnpmDeps = pnpm.fetchDeps {
+  pnpmDeps = fetchPnpmDeps {
     inherit (finalAttrs) pname version src;
     fetcherVersion = 1;
-    hash = "sha256-7HaEDEiFBPjMtx+OHucCqQ7SaE0RAhYPLDssQbwsDoQ=";
+    hash = "sha256-gNQUbaM6MxkGrxuxyu6wux5rGsYZgqpxiO2aeUqDg2E=";
   };
 
   postPatch = ''

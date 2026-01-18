@@ -11,8 +11,8 @@ rustPlatform.buildRustPackage {
   src = fetchFromGitHub {
     owner = "pointsgame";
     repo = "oppai-rs";
-    rev = "eb983e0ebf7e0ecb413db0aeddee12f00283741a";
-    hash = "sha256-e9K8lSmf7UOFlWKrrLUBgSAystSw60TacpnptET5GJQ=";
+    rev = "5247525ca27c468511fc057de7a90a09334d2204";
+    hash = "sha256-D+kxLvhL8uyAVEfwE4JXpSrM1Uxv3iNPW46yWMc1ako=";
   };
 
   buildAndTestSubdir = "server";
