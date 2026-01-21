@@ -798,6 +798,18 @@ which LANG was detected but these are ignored."
   :custom
   (tramp-default-method "ssh"))
 
+;; (use-package tramp-rpc
+;;   :demand t
+;;   :after tramp
+;;   :custom
+;;   (tramp-rpc-deploy-auto-deploy nil)
+;;   :config
+;;   (defun tramp-rpc-deploy--remote-binary-path (vec)
+;;     "Return the remote path where the binary should be installed for VEC."
+;;     (tramp-make-tramp-file-name
+;;       vec
+;;       "/run/current-system/sw/bin/tramp-rpc-server")))
+
 (use-package ag
   :commands (ag
               ag-files
@@ -1275,6 +1287,8 @@ which LANG was detected but these are ignored."
   (add-hook 'pdf-view-mode-hook (lambda ()
                                   (display-line-numbers-mode -1))))
 
+(use-package tidal)
+
 (use-package nov
   :mode ("\\.epub\\'" . nov-mode))
 
@@ -1322,6 +1336,8 @@ which LANG was detected but these are ignored."
 
 (use-package wakatime-mode
   :demand t
+  :custom
+  (wakatime-cli-path "/run/current-system/sw/bin/wakatime-cli")
   :config
   (when (file-exists-p "~/.wakatime.cfg")
     (global-wakatime-mode)))
