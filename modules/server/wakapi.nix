@@ -19,7 +19,7 @@
 
     wakapi = {
       enable = true;
-      passwordSaltFile = config.age.secrets.wakapi.path or "/secrets/wakapi";
+      environmentFiles = [ config.age.secrets.wakapi.path or "/secrets/wakapi" ];
       settings = {
         server.public_url = "https://waka.kropki.org";
         app.leaderboard_enabled = false;

@@ -30,7 +30,7 @@
       ];
     };
 
-    stalwart-mail = {
+    stalwart = {
       enable = true;
       settings = {
         storage.blob = "db";
