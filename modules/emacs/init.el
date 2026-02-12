@@ -1673,7 +1673,8 @@ identifier and the position respectively."
   :demand t
   :after mcp)
 
-(use-package agent-shell)
+;; TODO: broken
+;; (use-package agent-shell)
 
 (use-package sendmail
   :ensure nil

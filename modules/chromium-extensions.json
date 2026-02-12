@@ -1,8 +1,8 @@
 {
   "dark-reader": {
     "id": "eimadpbcbfnmbkopoojfekhnkhdbieeh",
-    "sha256": "sha256:1f6hxdc1qxd5pj48022v72q2jb5f7sm3sp4a4yj6mrwd11raf4vd",
-    "version": "4.9.119"
+    "sha256": "sha256:1hanyryhp6a78371f5wz281h6p0bmrb5vkrfr21vjhx4sy78wrch",
+    "version": "4.9.120"
   },
   "decentraleyes": {
     "id": "ldpochfccmkkmhdbclfhpagapcfdljkj",
@@ -26,13 +26,13 @@
   },
   "ublock-origin-lite": {
     "id": "ddkjiahejlhfcafbddmgiahcphecmpfh",
-    "sha256": "sha256:1kczihy6bv9v9qhav0vx9z2yf6p8pxlkvcn5b5nm66b9kifd61w5",
-    "version": "2026.201.1924"
+    "sha256": "sha256:0yflvp1am7lrrbqz10rg16cfzd5ppwvqsqj2gcxq7cv4g3jpjp59",
+    "version": "2026.208.2004"
   },
   "find-plus": {
     "id": "fddffkdncgkkdjobemgbpojjeffmmofb",
-    "sha256": "sha256:03yhzc8yhcx2shm34pm54fhrnhb3hfccgnk2q6qkhysk9ylpywq3",
-    "version": "2.2.2"
+    "sha256": "sha256:1xic4rln1rnjm6gzbk6kdisams9fq7yc7qq1pi2bk61ip15q9kvr",
+    "version": "2.2.3"
   },
   "i-still-dont-care-about-cookies": {
     "id": "edibdbjcniadpccecjdfdjjppcpchdlm",
