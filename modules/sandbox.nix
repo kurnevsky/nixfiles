@@ -913,7 +913,7 @@ in
             ];
           }
         ];
-        wineWowPackages.stagingFull = wrap self.wineWowPackages.stagingFull [
+        wineWow64Packages.stagingFull = wrap self.wineWow64Packages.stagingFull [
           (lib.pipe
             {
               name = "wine";

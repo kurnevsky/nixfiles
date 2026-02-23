@@ -147,7 +147,7 @@
         tesseract
         tigervnc
         ubpm
-        wineWowPackages.stagingFull
+        wineWow64Packages.stagingFull
         winetricks
         dxvk.out
         zathura
