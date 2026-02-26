@@ -16,8 +16,8 @@
   },
   "privacy-badger": {
     "id": "pkehgijcmpdhfbdbbnkijodmdjhbjlgp",
-    "sha256": "sha256:0sw9f6xvck6f3jdx733nrrnrqpzcn7b4h9wmdd4an76dilhfw9n7",
-    "version": "2025.12.9"
+    "sha256": "sha256:0xl9zqmm92g03c39aqgrpzkvk8k9r376amx2x5z3sip89sy7daa8",
+    "version": "2026.2.20"
   },
   "sponsorblock": {
     "id": "mnjggcdmjocbbbhaepdhchncahnbgone",
@@ -26,8 +26,8 @@
   },
   "ublock-origin-lite": {
     "id": "ddkjiahejlhfcafbddmgiahcphecmpfh",
-    "sha256": "sha256:0b148xvsyrdj873chwlix1nbbp60f5yp8gw7gpn4gkqd8j1v9gap",
-    "version": "2026.215.1801"
+    "sha256": "sha256:1n45j68hl3m8w3ip96gbxxra6i476n8q7x7vp7im4b6v1ykv1hhq",
+    "version": "2026.222.1657"
   },
   "find-plus": {
     "id": "fddffkdncgkkdjobemgbpojjeffmmofb",
