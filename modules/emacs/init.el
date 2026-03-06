@@ -1628,12 +1628,6 @@ identifier and the position respectively."
 (use-package gptel
   :custom
   (gptel-model 'llama-3.3-70b-versatile)
-  (gptel-backend (gptel-make-openai "Groq"
-                   :host "api.groq.com"
-                   :endpoint "/openai/v1/chat/completions"
-                   :stream t
-                   :key (lambda () (secrets-get-secret "Passwords" "Groq"))
-                   :models '(llama-3.3-70b-versatile)))
   (gptel-directives
     '((default . "You are an advanced AI system.")
        (programming . "Provide code and only code as output without any additional text, prompt or note.")
@@ -1642,6 +1636,12 @@ identifier and the position respectively."
   :config
   (delete (assoc "ChatGPT" gptel--known-backends) gptel--known-backends)
   (setq gptel-expert-commands t)
+  (setq gptel-backend (gptel-make-openai "Groq"
+                        :host "api.groq.com"
+                        :endpoint "/openai/v1/chat/completions"
+                        :stream t
+                        :key (lambda () (secrets-get-secret "Passwords" "Groq"))
+                        :models '(llama-3.3-70b-versatile)))
   (gptel-make-gh-copilot "Copilot")
   (gptel-make-openai "Mistral"
     :host "api.mistral.ai"
@@ -1673,8 +1673,7 @@ identifier and the position respectively."
   :demand t
   :after mcp)
 
-;; TODO: broken
-;; (use-package agent-shell)
+(use-package agent-shell)
 
 (use-package sendmail
   :ensure nil
