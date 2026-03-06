@@ -25,7 +25,11 @@
 
   environment.systemPackages = with pkgs; [
     (import ../../modules/with-native-optimizations.nix config.networking.hostName whisper-cpp)
-    (import ../../modules/with-native-optimizations.nix config.networking.hostName llama-cpp)
+    (import ../../modules/with-native-optimizations.nix config.networking.hostName (
+      llama-cpp.override {
+        vulkanSupport = true;
+      }
+    ))
   ];
 
   networking.hostName = "evo";
