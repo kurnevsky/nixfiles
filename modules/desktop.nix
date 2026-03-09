@@ -327,7 +327,6 @@
         openmw
         wesnoth
         # Databases
-        cassandra
         grafana-loki
         kcat
         # Wallets
@@ -336,18 +335,12 @@
         feather
         # Audio
         easyeffects
-        helvum
+        crosspipe
         qpwgraph
         sox
         # Languages
         (agda.withPackages (pkgs: with pkgs; [ standard-library ]))
-        (pkgs.writeShellScriptBin "prettier" ''
-          ${pkgs.nodePackages.prettier}/bin/prettier --plugin "${
-            pkgs.callPackage ./prettier-plugin-toml.nix {
-              nodeEnv = pkgs.callPackage "${pkgs.path}/pkgs/development/node-packages/node-env.nix" { };
-            }
-          }/lib/node_modules/prettier-plugin-toml/lib/index.cjs" "$@"
-        '')
+        pkgs.nodePackages.prettier
         astyle
         groovy
         mono

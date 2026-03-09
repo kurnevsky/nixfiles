@@ -64,7 +64,7 @@
             # ./opencode/line-numbers.patch
           ];
 
-          outputHash = "sha256-hK7ad7tG60K0VARAlZJsSxKjiHU78XQYl/tbIReBusc=";
+          outputHash = "sha256-orNyesv8Y3vooV1upr+X1CKHUdygyDQ3hmyPVlHC6Zk=";
         });
 
         patches = (old.patches or [ ]) ++ [

@@ -28,6 +28,7 @@ in
       "7zz"
       "p7zip"
       "vagrant"
+      "uasm"
     ];
 
   nix = {
