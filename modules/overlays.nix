@@ -60,16 +60,13 @@
         node_modules = old.node_modules.overrideAttrs (old_modules: {
           patches = (old_modules.patches or [ ]) ++ [
             ./opencode/safety.patch
-            # TODO
-            # ./opencode/line-numbers.patch
           ];
 
-          outputHash = "sha256-orNyesv8Y3vooV1upr+X1CKHUdygyDQ3hmyPVlHC6Zk=";
+          outputHash = "sha256-OwlJRAeKnX5YMwQgaV4op40rjt5kxsP4WrOzpp9t90w=";
         });
 
         patches = (old.patches or [ ]) ++ [
           ./opencode/safety.patch
-          # ./opencode/line-numbers.patch
         ];
 
         configurePhase = ''

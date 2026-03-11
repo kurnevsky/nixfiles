@@ -24,15 +24,22 @@
     binfmt.emulatedSystems = [ "aarch64-linux" ];
   };
 
+  nixpkgs.overlays = [
+    (self: super: {
+      whisper-cpp = import ../../modules/with-native-optimizations.nix config.networking.hostName (
+        super.whisper-cpp.override {
+          # TODO: broken
+          rocmSupport = false;
+          rocmGpuTargets = "gfx1100";
+        }
+      );
+    })
+  ];
+
   environment = {
     systemPackages = with pkgs; [
       amdgpu_top
-      (import ../../modules/with-native-optimizations.nix config.networking.hostName (
-        whisper-cpp.override {
-          rocmSupport = true;
-          rocmGpuTargets = "gfx1100";
-        }
-      ))
+      whisper-cpp
       (import ../../modules/with-native-optimizations.nix config.networking.hostName (
         pkgs.callPackage ../../modules/stable-diffusion-cpp.nix {
           vulkanSupport = false;
@@ -48,6 +55,7 @@
           vulkanSupport = true;
         }
       ))
+      (callPackage ../../modules/apollo-air1-exporter.nix { })
     ];
     variables.RUSTICL_ENABLE = "radeonsi";
   };
@@ -85,6 +93,7 @@
         Option "TearFree" "true"
       '';
     };
+    esphome.enable = true;
   };
 
   age.secrets = {
