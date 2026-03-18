@@ -62,7 +62,7 @@
             ./opencode/safety.patch
           ];
 
-          outputHash = "sha256-OwlJRAeKnX5YMwQgaV4op40rjt5kxsP4WrOzpp9t90w=";
+          outputHash = "sha256-byKXLpfvidfKl8PshUsW0grrRYRoVAYYlid0N6/ke2c=";
         });
 
         patches = (old.patches or [ ]) ++ [

@@ -28,8 +28,7 @@
     (self: super: {
       whisper-cpp = import ../../modules/with-native-optimizations.nix config.networking.hostName (
         super.whisper-cpp.override {
-          # TODO: broken
-          rocmSupport = false;
+          rocmSupport = true;
           rocmGpuTargets = "gfx1100";
         }
       );
