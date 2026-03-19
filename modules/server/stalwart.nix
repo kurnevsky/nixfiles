@@ -145,7 +145,7 @@
     };
   };
 
-  systemd.services.stalwart-mail.serviceConfig = {
+  systemd.services.stalwart.serviceConfig = {
     RestrictAddressFamilies = [ "AF_UNIX" ];
     EnvironmentFile = "${config.age.secrets.stalwart.path or "/secrets/stalwart"}";
   };
