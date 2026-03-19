@@ -46,6 +46,7 @@
           use_pkce = true;
           use_refresh_token = true;
         };
+        security.secret_key = "$__file{${config.age.secrets.grafana-db.path or "/secrets/grafana-db"}}";
       };
       provision = {
         enable = true;
@@ -117,9 +118,16 @@
     "grafana-dashboards/air-1.json".source = ./air-1.json;
   };
 
-  age.secrets.grafana = {
-    file = ../../secrets/grafana.age;
-    owner = "grafana";
-    group = "grafana";
+  age.secrets = {
+    grafana = {
+      file = ../../secrets/grafana.age;
+      owner = "grafana";
+      group = "grafana";
+    };
+    grafana-db = {
+      file = ../../secrets/grafana-db.age;
+      owner = "grafana";
+      group = "grafana";
+    };
   };
 }

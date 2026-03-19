@@ -60,6 +60,7 @@ in
   "mautrix-whatsapp.age".publicKeys = [ vps ];
   "oauth2-proxy.age".publicKeys = [ vps ];
   "grafana.age".publicKeys = [ vps ];
+  "grafana-db.age".publicKeys = [ vps ];
   "scrutiny.age".publicKeys = [ vps ];
   "livekit.age".publicKeys = [ vps ];
   "coturn.age".publicKeys = [ vps ];
