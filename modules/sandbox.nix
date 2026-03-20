@@ -1199,6 +1199,7 @@ in
               "SHELL"
             ];
             unshare-net = false;
+            shared-tmp = true;
             whitelist = [
               "~/.config/opencode/"
               "~/.cache/opencode/"
