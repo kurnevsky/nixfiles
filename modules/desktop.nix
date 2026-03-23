@@ -310,7 +310,8 @@
         ## Image
         feh
         imv
-        oculante
+        # TODO: broken
+        # oculante
         ## Video
         mpv
         video2x
@@ -934,7 +935,10 @@
               ];
             };
           };
-          git.enable = true;
+          git = {
+            enable = true;
+            signing.format = "openpgp";
+          };
           firefox = {
             enable = true;
             package = pkgs.sandboxed.firefox;
