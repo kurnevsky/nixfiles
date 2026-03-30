@@ -49,6 +49,8 @@
             meta skuid ${toString config.users.users.ww.uid} oifname "lo" tcp dport 9050 accept
             meta skuid ${toString config.users.users.ww.uid} oifname "lo" tcp dport 9051 accept
 
+            meta skgid ${toString config.users.groups.netbypass.gid} accept
+
             meta skuid ${toString config.users.users.ww.uid} drop
           }
         }
@@ -746,15 +748,18 @@
     pam.services.login.startSession = true;
     unprivilegedUsernsClone = true;
     rtkit.enable = true;
-    sudo.extraRules = [
-      {
-        runAs = "root";
-        users = [ "ww" ];
-        commands = [
-          "/run/current-system/sw/bin/ip ^netns exec [[:alnum:]]+ sudo -u ww [^-].*$"
-        ];
-      }
-    ];
+    sudo = {
+      extraRules = [
+        {
+          runAs = "root";
+          users = [ "ww" ];
+          commands = [
+            "/run/current-system/sw/bin/ip ^netns exec [[:alnum:]]+ sudo -u ww [^-].*$"
+          ];
+        }
+      ];
+      extraConfig = "ww ALL=(ww : netbypass) ALL";
+    };
   };
 
   users = {
@@ -782,7 +787,10 @@
       hans.group = "hans";
     };
     extraUsers.tor.homeMode = "755";
-    groups.hans = { };
+    groups = {
+      netbypass.gid = 14322;
+      hans = { };
+    };
   };
 
   xdg.mime = {
