@@ -55,29 +55,6 @@
         ];
       };
     })
-    (_self: super: {
-      opencode = super.opencode.overrideAttrs (old: rec {
-        node_modules = old.node_modules.overrideAttrs (old_modules: {
-          patches = (old_modules.patches or [ ]) ++ [
-            ./opencode/safety.patch
-          ];
-
-          outputHash = "sha256-byKXLpfvidfKl8PshUsW0grrRYRoVAYYlid0N6/ke2c=";
-        });
-
-        patches = (old.patches or [ ]) ++ [
-          ./opencode/safety.patch
-        ];
-
-        configurePhase = ''
-          runHook preConfigure
-
-          cp -R ${node_modules}/. .
-
-          runHook postConfigure
-        '';
-      });
-    })
     (self: super: {
       tor-browser = self.symlinkJoin {
         name = "tor-browser";
