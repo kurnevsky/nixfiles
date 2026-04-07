@@ -312,8 +312,7 @@
         ## Image
         feh
         imv
-        # TODO: broken
-        # oculante
+        oculante
         ## Video
         mpv
         video2x
@@ -342,11 +341,11 @@
         sox
         # Languages
         (agda.withPackages (pkgs: with pkgs; [ standard-library ]))
-        pkgs.nodePackages.prettier
+        prettier
         astyle
         groovy
         mono
-        nodePackages.mermaid-cli
+        mermaid-cli
         graphviz
         perl
         python3
@@ -360,7 +359,7 @@
         clang-tools
         gcc
         ## Shell
-        nodePackages.bash-language-server
+        bash-language-server
         shellcheck
         shfmt
         ## Haskell
@@ -370,11 +369,12 @@
         haskell-language-server
         hlint
         ## PureScript
-        purescript-language-server
-        purs-tidy
-        purescript
-        spago-unstable
-        purs-backend-es
+        # TODO: broken
+        # purescript-language-server
+        # purs-tidy
+        # purescript
+        # spago-unstable
+        # purs-backend-es
         ## Rust
         (fenix.combine [
           (fenix.stable.withComponents [
@@ -424,10 +424,10 @@
           ];
         })
         ## Markdown
-        nodePackages.markdownlint-cli
+        markdownlint-cli
         marksman
         ## TypeScript
-        nodePackages.typescript-language-server
+        typescript-language-server
         ## Dhall
         dhall
         dhall-lsp-server

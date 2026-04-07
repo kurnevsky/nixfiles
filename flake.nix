@@ -7,13 +7,6 @@
       ref = "nixos-unstable";
     };
 
-    nixpkgs-old = {
-      type = "github";
-      owner = "NixOS";
-      repo = "nixpkgs";
-      ref = "9da7f1cf7f8a6e2a7cb3001b048546c92a8258b4";
-    };
-
     fenix = {
       type = "github";
       owner = "nix-community";
@@ -94,24 +87,18 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    purescript-overlay = {
-      type = "github";
-      owner = "thomashoneyman";
-      repo = "purescript-overlay";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # TODO: broken
+    # purescript-overlay = {
+    #   type = "github";
+    #   owner = "thomashoneyman";
+    #   repo = "purescript-overlay";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
 
     stable-diffusion-cpp = {
       type = "git";
       url = "https://github.com/leejet/stable-diffusion.cpp.git";
       submodules = true;
-      flake = false;
-    };
-
-    pan-globalprotect-okta = {
-      type = "github";
-      owner = "arthepsy";
-      repo = "pan-globalprotect-okta";
       flake = false;
     };
 
@@ -181,28 +168,14 @@
         { _module.args.inputs = inputs; }
         # Keep flake inputs from being garbage collected
         { system.extraDependencies = collectFlakeInputs inputs.self; }
-        (
-          { pkgs, ... }:
-          let
-            oldPkgs = import inputs.nixpkgs-old {
-              inherit (pkgs.stdenv.targetPlatform) system;
-            };
-          in
-          {
-            nixpkgs.overlays = [
-              (_self: _super: {
-                inherit (oldPkgs) deadbeef;
-              })
-            ];
-          }
-        )
       ];
       desktopModules = commonModules ++ [
         {
           nixpkgs.overlays = [
             inputs.emacs-overlay.overlay
             inputs.fenix.overlays.default
-            inputs.purescript-overlay.overlays.default
+            # TODO: broken
+            # inputs.purescript-overlay.overlays.default
             inputs.nur.overlays.default
           ];
         }

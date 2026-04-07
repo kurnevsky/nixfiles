@@ -72,6 +72,12 @@
       };
     })
     (_self: super: {
+      llama-cpp = super.llama-cpp.overrideAttrs (old: {
+        # TODO: https://github.com/NixOS/nixpkgs/pull/506952
+        postPatch = "find tools/server/public -type f -not -name loading.html -delete";
+      });
+    })
+    (_self: super: {
       telegram-desktop = super.telegram-desktop.override {
         unwrapped = super.telegram-desktop.unwrapped.overrideAttrs (old: {
           patches = (old.patches or [ ]) ++ [
