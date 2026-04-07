@@ -51,4 +51,6 @@
     root.home.stateVersion = "25.05";
     kurnevsky.home.stateVersion = "25.05";
   };
+
+  services.stalwart.stateVersion = "25.05";
 }
