@@ -238,6 +238,7 @@
         lsd
         lshw
         mesa-demos
+        mergiraf
         metasploit
         mu
         nettools
@@ -264,6 +265,7 @@
         shntool
         skim
         smartmontools
+        streamlink
         sshfs-fuse
         tealdeer
         tmux
