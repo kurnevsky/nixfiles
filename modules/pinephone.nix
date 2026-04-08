@@ -81,7 +81,10 @@
   };
 
   home-manager.users.kurnevsky = {
-    programs.git.enable = true;
+    programs.git = {
+      enable = true;
+      signing.format = "openpgp";
+    };
     services = {
       gpg-agent = {
         enable = true;
