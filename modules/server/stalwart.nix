@@ -120,10 +120,14 @@
           private-key = "%{file:${config.security.acme.certs."kropki.org".directory}/key.pem}%";
           default = true;
         };
-        email.encryption.append = true;
-        session.rcpt.sub-addressing = [
+        session.auth.must-match-sender = false;
+        session.rcpt.rewrite = [
           {
-            "if" = "matches('^([^.]+)\.([^.]+)@(.+)$', rcpt)";
+            "if" = "is_local_domain('', rcpt_domain) & matches('^k\.([^.]+)@(.+)$', rcpt)";
+            "then" = "'kurnevsky@' + $2";
+          }
+          {
+            "if" = "is_local_domain('', rcpt_domain) & matches('^([^.]+)\.([^.]+)@(.+)$', rcpt)";
             "then" = "$1 + '@' + $3";
           }
           { "else" = false; }
