@@ -830,9 +830,48 @@
               target-colorspace-hint = true;
               gpu-api = "vulkan";
             };
-            bindings = {
-              "Ctrl+n" = ''af toggle "lavfi=[dynaudnorm=f=175:g=25:p=0.75]"'';
-            };
+            bindings =
+              let
+                anime4k = pkgs.stdenv.mkDerivation (finalAttrs: {
+                  name = "anime4k";
+                  version = "4.0.1";
+                  src = pkgs.fetchFromGitHub {
+                    owner = "bloc97";
+                    repo = "Anime4K";
+                    tag = "v${finalAttrs.version}";
+                    hash = "sha256-OQWJWcDpwmnJJ/kc4uEReaO74dYFlxNQwf33E5Oagb0=";
+                  };
+                  buildPhase = "true";
+                  installPhase = "mkdir -p $out && cp -r glsl/* $out";
+                });
+                clamp-highlights = "${anime4k}/Restore/Anime4K_Clamp_Highlights.glsl";
+                restore-cnn-vl = "${anime4k}/Restore/Anime4K_Restore_CNN_VL.glsl";
+                restore-cnn-soft-vl = "${anime4k}/Restore/Anime4K_Restore_CNN_Soft_VL.glsl";
+                restore-cnn-m = "${anime4k}/Restore/Anime4K_Restore_CNN_M.glsl";
+                restore-cnn-soft-m = "${anime4k}/Restore/Anime4K_Restore_CNN_Soft_M.glsl";
+                upscale-cnn-x2 = "${anime4k}/Upscale/Anime4K_Upscale_CNN_x2_VL.glsl";
+                upscale-denoise-cnn-x2-vl = "${anime4k}/Upscale+Denoise/Anime4K_Upscale_Denoise_CNN_x2_VL.glsl";
+                auto-downscale-pre-x2 = "${anime4k}/Upscale/Anime4K_AutoDownscalePre_x2.glsl";
+                auto-downscale-pre-x4 = "${anime4k}/Upscale/Anime4K_AutoDownscalePre_x4.glsl";
+                upscale-cnn-x2-m = "${anime4k}/Upscale/Anime4K_Upscale_CNN_x2_M.glsl";
+                shaders = "no-osd change-list glsl-shaders";
+              in
+              {
+                "Ctrl+n" = ''af toggle "lavfi=[dynaudnorm=f=175:g=25:p=0.75]"'';
+                "CTRL+1" =
+                  ''${shaders} set "${clamp-highlights}:${restore-cnn-vl}:${upscale-cnn-x2}:${auto-downscale-pre-x2}:${auto-downscale-pre-x4}:${upscale-cnn-x2-m}"; show-text "Anime4K: Mode A (HQ)"'';
+                "CTRL+2" =
+                  ''${shaders} set "${clamp-highlights}:${restore-cnn-soft-vl}:${upscale-cnn-x2}:${auto-downscale-pre-x2}:${auto-downscale-pre-x4}:${upscale-cnn-x2-m}"; show-text "Anime4K: Mode B (HQ)"'';
+                "CTRL+3" =
+                  ''${shaders} set "${clamp-highlights}:${upscale-denoise-cnn-x2-vl}:${auto-downscale-pre-x2}:${auto-downscale-pre-x4}:${upscale-cnn-x2-m}"; show-text "Anime4K: Mode C (HQ)"'';
+                "CTRL+4" =
+                  ''${shaders} set "${clamp-highlights}:${restore-cnn-vl}:${upscale-cnn-x2}:${restore-cnn-m}:${auto-downscale-pre-x2}:${auto-downscale-pre-x4}:${upscale-cnn-x2-m}"; show-text "Anime4K: Mode A+A (HQ)"'';
+                "CTRL+5" =
+                  ''${shaders} set "${clamp-highlights}:${restore-cnn-soft-vl}:${upscale-cnn-x2}:${auto-downscale-pre-x2}:${auto-downscale-pre-x4}:${restore-cnn-soft-m}:${upscale-cnn-x2-m}"; show-text "Anime4K: Mode B+B (HQ)"'';
+                "CTRL+6" =
+                  ''${shaders} set "${clamp-highlights}:${upscale-denoise-cnn-x2-vl}:${auto-downscale-pre-x2}:${auto-downscale-pre-x4}:${restore-cnn-m}:${upscale-cnn-x2-m}"; show-text "Anime4K: Mode C+A (HQ)"'';
+                "CTRL+0" = ''${shaders} clr ""; show-text "GLSL shaders cleared"'';
+              };
           };
           alacritty = {
             enable = true;
