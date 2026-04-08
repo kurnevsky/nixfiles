@@ -73,6 +73,21 @@
     })
     (_self: super: {
       llama-cpp = super.llama-cpp.overrideAttrs (old: {
+        version = "8703";
+        src = old.src.overrideAttrs {
+          hash = "sha256-9eG6083601VU2DKTJ4Hz5PX85t1YHJv/NpxlD9kT0gU=";
+        };
+        patches = (old.patches or [ ]) ++ [
+          (super.fetchpatch {
+            url = "https://patch-diff.githubusercontent.com/raw/ggml-org/llama.cpp/pull/21534.diff";
+            hash = "sha256-9X/NpLUH4Lkdc24y4CgVRZIrLowMZZ6SA/yRHE9Scs8=";
+          })
+          (super.fetchpatch {
+            url = "https://patch-diff.githubusercontent.com/raw/ggml-org/llama.cpp/pull/21492.diff";
+            hash = "sha256-/xUcscEqkygo5be2j0GINM+VsVmFadarH4WdSj7xkxQ=";
+          })
+        ];
+        npmDepsHash = "sha256-eeftjKt0FuS0Dybez+Iz9VTVMA4/oQVh+3VoIqvhVMw=";
         # TODO: https://github.com/NixOS/nixpkgs/pull/506952
         postPatch = "find tools/server/public -type f -not -name loading.html -delete";
       });
