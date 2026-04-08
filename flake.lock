@@ -298,11 +298,11 @@
     "mobile-nixos": {
       "flake": false,
       "locked": {
-        "lastModified": 1763886757,
-        "narHash": "sha256-2hwRV2gIWShQuAmD7AHEPaDbHWOQKajKpPvJ053kY+4=",
+        "lastModified": 1775646930,
+        "narHash": "sha256-T54//lYmsqiSF92ev1LCdJLTl/MEFZmSg0PFdgMsSfk=",
         "owner": "kurnevsky",
         "repo": "mobile-nixos",
-        "rev": "7be68cd3bdf56aec948a980b319c0d00ac642c99",
+        "rev": "b1d38f0d79b7663e2e10a3725d199741bffed177",
         "type": "github"
       },
       "original": {
