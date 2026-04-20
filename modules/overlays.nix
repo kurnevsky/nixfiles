@@ -73,12 +73,11 @@
     })
     (_self: super: {
       llama-cpp = super.llama-cpp.overrideAttrs (old: {
-        version = "8736";
+        version = "8854";
         src = old.src.overrideAttrs {
-          rev = "c8ac02fa1b9f8a154e110b655f7f7e4907796b0c";
-          hash = "sha256-JF9oyfiA3Ot74bNxNHktsnfug+T71eqmB7TdoyicdWA=";
+          hash = "sha256-5wVUrzYtsC0MrbyHZ/vn3SN2s96wXt42Hgimcu9T+Os=";
         };
-        npmDepsHash = "sha256-eeftjKt0FuS0Dybez+Iz9VTVMA4/oQVh+3VoIqvhVMw=";
+        npmDepsHash = "sha256-RAFtsbBGBjteCt5yXhrmHL39rIDJMCFBETgzId2eRRk=";
         # https://github.com/NixOS/nixpkgs/pull/506952
         postPatch = "find tools/server/public -type f -not -name loading.html -delete";
       });
