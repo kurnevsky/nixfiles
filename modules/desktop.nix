@@ -106,8 +106,11 @@
         (pkgs.pkgsCross.mingwW64.callPackage ./vkd3d-proton.nix { })
         (callPackage ./mcptools.nix { })
         (callPackage ./firefox-devtools-mcp.nix { })
+        (callPackage ./anki-mcp-server.nix { })
         mcp-proxy
-        anki
+        (anki.withAddons [
+          ankiAddons.anki-connect
+        ])
         blender
         calibre
         claws-mail
