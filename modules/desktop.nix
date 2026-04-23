@@ -376,12 +376,11 @@
         haskell-language-server
         hlint
         ## PureScript
-        # TODO: broken
-        # purescript-language-server
-        # purs-tidy
-        # purescript
-        # spago-unstable
-        # purs-backend-es
+        purescript-language-server
+        purs-tidy
+        purescript
+        spago-unstable
+        purs-backend-es
         ## Rust
         (fenix.combine [
           (fenix.stable.withComponents [

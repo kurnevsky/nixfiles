@@ -87,13 +87,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # TODO: broken
-    # purescript-overlay = {
-    #   type = "github";
-    #   owner = "thomashoneyman";
-    #   repo = "purescript-overlay";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
+    purescript-overlay = {
+      type = "github";
+      owner = "thomashoneyman";
+      repo = "purescript-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     stable-diffusion-cpp = {
       type = "git";
@@ -174,8 +173,7 @@
           nixpkgs.overlays = [
             inputs.emacs-overlay.overlay
             inputs.fenix.overlays.default
-            # TODO: broken
-            # inputs.purescript-overlay.overlays.default
+            inputs.purescript-overlay.overlays.default
             inputs.nur.overlays.default
           ];
         }

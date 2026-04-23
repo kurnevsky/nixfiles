@@ -21,13 +21,13 @@
   },
   "sponsorblock": {
     "id": "mnjggcdmjocbbbhaepdhchncahnbgone",
-    "sha256": "sha256:0cf6djpwqybhs6gmdix8py1bqcnrsapdf0vdja2gn2wp06njmw0s",
-    "version": "6.1.3"
+    "sha256": "sha256:01nk3c1b1iz6ch4dz15j12c5p57hclsn4jixn6y33mi8f49laklw",
+    "version": "6.1.5"
   },
   "ublock-origin-lite": {
     "id": "ddkjiahejlhfcafbddmgiahcphecmpfh",
-    "sha256": "sha256:0p2xka6magh00rhyh36k7jprd45php741398ms30b2klff2favbj",
-    "version": "2026.405.2010"
+    "sha256": "sha256:1sxanc4qcpfm96rdinx50m94lcw994f52hl7m4rvjrkl8j8b2gzs",
+    "version": "2026.419.1519"
   },
   "find-plus": {
     "id": "fddffkdncgkkdjobemgbpojjeffmmofb",
@@ -41,8 +41,8 @@
   },
   "refined-github": {
     "id": "hlepfoohegkhhmjieoechaddaejaokhf",
-    "sha256": "sha256:0bh58ms0m4q292nl996gcrn8w03byhx0lkdzx2y5aqh2z29n2hv0",
-    "version": "26.4.4"
+    "sha256": "sha256:0l80hadyv7m2axj4hrv37a5d0flqx44m4b9rfdlfgafbsflrrjmy",
+    "version": "26.4.20"
   },
   "keepassxc-browser": {
     "id": "oboonakemofpalcgghocfoadofidjkkk",
