@@ -1,13 +1,13 @@
 {
   "dark-reader": {
     "id": "eimadpbcbfnmbkopoojfekhnkhdbieeh",
-    "sha256": "sha256:03qg9wmhq408d1hvmkmlfg6wz82g9l37bqhqpr28jaxlq7g32n7s",
-    "version": "4.9.124"
+    "sha256": "sha256:05khd2bjdzfa2101gv11fmqc1lrsd115axpjx6gphw3f4n1nj24c",
+    "version": "4.9.125"
   },
   "decentraleyes": {
     "id": "ldpochfccmkkmhdbclfhpagapcfdljkj",
-    "sha256": "sha256:198k1hyzf3a1yz4chnx095rwqa15hkcck4ir6xs6ps29qgqw8ili",
-    "version": "3.0.0"
+    "sha256": "sha256:0k4rxywbr4cgp03wsz51g8x127s4g0a7hkb5g4ygzmp2n8npn9ab",
+    "version": "3.0.1"
   },
   "plasma-integration": {
     "id": "cimiefiiaegbelhefglklhhakcgmhkai",
@@ -26,8 +26,8 @@
   },
   "ublock-origin-lite": {
     "id": "ddkjiahejlhfcafbddmgiahcphecmpfh",
-    "sha256": "sha256:1sxanc4qcpfm96rdinx50m94lcw994f52hl7m4rvjrkl8j8b2gzs",
-    "version": "2026.419.1519"
+    "sha256": "sha256:1vpf2d5npqghdrlly3z7mjywlhjy3iiagf9bsh964dm6ww7vlsjc",
+    "version": "2026.426.1536"
   },
   "find-plus": {
     "id": "fddffkdncgkkdjobemgbpojjeffmmofb",
@@ -41,8 +41,8 @@
   },
   "refined-github": {
     "id": "hlepfoohegkhhmjieoechaddaejaokhf",
-    "sha256": "sha256:0l80hadyv7m2axj4hrv37a5d0flqx44m4b9rfdlfgafbsflrrjmy",
-    "version": "26.4.20"
+    "sha256": "sha256:14b2mljgmhq00yy21s13azlr0cb4lpwiqyylryfaj2rdr2p5dxfl",
+    "version": "26.5.1"
   },
   "keepassxc-browser": {
     "id": "oboonakemofpalcgghocfoadofidjkkk",
