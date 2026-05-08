@@ -122,8 +122,6 @@
 
   # [SECTION 1200]: HTTPS (SSL/TLS / OCSP / CERTS / HPKP / CIPHERS)
 
-  # 1201: require safe negotiation
-  "security.ssl.require_safe_negotiation" = true;
   # 1204: disable SSL session tracking
   "security.ssl.disable_session_identifiers" = true;
   # 1206: disable TLS1.3 0-RTT (round-trip time)
