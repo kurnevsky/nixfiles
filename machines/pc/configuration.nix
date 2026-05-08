@@ -53,6 +53,11 @@
         }
       ))
       (import ../../modules/with-native-optimizations.nix config.networking.hostName (
+        pkgs.callPackage ../../modules/crispasr.nix {
+          vulkanSupport = true;
+        }
+      ))
+      (import ../../modules/with-native-optimizations.nix config.networking.hostName (
         llama-cpp.override {
           rocmSupport = true;
           rocmGpuTargets = [ "gfx1100" ];
