@@ -4,12 +4,6 @@
   boot.tmp.cleanOnBoot = true;
 
   environment.systemPackages = with pkgs; [
-    (pass-wayland.withExtensions (
-      ext: with ext; [
-        pass-otp
-        pass-update
-      ]
-    ))
     gnupg
     firefox-mobile
     telegram-desktop

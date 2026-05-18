@@ -252,7 +252,6 @@
         openssl
         pandoc
         parallel
-        pass
         pciutils
         pgpdump
         pizauth

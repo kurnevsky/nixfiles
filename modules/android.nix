@@ -60,7 +60,6 @@ in
     util-linux
     which
     ripgrep
-    pass
     emacsWithPackages
   ];
 

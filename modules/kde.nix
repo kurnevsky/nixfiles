@@ -291,7 +291,7 @@
             if builtins.isAttrs value then
               lib.mapAttrsToList (group: value: toLine file (path ++ [ group ]) value) value
             else
-              "test -f ~/.config/'${file}' && ${pkgs.libsForQt5.kconfig}/bin/kwriteconfig5 --file ~/.config/'${file}' ${
+              "test -f ~/.config/'${file}' && ${pkgs.kdePackages.kconfig}/bin/kwriteconfig6 --file ~/.config/'${file}' ${
                 lib.concatMapStringsSep " " (x: "--group ${x}") (lib.lists.init path)
               } --key '${lib.lists.last path}' ${toValue value}";
           lines = lib.flatten (lib.mapAttrsToList (file: attrs: toLine file [ ] attrs) configs);
