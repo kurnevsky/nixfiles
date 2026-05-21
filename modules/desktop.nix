@@ -358,6 +358,7 @@
         (pkgs.writeShellScriptBin "famulus" ''
           ${pkgs.coreutils}/bin/env \
             MISTRAL_API_KEY="$(${pkgs.libsecret}/bin/secret-tool lookup id mistral)" \
+            COPILOT_TOKEN="$(${pkgs.libsecret}/bin/secret-tool lookup id copilot)" \
             ${callPackage ./famulus.nix { }}/bin/famulus "$@"
         '')
         ## C/C++
