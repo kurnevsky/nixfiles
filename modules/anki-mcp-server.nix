@@ -6,16 +6,16 @@
 
 buildNpmPackage (finalAttrs: {
   pname = "anki-mcp-server";
-  version = "0.15.1";
+  version = "0.18.5";
 
   src = fetchFromGitHub {
     owner = "ankimcp";
     repo = "anki-mcp-server";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-1xxHoSD/Li2f3ujfQEOmMro7IEkClZwCGX6cA1Bn8xQ=";
+    hash = "sha256-bmKzfQAgTcY1+Upy/M/SYkNCWhFpK6ZoRhKflUyQr3w=";
   };
 
-  npmDepsHash = "sha256-XIihI386oRyenLGMROMhylOn/KMWnFQvQSLN21JoBuw=";
+  npmDepsHash = "sha256-DkPMZ1PgeQ5eHSQtu/CiC7WrKUDt6ndwHjA68bogTxU=";
 
   meta = {
     description = "A Model Context Protocol (MCP) server that enables AI assistants to interact with Anki";
