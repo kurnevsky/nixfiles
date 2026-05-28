@@ -12,12 +12,6 @@
           statusnotifier
         ];
       };
-      pass = super.pass-wayland.withExtensions (
-        ext: with ext; [
-          pass-otp
-          pass-update
-        ]
-      );
       firefox = super.firefox.override {
         nativeMessagingHosts = [
           super.keepassxc
@@ -73,12 +67,11 @@
     })
     (_self: super: {
       llama-cpp = super.llama-cpp.overrideAttrs (old: {
-        version = "0";
+        version = "9371";
         src = old.src.overrideAttrs {
-          rev = "1348f67c58f561808136e8a152a9eddec168f221";
-          hash = "sha256-n7I3XJab5CoYq1q6F4oZlbtzItdJ+f7S8GbJeNDan+s=";
+          hash = "sha256-NhFtb3wzhKuRf3zoYqiJhKB/jDqwCm5QwGe6ZZvOqJg=";
         };
-        npmDepsHash = "sha256-WaEePrEZ7O/7deP2KJhe0AwiSKYA8HOqETmMHUkmBe0=";
+        npmDepsHash = "sha256-Iyg8FpcTKf2UYHuK7mA3cTAqVaLcQPcS0YCa5Qf01Gc=";
       });
     })
     (_self: super: {
