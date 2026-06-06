@@ -67,11 +67,11 @@
     })
     (_self: super: {
       llama-cpp = super.llama-cpp.overrideAttrs (old: {
-        version = "9491";
+        version = "9542";
         src = old.src.overrideAttrs {
-          hash = "sha256-rrEVt9lUywPEzJTUGFhmf5jU+DHa/jp+gfimU4YaiFs=";
+          hash = "sha256-olPHWt37mq6nMIAXY2l/icyAuNR6xa02xQoUTef5bF0=";
         };
-        npmDepsHash = "sha256-Iyg8FpcTKf2UYHuK7mA3cTAqVaLcQPcS0YCa5Qf01Gc=";
+        npmDepsHash = "sha256-pjdbI6NcZRlJVd62xhgbLhWrwFYwgsIwjORqvo1+VD8=";
       });
     })
     (_self: super: {
