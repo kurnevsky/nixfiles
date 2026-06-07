@@ -12,6 +12,10 @@
     clientID = "f1f219b2-64b4-4635-b522-dd00990285d3";
     keyFile = config.age.secrets.oauth2-proxy.path or "/secrets/oauth2-proxy";
     reverseProxy = true;
+    trustedProxyIP = [
+      "127.0.0.1"
+      "::1"
+    ];
     setXauthrequest = true;
     cookie = {
       domain = "kropki.org";
