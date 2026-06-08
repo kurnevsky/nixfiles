@@ -26,6 +26,7 @@ drv:
   pams ? [ ],
   whitelist ? [ ],
   ro-whitelist ? [ ],
+  overlay-whitelist ? [ ],
   blacklist ? [ ],
   unsetenvs ? [ ],
   setenvs ? [ ],
@@ -135,7 +136,9 @@ writeShellScriptBin target-name ''
   fi
 
   ${lib.concatMapStringsSep "\n" (x: "test ! -e ${bindFrom x} && mkdir -p ${bindFrom x}") (
-    lib.filter (x: builtins.match ".*/" (bindFrom x) != null) (ro-whitelist ++ whitelist)
+    lib.filter (x: builtins.match ".*/" (bindFrom x) != null) (
+      ro-whitelist ++ overlay-whitelist ++ whitelist
+    )
   )}
 
   ${lib.optionalString unshare-net ''
@@ -195,6 +198,7 @@ writeShellScriptBin target-name ''
   ''}
 
   mapfile -t ro_whitelist < <(echo -n "''${RO_WHITELIST-}" | grep -v '^[[:space:]]*$' | ${gnused}/bin/sed 's/.*/--ro-bind\n&\n&/')
+  mapfile -t overlay_whitelist < <(echo -n "''${OVERLAY_WHITELIST-}" | grep -v '^[[:space:]]*$' | ${gnused}/bin/sed 's/.*/--overlay-src\n&\n--tmp-overlay\n&/')
   mapfile -t whitelist < <(echo -n "''${WHITELIST-}" | grep -v '^[[:space:]]*$' | ${gnused}/bin/sed 's/.*/--bind\n&\n&/')
   mapfile -t blacklist < <(echo -n "''${BLACKLIST-}" | grep -v '^[[:space:]]*$' | ${gnused}/bin/sed 's/.*/--tmpfs\n&/')
 
@@ -289,12 +293,18 @@ writeShellScriptBin target-name ''
        ${lib.optionalString media ''--bind-try /run/media/"$(whoami)" /run/media/"$(whoami)"''} \
        \
        ${lib.concatMapStringsSep " " (x: "--ro-bind ${bindFrom x} ${bindTo x}") ro-whitelist} \
+       ${
+         lib.concatMapStringsSep " " (
+           x: "--overlay-src ${bindFrom x} --tmp-overlay ${bindTo x}"
+         ) overlay-whitelist
+       } \
        ${lib.concatMapStringsSep " " (x: "--bind ${bindFrom x} ${bindTo x}") whitelist} \
        ${lib.concatMapStringsSep " " (x: "--tmpfs ${x}") blacklist} \
        \
        ${lib.optionalString graphics ''"''${xauthority[@]}"''} \
        \
        "''${ro_whitelist[@]}" \
+       "''${overlay_whitelist[@]}" \
        "''${whitelist[@]}" \
        "''${blacklist[@]}" \
        \
