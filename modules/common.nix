@@ -29,6 +29,7 @@ in
       "p7zip"
       "vagrant"
       "uasm"
+      "claude-code" # :(
     ];
 
   nix = {

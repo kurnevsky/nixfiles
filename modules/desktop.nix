@@ -10,12 +10,6 @@
     ./scrutiny-collector.nix
   ];
 
-  nixpkgs.config.allowUnfreePredicate =
-    pkg:
-    builtins.elem (pkgs.lib.getName pkg) [
-      "claude-code" # :(
-    ];
-
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
     kernelParams = [ "threadirqs" ];
