@@ -71,7 +71,7 @@
     ssh = {
       enable = true;
       enableDefaultConfig = false;
-      matchBlocks."*" = {
+      settings."*" = {
         compression = true;
         hashKnownHosts = true;
       };

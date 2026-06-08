@@ -210,7 +210,6 @@
         fdroidcl
         ffmpeg-full
         flac
-        fuseiso
         gdb
         gpclient
         graphicsmagick
