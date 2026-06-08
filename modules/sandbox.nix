@@ -1229,6 +1229,61 @@ in
             ];
           }
         ];
+        claude-code = wrap self.claude-code [
+          {
+            name = "claude";
+            extra-deps = with pkgs; [
+              coreutils-full
+              gnugrep
+              gnused
+              ripgrep
+            ];
+            etcs = [ "ssl/certs/ca-certificates.crt" ];
+            resolv-conf = true;
+            unsetenvs = [
+              "MAIL"
+              "SHELL"
+            ];
+            setenvs = [
+              {
+                name = "DISABLE_TELEMETRY";
+                value = "1";
+              }
+              {
+                name = "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC";
+                value = "1";
+              }
+            ];
+            unshare-net = false;
+            whitelist = [
+              "~/.claude.json"
+              "~/.claude/"
+            ];
+            overlay-whitelist = [
+              "~/.bun/"
+              "~/.cache/bloop/"
+              "~/.cache/cabal/"
+              "~/.cache/coursier/"
+              "~/.cache/metals/"
+              "~/.cache/scalacli/"
+              "~/.cache/spago-nodejs/"
+              "~/.cargo/"
+              "~/.config/cabal/"
+              "~/.config/direnv/"
+              "~/.config/ghc/"
+              "~/.config/git/"
+              "~/.local/share/direnv/"
+              "~/.local/share/ghc/"
+              "~/.local/share/metals/"
+              "~/.local/share/scalacli/"
+              "~/.local/state/trunk/"
+              "~/.m2/"
+              "~/.npm/"
+              "~/.sbt/"
+              "\$(pwd)"
+            ];
+          }
+        ];
         claws-mail = wrap self.claws-mail [
           (withFonts {
             name = "claws-mail";
