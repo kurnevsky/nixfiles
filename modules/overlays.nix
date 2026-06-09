@@ -72,6 +72,9 @@
           hash = "sha256-JPJQeBW5HaZVfak1nPSm4EWVp9o4tUIx+PfAebYTxPA=";
         };
         npmDepsHash = "sha256-pjdbI6NcZRlJVd62xhgbLhWrwFYwgsIwjORqvo1+VD8=";
+        cmakeFlags = old.cmakeFlags ++ [
+          (super.lib.cmakeFeature "GGML_SCHED_MAX_COPIES" "1")
+        ];
       });
     })
     (_self: super: {
