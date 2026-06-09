@@ -1244,6 +1244,7 @@ in
             whitelist = [
               "~/.claude.json"
               "~/.claude/"
+              "\$(pwd)"
             ];
             overlay-whitelist = [
               "~/.bun/"
@@ -1266,7 +1267,6 @@ in
               "~/.m2/"
               "~/.npm/"
               "~/.sbt/"
-              "\$(pwd)"
             ];
           }
         ];
