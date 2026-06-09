@@ -129,6 +129,11 @@ writeShellScriptBin target-name ''
   set -euETo pipefail
   shopt -s inherit_errexit
 
+  if [ -n "''${ALREADY_SANDBOXED-}" ]
+  then
+    exec ${drv}/bin/${name} "$@"
+  fi
+
   if [ -n "''${UNSANDBOXED-}" ]
   then
     echo "Running in unsandboxed mode!" >&2
@@ -308,6 +313,7 @@ writeShellScriptBin target-name ''
        "''${whitelist[@]}" \
        "''${blacklist[@]}" \
        \
+       --setenv ALREADY_SANDBOXED 1 \
        ${lib.concatMapStringsSep " " (x: "--unsetenv ${x}") unsetenvs} \
        ${lib.concatMapStringsSep " " (x: "--setenv ${x.name} ${x.value}") setenvs} \
        \
