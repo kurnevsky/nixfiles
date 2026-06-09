@@ -253,12 +253,9 @@ in
               pams = [ "pulse" ];
               # xdg-screensaver creates a lockfile in /tmp
               shared-tmp = true;
-              unsetenvs = [ "MAIL" ];
-              setenvs = [
-                {
-                  name = "SHELL";
-                  value = "/run/current-system/sw/bin/bash";
-                }
+              unsetenvs = [
+                "MAIL"
+                "SHELL"
               ];
               ro-media = true;
               dbus = [
@@ -296,12 +293,9 @@ in
               graphics = true;
               pipewire = true;
               pams = [ "pulse" ];
-              unsetenvs = [ "MAIL" ];
-              setenvs = [
-                {
-                  name = "SHELL";
-                  value = "/run/current-system/sw/bin/bash";
-                }
+              unsetenvs = [
+                "MAIL"
+                "SHELL"
               ];
               ro-media = true;
               dbus = [
@@ -364,12 +358,9 @@ in
               ];
               localtime = true;
               resolv-conf = true;
-              unsetenvs = [ "MAIL" ];
-              setenvs = [
-                {
-                  name = "SHELL";
-                  value = "/run/current-system/sw/bin/bash";
-                }
+              unsetenvs = [
+                "MAIL"
+                "SHELL"
               ];
               unshare-net = false;
               system-dbus = [
@@ -934,12 +925,9 @@ in
               pipewire = true;
               pams = [ "pulse" ];
               localtime = true;
-              unsetenvs = [ "MAIL" ];
-              setenvs = [
-                {
-                  name = "SHELL";
-                  value = "/run/current-system/sw/bin/bash";
-                }
+              unsetenvs = [
+                "MAIL"
+                "SHELL"
               ];
               unshare-cgroup = false;
               unshare-pid = false;
@@ -1233,6 +1221,7 @@ in
           {
             name = "claude";
             extra-deps = with pkgs; [
+              bash
               coreutils-full
               gnugrep
               gnused
@@ -1242,9 +1231,12 @@ in
             resolv-conf = true;
             unsetenvs = [
               "MAIL"
-              "SHELL"
             ];
             setenvs = [
+              {
+                name = "SHELL";
+                value = "${pkgs.bash}/bin/bash";
+              }
               {
                 name = "DISABLE_TELEMETRY";
                 value = "1";
