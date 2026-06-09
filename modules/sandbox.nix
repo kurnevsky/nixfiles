@@ -1220,13 +1220,7 @@ in
         claude-code = wrap self.claude-code [
           {
             name = "claude";
-            extra-deps = with pkgs; [
-              bash
-              coreutils-full
-              gnugrep
-              gnused
-              ripgrep
-            ];
+            whole-store = true;
             etcs = [ "ssl/certs/ca-certificates.crt" ];
             resolv-conf = true;
             unsetenvs = [
