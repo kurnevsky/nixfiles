@@ -41,7 +41,7 @@
       whisper-cpp
       (import ../../modules/with-native-optimizations.nix config.networking.hostName (
         pkgs.callPackage ../../modules/stable-diffusion-cpp.nix {
-          vulkanSupport = false;
+          vulkanSupport = true;
           rocmSupport = true;
           gpuTargets = "gfx1100";
           inherit inputs;
