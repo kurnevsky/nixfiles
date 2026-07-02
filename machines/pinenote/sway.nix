@@ -4,6 +4,9 @@
   ...
 }:
 
+let
+  pinenoteConfig = "${pkgs.pinenote.config-sway}/share/pinenote-config";
+in
 {
   services.greetd = {
     enable = true;
@@ -13,20 +16,6 @@
         user = "kurnevsky";
       };
       default_session = initial_session;
-    };
-  };
-
-  systemd.user.services.sway-dbus-integration = {
-    description = "sway-dbus-integration";
-    wantedBy = [ "graphical.target" ];
-    wants = [ "graphical.target" ];
-    after = [ "graphical.target" ];
-    serviceConfig = {
-      Type = "simple";
-      ExecStart = "${pkgs.hrdl-utils}/bin/sway_dbus_integration.py";
-      Restart = "on-failure";
-      RestartSec = 1;
-      TimeoutStopSec = 10;
     };
   };
 
@@ -52,6 +41,7 @@
         launch-lisgd = pkgs.callPackage ./packages/launch-lisgd.nix { };
         sway-rotate = pkgs.callPackage ./packages/sway-rotate.nix { };
         sway-workspace = pkgs.callPackage ./packages/sway-workspace.nix { };
+        config-sway = pkgs.callPackage ./packages/pinenote-config-sway.nix { };
       };
     })
   ];
@@ -63,7 +53,7 @@
     papirus-icon-theme
     nwg-menu
     networkmanagerapplet
-    xfce.thunar
+    thunar
     xournalpp
     koreader
   ];
@@ -109,23 +99,38 @@
         bars = [ ];
       };
       extraConfig = ''
+        set $menu ${pkgs.pinenote.toggle-menu}/bin/toggle_menu.sh
+        set $toggle_osk ${pinenoteConfig}/sway/scripts/toggle_squeekboard.sh
+        set $gestures_service ${pkgs.pinenote.launch-lisgd}/bin/launch_lisgd.sh
+        set $pn_ebcmark ${pinenoteConfig}/sway/scripts/ebcmark.sh
+
+        bar {
+            position top
+            swaybar_command ${pinenoteConfig}/sway/scripts/start_waybar.sh
+            pango_markup enable
+        }
+
+        bar bar-ctrl {
+            swaybar_command ${pkgs.coreutils}/bin/true
+            mode hide
+            pango_markup enable
+        }
+
+        exec_always --no-startup-id $gestures_service
+        exec --no-startup-id ${pinenoteConfig}/sway/scripts/sway_rotate.sh start
+
         exec --no-startup-id ${pkgs.networkmanagerapplet}/bin/nm-applet --indicator &
         exec --no-startup-id ${pkgs.squeekboard}/bin/squeekboard &
 
-        exec --no-startup-id ${pkgs.pinenote.sway-rotate}/bin/sway_rotate.sh rotnormal
-
-        exec_always --no-startup-id ${pkgs.pinenote.launch-lisgd}/bin/launch_lisgd.sh
-        exec_always --no-startup-id ${pkgs.util-linux}/bin/flock -n .sway_dbus_integration.lock ${pkgs.hrdl-utils}/bin/sway_dbus_integration.py
-        exec rot8 --hooks ${pkgs.pinenote.launch-lisgd}/bin/launch_lisgd.sh --display DPI-1 --invert-x
+        for_window [app_id="mpv"] exec $pn_ebcmark set "Y1|D" silent
+        for_window [app_id="KOReader"] exec $pn_ebcmark set "Y4" silent
+        for_window [app_id="Alacritty"] exec $pn_ebcmark set "Y2|R" silent
+        for_window [app_id="com.github.xournalpp.xournalpp"] exec $pn_ebcmark set "Y4|R" silent
+        for_window [app_id="firefox"] exec $pn_ebcmark set "Y4|R" silent
+        for_window [app_id="org.qutebrowser.qutebrowser"] exec $pn_ebcmark set "Y4|R" silent
+        for_window [app_id="mepo"] exec $pn_ebcmark set "Y4|R" silent
+        for_window [app_id="imv"] exec $pn_ebcmark set "Y4|R" silent
       '';
-    };
-    programs = {
-      waybar = {
-        enable = true;
-        systemd.enable = true;
-        settings.mainBar = import ./waybar.nix { inherit pkgs; };
-        style = builtins.readFile ./waybar/style.css;
-      };
     };
     xdg.configFile."nwg-panel/menu-start.css".source = ./menu-start.css;
   };
