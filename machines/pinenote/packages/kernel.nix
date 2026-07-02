@@ -5,7 +5,7 @@ pkgs.linuxPackagesFor (
     let
       kernelPatches = pkgs.callPackage "${pkgs.path}/pkgs/os-specific/linux/kernel/patches.nix" { };
       kernel = pkgs.callPackage "${pkgs.path}/pkgs/os-specific/linux/kernel/mainline.nix" {
-        branch = "6.15";
+        branch = "6.19";
         kernelPatches = [
           kernelPatches.bridge_stp_helper
           kernelPatches.request_key_helper
@@ -17,10 +17,10 @@ pkgs.linuxPackagesFor (
         src = fetchFromSourcehut {
           owner = "~hrdl";
           repo = "linux";
-          rev = "f75fe16d81ae784b8cd2b915113f3a99ff812777";
-          sha256 = "sha256-DhMiZMcwownJJRqIYOj87E/j34jJZb2/rTOhYuMumG4=";
+          rev = "46028a0e2658877625568f2134e243b304966ef4";
+          sha256 = "sha256-Y96Yae3SLoTJoRLqjeMK7lubBCsJUrc/1Lk6Eyfm6K0=";
         };
-        version = "6.15.0-rc3";
+        version = "6.19.0";
         modDirVersion = version;
         defconfig = "pinenote_defconfig";
 

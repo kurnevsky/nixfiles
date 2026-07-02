@@ -22,8 +22,8 @@ pkgs.stdenvNoCC.mkDerivation {
   src = pkgs.fetchFromSourcehut {
     owner = "~hrdl";
     repo = "pinenote-dist";
-    rev = "0d463616813e678693e741e5c2cea056f4270718";
-    sha256 = "sha256-9T+xe252nqMK63KlrFawb1KyQ+JXFVnIfgBI0ZdWrjQ=";
+    rev = "3e228dbf3fe26f74ab7ec3a971adc477d9c0bfe6";
+    sha256 = "sha256-SWHEK6Clv0H2hdRxi4DyLKVDxuPeIpzsZGaITuPgg+s=";
   };
 
   nativeBuildInputs = with pkgs; [

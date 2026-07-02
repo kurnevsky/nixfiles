@@ -17,7 +17,7 @@ pkgs.writeShellScriptBin "sway_rotate.sh" ''
   }
 
   rotnormal() {
-  	${pkgs.sway}/bin/swaymsg -- output "-" transform 0 scale 1
+  	${pkgs.sway}/bin/swaymsg -- output "-" transform 0
   	focused_name="$(focusedname)"
   	${pkgs.sway}/bin/swaymsg -- input type:touch map_to_output "$focused_name"
   	${pkgs.sway}/bin/swaymsg -- input type:tablet_tool map_to_output "$focused_name"
@@ -26,7 +26,7 @@ pkgs.writeShellScriptBin "sway_rotate.sh" ''
   }
 
   rotleft() {
-  	${pkgs.sway}/bin/swaymsg -- output "-" transform 90 scale 1
+  	${pkgs.sway}/bin/swaymsg -- output "-" transform 90
   	focused_name="$(focusedname)"
   	${pkgs.sway}/bin/swaymsg -- input type:touch map_to_output "$focused_name"
   	${pkgs.sway}/bin/swaymsg -- input type:tablet_tool map_to_output "$focused_name"
@@ -35,7 +35,7 @@ pkgs.writeShellScriptBin "sway_rotate.sh" ''
   }
 
   rotright() {
-  	${pkgs.sway}/bin/swaymsg -- output "-" transform 270 scale 1
+  	${pkgs.sway}/bin/swaymsg -- output "-" transform 270
   	focused_name="$(focusedname)"
   	${pkgs.sway}/bin/swaymsg -- input type:touch map_to_output "$focused_name"
   	${pkgs.sway}/bin/swaymsg -- input type:tablet_tool map_to_output "$focused_name"
@@ -44,7 +44,7 @@ pkgs.writeShellScriptBin "sway_rotate.sh" ''
   }
 
   rotinvert() {
-  	${pkgs.sway}/bin/swaymsg -- output "-" transform 180 scale 1
+  	${pkgs.sway}/bin/swaymsg -- output "-" transform 180
   	focused_name="$(focusedname)"
   	${pkgs.sway}/bin/swaymsg -- input type:touch map_to_output "$focused_name"
   	${pkgs.sway}/bin/swaymsg -- input type:tablet_tool map_to_output "$focused_name"
