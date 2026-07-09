@@ -63,6 +63,7 @@ in
   "grafana-db.age".publicKeys = [ vps ];
   "scrutiny.age".publicKeys = [ vps ];
   "livekit.age".publicKeys = [ vps ];
+  "livekit-turn.age".publicKeys = [ vps ];
   "coturn.age".publicKeys = [ vps ];
   "prosody-turn.age".publicKeys = [ vps ];
   "rustic.age".publicKeys = [ vps ];

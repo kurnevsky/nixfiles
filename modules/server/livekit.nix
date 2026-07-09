@@ -12,6 +12,13 @@
       settings = {
         room.auto_create = false;
         prometheus.port = 31049;
+        rtc.turn_servers = [
+          {
+            host = "kropki.org";
+            port = config.services.coturn.listening-port;
+            secret_file = config.age.secrets.livekit-turn.path or "/secrets/livekit-turn";
+          }
+        ];
       };
     };
 
@@ -34,7 +41,19 @@
     };
   };
 
-  systemd.services.lk-jwt-service.environment.LIVEKIT_FULL_ACCESS_HOMESERVERS = "kropki.org";
+  systemd.services = {
+    livekit.serviceConfig.SupplementaryGroups = "secrets-livekit";
+    lk-jwt-service.environment.LIVEKIT_FULL_ACCESS_HOMESERVERS = "kropki.org";
+  };
 
-  age.secrets.livekit.file = ../../secrets/livekit.age;
+  age.secrets = {
+    livekit.file = ../../secrets/livekit.age;
+    livekit-turn = {
+      file = ../../secrets/livekit-turn.age;
+      mode = "440";
+      group = "secrets-livekit";
+    };
+  };
+
+  users.groups.secrets-livekit = { };
 }
