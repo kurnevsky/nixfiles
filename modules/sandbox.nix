@@ -1220,6 +1220,7 @@ in
         claude-code = wrap self.claude-code [
           {
             name = "claude";
+            bin-sh = true;
             whole-store = true;
             etcs = [ "ssl/certs/ca-certificates.crt" ];
             resolv-conf = true;
