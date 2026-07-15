@@ -12,7 +12,7 @@
           compositor = "kwin";
         };
         autoNumlock = true;
-        settings.Users.HideUsers = "ww";
+        settings.Users.HideUsers = "ww,zz";
       };
     };
   };
@@ -350,5 +350,6 @@
     {
       kurnevsky = home;
       ww = home;
+      zz = home;
     };
 }
