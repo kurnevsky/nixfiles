@@ -251,6 +251,7 @@
         opencode
         openssl
         pandoc
+        par2cmdline-turbo
         parallel
         pciutils
         pgpdump
@@ -1021,6 +1022,7 @@
                 istilldontcareaboutcookies
                 refined-github
                 canvasblocker
+                geo-spoof
               ];
             };
           };
