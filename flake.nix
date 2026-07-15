@@ -153,6 +153,7 @@
         root = "root";
         kurnevsky = "kurnevsky";
         ww = "ww";
+        zz = "zz";
         parents = "parents";
       };
       for-all-home-users = import ./modules/for-all-home-users.nix;
@@ -185,12 +186,16 @@
           ];
         }
         inputs.solaar.nixosModules.default
-        (for-all-home-users (with users; [ ww ]) common-home)
+        (for-all-home-users (with users; [
+          ww
+          zz
+        ]) common-home)
         (import ./modules/emacs.nix (
           with users;
           [
             kurnevsky
             ww
+            zz
           ]
         ))
         ./modules/desktop.nix

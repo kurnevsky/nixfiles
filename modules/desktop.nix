@@ -791,6 +791,16 @@
           "tor"
         ];
       };
+      zz = {
+        uid = 1002;
+        isNormalUser = true;
+        shell = pkgs.zsh;
+        hashedPasswordFile = config.age.secrets.ww.path or "/secrets/ww";
+        extraGroups = [
+          "video"
+          "pipewire"
+        ];
+      };
       hans.group = "hans";
     };
     extraUsers.tor.homeMode = "755";
@@ -1163,6 +1173,7 @@
           };
         };
         ww = home-config;
+        zz = home-config;
       };
     };
 }

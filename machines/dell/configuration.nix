@@ -98,5 +98,6 @@
     root.home.stateVersion = "21.05";
     kurnevsky.home.stateVersion = "21.05";
     ww.home.stateVersion = "21.05";
+    zz.home.stateVersion = "21.05";
   };
 }
