@@ -7,6 +7,13 @@
       ref = "nixos-unstable";
     };
 
+    nixpkgs-old = {
+      type = "github";
+      owner = "NixOS";
+      repo = "nixpkgs";
+      ref = "b5aa0fbd538984f6e3d201be0005b4463d8b09f8";
+    };
+
     fenix = {
       type = "github";
       owner = "nix-community";
@@ -202,6 +209,21 @@
           { pkgs, ... }:
           {
             environment.systemPackages = [ inputs.agenix.packages.${pkgs.stdenv.hostPlatform.system}.default ];
+          }
+        )
+        (
+          { pkgs, ... }:
+          let
+            oldPkgs = import inputs.nixpkgs-old {
+              inherit (pkgs.stdenv.targetPlatform) system;
+            };
+          in
+          {
+            nixpkgs.overlays = [
+              (_self: _super: {
+                inherit (oldPkgs) deadbeef;
+              })
+            ];
           }
         )
       ];
