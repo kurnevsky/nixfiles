@@ -105,8 +105,8 @@
         (pkgs.pkgsCross.mingw32.callPackage ./vkd3d-proton.nix { })
         (pkgs.pkgsCross.mingwW64.callPackage ./vkd3d-proton.nix { })
         (callPackage ./mcptools.nix { })
-        (callPackage ./firefox-devtools-mcp.nix { })
         (callPackage ./anki-mcp-server.nix { })
+        firefox-devtools-mcp
         mcp-proxy
         (anki.withAddons [
           ankiAddons.anki-connect
