@@ -9,6 +9,7 @@
     telegram-desktop
     wesnoth
     megapixels
+    gnome-console
   ];
 
   i18n.supportedLocales = [
