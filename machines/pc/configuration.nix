@@ -114,6 +114,7 @@
       '';
     };
     esphome.enable = true;
+    lact.enable = true;
   };
 
   age.secrets = {
