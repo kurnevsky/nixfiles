@@ -1,5 +1,5 @@
 diff --git a/Telegram/SourceFiles/main/main_domain.h b/Telegram/SourceFiles/main/main_domain.h
-index 2e69222b9..b3e08fd66 100644
+index 99e2c9d5b3..a687171a43 100644
 --- a/Telegram/SourceFiles/main/main_domain.h
 +++ b/Telegram/SourceFiles/main/main_domain.h
 @@ -31,8 +31,8 @@ public:

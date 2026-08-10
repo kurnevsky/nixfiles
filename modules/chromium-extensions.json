@@ -1,13 +1,13 @@
 {
   "dark-reader": {
     "id": "eimadpbcbfnmbkopoojfekhnkhdbieeh",
-    "sha256": "sha256:0lwamw0dmjvjjvcidsy2cmrh7azmbjgdrm6wm5ljlpirag0f5bg3",
-    "version": "4.9.128"
+    "sha256": "sha256:04xa6wg6fwgswi2n96js2fxfvwrdk1gzd3q2vhnqjhxdvkb1pjwx",
+    "version": "4.9.129"
   },
   "decentraleyes": {
     "id": "ldpochfccmkkmhdbclfhpagapcfdljkj",
-    "sha256": "sha256:0k4rxywbr4cgp03wsz51g8x127s4g0a7hkb5g4ygzmp2n8npn9ab",
-    "version": "3.0.1"
+    "sha256": "sha256:056slds04sb38gcwgbrigvk05xj7mg82a9mzai7024j5lgsvwnrd",
+    "version": "3.0.2"
   },
   "plasma-integration": {
     "id": "cimiefiiaegbelhefglklhhakcgmhkai",
@@ -16,8 +16,8 @@
   },
   "privacy-badger": {
     "id": "pkehgijcmpdhfbdbbnkijodmdjhbjlgp",
-    "sha256": "sha256:0h4gs3yf5ryrk04djlvdn23mrppvnjjb04vawpw3zm4hlhwgmgxg",
-    "version": "2026.6.16"
+    "sha256": "sha256:09yz5w8jmn04fqzgag1d770nn8n7sg2a1vwdkdgl4x8il6kmpvxk",
+    "version": "2026.8.7"
   },
   "sponsorblock": {
     "id": "mnjggcdmjocbbbhaepdhchncahnbgone",
@@ -26,8 +26,8 @@
   },
   "ublock-origin-lite": {
     "id": "ddkjiahejlhfcafbddmgiahcphecmpfh",
-    "sha256": "sha256:13y8jlyhd3yx569sp8809z8kgfwvxrrdid60ifxs05vxwm9g3yfm",
-    "version": "2026.713.1408"
+    "sha256": "sha256:1chhmpws01fdg3w5d4dcz3a3fkwafqvh7997a4vmn5khddnrs5z8",
+    "version": "2026.804.1652"
   },
   "find-plus": {
     "id": "fddffkdncgkkdjobemgbpojjeffmmofb",
@@ -41,8 +41,8 @@
   },
   "refined-github": {
     "id": "hlepfoohegkhhmjieoechaddaejaokhf",
-    "sha256": "sha256:0gl94s5g0m59796z4dwqwl4v4wwh5rgbh19g9n3dcv9zj0rd506a",
-    "version": "26.7.12"
+    "sha256": "sha256:1k3aiy904bwy6nk59h895lf8cq2ba4i45b20g4i58y86rng5vk30",
+    "version": "26.8.8"
   },
   "keepassxc-browser": {
     "id": "oboonakemofpalcgghocfoadofidjkkk",
@@ -51,7 +51,7 @@
   },
   "geo-spoof": {
     "id": "dgdbdodafgaeifgajaajohkjjgobcgje",
-    "sha256": "sha256:14xxwkfs2gjxvjgb89jg5g6sdbyqxhqkjjn908hwbcfzqgssj70b",
-    "version": "2.0.5"
+    "sha256": "sha256:1fqzv3vgjd30vxvpx248b08hrhmapazwrc2qszzrr8dxqqd8i2a3",
+    "version": "2.1.2"
   }
 }

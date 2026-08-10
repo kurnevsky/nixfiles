@@ -340,7 +340,8 @@
         # Wallets
         electrum
         monero-cli
-        feather
+        # TODO: broken
+        # feather
         # Audio
         easyeffects
         crosspipe
