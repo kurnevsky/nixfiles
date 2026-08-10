@@ -48,6 +48,12 @@
         }
       ))
       (import ../../modules/with-native-optimizations.nix config.networking.hostName (
+        pkgs.callPackage ../../modules/audio-cpp.nix {
+          vulkanSupport = true;
+          inherit inputs;
+        }
+      ))
+      (import ../../modules/with-native-optimizations.nix config.networking.hostName (
         pkgs.callPackage ../../modules/s2-cpp.nix {
           vulkanSupport = true;
         }

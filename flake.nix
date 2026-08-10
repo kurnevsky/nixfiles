@@ -101,6 +101,13 @@
       flake = false;
     };
 
+    audio-cpp = {
+      type = "git";
+      url = "https://github.com/0xShug0/audio.cpp.git";
+      submodules = true;
+      flake = false;
+    };
+
     git-hooks = {
       type = "github";
       owner = "cachix";

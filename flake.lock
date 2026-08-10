@@ -25,6 +25,24 @@
         "type": "github"
       }
     },
+    "audio-cpp": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1786342673,
+        "narHash": "sha256-3c0S78QlsZPHblVv8on1/0nd3bJTpZF0ngNbs+1GQc4=",
+        "ref": "refs/heads/main",
+        "rev": "a48cc34f326fdb482a1bcc2f7441b160f5900f7d",
+        "revCount": 287,
+        "submodules": true,
+        "type": "git",
+        "url": "https://github.com/0xShug0/audio.cpp.git"
+      },
+      "original": {
+        "submodules": true,
+        "type": "git",
+        "url": "https://github.com/0xShug0/audio.cpp.git"
+      }
+    },
     "base16": {
       "inputs": {
         "fromYaml": "fromYaml"
@@ -522,6 +540,7 @@
     "root": {
       "inputs": {
         "agenix": "agenix",
+        "audio-cpp": "audio-cpp",
         "base16": "base16",
         "disko": "disko",
         "emacs-overlay": "emacs-overlay",
