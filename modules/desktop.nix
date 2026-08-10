@@ -118,8 +118,7 @@
           extraPackages = [ ffmpeg-full ];
         })
         dosbox
-        # TODO: broken
-        # eiskaltdcpp
+        eiskaltdcpp
         gimp3-with-plugins
         scrcpy
         gnome-themes-extra
@@ -340,8 +339,7 @@
         # Wallets
         electrum
         monero-cli
-        # TODO: broken
-        # feather
+        feather
         # Audio
         easyeffects
         crosspipe
