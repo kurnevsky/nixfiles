@@ -35,9 +35,9 @@ in
 
   systemd.user.services.pinenote-service-sway = {
     description = "pinenote-service";
-    wantedBy = [ "graphical.target" ];
-    wants = [ "graphical.target" ];
-    after = [ "graphical.target" ];
+    wantedBy = [ "graphical-session.target" ];
+    partOf = [ "graphical-session.target" ];
+    after = [ "graphical-session.target" ];
     serviceConfig = {
       Type = "simple";
       ExecStart = "${pkgs.pinenote-service}/bin/pinenote-service --sway";
@@ -71,6 +71,15 @@ in
           '';
         }
       );
+      # The search-result scrolled windows don't propagate their natural
+      # height, so the menu window stays tiny and 64px icons get cropped.
+      nwg-menu = super.nwg-menu.overrideAttrs (old: {
+        postPatch =
+          (old.postPatch or "")
+          + ''
+            sed -i -E 's/([a-zA-Z]+)\.SetPolicy\(gtk\.POLICY_NEVER, gtk\.POLICY_AUTOMATIC\)/&\n\t\1.SetPropagateNaturalHeight(true)\n\t\1.SetMinContentHeight(600)/' uicomponents.go
+          '';
+      });
       pinenote-service = super.callPackage ./packages/pinenote-service.nix { };
       pinenote = {
         toggle-menu = pkgs.callPackage ./packages/toggle-menu.nix { };

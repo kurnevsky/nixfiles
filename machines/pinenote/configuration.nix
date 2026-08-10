@@ -50,12 +50,16 @@
     };
   };
 
-  fonts.packages = with pkgs; [
-    font-awesome
-    nerd-fonts.symbols-only
-    noto-fonts
-    noto-fonts-color-emoji
-  ];
+  fonts = {
+    packages = with pkgs; [
+      font-awesome
+      nerd-fonts.symbols-only
+      noto-fonts
+      noto-fonts-color-emoji
+      liberation_ttf
+    ];
+    fontDir.enable = true;
+  };
 
   fileSystems = {
     "/" = {
