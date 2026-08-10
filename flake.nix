@@ -312,6 +312,14 @@
             ./machines/pinenote/boot.nix
           ];
         };
+        pinenote-cross = inputs.nixpkgs.lib.nixosSystem {
+          system = "aarch64-linux";
+          modules = commonModules ++ [
+            ./machines/pinenote/configuration.nix
+            ./machines/pinenote/boot.nix
+            ./machines/pinenote/cross.nix
+          ];
+        };
       };
       nixOnDroidConfigurations.default = inputs.nix-on-droid.lib.nixOnDroidConfiguration {
         pkgs = import inputs.nixpkgs { system = "aarch64-linux"; };
