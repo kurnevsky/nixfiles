@@ -22,6 +22,8 @@
 
     (pkgs.writeTextDir "lib/udev/rules.d/83-backlight.rules" ''
       SUBSYSTEM=="backlight", ACTION=="add", RUN+="${pkgs.coreutils}/bin/chgrp video /sys/class/backlight/%k/brightness", RUN+="${pkgs.coreutils}/bin/chmod g+w /sys/class/backlight/%k/brightness"
+      SUBSYSTEM=="backlight", KERNEL=="backlight_cool", ENV{ID_BACKLIGHT_CLAMP}="false"
+      SUBSYSTEM=="backlight", KERNEL=="backlight_warm", ENV{ID_BACKLIGHT_CLAMP}="false"
     '')
 
     (pkgs.writeTextDir "lib/udev/rules.d/84-rockchip-ebc-power.rules" ''

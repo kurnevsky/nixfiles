@@ -25,6 +25,9 @@
     "video"
     "pipewire"
     "audio"
+    # lisgd needs raw access to the touchscreen for gestures (in particular
+    # the swipe that opens the bar-ctrl side bar).
+    "input"
   ];
 
   networking = {

@@ -34,7 +34,7 @@
 
     extraModprobeConfig = ''
       options rockchip_ebc dithering_method=2 default_hint=0xa0 early_cancellation_addition=2 redraw_delay=200
-      options brcmfmac feature_disable=0x820001
+      options brcmfmac feature_disable=0x82000
     '';
 
     plymouth.enable = true;
