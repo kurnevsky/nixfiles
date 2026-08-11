@@ -8,11 +8,7 @@
 let
   pkgsCross = import inputs.nixpkgs {
     system = "x86_64-linux";
-    crossSystem = {
-      config = "aarch64-unknown-linux-gnu";
-      # The platform description defined in pinephone.nix.
-      inherit (config.nixpkgs.hostPlatform) linux-kernel;
-    };
+    crossSystem.config = "aarch64-unknown-linux-gnu";
     overlays = [
       (import "${inputs.mobile-nixos}/overlay/overlay.nix")
       # Same as the overlay defined in mobile-nixos modules/kernel-config.nix.
