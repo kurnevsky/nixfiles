@@ -345,18 +345,32 @@
           ];
         };
       };
-      nixOnDroidConfigurations.default = inputs.nix-on-droid.lib.nixOnDroidConfiguration {
-        pkgs = import inputs.nixpkgs { system = "aarch64-linux"; };
-        modules = [
-          ./modules/android.nix
-          ./machines/android/configuration.nix
-          { _module.args.inputs = inputs; }
-        ];
-      };
+      nixOnDroidConfigurations =
+        let
+          droidConfiguration =
+            system:
+            inputs.nix-on-droid.lib.nixOnDroidConfiguration {
+              pkgs = import inputs.nixpkgs { inherit system; };
+              modules = [
+                ./modules/android.nix
+                ./machines/android/configuration.nix
+                { _module.args.inputs = inputs; }
+              ];
+            };
+        in
+        {
+          default = droidConfiguration "aarch64-linux";
+          x86_64 = droidConfiguration "x86_64-linux";
+        };
       packages = forAllSystems (_system: {
         # nix build -L '/etc/nixos#phone-vm' && ./result -enable-kvm -smp 2
         phone-vm = inputs.self.nixosConfigurations.pinephone-vm.config.mobile.outputs.uefi.vm;
         note-vm = inputs.self.nixosConfigurations.pinenote-vm.config.system.build.vm;
+        # nix build -L --impure '/etc/nixos#droid-shell' && ./result/bin/droid-shell
+        droid-shell = import ./modules/droid-shell.nix {
+          pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
+          droid = inputs.self.nixOnDroidConfigurations.x86_64;
+        };
       });
       checks = forAllSystems (system: {
         pre-commit-check = inputs.git-hooks.lib.${system}.run {
