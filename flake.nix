@@ -287,6 +287,18 @@
             ./machines/pinephone/hardware-configuration.nix
           ];
         };
+        pinephone-cross = inputs.nixpkgs.lib.nixosSystem {
+          system = "aarch64-linux";
+          modules = commonModules ++ [
+            (import "${inputs.mobile-nixos}/lib/configuration.nix" {
+              device = "pine64-pinephone";
+            })
+            ./modules/pinephone.nix
+            ./modules/pinephone-cross.nix
+            ./machines/pinephone/configuration.nix
+            ./machines/pinephone/hardware-configuration.nix
+          ];
+        };
         pinephone-pro = inputs.nixpkgs.lib.nixosSystem {
           system = "aarch64-linux";
           modules = commonModules ++ [
@@ -294,6 +306,18 @@
               device = "pine64-pinephonepro";
             })
             ./modules/pinephone.nix
+            ./machines/pinephone-pro/configuration.nix
+            ./machines/pinephone-pro/hardware-configuration.nix
+          ];
+        };
+        pinephone-pro-cross = inputs.nixpkgs.lib.nixosSystem {
+          system = "aarch64-linux";
+          modules = commonModules ++ [
+            (import "${inputs.mobile-nixos}/lib/configuration.nix" {
+              device = "pine64-pinephonepro";
+            })
+            ./modules/pinephone.nix
+            ./modules/pinephone-cross.nix
             ./machines/pinephone-pro/configuration.nix
             ./machines/pinephone-pro/hardware-configuration.nix
           ];
