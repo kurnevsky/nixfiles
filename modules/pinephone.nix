@@ -7,54 +7,6 @@
 }:
 
 {
-  nixpkgs.overlays = [
-    (final: super: {
-      mobile-nixos = super.mobile-nixos // {
-        # Fix the cut-down stage-1 packages from the mobile-nixos boot overlay:
-        # - libinput: lua is stripped from buildInputs while the meson flags
-        #   still enable lua plugins;
-        # - libxkbcommon: tools fail to compile without xkeyboard-config, and
-        #   stage-1 only needs the library.
-        stage-1 =
-          (final.appendOverlays [
-            (_final: prev: { libinput = prev.libinput.override { luaSupport = false; }; })
-            (import "${inputs.mobile-nixos}/boot/overlay")
-            (_final: prev: {
-              libxkbcommon = prev.libxkbcommon.overrideAttrs (old: {
-                mesonFlags = old.mesonFlags ++ [ "-Denable-tools=false" ];
-              });
-            })
-          ]).mobile-nixos.stage-1;
-      };
-    })
-  ];
-
-  # Mobile-nixos still expects the platform description that was removed from
-  # nixpkgs elaborated systems.
-  nixpkgs.hostPlatform =
-    if config.mobile.system.system == "aarch64-linux" then
-      {
-        system = "aarch64-linux";
-        linux-kernel = {
-          name = "aarch64-multiplatform";
-          baseConfig = "defconfig";
-          DTB = true;
-          autoModules = true;
-          preferBuiltin = true;
-          target = "Image";
-        };
-      }
-    else
-      {
-        system = config.mobile.system.system;
-        linux-kernel = {
-          name = "pc";
-          baseConfig = "defconfig";
-          autoModules = true;
-          target = "bzImage";
-        };
-      };
-
   boot.tmp.cleanOnBoot = true;
 
   environment.systemPackages = with pkgs; [
