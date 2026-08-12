@@ -102,8 +102,6 @@
             obs-backgroundremoval
           ];
         })
-        (pkgs.pkgsCross.mingw32.callPackage ./vkd3d-proton.nix { })
-        (pkgs.pkgsCross.mingwW64.callPackage ./vkd3d-proton.nix { })
         (callPackage ./mcptools.nix { })
         (callPackage ./anki-mcp-server.nix { })
         firefox-devtools-mcp
