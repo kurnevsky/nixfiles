@@ -23,7 +23,6 @@ lib.mkMerge [
 
     environment.systemPackages = with pkgs; [
       emacs-lsp-booster
-      (callPackage ./emacs-tramp-rpc-server.nix { })
     ];
   }
   (import ./for-all-home-users.nix users (import ./emacs/home.nix emacs))
