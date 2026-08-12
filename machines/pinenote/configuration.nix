@@ -7,7 +7,6 @@
 {
   imports = [
     ./hardware.nix
-    # ./gnome.nix
     ./sway.nix
   ];
 
