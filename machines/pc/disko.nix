@@ -67,6 +67,26 @@
         };
       };
     };
+    swap1 = {
+      type = "disk";
+      device = "/dev/nvme1";
+      content = {
+        type = "swap";
+        priority = 10;
+        randomEncryption = true;
+        discardPolicy = "both";
+      };
+    };
+    swap2 = {
+      type = "disk";
+      device = "/dev/nvme2";
+      content = {
+        type = "swap";
+        priority = 10;
+        randomEncryption = true;
+        discardPolicy = "both";
+      };
+    };
     data = {
       type = "disk";
       device = "/dev/sda";

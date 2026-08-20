@@ -67,11 +67,11 @@
     })
     (_self: super: {
       llama-cpp = super.llama-cpp.overrideAttrs (old: {
-        version = "10338";
+        version = "10405";
         src = old.src.overrideAttrs {
-          hash = "sha256-j6bsjRB7edSGxuZk6eM157feHlZDvZVQt0uJmz1FG20=";
+          hash = "sha256-T24p4PmXEwkKl7bOO19nmqUaqXISOW1I3vEPr+NqKWo=";
         };
-        npmDepsHash = "sha256-FHvd2bMvBc9EXrJEzu8EN78oUVSLcOKYCc0232V+L4A=";
+        npmDepsHash = "sha256-2Q7XhaLAArmviOLdQsNbYTfdyDE5pW9lR26cRHEVl9k=";
         cmakeFlags = old.cmakeFlags ++ [
           (super.lib.cmakeFeature "GGML_SCHED_MAX_COPIES" "1")
         ];

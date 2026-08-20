@@ -80,13 +80,6 @@
       flake = false;
     };
 
-    solaar = {
-      type = "github";
-      owner = "Svenum";
-      repo = "Solaar-Flake";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     purescript-overlay = {
       type = "github";
       owner = "thomashoneyman";
@@ -185,7 +178,6 @@
             inputs.nur.overlays.default
           ];
         }
-        inputs.solaar.nixosModules.default
         (for-all-home-users (with users; [
           ww
           zz

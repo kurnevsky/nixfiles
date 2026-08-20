@@ -327,13 +327,15 @@
         ncmpc
         # Games
         cataclysm-dda
-        hedgewars
+        # TODO: broken
+        # hedgewars
         luanti
         openmw
         wesnoth
         # Databases
         grafana-loki
-        kcat
+        # TODO: broken
+        # kcat
         # Wallets
         electrum
         monero-cli
@@ -494,12 +496,12 @@
     fuse.userAllowOther = true;
     chromium.enable = true;
     ssh.startAgent = true;
+    solaar.enable = true;
   };
 
   gtk.iconCache.enable = true;
 
   services = {
-    solaar.enable = true;
     envfs.enable = true;
     dbus.implementation = "broker";
     avahi = {
@@ -552,25 +554,26 @@
     };
     i2pd = {
       enable = true;
-      enableIPv6 = true;
-      proto = {
-        http.enable = true;
-        httpProxy.enable = true;
-        socksProxy.enable = true;
-        i2cp.enable = true;
+      settings = {
+        ipv6 = true;
+        meshnets.yggdrasil = true;
+        http.enabled = true;
+        httpproxy.enabled = true;
+        socksproxy.enabled = true;
+        i2cp.enabled = true;
       };
-      outTunnels = {
+      clientTunnels = {
         SMTP = {
           address = "127.0.0.1";
           port = 7659;
           destination = "smtp.postman.i2p";
-          destinationPort = 25;
+          destinationport = 25;
         };
         POP3 = {
           address = "127.0.0.1";
           port = 7660;
           destination = "pop.postman.i2p";
-          destinationPort = 110;
+          destinationport = 110;
         };
         IRC = {
           address = "127.0.0.1";
@@ -583,7 +586,6 @@
           destination = "kropkivvl72y7cjridmcdekzzbxm2pmtoy36bq6yczum3edq6o3q.b32.i2p";
         };
       };
-      yggdrasil.enable = true;
     };
     monero = {
       enable = true;

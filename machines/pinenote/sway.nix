@@ -49,28 +49,6 @@ in
 
   nixpkgs.overlays = [
     (_self: super: {
-      # The rot8 1.0.0 release in nixpkgs normalizes accelerometer readings
-      # with a fixed factor that doesn't match the PineNote's sc7a20, so
-      # autorotation never triggers; 1.0.1 detects the scale dynamically.
-      rot8 = super.rot8.overrideAttrs (
-        old: rec {
-          version = "1.0.1";
-          src = super.fetchFromGitHub {
-            owner = "efernau";
-            repo = "rot8";
-            rev = "v${version}";
-            hash = "sha256-9zjAi4yIpTqcJ338t0CVoOo0jlzrzRMfTH4ZRqBVAQg=";
-          };
-          # Upstream dropped Cargo.lock from the repo, so it has to be
-          # generated manually with `cargo generate-lockfile`.
-          cargoDeps = super.rustPlatform.importCargoLock {
-            lockFile = ./packages/rot8-Cargo.lock;
-          };
-          postPatch = (old.postPatch or "") + ''
-            ln -s ${./packages/rot8-Cargo.lock} Cargo.lock
-          '';
-        }
-      );
       # The search-result scrolled windows don't propagate their natural
       # height, so the menu window stays tiny and 64px icons get cropped.
       nwg-menu = super.nwg-menu.overrideAttrs (old: {
