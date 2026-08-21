@@ -2,7 +2,7 @@
   disko.devices.disk = {
     main = {
       type = "disk";
-      device = "/dev/nvme0";
+      device = "/dev/nvme0n1";
       content = {
         type = "gpt";
         partitions = {
@@ -69,7 +69,7 @@
     };
     swap1 = {
       type = "disk";
-      device = "/dev/nvme1";
+      device = "/dev/nvme1n1";
       content = {
         type = "swap";
         priority = 10;
@@ -79,7 +79,7 @@
     };
     swap2 = {
       type = "disk";
-      device = "/dev/nvme2";
+      device = "/dev/nvme2n1";
       content = {
         type = "swap";
         priority = 10;
