@@ -341,24 +341,9 @@
         let
           droidConfiguration =
             system:
-            let
+            inputs.nix-on-droid.lib.nixOnDroidConfiguration {
               pkgs = import inputs.nixpkgs { inherit system; };
-              # https://github.com/nix-community/nix-on-droid/pull/529
-              # Before switching on a device, the proot-termux store path
-              # referenced by the patch has to be present in its store, e.g.:
-              # nix copy --to ssh-ng://phone "$(nix build --no-link --print-out-paths 'inputs.nix-on-droid#prootTermux-aarch64')"
-              patched = pkgs.applyPatches {
-                name = "nix-on-droid-patched";
-                src = inputs.nix-on-droid;
-                patches = [ ./patches/nix-on-droid-529.patch ];
-              };
-            in
-            import "${patched}/modules" {
-              targetSystem = system;
-              inherit pkgs;
-              home-manager-path = inputs.home-manager.outPath;
-              isFlake = true;
-              config.imports = [
+              modules = [
                 ./modules/android.nix
                 ./machines/android/configuration.nix
                 { _module.args.inputs = inputs; }
