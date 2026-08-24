@@ -142,7 +142,7 @@
         libsecret
         languagetool
         lapce
-        libreoffice-fresh
+        libreoffice
         mc
         pavucontrol
         qbittorrent

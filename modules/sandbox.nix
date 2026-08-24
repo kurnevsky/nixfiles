@@ -950,7 +950,7 @@ in
             ]
           )
         ];
-        libreoffice-fresh = wrap self.libreoffice-fresh (
+        libreoffice = wrap self.libreoffice (
           map
             (
               name:
