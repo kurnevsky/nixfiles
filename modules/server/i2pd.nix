@@ -10,19 +10,20 @@
 
   services.i2pd = {
     enable = true;
-    enableIPv6 = true;
-    nat = false;
-    floodfill = true;
-    bandwidth = 2048;
-    share = 90;
-    port = 16964;
-    inTunnels.ssh = {
-      address = "127.0.0.1";
+    settings = {
+      ipv6 = true;
+      meshnets.yggdrasil = true;
+      floodfill = true;
+      bandwidth = 2048;
+      share = 90;
+      port = 16964;
+    };
+    serverTunnels.ssh = {
+      host = "127.0.0.1";
       port = 22;
       keys = "kropki.dat";
-      outbound.length = 1;
-      inbound.length = 1;
+      "outbound.length" = 1;
+      "inbound.length" = 1;
     };
-    yggdrasil.enable = true;
   };
 }

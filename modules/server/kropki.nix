@@ -31,14 +31,19 @@
     after = [ "network.target" ];
     wants = [ "network.target" ];
     wantedBy = [ "multi-user.target" ];
-    script = "${pkgs.callPackage ./kropki-server.nix { }}/bin/kropki --oidc-issuer-url 'https://broker.portier.io' --oidc-client-id 'https://kropki.org'";
+    script = "${
+      pkgs.callPackage ./kropki-server.nix { }
+    }/bin/kropki --oidc-issuer-url 'https://broker.portier.io' --oidc-client-id 'https://kropki.org'";
     serviceConfig = {
       Restart = "on-failure";
       User = "kropki";
       Group = "kropki";
       PrivateTmp = true;
       ProtectSystem = "strict";
-      Environment = [ "POSTGRES_SOCKET=/var/run/postgresql" ];
+      Environment = [
+        "POSTGRES_SOCKET=/var/run/postgresql"
+        "PGUSER=kropki"
+      ];
       EnvironmentFile = "${config.age.secrets.kropki.path or "/secrets/kropki"}";
     };
   };
