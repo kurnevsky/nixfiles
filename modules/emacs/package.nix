@@ -31,22 +31,11 @@ let
             propagatedBuildInputs = old.propagatedBuildInputs ++ [ d ];
             propagatedUserEnvPkgs = old.propagatedUserEnvPkgs ++ [ d ];
           });
-        withoutDependency =
-          d: p:
-          p.overrideAttrs (old: {
-            packageRequires = lib.lists.remove d old.packageRequires;
-            propagatedBuildInputs = lib.lists.remove d old.propagatedBuildInputs;
-            propagatedUserEnvPkgs = lib.lists.remove d old.propagatedUserEnvPkgs;
-          });
       in
       _self: super:
       {
         # Doesn't properly depend on dash: https://github.com/dandavison/magit-delta/issues/30
         magit-delta = withDependency super.dash super.magit-delta;
-        org-roam = withoutDependency super.org super.org-roam;
-        org-ql = withoutDependency super.org super.org-ql;
-        org-modern = withoutDependency super.org super.org-modern;
-        org-super-agenda = withoutDependency super.org super.org-super-agenda;
         treemacs = withDependency super.doom-modeline super.treemacs;
         origami = withDependency super.fringe-helper (
           super.origami.overrideAttrs (_old: {
@@ -82,6 +71,10 @@ let
           };
 
           buildInputs = with super; [
+            msgpack
+          ];
+
+          packageRequires = with super; [
             msgpack
           ];
 

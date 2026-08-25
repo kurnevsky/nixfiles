@@ -794,7 +794,6 @@ which LANG was detected but these are ignored."
   (ediff-split-window-function #'split-window-horizontally))
 
 (use-package tramp
-  :ensure nil
   :custom
   (tramp-default-method "ssh"))
 
@@ -802,13 +801,8 @@ which LANG was detected but these are ignored."
   :demand t
   :after tramp
   :custom
-  (tramp-rpc-deploy-auto-deploy nil)
-  :config
-  (defun tramp-rpc-deploy--remote-binary-path (vec)
-    "Return the remote path where the binary should be installed for VEC."
-    (tramp-make-tramp-file-name
-      vec
-      "/run/current-system/sw/bin/tramp-rpc-server")))
+  (tramp-rpc-deploy-never-deploy t)
+  (tramp-rpc-deploy-remote-binary-path "/run/current-system/sw/bin/tramp-rpc-server"))
 
 (use-package ag
   :commands (ag
@@ -1099,7 +1093,6 @@ which LANG was detected but these are ignored."
       (hs-minor-mode -1))))
 
 (use-package org
-  :ensure nil
   :bind (:map org-mode-map
           ("M-TAB" . org-cycle)
           ("S-<down>")
