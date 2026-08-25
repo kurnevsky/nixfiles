@@ -798,6 +798,18 @@ which LANG was detected but these are ignored."
   :custom
   (tramp-default-method "ssh"))
 
+;; (use-package tramp-rpc
+;;   :demand t
+;;   :after tramp
+;;   :custom
+;;   (tramp-rpc-deploy-auto-deploy nil)
+;;   :config
+;;   (defun tramp-rpc-deploy--remote-binary-path (vec)
+;;     "Return the remote path where the binary should be installed for VEC."
+;;     (tramp-make-tramp-file-name
+;;       vec
+;;       "/run/current-system/sw/bin/tramp-rpc-server")))
+
 (use-package ag
   :commands (ag
               ag-files

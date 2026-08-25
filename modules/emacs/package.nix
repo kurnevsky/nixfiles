@@ -71,6 +71,22 @@ let
                         :files ("*.el" "data"))
           '';
         };
+        tramp-rpc = super.melpaBuild rec {
+          pname = "tramp-rpc";
+          version = "0.3.0";
+          src = pkgs.fetchFromGitHub {
+            owner = "ArthurHeymans";
+            repo = "emacs-tramp-rpc";
+            rev = "v${version}";
+            hash = "sha256-9RFRYF5N1JMOQfDYnBmhk8vOKmdegGRokFYhpuFRPHo=";
+          };
+
+          recipe = pkgs.writeText "recipe" ''
+            (tramp-rpc :fetcher github
+                       :repo "ArthurHeymans/emacs-tramp-rpc"
+                       :files ("lisp/*.el"))
+          '';
+        };
       }
       //
         lib.genAttrs
