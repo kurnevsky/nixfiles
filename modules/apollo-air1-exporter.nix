@@ -12,8 +12,8 @@ rustPlatform.buildRustPackage rec {
   src = fetchFromGitHub {
     owner = "kurnevsky";
     repo = "apollo-air1-exporter";
-    rev = "4830bca9f9bf27f40af96b5c4b1dbefac36414a5";
-    hash = "sha256-1rWN4q+GVp9GdktQFwM6tslphkkA9km2TdNk8NdPQr0=";
+    rev = "c6a66c8ca50bb978690842de575a6a5c5b753648";
+    hash = "sha256-HJo+i7hUPhKpQr8exyBhXSWcOogshSY0mak8QelaafA=";
   };
 
   cargoHash = "sha256-QdZ4TV0ZeN+RjggeoFeoHZ/mtbNUFRUqX8xU6tDKQLM=";
