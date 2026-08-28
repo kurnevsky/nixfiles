@@ -1,5 +1,6 @@
 {
   config,
+  pkgs,
   ...
 }:
 
@@ -19,6 +20,9 @@
 
     grafana = {
       enable = true;
+      declarativePlugins = with pkgs.grafanaPlugins; [
+        frser-sqlite-datasource
+      ];
       settings = {
         server = {
           http_port = 3001;
@@ -57,6 +61,12 @@
             url = "http://${config.services.prometheus.listenAddress}:${toString config.services.prometheus.port}";
             isDefault = true;
             editable = false;
+          }
+          {
+            name = "Gadgetbridge";
+            type = "frser-sqlite-datasource";
+            access = "proxy";
+            jsonData.path = "/var/lib/grafana/gb/Gadgetbridge.db";
           }
         ];
 
@@ -116,6 +126,7 @@
       sha256 = "sha256:08gl3rf3mjd8mawrn1ryh9q5d3p599a9lgdw0035p9f93v8xm559";
     };
     "grafana-dashboards/air-1.json".source = ./air-1.json;
+    "grafana-dashboards/Gadgetbridge.json".source = ./Gadgetbridge.json;
   };
 
   age.secrets = {

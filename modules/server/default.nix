@@ -36,6 +36,7 @@
     ./i2pd.nix
     ./rustic.nix
     ./anki-sync-server.nix
+    ./bindfs.nix
   ];
 
   boot.tmp.cleanOnBoot = true;
