@@ -1,5 +1,8 @@
 {
   bubblewrap,
+  coreutils,
+  findutils,
+  gnugrep,
   gnused,
   callPackage,
   lib,
@@ -139,11 +142,14 @@ writeShellScriptBin target-name ''
     exec ${drv}/bin/${name} "$@"
   fi
 
-  ${lib.concatMapStringsSep "\n" (x: "test ! -e ${bindFrom x} && mkdir -p ${bindFrom x}") (
-    lib.filter (x: builtins.match ".*/" (bindFrom x) != null) (
-      ro-whitelist ++ overlay-whitelist ++ whitelist
+  ${lib.concatMapStringsSep "\n"
+    (x: "test ! -e ${bindFrom x} && ${coreutils}/bin/mkdir -p ${bindFrom x}")
+    (
+      lib.filter (x: builtins.match ".*/" (bindFrom x) != null) (
+        ro-whitelist ++ overlay-whitelist ++ whitelist
+      )
     )
-  )}
+  }
 
   ${lib.optionalString unshare-net ''
     mapfile -t unshare_net < <(
@@ -191,15 +197,15 @@ writeShellScriptBin target-name ''
       then
         echo -n "$CAMERA"
       else
-        find /dev -maxdepth 1 -type c -regex '/dev/video[0-9]+'
+        ${findutils}/bin/find /dev -maxdepth 1 -type c -regex '/dev/video[0-9]+'
       fi | ${gnused}/bin/sed 's/.*/--dev-bind\n&\n&/'
     )
   ''}
 
-  mapfile -t ro_whitelist < <(echo -n "''${RO_WHITELIST-}" | grep -v '^[[:space:]]*$' | ${gnused}/bin/sed 's/.*/--ro-bind\n&\n&/')
-  mapfile -t overlay_whitelist < <(echo -n "''${OVERLAY_WHITELIST-}" | grep -v '^[[:space:]]*$' | ${gnused}/bin/sed 's/.*/--overlay-src\n&\n--tmp-overlay\n&/')
-  mapfile -t whitelist < <(echo -n "''${WHITELIST-}" | grep -v '^[[:space:]]*$' | ${gnused}/bin/sed 's/.*/--bind\n&\n&/')
-  mapfile -t blacklist < <(echo -n "''${BLACKLIST-}" | grep -v '^[[:space:]]*$' | ${gnused}/bin/sed 's/.*/--tmpfs\n&/')
+  mapfile -t ro_whitelist < <(echo -n "''${RO_WHITELIST-}" | ${gnugrep}/bin/grep -v '^[[:space:]]*$' | ${gnused}/bin/sed 's/.*/--ro-bind\n&\n&/')
+  mapfile -t overlay_whitelist < <(echo -n "''${OVERLAY_WHITELIST-}" | ${gnugrep}/bin/grep -v '^[[:space:]]*$' | ${gnused}/bin/sed 's/.*/--overlay-src\n&\n--tmp-overlay\n&/')
+  mapfile -t whitelist < <(echo -n "''${WHITELIST-}" | ${gnugrep}/bin/grep -v '^[[:space:]]*$' | ${gnused}/bin/sed 's/.*/--bind\n&\n&/')
+  mapfile -t blacklist < <(echo -n "''${BLACKLIST-}" | ${gnugrep}/bin/grep -v '^[[:space:]]*$' | ${gnused}/bin/sed 's/.*/--tmpfs\n&/')
 
   ${lib.optionalString graphics ''
     mapfile -t xauthority < <(echo -n "''${XAUTHORITY-}" | ${gnused}/bin/sed 's/.*/--ro-bind\n&\n&/')
@@ -210,8 +216,8 @@ writeShellScriptBin target-name ''
   ''}
 
   ${lib.optionalString (dbus != [ ] || system-dbus != [ ]) ''
-    FIFO_TMP=$(mktemp -u)
-    mkfifo "$FIFO_TMP"
+    FIFO_TMP=$(${coreutils}/bin/mktemp -u)
+    ${coreutils}/bin/mkfifo "$FIFO_TMP"
     exec 3<>"$FIFO_TMP"
   ''}
 
@@ -228,7 +234,7 @@ writeShellScriptBin target-name ''
         ${xdg-dbus-proxy}/bin/xdg-dbus-proxy --fd=3 3>"$FIFO_TMP" "$DBUS_SESSION_BUS_ADDRESS" "$SANDBOX_BUS" ${
           lib.concatMapStringsSep " " (x: "--${x}") dbus
         } --filter &
-    head -c 1 <&3 > /dev/null
+    ${coreutils}/bin/head -c 1 <&3 > /dev/null
   ''}
 
   ${lib.optionalString (system-dbus != [ ]) ''
@@ -244,15 +250,15 @@ writeShellScriptBin target-name ''
         ${xdg-dbus-proxy}/bin/xdg-dbus-proxy --fd=3 3>"$FIFO_TMP" unix:path=/run/dbus/system_bus_socket "$SANDBOX_SYSTEM_BUS" ${
           lib.concatMapStringsSep " " (x: "--${x}") system-dbus
         } --filter &
-    head -c 1 <&3 > /dev/null
+    ${coreutils}/bin/head -c 1 <&3 > /dev/null
   ''}
 
   ${lib.optionalString (dbus != [ ] || system-dbus != [ ]) ''
-    rm "$FIFO_TMP"
+    ${coreutils}/bin/rm "$FIFO_TMP"
   ''}
 
   ${lib.optionalString flatpak ''
-    mkdir -p "$XDG_RUNTIME_DIR/.flatpak/${target-name}/"
+    ${coreutils}/bin/mkdir -p "$XDG_RUNTIME_DIR/.flatpak/${target-name}/"
   ''}
 
   exec ${bubblewrap}/bin/bwrap \
@@ -280,7 +286,7 @@ writeShellScriptBin target-name ''
        } \
        ${lib.optionalString graphics ''--bind-try "$XDG_RUNTIME_DIR"/"''${WAYLAND_DISPLAY-wayland-0}" "$XDG_RUNTIME_DIR"/"''${WAYLAND_DISPLAY-wayland-0}"''} \
        \
-       --ro-bind /etc/profiles/per-user/"$(whoami)" /etc/profiles/per-user/"$(whoami)" \
+       --ro-bind /etc/profiles/per-user/"$(${coreutils}/bin/whoami)" /etc/profiles/per-user/"$(${coreutils}/bin/whoami)" \
        ${lib.concatMapStringsSep " " (x: "--ro-bind /etc/${x} /etc/${x}") etcs} \
        ${lib.optionalString localtime ''"''${localtime[@]}"''} \
        ${lib.optionalString resolv-conf ''"''${resolvconf[@]}"''} \
@@ -288,8 +294,8 @@ writeShellScriptBin target-name ''
        ${if shared-tmp then "--bind /tmp /tmp" else "--tmpfs /tmp"} \
        ${lib.optionalString (graphics && !shared-tmp) "--bind /tmp/.X11-unix /tmp/.X11-unix"} \
        \
-       ${lib.optionalString ro-media ''--ro-bind-try /run/media/"$(whoami)" /run/media/"$(whoami)"''} \
-       ${lib.optionalString media ''--bind-try /run/media/"$(whoami)" /run/media/"$(whoami)"''} \
+       ${lib.optionalString ro-media ''--ro-bind-try /run/media/"$(${coreutils}/bin/whoami)" /run/media/"$(${coreutils}/bin/whoami)"''} \
+       ${lib.optionalString media ''--bind-try /run/media/"$(${coreutils}/bin/whoami)" /run/media/"$(${coreutils}/bin/whoami)"''} \
        \
        ${lib.concatMapStringsSep " " (x: "--ro-bind ${bindFrom x} ${bindTo x}") ro-whitelist} \
        ${
