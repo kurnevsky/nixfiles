@@ -363,6 +363,7 @@ in
                 "SHELL"
               ];
               unshare-net = false;
+              disable-userns = false;
               system-dbus = [
                 "talk=org.freedesktop.NetworkManager"
                 "talk=org.freedesktop.login1"
