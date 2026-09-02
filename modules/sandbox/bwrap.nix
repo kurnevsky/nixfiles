@@ -162,21 +162,16 @@ writeShellScriptBin target-name ''
   ''}
 
   ${lib.optionalString resolv-conf ''
-    mapfile -t resolvconf < <(
-      echo '--ro-bind'
-      if [ -n "''${TORJAIL-}" ]
-      then
-        echo '/etc/resolv-torjail.conf'
-      elif [ -n "''${DNS-}" ]
-      then
-        RESOLV_TMP=$(mktemp)
-        echo "nameserver $DNS" > "$RESOLV_TMP"
-        echo "$RESOLV_TMP"
-      else
-        echo '/etc/resolv.conf'
-      fi
-      echo '/etc/resolv.conf'
-    )
+    if [ -n "''${TORJAIL-}" ]
+    then
+      resolvconf=(--ro-bind /etc/resolv-torjail.conf /etc/resolv.conf)
+    elif [ -n "''${DNS-}" ]
+    then
+      exec 7<<< "nameserver $DNS"
+      resolvconf=(--ro-bind-data 7 /etc/resolv.conf)
+    else
+      resolvconf=(--ro-bind /etc/resolv.conf /etc/resolv.conf)
+    fi
   ''}
 
   ${lib.optionalString localtime ''
