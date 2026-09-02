@@ -1338,7 +1338,9 @@ in
       };
   };
 
-  system.activationScripts.installInitScript =
+  # warn if a binary that is supposed to be sandboxed ended up in the system or
+  # a user profile unwrapped, e.g. because another package took priority
+  system.activationScripts.checkSandboxedBins =
     let
       collectBins =
         attrs:
@@ -1347,11 +1349,11 @@ in
         else
           map collectBins (lib.attrValues attrs);
     in
-    lib.mkForce ''
+    ''
       RED='\033[0;31m'
       NC='\033[0m'
       declare -A bins
-      bins=(['${lib.concatStringsSep "']=1 ['" (lib.flatten (collectBins pkgs.sandboxed))}"']=1)
+      bins=(['${lib.concatStringsSep "']=1 ['" (lib.flatten (collectBins pkgs.sandboxed))}']=1)
       find $systemConfig/sw/bin $systemConfig/etc/profiles/per-user/*/bin -print0 |
         while IFS= read -r -d ''' bin; do
           if [[ -v bins["$(basename "$bin")"] ]]; then
