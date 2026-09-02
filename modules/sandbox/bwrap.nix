@@ -96,6 +96,9 @@ drv:
 }:
 
 assert !(ro-media && media);
+assert lib.assertMsg (
+  unshare-user || !disable-userns
+) "sandbox ${target-name}: disable-userns requires unshare-user";
 
 let
   sandbox-seccomp = callPackage ./seccomp.nix { } seccomp;
