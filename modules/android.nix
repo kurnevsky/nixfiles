@@ -12,7 +12,7 @@ let
   patchedPkgs = applyOverlays pkgs;
   emacsPkgs = patchedPkgs.extend inputs.emacs-overlay.overlay;
   emacsWithPackages = emacsPkgs.callPackage ./emacs/package.nix {
-    emacs = emacsPkgs.emacs30-nox;
+    emacs = emacsPkgs.emacs-nox;
     inherit inputs;
   };
 in

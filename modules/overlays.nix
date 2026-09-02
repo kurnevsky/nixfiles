@@ -67,9 +67,10 @@
     })
     (_self: super: {
       llama-cpp = super.llama-cpp.overrideAttrs (old: {
-        version = "10605";
+        version = "0";
         src = old.src.overrideAttrs {
-          hash = "sha256-q1++W9HgFlgVtBDZCAJMO04T/4szhWZvwXbBawMT5+A=";
+          rev = "0f3a71be15af836d277c9f918adfafb45732677e";
+          hash = "sha256-+WI/1TAJWG1m9ttS2RO43C+1oL/5xpZTaHn7vQh4+kc=";
         };
         npmDepsHash = "sha256-2Q7XhaLAArmviOLdQsNbYTfdyDE5pW9lR26cRHEVl9k=";
         cmakeFlags = old.cmakeFlags ++ [

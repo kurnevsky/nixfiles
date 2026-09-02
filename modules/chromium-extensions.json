@@ -1,8 +1,8 @@
 {
   "dark-reader": {
     "id": "eimadpbcbfnmbkopoojfekhnkhdbieeh",
-    "sha256": "sha256:04xa6wg6fwgswi2n96js2fxfvwrdk1gzd3q2vhnqjhxdvkb1pjwx",
-    "version": "4.9.129"
+    "sha256": "sha256:1ga601a49sz8g1v1wh7cyqx20pvsd5qjrmrfwzy8gxhr34lsiz44",
+    "version": "4.9.130"
   },
   "decentraleyes": {
     "id": "ldpochfccmkkmhdbclfhpagapcfdljkj",
@@ -26,8 +26,8 @@
   },
   "ublock-origin-lite": {
     "id": "ddkjiahejlhfcafbddmgiahcphecmpfh",
-    "sha256": "sha256:02sck5sndpfpar1gmbs544sk2p7z5qr2a4bd6pvinxy2xk5ca73w",
-    "version": "2026.820.1159"
+    "sha256": "sha256:150f57lnzl3dy3fi909ncz2b037pfwx26fzrvf4dgrkacp8393ya",
+    "version": "2026.901.1442"
   },
   "find-plus": {
     "id": "fddffkdncgkkdjobemgbpojjeffmmofb",
@@ -41,8 +41,8 @@
   },
   "refined-github": {
     "id": "hlepfoohegkhhmjieoechaddaejaokhf",
-    "sha256": "sha256:1k3aiy904bwy6nk59h895lf8cq2ba4i45b20g4i58y86rng5vk30",
-    "version": "26.8.8"
+    "sha256": "sha256:1xqpr93w0kqxr1j2xrl79kv12mmy28mc3drmc7n3z4281m2p34v2",
+    "version": "26.9"
   },
   "keepassxc-browser": {
     "id": "oboonakemofpalcgghocfoadofidjkkk",

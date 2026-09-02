@@ -9,7 +9,7 @@ users:
 
 let
   emacs = pkgs.callPackage ./emacs/package.nix {
-    emacs = pkgs.emacs30-pgtk;
+    emacs = pkgs.emacs-pgtk;
     inherit inputs;
   };
 in
