@@ -287,7 +287,7 @@ writeShellScriptBin target-name ''
        ${lib.optionalString localtime ''"''${localtime[@]}"''} \
        ${lib.optionalString resolv-conf ''"''${resolvconf[@]}"''} \
        \
-       ${lib.optionalString shared-tmp "--bind /tmp /tmp"} \
+       ${if shared-tmp then "--bind /tmp /tmp" else "--tmpfs /tmp"} \
        ${lib.optionalString (graphics && !shared-tmp) "--bind /tmp/.X11-unix /tmp/.X11-unix"} \
        \
        ${lib.optionalString ro-media ''--ro-bind-try /run/media/"$(whoami)" /run/media/"$(whoami)"''} \
