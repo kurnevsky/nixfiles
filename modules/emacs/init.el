@@ -568,28 +568,34 @@ which LANG was detected but these are ignored."
       (substring string 0 (- (length string) 1))
       string))
   (defun fuzzy-matcher-propertize (pattern candidate)
-    (let* ((score (fuzzy-matcher-fuzzy-indices pattern (fuzzy-matcher-without-tofu-char candidate)))
-            (candidate (copy-sequence candidate)))
-      (unless (string-empty-p pattern)
-        (put-text-property 0 1 'completion-score (- (* (or (car score) 0) 100) (length candidate)) candidate))
-      (dolist (char (cdr score))
-        (add-face-text-property char (1+ char) 'completions-common-part nil candidate))
-      (when-let* ((char (last (cdr score)))
-                   (char (car char)))
-        (when (length> candidate (1+ char))
-          (add-face-text-property (1+ char) (+ 2 char) 'completions-first-difference nil candidate)))
-      candidate))
+    "Score and highlight CANDIDATE against PATTERN.
+Return nil if CANDIDATE does not match, which makes this both the
+filter and the scorer.  Matching is smart-case: a lower case PATTERN
+matches case insensitively, any upper case character makes it case
+sensitive."
+    (when-let* ((score (fuzzy-matcher-fuzzy-indices
+                         pattern (fuzzy-matcher-without-tofu-char candidate))))
+      (let ((candidate (copy-sequence candidate)))
+        (unless (string-empty-p pattern)
+          (put-text-property 0 1 'completion-score (- (* (car score) 100) (length candidate)) candidate))
+        (dolist (char (cdr score))
+          (add-face-text-property char (1+ char) 'completions-common-part nil candidate))
+        (when-let* ((char (car (last (cdr score)))))
+          (when (length> candidate (1+ char))
+            (add-face-text-property (1+ char) (+ 2 char) 'completions-first-difference nil candidate)))
+        candidate)))
   (defun fuzzy-matcher-all-completions (string table pred point)
     (let* ((beforepoint (substring string 0 point))
             (afterpoint (substring string point))
             (bounds (completion-boundaries beforepoint table pred afterpoint))
+            (prefix (substring beforepoint 0 (car bounds)))
             (infix (concat
                      (substring beforepoint (car bounds))
-                     (substring afterpoint 0 (cdr bounds)))))
-      (pcase-let ((`(,all ,_pattern ,prefix ,_suffix ,_carbounds)
-                    (completion-substring--all-completions string table pred point #'completion-flex--make-flex-pattern)))
-        (when all
-          (nconc (mapcar (-partial #'fuzzy-matcher-propertize (downcase infix)) all) (length prefix))))))
+                     (substring afterpoint 0 (cdr bounds))))
+            (all (-keep (-partial #'fuzzy-matcher-propertize infix)
+                   (all-completions prefix table pred))))
+      (when all
+        (nconc all (length prefix)))))
   (add-to-list 'completion-styles-alist '(fuzzy
                                            completion-flex-try-completion
                                            fuzzy-matcher-all-completions
@@ -697,13 +703,18 @@ which LANG was detected but these are ignored."
         "")))
   (el-patch-defun marginalia-annotate-buffer (cand)
     "Annotate buffer CAND with modification status, file name and major mode."
-    (when-let (buffer (get-buffer cand))
-      (marginalia--fields
-        ((marginalia--buffer-status buffer))
-        (el-patch-add ((marginalia-project-name buffer)
-                        :truncate 0.2 :face 'marginalia-modified))
-        ((marginalia--buffer-file buffer)
-          :truncate -0.5 :face 'marginalia-file-name))))
+    ;; Emacs 31: `project--read-project-buffer' uses `uniquify-get-unique-names'
+    (when-let* ((buffer (or (and (stringp cand)
+                              (get-text-property 0 'uniquify-orig-buffer cand))
+                          (get-buffer cand))))
+      (if (buffer-live-p buffer)
+        (marginalia--fields
+          ((marginalia--buffer-status buffer))
+          (el-patch-add ((marginalia-project-name buffer)
+                          :truncate 0.2 :face 'marginalia-modified))
+          ((marginalia--buffer-file buffer)
+            :truncate -0.5 :face 'marginalia-file-name))
+        (marginalia--fields ("(dead buffer)" :face 'error)))))
   (marginalia-mode))
 
 (use-package nerd-icons-completion
@@ -728,10 +739,10 @@ which LANG was detected but these are ignored."
     (delete '(kill-buffer embark--confirm) embark-pre-action-hooks))
   (defun kill-target-buffer ()
     (interactive)
-    (if-let ((buffer (seq-find
-                       (lambda (target)
-                         (eq (plist-get target :type) 'buffer))
-                       (embark--targets))))
+    (if-let* ((buffer (seq-find
+                        (lambda (target)
+                          (eq (plist-get target :type) 'buffer))
+                        (embark--targets))))
       (embark--act 'kill-buffer buffer)
       (user-error "No buffer target found"))))
 
@@ -970,8 +981,8 @@ which LANG was detected but these are ignored."
   (defun mc/load-lists ())
   (defun mc/save-lists ())
   ;; Define commands.
-  (setq mc/cmds-to-run-once '(hydra-multiple-cursors/body
-                               hydra-multiple-cursors/nil
+  (setq mc/cmds-to-run-once '(hydra-mc/body
+                               hydra-mc/nil
                                cua--prefix-override-handler
                                mc/toggle-fake-cursor
                                mc/copy-across-cursors
@@ -996,13 +1007,13 @@ which LANG was detected but these are ignored."
         (mc/create-fake-cursor-at-point)))))
 
 (use-package hydra
-  :bind (("<C-return>" . hydra-multiple-cursors/body))
+  :bind (("<C-return>" . hydra-mc/body))
   :config
-  (defhydra hydra-multiple-cursors (:foreign-keys run
-                                     :body-pre (progn
-                                                 (mc/quit-leaving-cursors)
-                                                 (mc/toggle-fake-cursor))
-                                     :post (mc/multiple-cursors-mode-when-num-cursors>1))
+  (defhydra hydra-mc (:foreign-keys run
+                       :body-pre (progn
+                                   (mc/quit-leaving-cursors)
+                                   (mc/toggle-fake-cursor))
+                       :post (mc/multiple-cursors-mode-when-num-cursors>1))
     "multiple-cursors"
     ("<C-return>" mc/toggle-fake-cursor "toggle")
     ("<return>" nil "apply")
@@ -1014,8 +1025,7 @@ which LANG was detected but these are ignored."
           ([remap undo] . undo-tree-undo)
           ([remap undo-only] . undo-tree-undo)
           ("C-S-z" . undo-tree-redo)
-          ("C-y" . undo-tree-redo)
-          ("C-w" . last-edit))
+          ("C-y" . undo-tree-redo))
   :init
   (setq undo-tree-map (make-sparse-keymap))
   :custom
@@ -1076,7 +1086,11 @@ which LANG was detected but these are ignored."
                                  (setq
                                    undo (undo-tree-current buffer-undo-tree)
                                    tree t)))
-            (_ (setq undo (last-edit-next undo tree)))))))))
+            (_ (setq undo (last-edit-next undo tree))))))))
+  ;; Bound here rather than in `:bind' because `last-edit' is defined in this
+  ;; file, not in undo-tree: `:bind' would add it to `:commands', which declares
+  ;; it as coming from undo-tree.el.
+  (keymap-set undo-tree-map "C-w" #'last-edit))
 
 (use-package hideshow
   :ensure nil
@@ -1501,7 +1515,7 @@ identifier and the position respectively."
       (if (and (not test?) ;; for check lsp-server-present?
             (not (file-remote-p default-directory))) ;; see lsp-resolve-final-command, it would add extra shell wrapper)
         (progn
-          (when-let ((command-from-exec-path (executable-find (car orig-result)))) ;; resolve command from exec-path (in case not found in $PATH)
+          (when-let* ((command-from-exec-path (executable-find (car orig-result)))) ;; resolve command from exec-path (in case not found in $PATH)
             (setcar orig-result command-from-exec-path))
           (message "Using emacs-lsp-booster for %s!" orig-result)
           (cons "emacs-lsp-booster" orig-result))
@@ -1791,7 +1805,8 @@ properly."
     (when (or (= start (point)) (= bol (point)))
       (goto-char eol))))
 (defun comment-or-uncomment-region-or-line ()
-  "Comments or uncomments the region or the current line if there's no active region."
+  "Comment or uncomment the region.
+Act on the current line if there's no active region."
   (interactive)
   (let (beg end)
     (if (region-active-p)
@@ -1854,17 +1869,17 @@ properly."
 (defun scroll-right-2()
   "Scroll right by 2 columns."
   (interactive)
-  (when-let ((window (window-at (cadr (mouse-position))
-                       (cddr (mouse-position))
-                       (car (mouse-position)))))
+  (when-let* ((window (window-at (cadr (mouse-position))
+                        (cddr (mouse-position))
+                        (car (mouse-position)))))
     (with-selected-window window
       (scroll-right 2))))
 (defun scroll-left-2()
   "Scroll left by 2 columns."
   (interactive)
-  (when-let ((window (window-at (cadr (mouse-position))
-                       (cddr (mouse-position))
-                       (car (mouse-position)))))
+  (when-let* ((window (window-at (cadr (mouse-position))
+                        (cddr (mouse-position))
+                        (car (mouse-position)))))
     (with-selected-window window
       (scroll-left 2))))
 (global-set-key (kbd "<escape>") #'keyboard-escape-quit)
@@ -1905,10 +1920,10 @@ properly."
                                  (kmacro-call-macro 0)))
 (global-set-key (kbd "<f12>") (lambda ()
                                 (interactive)
-                                (when-let (value (completing-read "Kill ring: " (lambda (string pred action)
-                                                                                  (if (eq action 'metadata)
-                                                                                    `(metadata (display-sort-function . ,#'identity))
-                                                                                    (complete-with-action action kill-ring string pred)))))
+                                (when-let* ((value (completing-read "Kill ring: " (lambda (string pred action)
+                                                                                     (if (eq action 'metadata)
+                                                                                       `(metadata (display-sort-function . ,#'identity))
+                                                                                       (complete-with-action action kill-ring string pred))))))
                                   (kill-new value))))
 (global-set-key (kbd "<wheel-left>") #'scroll-left-2)
 (global-set-key (kbd "<double-wheel-left>") #'scroll-left-2)
