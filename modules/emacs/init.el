@@ -13,10 +13,10 @@
   "Set GC threshold and display Emacs startup time."
   (setq gc-cons-threshold (* 4 1024 1024))
   (message "Emacs loaded in %s with %d garbage collections."
-    (format "%.2f seconds"
-      (float-time
-        (time-subtract after-init-time before-init-time)))
-    gcs-done))
+           (format "%.2f seconds"
+                   (float-time
+                    (time-subtract after-init-time before-init-time)))
+           gcs-done))
 (add-hook 'emacs-startup-hook #'display-startup-time)
 ;; Speed up the initialization temporary disabling file-name-handler-alist.
 (defvar file-name-handler-alist-copy file-name-handler-alist)
@@ -24,9 +24,9 @@
 (add-hook 'emacs-startup-hook (lambda () (setq file-name-handler-alist file-name-handler-alist-copy)))
 ;; Collect the garbage when not used.
 (add-function :after after-focus-change-function
-  (lambda ()
-    (unless (frame-focus-state)
-      (garbage-collect))))
+              (lambda ()
+                (unless (frame-focus-state)
+                  (garbage-collect))))
 ;; Don't print startup message.
 (advice-add #'display-startup-echo-area-message :override #'ignore)
 ;; Remove gap in maximized window mode.
@@ -96,7 +96,7 @@
 (setq read-file-name-completion-ignore-case t)
 ;; Don't allow cursor in the read only minibuffer text.
 (setq minibuffer-prompt-properties
-  '(read-only t cursor-intangible t face minibuffer-prompt))
+      '(read-only t cursor-intangible t face minibuffer-prompt))
 (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
 ;; Hide commands in M-x which do not work in the current mode.
 (setq read-extended-command-predicate #'command-completion-default-include-p)
@@ -122,10 +122,10 @@ ORIG-FUN is original `kill-buffer' function.
 ARGS is `kill-buffer' arguments."
   (let ((buffer (get-buffer (if (and args (car args)) (car args) (buffer-name)))))
     (if (and (buffer-local-value 'new-untitled buffer)
-          (buffer-modified-p buffer)
-          (not (buffer-file-name buffer)))
-      (when (yes-or-no-p (format "Buffer '%s' modified and not associated with a file, kill it anyway?" (buffer-name buffer)))
-        (apply orig-fun args))
+             (buffer-modified-p buffer)
+             (not (buffer-file-name buffer)))
+        (when (yes-or-no-p (format "Buffer '%s' modified and not associated with a file, kill it anyway?" (buffer-name buffer)))
+          (apply orig-fun args))
       (apply orig-fun args))))
 (advice-add #'kill-buffer :around #'kill-buffer-ask-first)
 ;; Add possibility to use C-m as hotkey in graphic mode.
@@ -133,13 +133,13 @@ ARGS is `kill-buffer' arguments."
   (define-key input-decode-map [?\C-m] [C-m]))
 (when (daemonp)
   (add-hook 'after-make-frame-functions
-    (lambda (frame)
-      (when (display-graphic-p frame)
-        (with-selected-frame frame
-          (define-key input-decode-map [?\C-m] [C-m]))))))
+            (lambda (frame)
+              (when (display-graphic-p frame)
+                (with-selected-frame frame
+                  (define-key input-decode-map [?\C-m] [C-m]))))))
 ;; Unbind keys
 (dolist (key '("C-a" "C-b" "C-d" "C-e" "C-f" "C-j" "C-k" "C-n" "C-o" "C-p" "C-r"
-                "C-s" "C-t" "C-w" "C-y" "C-z" "M-w"))
+               "C-s" "C-t" "C-w" "C-y" "C-z" "M-w"))
   (global-unset-key (kbd key)))
 ;; Disable bell.
 (defun flash-mode-line ()
@@ -182,24 +182,24 @@ ARGS is `kill-buffer' arguments."
   (defun set-base16-terminal-colors ()
     (when (eq (tty-display-color-cells) 256)
       (--each-indexed
-        '(("black" "#3f4451")
-           ("red" "#e05561")
-           ("green" "#8cc265")
-           ("yellow" "#d18f52")
-           ("blue" "#4aa5f0")
-           ("magenta" "#c162de")
-           ("cyan" "#42b3c2")
-           ("white" "#e6e6e6")
-           ("brightblack" "#4f5666")
-           ("brightred" "#ff616e")
-           ("brightgreen" "#a5e075")
-           ("brightyellow" "#f0a45d")
-           ("brightblue" "#4dc4ff")
-           ("brightmagenta" "#de73ff")
-           ("brightcyan" "#4cd1e0")
-           ("brightwhite" "#ffffff"))
+          '(("black" "#3f4451")
+            ("red" "#e05561")
+            ("green" "#8cc265")
+            ("yellow" "#d18f52")
+            ("blue" "#4aa5f0")
+            ("magenta" "#c162de")
+            ("cyan" "#42b3c2")
+            ("white" "#e6e6e6")
+            ("brightblack" "#4f5666")
+            ("brightred" "#ff616e")
+            ("brightgreen" "#a5e075")
+            ("brightyellow" "#f0a45d")
+            ("brightblue" "#4dc4ff")
+            ("brightmagenta" "#de73ff")
+            ("brightcyan" "#4cd1e0")
+            ("brightwhite" "#ffffff"))
         (-let* (((name color) it)
-                 ((r g b) (--map (* it 256) (hexrgb-hex-to-color-values color))))
+                ((r g b) (--map (* it 256) (hexrgb-hex-to-color-values color))))
           (tty-modify-color-alist (list name it-index r g b))))))
   (add-hook 'tty-setup-hook #'set-base16-terminal-colors))
 
@@ -217,93 +217,93 @@ ARGS is `kill-buffer' arguments."
   (defun color-blend (c1 c2 a)
     "Combine A C1 with (1-a) C2."
     (hexrgb-color-values-to-hex
-      (cl-mapcar
-        (lambda (c1 c2) (+ (* a c1) (* (- 1 a) c2)))
-        (hexrgb-hex-to-color-values c1)
-        (hexrgb-hex-to-color-values c2))
-      2))
+     (cl-mapcar
+      (lambda (c1 c2) (+ (* a c1) (* (- 1 a) c2)))
+      (hexrgb-hex-to-color-values c1)
+      (hexrgb-hex-to-color-values c2))
+     2))
   (defun color-saturate-darken (c s d)
     "Saturate by S and darken by D a color C."
     (->> c
-      hexrgb-hex-to-color-values
-      (-map (-rpartial '/ 255.0))
-      (funcall (-applify 'color-rgb-to-hsl))
-      (funcall (-applify (-cut color-saturate-hsl <> <> <> s)))
-      (funcall (-applify (-cut color-lighten-hsl <> <> <> (- d))))
-      (funcall (-applify 'color-hsl-to-rgb))
-      (funcall (-applify 'color-rgb-to-hex))))
+         hexrgb-hex-to-color-values
+         (-map (-rpartial '/ 255.0))
+         (funcall (-applify 'color-rgb-to-hsl))
+         (funcall (-applify (-cut color-saturate-hsl <> <> <> s)))
+         (funcall (-applify (-cut color-lighten-hsl <> <> <> (- d))))
+         (funcall (-applify 'color-hsl-to-rgb))
+         (funcall (-applify 'color-rgb-to-hex))))
   (defun modify-theme (theme)
     (let* ((custom--inhibit-theme-enable nil)
-            (colors (symbol-value (intern (concat (symbol-name theme) "-theme-colors"))))
-            (base00 (plist-get colors :base00))
-            (base01 (plist-get colors :base01))
-            (base08 (plist-get colors :base08))
-            (base0A (plist-get colors :base0A))
-            (base0B (plist-get colors :base0B))
-            (base005 (color-blend base00 base01 0.5))
-            (base08-highlight (color-saturate-darken base08 20 10))
-            (base0A-highlight (color-saturate-darken base0A 20 10))
-            (base0B-highlight (color-saturate-darken base0B 20 10)))
+           (colors (symbol-value (intern (concat (symbol-name theme) "-theme-colors"))))
+           (base00 (plist-get colors :base00))
+           (base01 (plist-get colors :base01))
+           (base08 (plist-get colors :base08))
+           (base0A (plist-get colors :base0A))
+           (base0B (plist-get colors :base0B))
+           (base005 (color-blend base00 base01 0.5))
+           (base08-highlight (color-saturate-darken base08 20 10))
+           (base0A-highlight (color-saturate-darken base0A 20 10))
+           (base0B-highlight (color-saturate-darken base0B 20 10)))
       (base16-theme-set-faces theme (symbol-value (intern (concat (symbol-name theme) "-theme-colors")))
-        `( ;; Make it slightly different from highlighting
-           (hl-line :background ,base005)
-           ;; Fix line numbers zoom via setting inherit
-           (line-number :foreground base03 :background base16-settings-fringe-bg :inherit fixed-pitch)
-           (line-number-current-line :background base16-settings-fringe-bg :inherit fixed-pitch)
-           ;; Minibuffer completion
-           (completions-common-part :foreground base0C)
-           ;; Ediff
-           (ediff-current-diff-A :foreground base08 :inverse-video t)
-           (ediff-current-diff-B :foreground base0B :inverse-video t)
-           (ediff-current-diff-C :foreground base0A :inverse-video t)
-           (ediff-even-diff-A :inverse-video t)
-           (ediff-even-diff-B :inverse-video t)
-           (ediff-even-diff-C :inverse-video t)
-           (ediff-fine-diff-A :foreground ,base08-highlight :inverse-video t)
-           (ediff-fine-diff-B :foreground ,base0B-highlight :inverse-video t)
-           (ediff-fine-diff-C :foreground ,base0A-highlight :inverse-video t)
-           (ediff-odd-diff-A :foreground base04 :inverse-video t)
-           (ediff-odd-diff-B :foreground base04 :inverse-video t)
-           (ediff-odd-diff-C :foreground base04 :inverse-video t)
-           ;; Magit
-           (magit-diff-base :foreground base0A :inverse-video t)
-           (magit-diff-added :foreground base0B :inverse-video t)
-           (magit-diff-removed :foreground base08 :inverse-video t)
-           (magit-diff-base-highlight :foreground ,base0A-highlight :inverse-video t)
-           (magit-diff-added-highlight :foreground ,base0B-highlight :inverse-video t)
-           (magit-diff-removed-highlight :foreground ,base08-highlight :inverse-video t)
-           ;; lsp-ui
-           (lsp-ui-peek-peek :background ,base005)
-           (lsp-ui-peek-list :background ,base005)
-           (lsp-ui-peek-filename :foreground base09)
-           (lsp-ui-peek-line-number :foreground base03)
-           (lsp-ui-peek-highlight :box (:line-width -1 :color base08))
-           (lsp-ui-peek-header :background base07 :foreground base00)
-           (lsp-ui-peek-selection :background base07 :foreground base00)
-           ;; Smerge
-           (smerge-base :foreground base0A :inverse-video t)
-           (smerge-upper :foreground base08 :inverse-video t)
-           (smerge-lower :foreground base0B :inverse-video t)
-           (smerge-refined-added :foreground ,base0B-highlight :inverse-video t)
-           (smerge-refined-removed :foreground ,base08-highlight :inverse-video t)
-           ;; Highlight foreground instead of background
-           (show-paren-match :foreground base0D :background unspecified :weight extra-bold)
-           (show-paren-mismatch :foreground base09 :background unspecified :weight extra-bold)
-           ;; Make comments italic
-           (font-lock-comment-face :foreground base03 :slant italic)
-           ;; Apply string foreground for docstring and make it italic
-           (font-lock-doc-face :foreground base0B :slant italic)))))
+                              `( ;; Make it slightly different from highlighting
+                                (hl-line :background ,base005)
+                                ;; Fix line numbers zoom via setting inherit
+                                (line-number :foreground base03 :background base16-settings-fringe-bg :inherit fixed-pitch)
+                                (line-number-current-line :background base16-settings-fringe-bg :inherit fixed-pitch)
+                                ;; Minibuffer completion
+                                (completions-common-part :foreground base0C)
+                                ;; Ediff
+                                (ediff-current-diff-A :foreground base08 :inverse-video t)
+                                (ediff-current-diff-B :foreground base0B :inverse-video t)
+                                (ediff-current-diff-C :foreground base0A :inverse-video t)
+                                (ediff-even-diff-A :inverse-video t)
+                                (ediff-even-diff-B :inverse-video t)
+                                (ediff-even-diff-C :inverse-video t)
+                                (ediff-fine-diff-A :foreground ,base08-highlight :inverse-video t)
+                                (ediff-fine-diff-B :foreground ,base0B-highlight :inverse-video t)
+                                (ediff-fine-diff-C :foreground ,base0A-highlight :inverse-video t)
+                                (ediff-odd-diff-A :foreground base04 :inverse-video t)
+                                (ediff-odd-diff-B :foreground base04 :inverse-video t)
+                                (ediff-odd-diff-C :foreground base04 :inverse-video t)
+                                ;; Magit
+                                (magit-diff-base :foreground base0A :inverse-video t)
+                                (magit-diff-added :foreground base0B :inverse-video t)
+                                (magit-diff-removed :foreground base08 :inverse-video t)
+                                (magit-diff-base-highlight :foreground ,base0A-highlight :inverse-video t)
+                                (magit-diff-added-highlight :foreground ,base0B-highlight :inverse-video t)
+                                (magit-diff-removed-highlight :foreground ,base08-highlight :inverse-video t)
+                                ;; lsp-ui
+                                (lsp-ui-peek-peek :background ,base005)
+                                (lsp-ui-peek-list :background ,base005)
+                                (lsp-ui-peek-filename :foreground base09)
+                                (lsp-ui-peek-line-number :foreground base03)
+                                (lsp-ui-peek-highlight :box (:line-width -1 :color base08))
+                                (lsp-ui-peek-header :background base07 :foreground base00)
+                                (lsp-ui-peek-selection :background base07 :foreground base00)
+                                ;; Smerge
+                                (smerge-base :foreground base0A :inverse-video t)
+                                (smerge-upper :foreground base08 :inverse-video t)
+                                (smerge-lower :foreground base0B :inverse-video t)
+                                (smerge-refined-added :foreground ,base0B-highlight :inverse-video t)
+                                (smerge-refined-removed :foreground ,base08-highlight :inverse-video t)
+                                ;; Highlight foreground instead of background
+                                (show-paren-match :foreground base0D :background unspecified :weight extra-bold)
+                                (show-paren-mismatch :foreground base09 :background unspecified :weight extra-bold)
+                                ;; Make comments italic
+                                (font-lock-comment-face :foreground base03 :slant italic)
+                                ;; Apply string foreground for docstring and make it italic
+                                (font-lock-doc-face :foreground base0B :slant italic)))))
   (defun set-base16-theme (theme)
     (load-theme theme t)
     (modify-theme theme))
   (defvar base16-theme-chosen-themes '(base16-onedark base16-one-light))
   (if (or (daemonp) (display-graphic-p))
-    (set-base16-theme (car base16-theme-chosen-themes))
+      (set-base16-theme (car base16-theme-chosen-themes))
     (add-hook 'tty-setup-hook (lambda () (set-base16-theme (car base16-theme-chosen-themes))) t))
   (defun toggle-base16-theme ()
     (interactive)
     (set-base16-theme (if (eq (car base16-theme-chosen-themes) (car custom-enabled-themes))
-                        (cadr base16-theme-chosen-themes)
+                          (cadr base16-theme-chosen-themes)
                         (car base16-theme-chosen-themes)))))
 
 (use-package ligature
@@ -311,32 +311,32 @@ ARGS is `kill-buffer' arguments."
   :config
   (dolist (mode '(scala-mode scala-ts-mode))
     (ligature-set-ligatures mode '("<-" ;; for comprehension
-                                    "=>" ;; pattern matching
-                                    "=>>" ;; type lambda
-                                    "???" ;; not implemented
-                                    "##" ;; hashCode
-                                    "=:=" ;; type equality
-                                    "->" ;; tuple
-                                    "==" "!=" "||" "&&" ">=" "<=" ;; boolean operators
-                                    "<<" ">>" ;; binary operators
-                                    "+=" "-=" "*=" "/=" "%=" "&=" "|=" "^=" "<<=" ">>=" "++=" "--=" "::=" ":::=" "+++=" ;; assign operators
-                                    "++" "--" "::" ":::" "+++" ;; collections
-                                    "//" "/*" "*/" "/**" ;; comments
-                                    "<->" ;; cats IsEq
-                                    "===" "=!=" ;; cats Eq
-                                    "<*>" "*>" "<*" ;; cats Applicative
-                                    ">>" ">>=" ;; cats FlatMap
-                                    "***" ;; cats Arrow
-                                    ":=" ;; scalatags attr
-                                    )))
+                                   "=>" ;; pattern matching
+                                   "=>>" ;; type lambda
+                                   "???" ;; not implemented
+                                   "##" ;; hashCode
+                                   "=:=" ;; type equality
+                                   "->" ;; tuple
+                                   "==" "!=" "||" "&&" ">=" "<=" ;; boolean operators
+                                   "<<" ">>" ;; binary operators
+                                   "+=" "-=" "*=" "/=" "%=" "&=" "|=" "^=" "<<=" ">>=" "++=" "--=" "::=" ":::=" "+++=" ;; assign operators
+                                   "++" "--" "::" ":::" "+++" ;; collections
+                                   "//" "/*" "*/" "/**" ;; comments
+                                   "<->" ;; cats IsEq
+                                   "===" "=!=" ;; cats Eq
+                                   "<*>" "*>" "<*" ;; cats Applicative
+                                   ">>" ">>=" ;; cats FlatMap
+                                   "***" ;; cats Arrow
+                                   ":=" ;; scalatags attr
+                                   )))
   (dolist (mode '(rust-mode rust-ts-mode))
     (ligature-set-ligatures mode '("->" ;; function
-                                    "=>" ;; pattern matching
-                                    "::" ;; path
-                                    "==" "!=" "||" "&&" ">=" "<=" ;; boolean operators
-                                    "+=" "-=" "*=" "/=" "%=" "&=" "|=" "^=" "<<=" ">>=" ;; assign operators
-                                    ".." "..=" ;; range operators
-                                    )))
+                                   "=>" ;; pattern matching
+                                   "::" ;; path
+                                   "==" "!=" "||" "&&" ">=" "<=" ;; boolean operators
+                                   "+=" "-=" "*=" "/=" "%=" "&=" "|=" "^=" "<<=" ">>=" ;; assign operators
+                                   ".." "..=" ;; range operators
+                                   )))
   (global-ligature-mode t))
 
 (use-package cl-macs
@@ -345,26 +345,26 @@ ARGS is `kill-buffer' arguments."
   :config
   ;; Fix hotkeys for Russian keyboard layout.
   (cl-loop
-    for from across "йцукенгшщзхъфывапролджэячсмитьбю"
-    for to   across "qwertyuiop[]asdfghjkl;'zxcvbnm,."
-    do
-    (eval `(define-key key-translation-map (kbd ,(concat "C-" (string from))) (kbd ,(concat "C-" (string to)))))
-    (eval `(define-key key-translation-map (kbd ,(concat "M-" (string from))) (kbd ,(concat "M-" (string to)))))
-    (eval `(define-key key-translation-map (kbd ,(concat "C-" (string (upcase from)))) (kbd ,(concat "C-S-" (string to)))))
-    (eval `(define-key key-translation-map (kbd ,(concat "M-" (string (upcase from)))) (kbd ,(concat "M-S-" (string to)))))))
+   for from across "йцукенгшщзхъфывапролджэячсмитьбю"
+   for to   across "qwertyuiop[]asdfghjkl;'zxcvbnm,."
+   do
+   (eval `(define-key key-translation-map (kbd ,(concat "C-" (string from))) (kbd ,(concat "C-" (string to)))))
+   (eval `(define-key key-translation-map (kbd ,(concat "M-" (string from))) (kbd ,(concat "M-" (string to)))))
+   (eval `(define-key key-translation-map (kbd ,(concat "C-" (string (upcase from)))) (kbd ,(concat "C-S-" (string to)))))
+   (eval `(define-key key-translation-map (kbd ,(concat "M-" (string (upcase from)))) (kbd ,(concat "M-S-" (string to)))))))
 
 (use-package cua-base
   :ensure nil
   :demand t
   :bind (:map cua-global-keymap
-          ("<C-return>"))
+              ("<C-return>"))
   :config
   (cua-mode t)
   (defun cua-macro-fix (orig-fun &rest args)
     (apply orig-fun args)
     (kmacro-edit-macro)
     (let ((endl "[[:space:]]*\\(;.*\\)?\n")
-           (case-fold-search nil))
+          (case-fold-search nil))
       ;; fix the C-c C-c
       (goto-char (point-min))
       (forward-line 7)
@@ -437,8 +437,8 @@ ARGS is `kill-buffer' arguments."
 
 (use-package puni
   :bind (("<delete>" . puni-forward-delete-char)
-          ("C-M-<up>" . puni-beginning-of-sexp)
-          ("C-M-<down>" . puni-end-of-sexp))
+         ("C-M-<up>" . puni-beginning-of-sexp)
+         ("C-M-<down>" . puni-end-of-sexp))
   :custom
   (puni-confirm-when-delete-unbalanced-active-region nil))
 
@@ -452,8 +452,8 @@ ARGS is `kill-buffer' arguments."
   :ensure nil
   ;; overrides vertico
   :bind (:map pixel-scroll-precision-mode-map
-          ("<prior>")
-          ("<next>"))
+              ("<prior>")
+              ("<next>"))
   :demand t
   :config
   (pixel-scroll-precision-mode))
@@ -465,12 +465,12 @@ ARGS is `kill-buffer' arguments."
   :config
   (defun highlight-thing-should-highlight-p ()
     (and
-      (not (minibufferp))
-      (not (member major-mode highlight-thing-excluded-major-modes))
-      (not (and
-             (bound-and-true-p lsp-mode)
-             (fboundp 'lsp--capability)
-             (lsp--capability "documentHighlightProvider")))))
+     (not (minibufferp))
+     (not (member major-mode highlight-thing-excluded-major-modes))
+     (not (and
+           (bound-and-true-p lsp-mode)
+           (fboundp 'lsp--capability)
+           (lsp--capability "documentHighlightProvider")))))
   (global-highlight-thing-mode))
 
 (use-package indent-bars
@@ -482,7 +482,7 @@ ARGS is `kill-buffer' arguments."
 
 (use-package vterm
   :bind (:map vterm-mode-map
-          ("<f2>"))
+              ("<f2>"))
   :custom
   (vterm-always-compile-module t)
   :config
@@ -496,8 +496,8 @@ ARGS is `kill-buffer' arguments."
 (use-package flyspell
   :ensure nil
   :bind (:map flyspell-mode-map
-          ("C-.")
-          ("C-,"))
+              ("C-.")
+              ("C-,"))
   :config
   ;; flyspell uses sit-for for delays which breaks things like
   ;; delete-selection-mode and company-mode. One possible solution is setting
@@ -507,7 +507,7 @@ ARGS is `kill-buffer' arguments."
   ;; for Unicode properties.
   (advice-add #'flyspell-check-word-p :around (lambda (orig-fun &rest args)
                                                 (if (eq this-command 'self-insert-command)
-                                                  (memq (get-char-code-property (char-before) 'general-category) '(Zs Zl Zp))
+                                                    (memq (get-char-code-property (char-before) 'general-category) '(Zs Zl Zp))
                                                   (apply orig-fun args)))))
 
 (use-package jinx
@@ -563,9 +563,9 @@ which LANG was detected but these are ignored."
   :config
   (defun fuzzy-matcher-without-tofu-char (string)
     (if (and
-          (fboundp 'consult--tofu-p)
-          (consult--tofu-p (aref string (- (length string) 1))))
-      (substring string 0 (- (length string) 1))
+         (fboundp 'consult--tofu-p)
+         (consult--tofu-p (aref string (- (length string) 1))))
+        (substring string 0 (- (length string) 1))
       string))
   (defun fuzzy-matcher-propertize (pattern candidate)
     "Score and highlight CANDIDATE against PATTERN.
@@ -574,7 +574,7 @@ filter and the scorer.  Matching is smart-case: a lower case PATTERN
 matches case insensitively, any upper case character makes it case
 sensitive."
     (when-let* ((score (fuzzy-matcher-fuzzy-indices
-                         pattern (fuzzy-matcher-without-tofu-char candidate))))
+                        pattern (fuzzy-matcher-without-tofu-char candidate))))
       (let ((candidate (copy-sequence candidate)))
         (unless (string-empty-p pattern)
           (put-text-property 0 1 'completion-score (- (* (car score) 100) (length candidate)) candidate))
@@ -586,56 +586,56 @@ sensitive."
         candidate)))
   (defun fuzzy-matcher-all-completions (string table pred point)
     (let* ((beforepoint (substring string 0 point))
-            (afterpoint (substring string point))
-            (bounds (completion-boundaries beforepoint table pred afterpoint))
-            (prefix (substring beforepoint 0 (car bounds)))
-            (infix (concat
-                     (substring beforepoint (car bounds))
-                     (substring afterpoint 0 (cdr bounds))))
-            (all (-keep (-partial #'fuzzy-matcher-propertize infix)
-                   (all-completions prefix table pred))))
+           (afterpoint (substring string point))
+           (bounds (completion-boundaries beforepoint table pred afterpoint))
+           (prefix (substring beforepoint 0 (car bounds)))
+           (infix (concat
+                   (substring beforepoint (car bounds))
+                   (substring afterpoint 0 (cdr bounds))))
+           (all (-keep (-partial #'fuzzy-matcher-propertize infix)
+                       (all-completions prefix table pred))))
       (when all
         (nconc all (length prefix)))))
   (add-to-list 'completion-styles-alist '(fuzzy
-                                           completion-flex-try-completion
-                                           fuzzy-matcher-all-completions
-                                           "Fuzzy completion with scoring."))
+                                          completion-flex-try-completion
+                                          fuzzy-matcher-all-completions
+                                          "Fuzzy completion with scoring."))
   (defun fuzzy-matcher-adjust-metadata (metadata)
     (let ((existing-dsf
-            (completion-metadata-get metadata 'display-sort-function))
-           (existing-csf
-             (completion-metadata-get metadata 'cycle-sort-function)))
+           (completion-metadata-get metadata 'display-sort-function))
+          (existing-csf
+           (completion-metadata-get metadata 'cycle-sort-function)))
       (cl-flet
-        ((compose-flex-sort-fn
-           (existing-sort-fn)
-           (lambda (completions)
-             (sort
-               (funcall existing-sort-fn completions)
-               (lambda (c1 c2)
-                 (let ((s1 (get-text-property 0 'completion-score c1))
+          ((compose-flex-sort-fn
+             (existing-sort-fn)
+             (lambda (completions)
+               (sort
+                (funcall existing-sort-fn completions)
+                (lambda (c1 c2)
+                  (let ((s1 (get-text-property 0 'completion-score c1))
                         (s2 (get-text-property 0 'completion-score c2)))
-                   (> (or s1 0) (or s2 0))))))))
+                    (> (or s1 0) (or s2 0))))))))
         `(metadata
-           (display-sort-function . ,(compose-flex-sort-fn (or existing-dsf #'identity)))
-           (cycle-sort-function . ,(compose-flex-sort-fn (or existing-csf #'identity)))
-           ,@(cdr metadata)))))
+          (display-sort-function . ,(compose-flex-sort-fn (or existing-dsf #'identity)))
+          (cycle-sort-function . ,(compose-flex-sort-fn (or existing-csf #'identity)))
+          ,@(cdr metadata)))))
   (put 'fuzzy 'completion--adjust-metadata (lambda (metadata)
                                              (if (let ((input (minibuffer-contents-no-properties)))
                                                    (or
-                                                     (string-empty-p input)
-                                                     (and
-                                                       (eq (completion-metadata-get metadata 'category) 'file)
-                                                       (string-suffix-p "/" input))))
-                                               metadata
+                                                    (string-empty-p input)
+                                                    (and
+                                                     (eq (completion-metadata-get metadata 'category) 'file)
+                                                     (string-suffix-p "/" input))))
+                                                 metadata
                                                (fuzzy-matcher-adjust-metadata metadata))))
   (setq completion-styles '(fuzzy)))
 
 (use-package ido
   :ensure nil
   :commands (ido-completing-read
-              ido-read-directory-name
-              ido-read-file-name
-              ido-read-buffer)
+             ido-read-directory-name
+             ido-read-file-name
+             ido-read-buffer)
   :custom
   (ido-enable-flex-matching t)
   (ido-use-faces nil)
@@ -645,22 +645,22 @@ sensitive."
     (eq (aref s (1- (length s))) ?/))
   (defun ido-file-lessp (a b)
     (cond
-      ((and (ends-with-/ a) (not (ends-with-/ b))) t)
-      ((and (not (ends-with-/ a)) (ends-with-/ b)) nil)
-      (t (string-lessp a b)))))
+     ((and (ends-with-/ a) (not (ends-with-/ b))) t)
+     ((and (not (ends-with-/ a)) (ends-with-/ b)) nil)
+     (t (string-lessp a b)))))
 
 (use-package nerd-icons)
 
 (use-package vertico
   :demand t
   :bind (:map vertico-map
-          ("TAB" . minibuffer-complete)
-          ("M-TAB" . vertico-insert)
-          ("<prior>" . vertico-scroll-down)
-          ("<next>" . vertico-scroll-up)
-          ("RET" . vertico-directory-enter)
-          ("DEL" . vertico-directory-delete-char)
-          ("M-DEL" . vertico-directory-delete-word))
+              ("TAB" . minibuffer-complete)
+              ("M-TAB" . vertico-insert)
+              ("<prior>" . vertico-scroll-down)
+              ("<next>" . vertico-scroll-up)
+              ("RET" . vertico-directory-enter)
+              ("DEL" . vertico-directory-delete-char)
+              ("M-DEL" . vertico-directory-delete-word))
   :hook (rfn-eshadow-update-overlay . vertico-directory-tidy)
   :custom
   (vertico-resize nil)
@@ -678,7 +678,7 @@ sensitive."
   (defun sort-directories-first (files)
     (setq files (vertico-sort-history-alpha files))
     (nconc (seq-filter (-partial #'string-suffix-p "/") files)
-      (seq-remove (-partial #'string-suffix-p "/") files)))
+           (seq-remove (-partial #'string-suffix-p "/") files)))
   (vertico-multiform-mode))
 
 (use-package vertico-mouse
@@ -699,20 +699,20 @@ sensitive."
   (defun marginalia-project-name (buffer)
     (let ((name (buffer-file-name buffer)))
       (if (and name (projectile-project-p name))
-        (projectile-project-name (projectile-project-root name))
+          (projectile-project-name (projectile-project-root name))
         "")))
   (el-patch-defun marginalia-annotate-buffer (cand)
     "Annotate buffer CAND with modification status, file name and major mode."
     ;; Emacs 31: `project--read-project-buffer' uses `uniquify-get-unique-names'
     (when-let* ((buffer (or (and (stringp cand)
-                              (get-text-property 0 'uniquify-orig-buffer cand))
-                          (get-buffer cand))))
+                                 (get-text-property 0 'uniquify-orig-buffer cand))
+                            (get-buffer cand))))
       (if (buffer-live-p buffer)
-        (marginalia--fields
-          ((marginalia--buffer-status buffer))
-          (el-patch-add ((marginalia-project-name buffer)
+          (marginalia--fields
+           ((marginalia--buffer-status buffer))
+           (el-patch-add ((marginalia-project-name buffer)
                           :truncate 0.2 :face 'marginalia-modified))
-          ((marginalia--buffer-file buffer)
+           ((marginalia--buffer-file buffer)
             :truncate -0.5 :face 'marginalia-file-name))
         (marginalia--fields ("(dead buffer)" :face 'error)))))
   (marginalia-mode))
@@ -727,55 +727,55 @@ sensitive."
 (use-package embark
   :commands kill-target-buffer
   :bind (:map minibuffer-local-map
-          ("C-." . embark-act)
-          ("C-;" . embark-dwim)
-          ("C-e" . embark-export))
+              ("C-." . embark-act)
+              ("C-;" . embark-dwim)
+              ("C-e" . embark-export))
   :custom
   (embark-mixed-indicator-delay 0)
   (embark-mixed-indicator-both t)
   (embark-quit-after-action nil)
   :config
   (setq embark-pre-action-hooks
-    (delete '(kill-buffer embark--confirm) embark-pre-action-hooks))
+        (delete '(kill-buffer embark--confirm) embark-pre-action-hooks))
   (defun kill-target-buffer ()
     (interactive)
     (if-let* ((buffer (seq-find
-                        (lambda (target)
-                          (eq (plist-get target :type) 'buffer))
-                        (embark--targets))))
-      (embark--act 'kill-buffer buffer)
+                       (lambda (target)
+                         (eq (plist-get target :type) 'buffer))
+                       (embark--targets))))
+        (embark--act 'kill-buffer buffer)
       (user-error "No buffer target found"))))
 
 (use-package projectile
   :demand t
   :bind (:map projectile-mode-map
-          ("C-p f" . projectile-find-file)
-          ("C-p o" . projectile-find-file)
-          ("C-p C-p" . projectile-switch-project))
+              ("C-p f" . projectile-find-file)
+              ("C-p o" . projectile-find-file)
+              ("C-p C-p" . projectile-switch-project))
   :config
   (projectile-mode))
 
 (use-package consult
   :bind (("<f2>" . consult-buffer)
-          ([remap goto-line] . consult-goto-line)
-          :map projectile-mode-map
-          ("C-p g" . consult-ripgrep))
+         ([remap goto-line] . consult-goto-line)
+         :map projectile-mode-map
+         ("C-p g" . consult-ripgrep))
   :init
   (setq
-    register-preview-function #'consult-register-format
-    xref-show-xrefs-function #'consult-xref
-    xref-show-definitions-function #'consult-xref)
+   register-preview-function #'consult-register-format
+   xref-show-xrefs-function #'consult-xref
+   xref-show-definitions-function #'consult-xref)
   (advice-add #'register-preview :override #'consult-register-window)
   :custom
   (consult-project-function (lambda (_) (projectile-project-root)))
   (consult-async-min-input 2)
   :config
   (consult-customize consult-buffer
-    :preview-key nil
-    :keymap (let ((map (make-sparse-keymap)))
-              (define-key map (kbd "<f2>") #'keyboard-escape-quit)
-              (define-key map (kbd "C-k") #'kill-target-buffer)
-              map)))
+                     :preview-key nil
+                     :keymap (let ((map (make-sparse-keymap)))
+                               (define-key map (kbd "<f2>") #'keyboard-escape-quit)
+                               (define-key map (kbd "C-k") #'kill-target-buffer)
+                               map)))
 
 (use-package embark-consult
   :hook
@@ -783,20 +783,20 @@ sensitive."
 
 (use-package helpful
   :bind (([remap describe-key] . helpful-key)
-          ([remap describe-variable] . helpful-variable)
-          ([remap describe-function] . helpful-callable)
-          ([remap describe-command] . helpful-command)
-          ("C-h F" . helpful-function)))
+         ([remap describe-variable] . helpful-variable)
+         ([remap describe-function] . helpful-callable)
+         ([remap describe-command] . helpful-command)
+         ("C-h F" . helpful-function)))
 
 (use-package dired
   :ensure nil
   :bind (:map dired-mode-map
-          ("C-e" . dired-toggle-read-only)))
+              ("C-e" . dired-toggle-read-only)))
 
 (use-package wdired
   :ensure nil
   :bind (:map wdired-mode-map
-          ("C-s" . wdired-finish-edit)))
+              ("C-s" . wdired-finish-edit)))
 
 (use-package ediff-wind
   :ensure nil
@@ -817,20 +817,20 @@ sensitive."
 
 (use-package ag
   :commands (ag
-              ag-files
-              ag-regexp
-              ag-project
-              ag-project-files
-              ag-project-regexp
-              ag-dired
-              ag-dired-regexp
-              ag-project-dired
-              ag-project-dired-regexp))
+             ag-files
+             ag-regexp
+             ag-project
+             ag-project-files
+             ag-project-regexp
+             ag-dired
+             ag-dired-regexp
+             ag-project-dired
+             ag-project-dired-regexp))
 
 (use-package anzu
   :demand t
   :bind (([remap query-replace] . anzu-query-replace)
-          ([remap query-replace-regexp] . anzu-query-replace-regexp))
+         ([remap query-replace-regexp] . anzu-query-replace-regexp))
   :config
   (global-anzu-mode t))
 
@@ -851,9 +851,9 @@ sensitive."
   (advice-add #'centaur-tabs-hide-tab-cached :after-until (lambda (buffer)
                                                             (with-current-buffer buffer
                                                               (and
-                                                                (boundp 'polymode-mode)
-                                                                polymode-mode
-                                                                (string-prefix-p " " (buffer-name (current-buffer)))))))
+                                                               (boundp 'polymode-mode)
+                                                               polymode-mode
+                                                               (string-prefix-p " " (buffer-name (current-buffer)))))))
   (centaur-tabs-mode t)
   (centaur-tabs-group-by-projectile-project)
   (remove-hook 'kill-buffer-hook 'centaur-tabs-buffer-track-killed))
@@ -864,26 +864,26 @@ sensitive."
   (rg-group-result t)
   (rg-command-line-flags '("--hidden"))
   :bind (:map projectile-mode-map
-          ("C-p G" . rg-project)
-          :map rg-mode-map
-          ("C-b")
-          ("C-f")
-          ("F" . rg-forward-history)
-          ("B" . rg-back-history)))
+              ("C-p G" . rg-project)
+              :map rg-mode-map
+              ("C-b")
+              ("C-f")
+              ("F" . rg-forward-history)
+              ("B" . rg-back-history)))
 
 (use-package wgrep
   :bind (:map wgrep-mode-map
-          ("C-s" . wgrep-finish-edit)
-          :map embark-consult-rerun-map
-          ("C-e" . wgrep-change-to-wgrep-mode))
+              ("C-s" . wgrep-finish-edit)
+              :map embark-consult-rerun-map
+              ("C-e" . wgrep-change-to-wgrep-mode))
   :custom
   (wgrep-auto-save-buffer t))
 
 (use-package company
   :demand t
   :bind (:map company-mode-map
-          ("TAB" . company-indent-or-complete-common)
-          ("<escape>" . company-abort))
+              ("TAB" . company-indent-or-complete-common)
+              ("<escape>" . company-abort))
   :custom
   (company-tooltip-align-annotations t)
   (company-require-match nil)
@@ -904,11 +904,11 @@ sensitive."
 (use-package multiple-cursors-core
   :ensure multiple-cursors
   :commands (mc/multiple-cursors-mode-when-num-cursors>1
-              mc/quit-leaving-cursors)
+             mc/quit-leaving-cursors)
   :bind (("C-b" . mc/mark-all-like-this)
-          ("C-S-b" . mc/edit-lines)
-          :map mc/keymap
-          ("C-S-b" . mc/keyboard-quit))
+         ("C-S-b" . mc/edit-lines)
+         :map mc/keymap
+         ("C-S-b" . mc/keyboard-quit))
   :config
   ;; Copy/paste.
   (with-no-warnings
@@ -916,23 +916,23 @@ sensitive."
   (defun mc/cut-copy-across-cursors (cut)
     (setq mc/clipboard nil)
     (mc/for-each-cursor-ordered
-      (mc/restore-state-from-overlay cursor)
-      (push
-        (if (region-active-p)
+     (mc/restore-state-from-overlay cursor)
+     (push
+      (if (region-active-p)
           (buffer-substring
-            (caar (region-bounds))
-            (cdar (region-bounds)))
-          "")
-        mc/clipboard)
-      (mc/execute-command-for-fake-cursor
-        (lambda ()
-          (interactive)
-          (if (and cut (not buffer-read-only))
+           (caar (region-bounds))
+           (cdar (region-bounds)))
+        "")
+      mc/clipboard)
+     (mc/execute-command-for-fake-cursor
+      (lambda ()
+        (interactive)
+        (if (and cut (not buffer-read-only))
             (delete-region
-              (caar (region-bounds))
-              (cdar (region-bounds)))
-            (deactivate-mark)))
-        cursor)))
+             (caar (region-bounds))
+             (cdar (region-bounds)))
+          (deactivate-mark)))
+      cursor)))
   (defun mc/copy-across-cursors ()
     (interactive)
     (mc/cut-copy-across-cursors nil))
@@ -942,25 +942,25 @@ sensitive."
   (defun mc/paste-across-cursors ()
     (interactive)
     (if mc/clipboard
-      (let ((clipboard (reverse mc/clipboard)))
-        (mc/for-each-cursor-ordered
-          (when clipboard
-            (mc/execute-command-for-fake-cursor
+        (let ((clipboard (reverse mc/clipboard)))
+          (mc/for-each-cursor-ordered
+           (when clipboard
+             (mc/execute-command-for-fake-cursor
               (lambda ()
                 (interactive)
                 (insert (car clipboard)))
               cursor)
-            (setq clipboard (cdr clipboard)))))
+             (setq clipboard (cdr clipboard)))))
       (mc/execute-command-for-all-cursors #'cua-paste)))
   (add-to-list
-    'emulation-mode-map-alists
-    `((multiple-cursors-mode . ,(-doto (make-sparse-keymap)
-                                  (define-key [remap yank] #'mc/paste-across-cursors)
-                                  (define-key [remap clipboard-yank] #'mc/paste-across-cursors)
-                                  (define-key [remap x-clipboard-yank] #'mc/paste-across-cursors)
-                                  (define-key [remap copy-region-as-kill] #'mc/copy-across-cursors)
-                                  (define-key [remap kill-region] #'mc/cut-across-cursors)
-                                  (define-key [remap clipboard-kill-region] #'mc/cut-across-cursors)))))
+   'emulation-mode-map-alists
+   `((multiple-cursors-mode . ,(-doto (make-sparse-keymap)
+                                 (define-key [remap yank] #'mc/paste-across-cursors)
+                                 (define-key [remap clipboard-yank] #'mc/paste-across-cursors)
+                                 (define-key [remap x-clipboard-yank] #'mc/paste-across-cursors)
+                                 (define-key [remap copy-region-as-kill] #'mc/copy-across-cursors)
+                                 (define-key [remap kill-region] #'mc/cut-across-cursors)
+                                 (define-key [remap clipboard-kill-region] #'mc/cut-across-cursors)))))
   (defun mc/clear-clipboard ()
     (setq mc/clipboard nil))
   (add-hook 'multiple-cursors-mode-hook #'mc/clear-clipboard)
@@ -972,7 +972,7 @@ sensitive."
   (defun mc/quit-leaving-cursors ()
     (interactive)
     (cl-letf (((symbol-function 'mc/remove-fake-cursors)
-                (lambda ())))
+               (lambda ())))
       (multiple-cursors-mode 0)))
   (defun mc/remove-fake-cursors-interactive ()
     (interactive)
@@ -982,17 +982,17 @@ sensitive."
   (defun mc/save-lists ())
   ;; Define commands.
   (setq mc/cmds-to-run-once '(hydra-mc/body
-                               hydra-mc/nil
-                               cua--prefix-override-handler
-                               mc/toggle-fake-cursor
-                               mc/copy-across-cursors
-                               mc/cut-across-cursors
-                               mc/paste-across-cursors))
+                              hydra-mc/nil
+                              cua--prefix-override-handler
+                              mc/toggle-fake-cursor
+                              mc/copy-across-cursors
+                              mc/cut-across-cursors
+                              mc/paste-across-cursors))
   (setq mc/cmds-to-run-for-all '(back-to-indentation-or-beginning
-                                  end-of-code-or-line
-                                  indent-for-tab-command
-                                  org-self-insert-command
-                                  puni-forward-delete-char)))
+                                 end-of-code-or-line
+                                 indent-for-tab-command
+                                 org-self-insert-command
+                                 puni-forward-delete-char)))
 
 (use-package mc-mark-more
   :ensure multiple-cursors
@@ -1003,17 +1003,17 @@ sensitive."
     (interactive)
     (let ((existing (mc/fake-cursor-at-point)))
       (if existing
-        (mc/remove-fake-cursor existing)
+          (mc/remove-fake-cursor existing)
         (mc/create-fake-cursor-at-point)))))
 
 (use-package hydra
   :bind (("<C-return>" . hydra-mc/body))
   :config
   (defhydra hydra-mc (:foreign-keys run
-                       :body-pre (progn
-                                   (mc/quit-leaving-cursors)
-                                   (mc/toggle-fake-cursor))
-                       :post (mc/multiple-cursors-mode-when-num-cursors>1))
+                                    :body-pre (progn
+                                                (mc/quit-leaving-cursors)
+                                                (mc/toggle-fake-cursor))
+                                    :post (mc/multiple-cursors-mode-when-num-cursors>1))
     "multiple-cursors"
     ("<C-return>" mc/toggle-fake-cursor "toggle")
     ("<return>" nil "apply")
@@ -1022,10 +1022,10 @@ sensitive."
 (use-package undo-tree
   :demand t
   :bind (:map undo-tree-map
-          ([remap undo] . undo-tree-undo)
-          ([remap undo-only] . undo-tree-undo)
-          ("C-S-z" . undo-tree-redo)
-          ("C-y" . undo-tree-redo))
+              ([remap undo] . undo-tree-undo)
+              ([remap undo-only] . undo-tree-undo)
+              ("C-S-z" . undo-tree-redo)
+              ("C-y" . undo-tree-redo))
   :init
   (setq undo-tree-map (make-sparse-keymap))
   :custom
@@ -1036,17 +1036,17 @@ sensitive."
   (defun undo-tree-make-hashed-history-save-file-name (file)
     (f-mkdir (concat user-emacs-directory "undo/"))
     (concat
-      user-emacs-directory
-      "undo/"
-      (let ((filename (file-name-nondirectory file)))
-        (substring-no-properties filename 0 (min 64 (length filename))))
-      "~"
-      (secure-hash 'sha256 file)))
+     user-emacs-directory
+     "undo/"
+     (let ((filename (file-name-nondirectory file)))
+       (substring-no-properties filename 0 (min 64 (length filename))))
+     "~"
+     (secure-hash 'sha256 file)))
   (advice-add #'undo-tree-make-history-save-file-name :override #'undo-tree-make-hashed-history-save-file-name)
   (defun last-edit-next (undo tree)
     (when undo
       (if tree
-        (undo-tree-node-previous undo)
+          (undo-tree-node-previous undo)
         (cdr undo))))
   (defun last-edit (arg)
     "Go back to last add/delete edit."
@@ -1054,38 +1054,38 @@ sensitive."
     (unless arg
       (setq arg 1))
     (let ((undo buffer-undo-list)
-           (tree))
+          (tree))
       (unless (eq undo t)
         (while undo
           (pcase (if tree
-                   (car (undo-tree-node-undo undo))
+                     (car (undo-tree-node-undo undo))
                    (car undo))
             (`(,beg . ,end) (let ((pos (cond
-                                         ((and (integerp beg) (integerp end)) end)
-                                         ((and (stringp beg) (integerp end)) (abs end))
-                                         ((eq beg 'apply) (pcase end
-                                                            (`(,delta ,beg ,end . ,_)
-                                                              (when (and
-                                                                      (integerp delta)
-                                                                      (integerp beg)
-                                                                      (integerp end))
-                                                                end)))))))
+                                        ((and (integerp beg) (integerp end)) end)
+                                        ((and (stringp beg) (integerp end)) (abs end))
+                                        ((eq beg 'apply) (pcase end
+                                                           (`(,delta ,beg ,end . ,_)
+                                                            (when (and
+                                                                   (integerp delta)
+                                                                   (integerp beg)
+                                                                   (integerp end))
+                                                              end)))))))
                               (if pos
-                                (progn
-                                  (setq arg (1- arg))
-                                  (if (<= arg 0)
-                                    (progn
-                                      (goto-char pos)
-                                      (setq undo nil))
-                                    (setq undo (last-edit-next undo tree))))
+                                  (progn
+                                    (setq arg (1- arg))
+                                    (if (<= arg 0)
+                                        (progn
+                                          (goto-char pos)
+                                          (setq undo nil))
+                                      (setq undo (last-edit-next undo tree))))
                                 (setq undo (last-edit-next undo tree)))))
             (`undo-tree-canary (if tree
-                                 (progn
-                                   (error "Inner undo-tree-canary")
-                                   (setq undo nil))
+                                   (progn
+                                     (error "Inner undo-tree-canary")
+                                     (setq undo nil))
                                  (setq
-                                   undo (undo-tree-current buffer-undo-tree)
-                                   tree t)))
+                                  undo (undo-tree-current buffer-undo-tree)
+                                  tree t)))
             (_ (setq undo (last-edit-next undo tree))))))))
   ;; Bound here rather than in `:bind' because `last-edit' is defined in this
   ;; file, not in undo-tree: `:bind' would add it to `:commands', which declares
@@ -1096,27 +1096,27 @@ sensitive."
   :ensure nil
   :hook (prog-mode . hs-minor-mode)
   :bind (:map hs-minor-mode-map
-          ("C-`" . hs-toggle-hiding)))
+              ("C-`" . hs-toggle-hiding)))
 
 (use-package origami
   :bind (:map origami-mode-map
-          ("C-`" . origami-toggle-node))
+              ("C-`" . origami-toggle-node))
   :config
   (add-hook 'origami-mode-hook
-    (lambda ()
-      (hs-minor-mode -1))))
+            (lambda ()
+              (hs-minor-mode -1))))
 
 (use-package org
   :bind (:map org-mode-map
-          ("M-TAB" . org-cycle)
-          ("S-<down>")
-          ("S-<up>")
-          ("S-<left>")
-          ("S-<right>")
-          ("C-S-<down>")
-          ("C-S-<up>")
-          ("C-S-<left>")
-          ("C-S-<right>"))
+              ("M-TAB" . org-cycle)
+              ("S-<down>")
+              ("S-<up>")
+              ("S-<left>")
+              ("S-<right>")
+              ("C-S-<down>")
+              ("C-S-<up>")
+              ("C-S-<left>")
+              ("C-S-<right>"))
   :custom
   (org-support-shift-select t)
   :config
@@ -1143,7 +1143,7 @@ sensitive."
 (use-package org-agenda
   :ensure nil
   :bind (:map org-agenda-mode-map
-          ("R" . khalel-run-vdirsyncer))
+              ("R" . khalel-run-vdirsyncer))
   :custom
   (org-agenda-file-regexp "\\`[^.].*\\.org\\\(\\.gpg\\\)?\\'")
   (org-agenda-start-on-weekday nil)
@@ -1161,16 +1161,16 @@ sensitive."
   :after org-roam
   :custom
   (org-roam-capture-templates '(("d" "default" plain "%?"
-                                  :target (file+head "${slug}.org.gpg"
-                                            "# -*- mode:org; epa-file-encrypt-to: (\"kurnevsky@kropki.org\") -*-\n#+title: ${title}\n")
-                                  :unnarrowed t))))
+                                 :target (file+head "${slug}.org.gpg"
+                                                    "# -*- mode:org; epa-file-encrypt-to: (\"kurnevsky@kropki.org\") -*-\n#+title: ${title}\n")
+                                 :unnarrowed t))))
 
 (use-package org-ql)
 
 (use-package yasnippet
   :hook (prog-mode . yas-minor-mode)
   :bind (:map yas-keymap
-          ("<return>" . yas-next-field-or-maybe-expand))
+              ("<return>" . yas-next-field-or-maybe-expand))
   :config
   (yas-reload-all))
 
@@ -1186,15 +1186,15 @@ sensitive."
 (use-package magit
   :demand t
   :bind (("<C-m> <C-m>" . magit-status)
-          ("<C-m> b" . magit-blame-addition)
-          ("<C-m> s" . magit-show-commit)
-          :map magit-blame-mode-map
-          ("<C-m> b" . magit-blame-quit)
-          :map magit-status-mode-map
-          ("TAB" . magit-section-cycle))
+         ("<C-m> b" . magit-blame-addition)
+         ("<C-m> s" . magit-show-commit)
+         :map magit-blame-mode-map
+         ("<C-m> b" . magit-blame-quit)
+         :map magit-status-mode-map
+         ("TAB" . magit-section-cycle))
   :config
   (add-hook 'magit-status-mode-hook
-    (lambda () (company-mode -1))))
+            (lambda () (company-mode -1))))
 
 (use-package forge
   :demand t
@@ -1202,8 +1202,8 @@ sensitive."
   :config
   (let ((host "gitlab.evolution.com"))
     (add-to-list
-      'forge-alist
-      `(,host ,(concat host "/api/v4") ,host forge-gitlab-repository))))
+     'forge-alist
+     `(,host ,(concat host "/api/v4") ,host forge-gitlab-repository))))
 
 (use-package auth-source
   :ensure nil
@@ -1240,9 +1240,9 @@ sensitive."
 
 (use-package treemacs
   :bind (("<f8>" . treemacs)
-          :map treemacs-mode-map
-          ("<M-up>")
-          ("<M-down>"))
+         :map treemacs-mode-map
+         ("<M-up>")
+         ("<M-down>"))
   :custom
   (treemacs-collapse-dirs 3)
   (treemacs-position 'right)
@@ -1270,11 +1270,11 @@ sensitive."
   :config
   (global-flycheck-mode)
   (add-to-list 'display-buffer-alist
-    `(,(rx bos "*Flycheck errors*" eos)
-       (display-buffer-reuse-window display-buffer-below-selected)
-       (reusable-frames . visible)
-       (side            . bottom)
-       (window-height   . 0.3))))
+               `(,(rx bos "*Flycheck errors*" eos)
+                 (display-buffer-reuse-window display-buffer-below-selected)
+                 (reusable-frames . visible)
+                 (side            . bottom)
+                 (window-height   . 0.3))))
 
 (use-package flycheck-package
   :after flycheck
@@ -1332,12 +1332,12 @@ sensitive."
   :demand t
   :config
   (push
-    (make-treesit-auto-recipe
-      :lang 'scala
-      :ts-mode 'scala-ts-mode
-      :remap 'scala-mode
-      :url "https://github.com/KaranAhlawat/scala-ts-mode")
-    treesit-auto-recipe-list)
+   (make-treesit-auto-recipe
+    :lang 'scala
+    :ts-mode 'scala-ts-mode
+    :remap 'scala-mode
+    :url "https://github.com/KaranAhlawat/scala-ts-mode")
+   treesit-auto-recipe-list)
   (push 'scala treesit-auto-langs)
   (global-treesit-auto-mode))
 
@@ -1478,11 +1478,11 @@ sensitive."
   (defun lsp-activate-if-already-activated ()
     (let ((lsp-warn-no-matched-clients nil))
       (when (and (buffer-file-name)
-              (lsp--filter-clients (-andfn
-                                     #'lsp--supports-buffer?
-                                     (-not #'lsp--client-add-on?)
-                                     #'lsp--server-binary-present?
-                                     (lambda (client) (lsp-find-workspace (lsp--client-server-id client) (buffer-file-name))))))
+                 (lsp--filter-clients (-andfn
+                                       #'lsp--supports-buffer?
+                                       (-not #'lsp--client-add-on?)
+                                       #'lsp--server-binary-present?
+                                       (lambda (client) (lsp-find-workspace (lsp--client-server-id client) (buffer-file-name))))))
         (lsp))))
   (add-hook 'prog-mode-hook #'lsp-activate-if-already-activated)
   (add-hook 'lsp-inline-completion-mode-hook (lambda () (lsp-inline-completion-company-integration-mode 1)))
@@ -1492,52 +1492,52 @@ sensitive."
 If IDENTIFIER and POSITION are non-nil, they will be used as the document
 identifier and the position respectively."
     (list :textDocument (or identifier (lsp--text-document-identifier))
-      :position (or position (lsp--cur-position))
-      (el-patch-add :range (when (use-region-p) (lsp--region-to-range (region-beginning) (region-end))))))
+          :position (or position (lsp--cur-position))
+          (el-patch-add :range (when (use-region-p) (lsp--region-to-range (region-beginning) (region-end))))))
   ;; lsp-booster
   (defun lsp-booster--advice-json-parse (old-fn &rest args)
     "Try to parse bytecode instead of json."
     (or
-      (when (equal (following-char) ?#)
-        (let ((bytecode (read (current-buffer))))
-          (when (byte-code-function-p bytecode)
-            (funcall bytecode))))
-      (apply old-fn args)))
+     (when (equal (following-char) ?#)
+       (let ((bytecode (read (current-buffer))))
+         (when (byte-code-function-p bytecode)
+           (funcall bytecode))))
+     (apply old-fn args)))
   (advice-add (if (progn (require 'json)
-                    (fboundp 'json-parse-buffer))
-                'json-parse-buffer
+                         (fboundp 'json-parse-buffer))
+                  'json-parse-buffer
                 'json-read)
-    :around
-    #'lsp-booster--advice-json-parse)
+              :around
+              #'lsp-booster--advice-json-parse)
   (defun lsp-booster--advice-final-command (old-fn cmd &optional test?)
     "Prepend emacs-lsp-booster command to lsp CMD."
     (let ((orig-result (funcall old-fn cmd test?)))
       (if (and (not test?) ;; for check lsp-server-present?
-            (not (file-remote-p default-directory))) ;; see lsp-resolve-final-command, it would add extra shell wrapper)
-        (progn
-          (when-let* ((command-from-exec-path (executable-find (car orig-result)))) ;; resolve command from exec-path (in case not found in $PATH)
-            (setcar orig-result command-from-exec-path))
-          (message "Using emacs-lsp-booster for %s!" orig-result)
-          (cons "emacs-lsp-booster" orig-result))
+               (not (file-remote-p default-directory))) ;; see lsp-resolve-final-command, it would add extra shell wrapper)
+          (progn
+            (when-let* ((command-from-exec-path (executable-find (car orig-result)))) ;; resolve command from exec-path (in case not found in $PATH)
+              (setcar orig-result command-from-exec-path))
+            (message "Using emacs-lsp-booster for %s!" orig-result)
+            (cons "emacs-lsp-booster" orig-result))
         orig-result)))
   (advice-add 'lsp-resolve-final-command :around #'lsp-booster--advice-final-command)
   ;; Famulus
   (lsp-register-client
-    (make-lsp-client :new-connection (lsp-stdio-connection (executable-find "famulus"))
-      :activation-fn (-const t)
-      :add-on? t
-      :priority -1
-      :server-id 'famulus
-      :completion-in-comments? t
-      :initialized-fn (lambda (workspace)
-                        (let ((caps (lsp--workspace-server-capabilities workspace)))
-                          (unless (lsp-get caps :inlineCompletionProvider)
-                            (lsp:set-server-capabilities-inline-completion-provider? caps t))))
-      :initialization-options '((infill . ((provider . "Copilot")
-                                            (config . ((api_key_env . "COPILOT_TOKEN")
-                                                        (temperature . 0)
-                                                        (max_tokens . 512)
-                                                        (stop . ["\n\n"])))))))))
+   (make-lsp-client :new-connection (lsp-stdio-connection (executable-find "famulus"))
+                    :activation-fn (-const t)
+                    :add-on? t
+                    :priority -1
+                    :server-id 'famulus
+                    :completion-in-comments? t
+                    :initialized-fn (lambda (workspace)
+                                      (let ((caps (lsp--workspace-server-capabilities workspace)))
+                                        (unless (lsp-get caps :inlineCompletionProvider)
+                                          (lsp:set-server-capabilities-inline-completion-provider? caps t))))
+                    :initialization-options '((infill . ((provider . "Copilot")
+                                                         (config . ((api_key_env . "COPILOT_TOKEN")
+                                                                    (temperature . 0)
+                                                                    (max_tokens . 512)
+                                                                    (stop . ["\n\n"])))))))))
 
 (use-package lsp-ui
   :custom
@@ -1623,7 +1623,7 @@ identifier and the position respectively."
   :hook (flycheck-mode . sideline-mode)
   :custom
   (sideline-backends-right '((sideline-lsp . up)
-                              (sideline-flycheck . down))))
+                             (sideline-flycheck . down))))
 
 (use-package sideline-flycheck
   :hook (flycheck-mode . sideline-flycheck-setup))
@@ -1634,10 +1634,10 @@ identifier and the position respectively."
   :custom
   (gptel-model 'llama-3.3-70b-versatile)
   (gptel-directives
-    '((default . "You are an advanced AI system.")
-       (programming . "Provide code and only code as output without any additional text, prompt or note.")
-       (writing . "You are a writing assistant.")
-       (chat . "You are an advanced AI system. Respond concisely.")))
+   '((default . "You are an advanced AI system.")
+     (programming . "Provide code and only code as output without any additional text, prompt or note.")
+     (writing . "You are a writing assistant.")
+     (chat . "You are an advanced AI system. Respond concisely.")))
   :config
   (delete (assoc "ChatGPT" gptel--known-backends) gptel--known-backends)
   (setq gptel-expert-commands t)
@@ -1654,7 +1654,7 @@ identifier and the position respectively."
     :protocol "https"
     :key (lambda () (secrets-get-secret "Passwords" "Mistral"))
     :models '(mistral-large-latest
-               codestral-latest))
+              codestral-latest))
   (gptel-make-openai "llama-cpp"
     :stream t
     :protocol "http"
@@ -1670,7 +1670,7 @@ identifier and the position respectively."
   :demand t
   :after gptel
   :custom (mcp-hub-servers
-            `(("metals" . (:url "http://localhost:32963/sse"))))
+           `(("metals" . (:url "http://localhost:32963/sse"))))
   :hook (after-init . mcp-hub-start-all-server))
 
 (use-package gptel-integrations
@@ -1694,7 +1694,7 @@ identifier and the position respectively."
   (smtpmail-servers-requiring-authorization ".*")
   :config
   (advice-add 'smtpmail-fqdn :override
-    (lambda () "localhost")))
+              (lambda () "localhost")))
 
 (use-package mu4e
   :commands mu4e
@@ -1717,37 +1717,37 @@ identifier and the position respectively."
     (defvar shr-inhibit-images)
     (defvar shr-width)
     (let ((shr-inhibit-images t)
-           (shr-width (- (window-body-width) 8)))
+          (shr-width (- (window-body-width) 8)))
       (shr-render-region (point-min) (point-max))
       (goto-char (point-min))))
   (defvar mu4e-sent-folder-alternatives '("/[Gmail]/Sent Mail" ;; gmail
-                                           "/Sent Items" ;; outlook, stalwart
-                                           ))
+                                          "/Sent Items" ;; outlook, stalwart
+                                          ))
   (defvar mu4e-drafts-folder-alternatives '("/[Gmail]/Drafts" ;; gmail
-                                             "/Drafts" ;; outlook, stalwart
-                                             ))
-  (defvar mu4e-trash-folder-alternatives '("/[Gmail]/Trash" ;; gmail
-                                            "/Deleted Items" ;; outtlook, stalwart
+                                            "/Drafts" ;; outlook, stalwart
                                             ))
+  (defvar mu4e-trash-folder-alternatives '("/[Gmail]/Trash" ;; gmail
+                                           "/Deleted Items" ;; outtlook, stalwart
+                                           ))
   (defvar mu4e-refile-folder-alternatives '("/[Gmail]/Archive" ;; gmail
-                                             "/Archive" ;; outlook, stalwart
-                                             ))
+                                            "/Archive" ;; outlook, stalwart
+                                            ))
   (defun choose-mu4e-alternative (name alternatives)
     (string-remove-prefix "~/Maildir"
-      (seq-find #'file-directory-p
-        (mapcar (lambda (value) (concat "~/Maildir/" name value))
-          (symbol-value alternatives)))))
+                          (seq-find #'file-directory-p
+                                    (mapcar (lambda (value) (concat "~/Maildir/" name value))
+                                            (symbol-value alternatives)))))
   (defun make-mu4e-context-generic (name)
     (make-mu4e-context
-      :name name
-      :enter-func `(lambda () (mu4e-message (concat "Entering " ,name " context")))
-      :leave-func `(lambda () (mu4e-message (concat "Leaving " ,name " context")))
-      :match-func `(lambda (msg) (when msg
-                                   (string-prefix-p (concat "/" ,name) (mu4e-message-field msg :maildir))))
-      :vars `((mu4e-sent-folder . ,(choose-mu4e-alternative name 'mu4e-sent-folder-alternatives))
-               (mu4e-drafts-folder . ,(choose-mu4e-alternative name 'mu4e-drafts-folder-alternatives))
-               (mu4e-trash-folder . ,(choose-mu4e-alternative name 'mu4e-trash-folder-alternatives))
-               (mu4e-refile-folder . ,(choose-mu4e-alternative name 'mu4e-refile-folder-alternatives)))))
+     :name name
+     :enter-func `(lambda () (mu4e-message (concat "Entering " ,name " context")))
+     :leave-func `(lambda () (mu4e-message (concat "Leaving " ,name " context")))
+     :match-func `(lambda (msg) (when msg
+                                  (string-prefix-p (concat "/" ,name) (mu4e-message-field msg :maildir))))
+     :vars `((mu4e-sent-folder . ,(choose-mu4e-alternative name 'mu4e-sent-folder-alternatives))
+             (mu4e-drafts-folder . ,(choose-mu4e-alternative name 'mu4e-drafts-folder-alternatives))
+             (mu4e-trash-folder . ,(choose-mu4e-alternative name 'mu4e-trash-folder-alternatives))
+             (mu4e-refile-folder . ,(choose-mu4e-alternative name 'mu4e-refile-folder-alternatives)))))
   (setq mu4e-contexts (mapcar #'make-mu4e-context-generic (directory-files "~/Maildir" nil "[^.]"))))
 
 ;; ========== Key bindings ==========
@@ -1788,18 +1788,18 @@ Comments are recognized in any mode that sets `syntax-ppss'
 properly."
   (interactive "^P")
   (let* ((start (point))
-          (bol (save-excursion
-                 (beginning-of-line)
-                 (point)))
-          (eol (progn
-                 (move-end-of-line arg)
-                 (point)))
-          (syn (syntax-ppss))
-          (boc (nth 8 syn)))
+         (bol (save-excursion
+                (beginning-of-line)
+                (point)))
+         (eol (progn
+                (move-end-of-line arg)
+                (point)))
+         (syn (syntax-ppss))
+         (boc (nth 8 syn)))
     (when (and
-            boc
-            (not (nth 3 syn))
-            (> boc bol))
+           boc
+           (not (nth 3 syn))
+           (> boc bol))
       (goto-char boc))
     (skip-chars-backward " \t")
     (when (or (= start (point)) (= bol (point)))
@@ -1810,7 +1810,7 @@ Act on the current line if there's no active region."
   (interactive)
   (let (beg end)
     (if (region-active-p)
-      (setq beg (region-beginning) end (region-end))
+        (setq beg (region-beginning) end (region-end))
       (setq beg (line-beginning-position) end (line-end-position)))
     (comment-or-uncomment-region beg end)
     (forward-line)))
@@ -1819,10 +1819,10 @@ Act on the current line if there's no active region."
   (interactive)
   (let ((active-modes))
     (mapc (lambda (mode) (condition-case nil
-                           (if (and (symbolp mode) (symbol-value mode))
-                             (add-to-list 'active-modes mode))
+                             (if (and (symbolp mode) (symbol-value mode))
+                                 (add-to-list 'active-modes mode))
                            (error nil)))
-      minor-mode-list)
+          minor-mode-list)
     (message "Active modes are %s" active-modes)))
 (defun tell-emacsclients-for-buffer-to-die ()
   "Sends error exit command to every client for the current buffer."
@@ -1870,16 +1870,16 @@ Act on the current line if there's no active region."
   "Scroll right by 2 columns."
   (interactive)
   (when-let* ((window (window-at (cadr (mouse-position))
-                        (cddr (mouse-position))
-                        (car (mouse-position)))))
+                                 (cddr (mouse-position))
+                                 (car (mouse-position)))))
     (with-selected-window window
       (scroll-right 2))))
 (defun scroll-left-2()
   "Scroll left by 2 columns."
   (interactive)
   (when-let* ((window (window-at (cadr (mouse-position))
-                        (cddr (mouse-position))
-                        (car (mouse-position)))))
+                                 (cddr (mouse-position))
+                                 (car (mouse-position)))))
     (with-selected-window window
       (scroll-left 2))))
 (global-set-key (kbd "<escape>") #'keyboard-escape-quit)
@@ -1921,9 +1921,9 @@ Act on the current line if there's no active region."
 (global-set-key (kbd "<f12>") (lambda ()
                                 (interactive)
                                 (when-let* ((value (completing-read "Kill ring: " (lambda (string pred action)
-                                                                                     (if (eq action 'metadata)
-                                                                                       `(metadata (display-sort-function . ,#'identity))
-                                                                                       (complete-with-action action kill-ring string pred))))))
+                                                                                    (if (eq action 'metadata)
+                                                                                        `(metadata (display-sort-function . ,#'identity))
+                                                                                      (complete-with-action action kill-ring string pred))))))
                                   (kill-new value))))
 (global-set-key (kbd "<wheel-left>") #'scroll-left-2)
 (global-set-key (kbd "<double-wheel-left>") #'scroll-left-2)
