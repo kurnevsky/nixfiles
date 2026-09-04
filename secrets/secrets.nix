@@ -53,6 +53,7 @@ in
   "syncthing-cert-vps.age".publicKeys = [ vps ];
 
   "miniflux.age".publicKeys = [ vps ];
+  "miniflux-mcp.age".publicKeys = [ vps ];
   "wakapi.age".publicKeys = [ vps ];
   "prometheus-wakapi.age".publicKeys = [ vps ];
   "tox.age".publicKeys = [ vps ];

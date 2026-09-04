@@ -12,6 +12,7 @@
     ./stalwart.nix
     ./wkd.nix
     ./miniflux.nix
+    ./miniflux-mcp.nix
     ./oauth2-proxy.nix
     ./wakapi.nix
     ./prometheus.nix
