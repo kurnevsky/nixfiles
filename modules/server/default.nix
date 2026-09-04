@@ -17,6 +17,7 @@
     ./wakapi.nix
     ./prometheus.nix
     ./grafana.nix
+    ./mcp-grafana.nix
     ./scrutiny.nix
     ./wireguard.nix
     ./tox.nix

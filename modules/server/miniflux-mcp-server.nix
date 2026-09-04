@@ -6,13 +6,13 @@
 
 buildGoModule (finalAttrs: {
   pname = "miniflux-mcp";
-  version = "0.4.0";
+  version = "0.5.0";
 
   src = fetchFromGitHub {
     owner = "tssujt";
     repo = "miniflux-mcp";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-Ly1u4pYGi+/iQ1vpEce+KBC8ICqOUHP68LZLmkDGfxs=";
+    hash = "sha256-9sW+xEVuy22wga4G7WzwjIUglMh74bjAGwWrqCHRFIs=";
   };
 
   vendorHash = "sha256-KQiLj/XceaqrJocFavqCxYjPg2pkm5vjfy6hIjfz6Ac=";
