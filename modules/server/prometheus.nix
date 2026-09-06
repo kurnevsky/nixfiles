@@ -27,6 +27,32 @@
         ];
       }
       {
+        job_name = "prometheus-mcp";
+        static_configs = [
+          {
+            targets = [ "localhost:34452" ];
+          }
+        ];
+      }
+      {
+        job_name = "grafana";
+        static_configs = [
+          {
+            targets = [
+              "localhost:${toString config.services.grafana.settings.server.http_port}"
+            ];
+          }
+        ];
+      }
+      {
+        job_name = "mcp-grafana";
+        static_configs = [
+          {
+            targets = [ "localhost:34453" ];
+          }
+        ];
+      }
+      {
         job_name = "miniflux";
         static_configs = [
           {
@@ -153,7 +179,11 @@
     enableACME = true;
     forceSSL = true;
     kTLS = true;
-    locations."/".proxyPass = "http://localhost:${builtins.toString config.services.prometheus.port}";
+    locations = {
+      "/".proxyPass = "http://localhost:${builtins.toString config.services.prometheus.port}";
+      # metrics are scraped locally, no need to expose them
+      "= /metrics".return = 403;
+    };
   };
 
   services.oauth2-proxy.nginx.virtualHosts."prometheus.kropki.org" = { };

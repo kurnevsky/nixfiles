@@ -33,7 +33,7 @@
       DynamicUser = true;
       PrivateTmp = true;
       ProtectSystem = "strict";
-      ExecStart = "${pkgs.mcp-grafana}/bin/mcp-grafana -t streamable-http -address 127.0.0.1:34451 -endpoint-path /mcp -allowed-hosts localhost -disable-write -disable-admin";
+      ExecStart = "${pkgs.mcp-grafana}/bin/mcp-grafana -t streamable-http -address 127.0.0.1:34451 -endpoint-path /mcp -allowed-hosts localhost -disable-write -disable-admin -metrics -metrics-address 127.0.0.1:34453";
       # the bearer token is taken from MCP_GRAFANA_SERVER_TOKEN
       EnvironmentFile = "${config.age.secrets.mcp-grafana.path or "/secrets/mcp-grafana"}";
     };

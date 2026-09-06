@@ -16,6 +16,7 @@
     ./oauth2-proxy.nix
     ./wakapi.nix
     ./prometheus.nix
+    ./prometheus-mcp.nix
     ./grafana.nix
     ./mcp-grafana.nix
     ./scrutiny.nix

@@ -70,14 +70,16 @@
           }
         ];
 
-        dashboards.settings.providers = [{
-          name = "Dashboards";
-          disableDeletion = true;
-          options = {
-            path = "/etc/grafana-dashboards";
-            foldersFromFilesStructure = true;
-          };
-        }];
+        dashboards.settings.providers = [
+          {
+            name = "Dashboards";
+            disableDeletion = true;
+            options = {
+              path = "/etc/grafana-dashboards";
+              foldersFromFilesStructure = true;
+            };
+          }
+        ];
       };
     };
 
@@ -87,9 +89,13 @@
       enableACME = true;
       forceSSL = true;
       kTLS = true;
-      locations."/" = {
-        proxyWebsockets = true;
-        proxyPass = "http://${toString config.services.grafana.settings.server.http_addr}:${toString config.services.grafana.settings.server.http_port}";
+      locations = {
+        "/" = {
+          proxyWebsockets = true;
+          proxyPass = "http://${toString config.services.grafana.settings.server.http_addr}:${toString config.services.grafana.settings.server.http_port}";
+        };
+        # metrics are scraped locally, no need to expose them
+        "= /metrics".return = 403;
       };
     };
   };
