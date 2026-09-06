@@ -63,7 +63,7 @@
       {
         job_name = "wakapi";
         metrics_path = "/api/metrics";
-        bearer_token_file = config.age.secrets.prometheus-wakapi.path or "/secrets/prometheus-wakapi";
+        bearer_token_file = "/run/credentials/prometheus.service/wakapi-token";
         static_configs = [
           {
             targets = [ "localhost:3000" ];
@@ -188,9 +188,9 @@
 
   services.oauth2-proxy.nginx.virtualHosts."prometheus.kropki.org" = { };
 
-  age.secrets.prometheus-wakapi = {
-    file = ../../secrets/prometheus-wakapi.age;
-    owner = "prometheus";
-    group = "prometheus";
-  };
+  systemd.services.prometheus.serviceConfig.LoadCredential = [
+    "wakapi-token:${config.age.secrets.prometheus-wakapi.path or "/secrets/prometheus-wakapi"}"
+  ];
+
+  age.secrets.prometheus-wakapi.file = ../../secrets/prometheus-wakapi.age;
 }

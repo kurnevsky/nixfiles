@@ -40,7 +40,7 @@
           allow_sign_up = true;
           auto_login = true;
           client_id = "afd931f6-4d16-41c5-9a2a-b68a944917b4";
-          client_secret = "$__file{${config.age.secrets.grafana.path or "/secrets/grafana"}}";
+          client_secret = "$__file{/run/credentials/grafana.service/oauth-client-secret}";
           scopes = "openid profile email groups";
           auth_url = "https://id.kropki.org/authorize";
           token_url = "https://id.kropki.org/api/oidc/token";
@@ -50,7 +50,7 @@
           use_pkce = true;
           use_refresh_token = true;
         };
-        security.secret_key = "$__file{${config.age.secrets.grafana-db.path or "/secrets/grafana-db"}}";
+        security.secret_key = "$__file{/run/credentials/grafana.service/secret-key}";
       };
       provision = {
         enable = true;
@@ -135,16 +135,13 @@
     "grafana-dashboards/Gadgetbridge.json".source = ./Gadgetbridge.json;
   };
 
+  systemd.services.grafana.serviceConfig.LoadCredential = [
+    "oauth-client-secret:${config.age.secrets.grafana.path or "/secrets/grafana"}"
+    "secret-key:${config.age.secrets.grafana-db.path or "/secrets/grafana-db"}"
+  ];
+
   age.secrets = {
-    grafana = {
-      file = ../../secrets/grafana.age;
-      owner = "grafana";
-      group = "grafana";
-    };
-    grafana-db = {
-      file = ../../secrets/grafana-db.age;
-      owner = "grafana";
-      group = "grafana";
-    };
+    grafana.file = ../../secrets/grafana.age;
+    grafana-db.file = ../../secrets/grafana-db.age;
   };
 }

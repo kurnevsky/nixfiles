@@ -3,9 +3,8 @@
 let
   homeDir = "/var/lib/motion";
   on-save = pkgs.writeShellScriptBin "on-save" ''
-    echo "Motion detected!" | ${pkgs.lib.getExe pkgs.go-sendxmpp} -f ${
-      config.age.secrets.motion-xmpp.path or "/secrets/motion-xmpp"
-    } -h "$1" -r ${config.age.secrets.motion-xmpp-recipients.path or "/secrets/motion-xmpp-recipients"}
+    echo "Motion detected!" | ${pkgs.lib.getExe pkgs.go-sendxmpp} \
+      -f "$CREDENTIALS_DIRECTORY/xmpp" -h "$1" -r "$CREDENTIALS_DIRECTORY/xmpp-recipients"
   '';
   motion-config = pkgs.writeText "motion.conf" ''
     video_device /dev/video1
@@ -42,10 +41,7 @@ in
       createHome = true;
       isSystemUser = true;
     };
-    groups = {
-      motion = { };
-      secrets-motion = { };
-    };
+    groups.motion = { };
   };
 
   systemd.services.motion = {
@@ -55,33 +51,28 @@ in
       Type = "simple";
       Restart = "on-failure";
       User = "motion";
-      SupplementaryGroups = "secrets-motion";
       WorkingDirectory = homeDir;
       PrivateTmp = true;
       ProtectSystem = "strict";
       ReadWritePaths = homeDir;
+      RuntimeDirectory = "motion";
+      LoadCredential = [
+        "config:${config.age.secrets.motion.path or "/secrets/motion"}"
+        "xmpp:${config.age.secrets.motion-xmpp.path or "/secrets/motion-xmpp"}"
+        "xmpp-recipients:${
+          config.age.secrets.motion-xmpp-recipients.path or "/secrets/motion-xmpp-recipients"
+        }"
+      ];
     };
     script = ''
-      cat ${motion-config} ${config.age.secrets.motion.path or "/secrets/motion"} > /tmp/motion.conf
-      exec ${pkgs.motion}/bin/motion -n -c /tmp/motion.conf
+      cat ${motion-config} "$CREDENTIALS_DIRECTORY/config" > "$RUNTIME_DIRECTORY/motion.conf"
+      exec ${pkgs.motion}/bin/motion -n -c "$RUNTIME_DIRECTORY/motion.conf"
     '';
   };
 
   age.secrets = {
-    motion = {
-      file = ../secrets/motion.age;
-      mode = "440";
-      group = "secrets-motion";
-    };
-    motion-xmpp = {
-      file = ../secrets/motion-xmpp.age;
-      mode = "440";
-      group = "secrets-motion";
-    };
-    motion-xmpp-recipients = {
-      file = ../secrets/motion-xmpp-recipients.age;
-      mode = "440";
-      group = "secrets-motion";
-    };
+    motion.file = ../secrets/motion.age;
+    motion-xmpp.file = ../secrets/motion-xmpp.age;
+    motion-xmpp-recipients.file = ../secrets/motion-xmpp-recipients.age;
   };
 }

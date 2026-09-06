@@ -31,21 +31,17 @@ in
       DynamicUser = true;
       PrivateTmp = true;
       ProtectSystem = "strict";
-      SupplementaryGroups = "secrets-shadowsocks";
+      RuntimeDirectory = "shadowsocks-server";
+      LoadCredential = [
+        "password:${config.age.secrets.shadowsocks.path or "/secrets/shadowsocks"}"
+      ];
     };
     script = ''
-      cat ${shadowsocksConfigFile} | ${pkgs.jq}/bin/jq --arg password "$(cat ${
-        config.age.secrets.shadowsocks.path or "/secrets/shadowsocks"
-      })" '. + { password: $password }' > /tmp/shadowsocks.json
-      exec ${pkgs.shadowsocks-rust}/bin/ssserver --config /tmp/shadowsocks.json
+      ${pkgs.jq}/bin/jq --arg password "$(cat "$CREDENTIALS_DIRECTORY/password")" \
+        '. + { password: $password }' ${shadowsocksConfigFile} > "$RUNTIME_DIRECTORY/shadowsocks.json"
+      exec ${pkgs.shadowsocks-rust}/bin/ssserver --config "$RUNTIME_DIRECTORY/shadowsocks.json"
     '';
   };
 
-  users.groups.secrets-shadowsocks = { };
-
-  age.secrets.shadowsocks = {
-    file = ../../secrets/shadowsocks.age;
-    mode = "440";
-    group = "secrets-shadowsocks";
-  };
+  age.secrets.shadowsocks.file = ../../secrets/shadowsocks.age;
 }

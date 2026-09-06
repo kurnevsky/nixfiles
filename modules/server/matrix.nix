@@ -16,14 +16,14 @@
       settings.global = {
         server_name = "kropki.org";
         allow_registration = true;
-        registration_token_file = config.age.secrets.continuwuity.path or "/secrets/continuwuity";
+        registration_token_file = "/run/credentials/continuwuity.service/registration-token";
         turn_uris = [
           "turns:kropki.org:${builtins.toString config.services.coturn.listening-port}?transport=udp"
           "turns:kropki.org:${builtins.toString config.services.coturn.listening-port}?transport=tcp"
           "turn:kropki.org:${builtins.toString config.services.coturn.listening-port}?transport=udp"
           "turn:kropki.org:${builtins.toString config.services.coturn.listening-port}?transport=tcp"
         ];
-        turn_secret_file = config.age.secrets.coturn.path or "/secrets/coturn";
+        turn_secret_file = "/run/credentials/continuwuity.service/turn-secret";
       };
     };
     heisenbridge = {
@@ -111,11 +111,10 @@
     };
   };
 
-  users.users.continuwuity.extraGroups = [ "turnserver" ];
+  systemd.services.continuwuity.serviceConfig.LoadCredential = [
+    "registration-token:${config.age.secrets.continuwuity.path or "/secrets/continuwuity"}"
+    "turn-secret:${config.age.secrets.coturn.path or "/secrets/coturn"}"
+  ];
 
-  age.secrets.continuwuity = {
-    file = ../../secrets/continuwuity.age;
-    owner = "continuwuity";
-    group = "continuwuity";
-  };
+  age.secrets.continuwuity.file = ../../secrets/continuwuity.age;
 }

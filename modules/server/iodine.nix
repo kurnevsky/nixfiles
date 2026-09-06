@@ -27,9 +27,5 @@
     passwordFile = config.age.secrets.iodine.path or "/secrets/iodine";
   };
 
-  age.secrets.iodine = {
-    file = ../../secrets/iodine.age;
-    owner = "iodined";
-    group = "iodined";
-  };
+  age.secrets.iodine.file = ../../secrets/iodine.age;
 }

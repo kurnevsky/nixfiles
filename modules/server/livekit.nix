@@ -16,7 +16,7 @@
           {
             host = "kropki.org";
             port = config.services.coturn.listening-port;
-            secret_file = config.age.secrets.livekit-turn.path or "/secrets/livekit-turn";
+            secret_file = "/run/credentials/livekit.service/turn-secret";
           }
         ];
       };
@@ -42,18 +42,14 @@
   };
 
   systemd.services = {
-    livekit.serviceConfig.SupplementaryGroups = "secrets-livekit";
+    livekit.serviceConfig.LoadCredential = [
+      "turn-secret:${config.age.secrets.livekit-turn.path or "/secrets/livekit-turn"}"
+    ];
     lk-jwt-service.environment.LIVEKIT_FULL_ACCESS_HOMESERVERS = "kropki.org";
   };
 
   age.secrets = {
     livekit.file = ../../secrets/livekit.age;
-    livekit-turn = {
-      file = ../../secrets/livekit-turn.age;
-      mode = "440";
-      group = "secrets-livekit";
-    };
+    livekit-turn.file = ../../secrets/livekit-turn.age;
   };
-
-  users.groups.secrets-livekit = { };
 }

@@ -42,9 +42,5 @@
     };
   };
 
-  age.secrets.pocket-id = {
-    file = ../../secrets/pocket-id.age;
-    owner = "pocket-id";
-    group = "pocket-id";
-  };
+  age.secrets.pocket-id.file = ../../secrets/pocket-id.age;
 }

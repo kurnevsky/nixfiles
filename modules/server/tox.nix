@@ -17,19 +17,15 @@
 
   services.tox-node = {
     enable = true;
-    keysFile = config.age.secrets.tox.path or "/secrets/tox";
+    keysFile = "/run/credentials/tox-node.service/keys";
     tcpAddresses = [ ];
     lanDiscovery = false;
     motd = "Hi from tox-rs!";
   };
 
-  systemd.services.tox-node.serviceConfig.SupplementaryGroups = "secrets-tox";
+  systemd.services.tox-node.serviceConfig.LoadCredential = [
+    "keys:${config.age.secrets.tox.path or "/secrets/tox"}"
+  ];
 
-  users.groups.secrets-tox = { };
-
-  age.secrets.tox = {
-    file = ../../secrets/tox.age;
-    mode = "440";
-    group = "secrets-tox";
-  };
+  age.secrets.tox.file = ../../secrets/tox.age;
 }

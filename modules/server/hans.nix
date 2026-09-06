@@ -28,9 +28,5 @@
     groups.hans = { };
   };
 
-  age.secrets.hans = {
-    file = ../../secrets/hans.age;
-    owner = "hans";
-    group = "hans";
-  };
+  age.secrets.hans.file = ../../secrets/hans.age;
 }

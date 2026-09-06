@@ -70,21 +70,9 @@
     ww.file = ../../secrets/ww-evo.age;
     github.file = ../../secrets/github.age;
     store.file = ../../secrets/store-evo.age;
-    hans = {
-      file = ../../secrets/hans.age;
-      owner = "hans";
-      group = "hans";
-    };
-    iodine = {
-      file = ../../secrets/iodine.age;
-      owner = "iodined";
-      group = "iodined";
-    };
-    shadowsocks = {
-      file = ../../secrets/shadowsocks.age;
-      mode = "440";
-      group = "secrets-shadowsocks";
-    };
+    hans.file = ../../secrets/hans.age;
+    iodine.file = ../../secrets/iodine.age;
+    shadowsocks.file = ../../secrets/shadowsocks.age;
     wg-private = {
       file = ../../secrets/wg-private-evo.age;
       owner = "systemd-network";
