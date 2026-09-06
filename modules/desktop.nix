@@ -102,7 +102,6 @@
             obs-backgroundremoval
           ];
         })
-        (callPackage ./mcptools.nix { })
         (callPackage ./anki-mcp-server.nix { })
         firefox-devtools-mcp
         mcp-proxy
