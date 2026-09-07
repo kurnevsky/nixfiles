@@ -109,7 +109,7 @@
           ankiAddons.anki-connect
         ])
         blender
-        calibre
+        calibre-no-speech
         claws-mail
         (czkawka.wrapper.override {
           extraPackages = [ ffmpeg-full ];
