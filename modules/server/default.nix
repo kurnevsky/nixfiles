@@ -20,6 +20,8 @@
     ./grafana.nix
     ./mcp-grafana.nix
     ./scrutiny.nix
+    ./searx.nix
+    ./mcp-searxng.nix
     ./wireguard.nix
     ./tox.nix
     ./coturn.nix

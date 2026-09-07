@@ -65,6 +65,8 @@ in
   "mcp-grafana.age".publicKeys = [ vps ];
   "prometheus-mcp.age".publicKeys = [ vps ];
   "scrutiny.age".publicKeys = [ vps ];
+  "searx.age".publicKeys = [ vps ];
+  "mcp-searxng.age".publicKeys = [ vps ];
   "livekit.age".publicKeys = [ vps ];
   "livekit-turn.age".publicKeys = [ vps ];
   "coturn.age".publicKeys = [ vps ];
