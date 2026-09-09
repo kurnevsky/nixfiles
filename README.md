@@ -39,6 +39,7 @@ The following environment variables are supported:
 | DNS               | override DNS server (useful in case of running an application inside network namespace that don't have access to localhost)          |
 | NOLOCALTIME       | use UTC timezone (if not set will be inherited from TORJAIL)                                                                         |
 | OVERLAY_WHITELIST | additional overlayfs whitelisted paths                                                                                               |
+| PORTS             | a whitespace separated list of ports to forward from the host loopback (`port` or `host-port:sandbox-port`, empty to disable)        |
 | RO_WHITELIST      | additional read-only whitelisted paths                                                                                               |
 | TORJAIL           | indicate that an application is running inside tor jail (necessary for proper DNS resolution)                                        |
 | UNSANDBOXED       | run application without sandbox                                                                                                      |

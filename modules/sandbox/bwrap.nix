@@ -6,8 +6,10 @@
   gnused,
   callPackage,
   lib,
+  writeShellScript,
   writeShellScriptBin,
   closureInfo,
+  socat,
   xdg-dbus-proxy,
   writeText,
   stdenv,
@@ -48,9 +50,18 @@ drv:
   bin-sh ? false,
   localtime ? false,
   resolv-conf ? false,
+  # Ports the sandbox listens on that should be reachable from the host
+  # loopback. Either `port` or `host-port:sandbox-port`. Overridable at runtime
+  # with the PORTS environment variable (whitespace separated, empty to
+  # disable).
+  ports ? [ ],
   ro-media ? false,
   media ? false,
   disable-userns ? true,
+  # Kill the sandbox when the launching process dies: --new-session detaches it
+  # from the terminal session, so otherwise Ctrl-C only reaches the outer bwrap
+  # and leaves an unkillable sandbox behind (it's pid 1 in its pid namespace).
+  die-with-parent ? true,
   dbus ? [ ],
   system-dbus ? [ ],
   flatpak ? false,
@@ -102,10 +113,39 @@ assert !(ro-media && media);
 assert lib.assertMsg (
   unshare-user || !disable-userns
 ) "sandbox ${target-name}: disable-userns requires unshare-user";
+assert lib.assertMsg (
+  ports == [ ] || unshare-net
+) "sandbox ${target-name}: ports require unshare-net";
+assert lib.assertMsg (lib.all (
+  x: builtins.match "[0-9]+(:[0-9]+)?" (toString x) != null
+) ports) "sandbox ${target-name}: ports must be `port` or `host-port:sandbox-port`";
 
 let
   sandbox-seccomp = callPackage ./seccomp.nix { } seccomp;
-  cinfo = closureInfo { rootPaths = [ drv ] ++ extra-deps; };
+  # Runs inside the sandbox network namespace: exposes each listening port on a
+  # unix socket in a directory shared with the host, since the sandbox loopback
+  # is not the host loopback.
+  port-forwarder = writeShellScript "sandbox-port-forwarder" ''
+    set -euETo pipefail
+    shopt -s inherit_errexit
+
+    dir=$1
+    shift
+    ports=$1
+    shift
+
+    for port in $ports
+    do
+      ${socat}/bin/socat \
+        UNIX-LISTEN:"$dir/''${port%%:*}",fork,unlink-early \
+        TCP:127.0.0.1:"''${port##*:}" &
+    done
+
+    exec "$@"
+  '';
+  cinfo = closureInfo {
+    rootPaths = [ drv ] ++ extra-deps ++ lib.optional (ports != [ ]) port-forwarder;
+  };
   flatpakArchitectures = {
     "x86_64-linux" = "x86_64";
     "aarch64-linux" = "aarch64";
@@ -215,6 +255,51 @@ writeShellScriptBin target-name ''
     mapfile -t deps < <(${gnused}/bin/sed 's/.*/--ro-bind\n&\n&/' ${cinfo}/store-paths ${lib.concatStringsSep " " runtime-deps})
   ''}
 
+  ${lib.optionalString (ports != [ ]) ''
+    port_binds=()
+    port_forwarder=()
+
+    # with a shared network namespace the ports are already reachable
+    if [ -z "''${WITH_NETWORK-}" ]
+    then
+      mapfile -t ports < <(
+        echo -n "''${PORTS-${lib.concatMapStringsSep " " toString ports}}" |
+          ${gnused}/bin/sed 's/[[:space:]]\+/\n/g' |
+          ${gnugrep}/bin/grep -v '^$'
+      )
+
+      for port in "''${ports[@]}"
+      do
+        if [[ ! $port =~ ^[0-9]+(:[0-9]+)?$ ]]
+        then
+          echo "${target-name}: invalid port: $port" >&2
+          exit 1
+        fi
+      done
+
+      if [ "''${#ports[@]}" -gt 0 ]
+      then
+        SANDBOX_PORTS="$XDG_RUNTIME_DIR/sandbox-ports-${target-name}"
+        ${coreutils}/bin/mkdir -p "$SANDBOX_PORTS"
+
+        for port in "''${ports[@]}"
+        do
+          ${bubblewrap}/bin/bwrap \
+            --ro-bind /nix/store /nix/store \
+            --bind "$SANDBOX_PORTS" "$SANDBOX_PORTS" \
+            --new-session \
+            --die-with-parent \
+              ${socat}/bin/socat \
+                TCP-LISTEN:"''${port%%:*}",bind=127.0.0.1,reuseaddr,fork \
+                UNIX-CONNECT:"$SANDBOX_PORTS/''${port%%:*}" &
+        done
+
+        port_binds=(--bind "$SANDBOX_PORTS" "$SANDBOX_PORTS")
+        port_forwarder=(${port-forwarder} "$SANDBOX_PORTS" "''${ports[*]}")
+      fi
+    fi
+  ''}
+
   ${lib.optionalString (dbus != [ ] || system-dbus != [ ]) ''
     FIFO_TMP=$(${coreutils}/bin/mktemp -u)
     ${coreutils}/bin/mkfifo "$FIFO_TMP"
@@ -312,6 +397,7 @@ writeShellScriptBin target-name ''
        "''${overlay_whitelist[@]}" \
        "''${whitelist[@]}" \
        "''${blacklist[@]}" \
+       ${lib.optionalString (ports != [ ]) ''"''${port_binds[@]}"''} \
        \
        --setenv ALREADY_SANDBOXED 1 \
        ${lib.concatMapStringsSep " " (x: "--unsetenv ${x}") unsetenvs} \
@@ -327,6 +413,7 @@ writeShellScriptBin target-name ''
        ${lib.optionalString disable-userns "--disable-userns"} \
        \
        --new-session \
+       ${lib.optionalString die-with-parent "--die-with-parent"} \
        \
        --cap-drop ALL \
        \
@@ -348,5 +435,6 @@ writeShellScriptBin target-name ''
        ''} \
        ${lib.optionalString (seccomp != [ ]) "--seccomp 6 6< ${sandbox-seccomp}/seccomp.bpf"} \
        \
+       ${lib.optionalString (ports != [ ]) ''"''${port_forwarder[@]}"''} \
        ${drv}/bin/${name} ${lib.concatStringsSep " " args} "$@"
 ''

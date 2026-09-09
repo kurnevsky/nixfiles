@@ -1177,6 +1177,54 @@ in
             ];
           })
         ];
+        llama-cpp =
+          let
+            cfg = withOpengl {
+              name = "llama-cli";
+              devs = [
+                "dri"
+                "kfd"
+              ];
+              syses = [
+                # Necessary for hardware acceleration
+                "class/kfd"
+                "dev"
+                "devices"
+              ];
+              etcs = [ "ssl/certs/ca-certificates.crt" ];
+              resolv-conf = true;
+              unsetenvs = [
+                "DBUS_SESSION_BUS_ADDRESS"
+                "XDG_RUNTIME_DIR"
+                "XAUTHORITY"
+                "MAIL"
+                "SHELL"
+              ];
+              ro-media = true;
+              ro-whitelist = [ "~/" ];
+              whitelist = [
+                "~/.cache/comgr/"
+                "~/.cache/huggingface/"
+                "~/.cache/llama.cpp/"
+                "~/.cache/mesa_shader_cache/"
+                "~/.cache/radv_builtin_shaders/"
+              ];
+              blacklist = [
+                "~/.gnupg/"
+                "~/.ssh/"
+              ];
+            };
+          in
+          wrap self.llama-cpp [
+            cfg
+            (
+              cfg
+              // {
+                name = "llama-server";
+                ports = [ 8087 ];
+              }
+            )
+          ];
         opencode = wrap self.opencode [
           {
             name = "opencode";
