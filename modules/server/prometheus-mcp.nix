@@ -14,6 +14,12 @@
         default 0;
         include ${config.age.secrets.prometheus-mcp.path or "/secrets/prometheus-mcp"};
       }
+
+      # a cors preflight carries no authorization header
+      map $request_method $prometheus_mcp_preflight {
+        default 0;
+        OPTIONS 1;
+      }
     '';
 
     virtualHosts."prometheus.kropki.org".locations."= /mcp" = {
@@ -22,7 +28,8 @@
       recommendedProxySettings = false;
       extraConfig = ''
         auth_request off;
-        if ($prometheus_mcp_authorized = 0) {
+        set $prometheus_mcp_deny "$prometheus_mcp_preflight$prometheus_mcp_authorized";
+        if ($prometheus_mcp_deny = 00) {
           return 401;
         }
         # it listens on loopback and rejects non-loopback Host headers
