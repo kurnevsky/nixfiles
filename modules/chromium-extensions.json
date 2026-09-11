@@ -26,8 +26,8 @@
   },
   "ublock-origin-lite": {
     "id": "ddkjiahejlhfcafbddmgiahcphecmpfh",
-    "sha256": "sha256:150f57lnzl3dy3fi909ncz2b037pfwx26fzrvf4dgrkacp8393ya",
-    "version": "2026.901.1442"
+    "sha256": "sha256:07xbrdpha0h1q7iyjjjsapy8xzalw0il6blwi27aln0y49ypsjd2",
+    "version": "2026.907.2003"
   },
   "find-plus": {
     "id": "fddffkdncgkkdjobemgbpojjeffmmofb",
@@ -51,7 +51,7 @@
   },
   "geo-spoof": {
     "id": "dgdbdodafgaeifgajaajohkjjgobcgje",
-    "sha256": "sha256:1fqzv3vgjd30vxvpx248b08hrhmapazwrc2qszzrr8dxqqd8i2a3",
-    "version": "2.1.2"
+    "sha256": "sha256:1k0iyjblc1p33hz86m5v48qhm8zq7dpskpdkwjcrzqfpy6spv7wf",
+    "version": "2.1.6"
   }
 }

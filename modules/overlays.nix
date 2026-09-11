@@ -69,12 +69,18 @@
       llama-cpp = super.llama-cpp.overrideAttrs (old: {
         version = "0";
         src = old.src.overrideAttrs {
-          rev = "0f3a71be15af836d277c9f918adfafb45732677e";
-          hash = "sha256-+WI/1TAJWG1m9ttS2RO43C+1oL/5xpZTaHn7vQh4+kc=";
+          rev = "43f3dda6237a453a587a8f00230d52decfeaa8e5";
+          hash = "sha256-F1U2jHNMPrx3Yz7FMgADDZkyLKm7q3tSfnLkvapddnA=";
         };
         npmDepsHash = "sha256-2Q7XhaLAArmviOLdQsNbYTfdyDE5pW9lR26cRHEVl9k=";
         cmakeFlags = old.cmakeFlags ++ [
           (super.lib.cmakeFeature "GGML_SCHED_MAX_COPIES" "1")
+        ];
+        patches = (old.patches or [ ]) ++ [
+          (super.fetchpatch {
+            url = "https://patch-diff.githubusercontent.com/raw/ggml-org/llama.cpp/pull/28313.patch";
+            hash = "sha256-VOeBWrdOrVLBMHDn1sBq3J/J16dQ8VKwjtom7CI/wO8=";
+          })
         ];
       });
     })

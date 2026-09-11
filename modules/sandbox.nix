@@ -140,6 +140,29 @@ let
         "~/.ssh/"
       ];
     };
+  # caches and configs of build tools that coding agents invoke
+  dev-caches = [
+    "~/.bun/"
+    "~/.cache/bloop/"
+    "~/.cache/cabal/"
+    "~/.cache/coursier/"
+    "~/.cache/metals/"
+    "~/.cache/scalacli/"
+    "~/.cache/spago-nodejs/"
+    "~/.cargo/"
+    "~/.config/cabal/"
+    "~/.config/direnv/"
+    "~/.config/ghc/"
+    "~/.config/git/"
+    "~/.local/share/direnv/"
+    "~/.local/share/ghc/"
+    "~/.local/share/metals/"
+    "~/.local/share/scalacli/"
+    "~/.local/state/trunk/"
+    "~/.m2/"
+    "~/.npm/"
+    "~/.sbt/"
+  ];
 in
 {
   nixpkgs.overlays = [
@@ -1177,7 +1200,7 @@ in
             ];
           })
         ];
-        llama-cpp =
+        llama-cpp = wrap self.llama-cpp (
           let
             cfg = withOpengl {
               name = "llama-cli";
@@ -1215,7 +1238,7 @@ in
               ];
             };
           in
-          wrap self.llama-cpp [
+          [
             cfg
             (
               cfg
@@ -1224,7 +1247,8 @@ in
                 ports = [ 8087 ];
               }
             )
-          ];
+          ]
+        );
         opencode = wrap self.opencode [
           {
             name = "opencode";
@@ -1242,28 +1266,9 @@ in
               "~/.cache/opencode/"
               "~/.local/share/opencode/"
               "~/.local/state/opencode/"
-              "~/.bun/"
-              "~/.cache/bloop/"
-              "~/.cache/cabal/"
-              "~/.cache/coursier/"
-              "~/.cache/metals/"
-              "~/.cache/scalacli/"
-              "~/.cache/spago-nodejs/"
-              "~/.cargo/"
-              "~/.config/cabal/"
-              "~/.config/direnv/"
-              "~/.config/ghc/"
-              "~/.config/git/"
-              "~/.local/share/direnv/"
-              "~/.local/share/ghc/"
-              "~/.local/share/metals/"
-              "~/.local/share/scalacli/"
-              "~/.local/state/trunk/"
-              "~/.m2/"
-              "~/.npm/"
-              "~/.sbt/"
-              "\$(pwd)"
-            ];
+            ]
+            ++ dev-caches
+            ++ [ "\$(pwd)" ];
           }
         ];
         claude-code = wrap self.claude-code [
@@ -1296,28 +1301,7 @@ in
               "~/.claude/"
               "\$(pwd)"
             ];
-            overlay-whitelist = [
-              "~/.bun/"
-              "~/.cache/bloop/"
-              "~/.cache/cabal/"
-              "~/.cache/coursier/"
-              "~/.cache/metals/"
-              "~/.cache/scalacli/"
-              "~/.cache/spago-nodejs/"
-              "~/.cargo/"
-              "~/.config/cabal/"
-              "~/.config/direnv/"
-              "~/.config/ghc/"
-              "~/.config/git/"
-              "~/.local/share/direnv/"
-              "~/.local/share/ghc/"
-              "~/.local/share/metals/"
-              "~/.local/share/scalacli/"
-              "~/.local/state/trunk/"
-              "~/.m2/"
-              "~/.npm/"
-              "~/.sbt/"
-            ];
+            overlay-whitelist = dev-caches;
           }
         ];
         claws-mail = wrap self.claws-mail [
