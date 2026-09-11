@@ -24,7 +24,6 @@
     ./mcp-searxng.nix
     ./mcp-cors.nix
     ./wireguard.nix
-    ./tox.nix
     ./coturn.nix
     ./livekit.nix
     ./matrix.nix

@@ -56,7 +56,6 @@ in
   "miniflux-mcp.age".publicKeys = [ vps ];
   "wakapi.age".publicKeys = [ vps ];
   "prometheus-wakapi.age".publicKeys = [ vps ];
-  "tox.age".publicKeys = [ vps ];
   "continuwuity.age".publicKeys = [ vps ];
   "mautrix-whatsapp.age".publicKeys = [ vps ];
   "oauth2-proxy.age".publicKeys = [ vps ];
