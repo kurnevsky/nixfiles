@@ -30,6 +30,10 @@ let
     # the origin is validated above already, and some of the mcp servers reject
     # every request carrying an origin as a dns rebinding protection
     proxy_set_header Origin "";
+    # go's net/http cross-origin protection rejects any non-safe request whose
+    # Sec-Fetch-Site is neither same-origin nor none before it even looks at the
+    # origin, so it has to be dropped as well
+    proxy_set_header Sec-Fetch-Site "";
   '';
 in
 
