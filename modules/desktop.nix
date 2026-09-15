@@ -104,6 +104,7 @@
         })
         (callPackage ./anki-mcp-server.nix { })
         firefox-devtools-mcp
+        (callPackage ./mcp-atlassian.nix { })
         mcp-proxy
         (anki.withAddons [
           ankiAddons.anki-connect
