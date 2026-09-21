@@ -1244,7 +1244,7 @@ in
               cfg
               // {
                 name = "llama-server";
-                ports = [ 8087 ];
+                ports = [ 9931 ];
               }
             )
           ]

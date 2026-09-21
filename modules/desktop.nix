@@ -405,7 +405,8 @@
         nodejs
         esbuild
         ## Lean
-        lean4
+        # TODO: broken
+        # lean4
         ## Idris
         idris2Packages.idris2Lsp
         idris2

@@ -1,8 +1,8 @@
 {
   "dark-reader": {
     "id": "eimadpbcbfnmbkopoojfekhnkhdbieeh",
-    "sha256": "sha256:1ga601a49sz8g1v1wh7cyqx20pvsd5qjrmrfwzy8gxhr34lsiz44",
-    "version": "4.9.130"
+    "sha256": "sha256:039jshp49bhh6jycpah1p7g2p62s28n07hr5fx325w9bivz0nmv6",
+    "version": "4.9.132"
   },
   "decentraleyes": {
     "id": "ldpochfccmkkmhdbclfhpagapcfdljkj",
@@ -16,8 +16,8 @@
   },
   "privacy-badger": {
     "id": "pkehgijcmpdhfbdbbnkijodmdjhbjlgp",
-    "sha256": "sha256:09yz5w8jmn04fqzgag1d770nn8n7sg2a1vwdkdgl4x8il6kmpvxk",
-    "version": "2026.8.7"
+    "sha256": "sha256:12pvw5gm9dxs28myv5ixk6vnrp1m7gl95xnw2f3i54bnl1q0q16h",
+    "version": "2026.9.15"
   },
   "sponsorblock": {
     "id": "mnjggcdmjocbbbhaepdhchncahnbgone",
@@ -26,8 +26,8 @@
   },
   "ublock-origin-lite": {
     "id": "ddkjiahejlhfcafbddmgiahcphecmpfh",
-    "sha256": "sha256:07xbrdpha0h1q7iyjjjsapy8xzalw0il6blwi27aln0y49ypsjd2",
-    "version": "2026.907.2003"
+    "sha256": "sha256:0sl4l6qpmk8ifq4bp42f6l4min4l26vh77qlkjrjwvsxpx1qb3zh",
+    "version": "2026.920.1710"
   },
   "find-plus": {
     "id": "fddffkdncgkkdjobemgbpojjeffmmofb",
@@ -41,17 +41,17 @@
   },
   "refined-github": {
     "id": "hlepfoohegkhhmjieoechaddaejaokhf",
-    "sha256": "sha256:1xqpr93w0kqxr1j2xrl79kv12mmy28mc3drmc7n3z4281m2p34v2",
-    "version": "26.9"
+    "sha256": "sha256:0yhifzi5m8ngvvmz65xjadg5p8pr4xkzfjw8dpskzyfyk7b3sxga",
+    "version": "26.9.12"
   },
   "keepassxc-browser": {
     "id": "oboonakemofpalcgghocfoadofidjkkk",
-    "sha256": "sha256:0999087b26m0s8g2nznbzjdhbbyqzpzidvcafakrj3c3v1x00sf2",
-    "version": "1.10.3"
+    "sha256": "sha256:1f833ivbvhfwnj3r2z1wdba2py1qv3l0drivy8wys80z12481rsn",
+    "version": "1.10.4"
   },
   "geo-spoof": {
     "id": "dgdbdodafgaeifgajaajohkjjgobcgje",
-    "sha256": "sha256:1k0iyjblc1p33hz86m5v48qhm8zq7dpskpdkwjcrzqfpy6spv7wf",
-    "version": "2.1.6"
+    "sha256": "sha256:1lp0ankjdp6aga5p9ywkzgzqjs85kkzv99z2lbdf5ipixjghq65g",
+    "version": "2.2.2"
   }
 }

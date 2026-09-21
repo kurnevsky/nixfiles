@@ -1,8 +1,8 @@
 diff --git a/Telegram/SourceFiles/data/components/sponsored_messages.cpp b/Telegram/SourceFiles/data/components/sponsored_messages.cpp
-index 40c00c4bb4..188d6d9bba 100644
+index 04b421ef67..6c7588298d 100644
 --- a/Telegram/SourceFiles/data/components/sponsored_messages.cpp
 +++ b/Telegram/SourceFiles/data/components/sponsored_messages.cpp
-@@ -239,17 +239,11 @@ void SponsoredMessages::inject(
+@@ -302,17 +302,11 @@ HistoryItem *SponsoredMessages::injectItem(
  }
  
  bool SponsoredMessages::canHaveFor(not_null<History*> history) const {
