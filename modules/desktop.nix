@@ -35,7 +35,14 @@
   networking = {
     useDHCP = false;
     useNetworkd = true;
-    networkmanager.enable = true;
+    networkmanager = {
+      enable = true;
+      # Tunnels are set up by systemd-networkd, hans, iodine and yggdrasil.
+      unmanaged = [
+        "type:tun"
+        "type:wireguard"
+      ];
+    };
     nftables = {
       enable = true;
       ruleset = ''
