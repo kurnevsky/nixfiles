@@ -53,6 +53,7 @@ in
       "prometheus.kropki.org".locations."= /mcp".extraConfig = cors;
       "grafana.kropki.org".locations."= /mcp".extraConfig = cors;
       "searx.kropki.org".locations."= /mcp".extraConfig = cors;
+      "kropki.org".locations."= /mcp".extraConfig = cors;
     };
   };
 }

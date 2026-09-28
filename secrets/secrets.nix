@@ -66,6 +66,7 @@ in
   "scrutiny.age".publicKeys = [ vps ];
   "searx.age".publicKeys = [ vps ];
   "mcp-searxng.age".publicKeys = [ vps ];
+  "systemd-mcp.age".publicKeys = [ vps ];
   "livekit.age".publicKeys = [ vps ];
   "livekit-turn.age".publicKeys = [ vps ];
   "coturn.age".publicKeys = [ vps ];

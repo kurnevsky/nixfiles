@@ -22,6 +22,7 @@
     ./scrutiny.nix
     ./searx.nix
     ./mcp-searxng.nix
+    ./systemd-mcp.nix
     ./mcp-cors.nix
     ./wireguard.nix
     ./coturn.nix
