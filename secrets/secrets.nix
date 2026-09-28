@@ -72,6 +72,7 @@ in
   "coturn.age".publicKeys = [ vps ];
   "prosody-turn.age".publicKeys = [ vps ];
   "rustic.age".publicKeys = [ vps ];
+  "rustic-rclone.age".publicKeys = [ vps ];
   "storage.age".publicKeys = [ vps ];
   "anki.age".publicKeys = [ vps ];
   "pocket-id.age".publicKeys = [ vps ];
