@@ -7,20 +7,20 @@
 
 rustPlatform.buildRustPackage (finalAttrs: {
   pname = "apollo-air1-exporter";
-  version = "0.0.12";
+  version = "0.0.13";
 
   src = fetchFromGitHub {
     owner = "rvben";
     repo = "apollo-air1-exporter";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-rmKuxwB3r71a8A04qX0OQxy9RtUXywO2URAmfSJSNNM=";
+    hash = "sha256-JHSWSSCYmMT6wUA5vkCwFNSv6AdbxJoYnkGBowld7ZQ=";
   };
 
-  cargoHash = "sha256-yk8aIGcFKApGM/4gXIf7mMcdGSGiFpqs7T+2om2P+gI=";
+  cargoHash = "sha256-3gRQK9g8OSxSUCVlHKjmb35D1TmrYlgs3w1hN1WAvbA=";
 
   meta = with lib; {
     description = "Prometheus exporter for Apollo AIR-1 air quality monitors";
-    homepage = "https://github.com/kurnevsky/apollo-air1-exporter";
+    homepage = "https://github.com/rvben/apollo-air1-exporter";
     license = [ licenses.mit ];
     maintainers = with maintainers; [ kurnevsky ];
     mainProgram = "apollo-air1-exporter";
