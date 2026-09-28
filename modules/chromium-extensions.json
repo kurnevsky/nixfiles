@@ -1,8 +1,8 @@
 {
   "dark-reader": {
     "id": "eimadpbcbfnmbkopoojfekhnkhdbieeh",
-    "sha256": "sha256:039jshp49bhh6jycpah1p7g2p62s28n07hr5fx325w9bivz0nmv6",
-    "version": "4.9.132"
+    "sha256": "sha256:065rc62sw7z2gpxpsapxha39nndbmmfim6ic915ryy2h3l6z4f7f",
+    "version": "4.9.133"
   },
   "decentraleyes": {
     "id": "ldpochfccmkkmhdbclfhpagapcfdljkj",
@@ -26,8 +26,8 @@
   },
   "ublock-origin-lite": {
     "id": "ddkjiahejlhfcafbddmgiahcphecmpfh",
-    "sha256": "sha256:0sl4l6qpmk8ifq4bp42f6l4min4l26vh77qlkjrjwvsxpx1qb3zh",
-    "version": "2026.920.1710"
+    "sha256": "sha256:1rm185lnp89yd5p53zjclfh447cb6y9p80sg15qvq0zrw47dwyp2",
+    "version": "2026.926.2202"
   },
   "find-plus": {
     "id": "fddffkdncgkkdjobemgbpojjeffmmofb",
