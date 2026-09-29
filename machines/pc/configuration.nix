@@ -69,6 +69,13 @@
         }
       ))
       (import ../../modules/with-native-optimizations.nix config.networking.hostName (
+        pkgs.callPackage ../../modules/transcribe-cpp.nix {
+          vulkanSupport = true;
+          rocmSupport = true;
+          gpuTargets = "gfx1100";
+        }
+      ))
+      (import ../../modules/with-native-optimizations.nix config.networking.hostName (
         sandboxed.llama-cpp.override {
           rocmSupport = true;
           rocmGpuTargets = [ "gfx1100" ];
