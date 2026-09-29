@@ -18,6 +18,12 @@
     gnome-console
   ];
 
+  # The phosh module enables gnome core-os-services which defaults
+  # i18n.inputMethod to ibus, and GTK_IM_MODULE=ibus prevents the on-screen
+  # keyboard from auto-activating in GTK apps.
+  # See https://github.com/NixOS/nixpkgs/issues/538381
+  i18n.inputMethod.enable = false;
+
   i18n.supportedLocales = [
     "C.UTF-8/UTF-8"
     "en_US.UTF-8/UTF-8"
@@ -85,6 +91,7 @@
   };
 
   home-manager.users.kurnevsky = {
+    dconf.settings."mobi/phosh/osk".ignore-hw-keyboards = true;
     programs.git = {
       enable = true;
       signing.format = "openpgp";
