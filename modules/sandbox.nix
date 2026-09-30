@@ -167,6 +167,7 @@ in
 {
   nixpkgs.overlays = [
     (self: _super: {
+      famulus-agent = self.callPackage ./famulus-agent.nix { };
       sandboxed = {
         p7zip = wrap self.p7zip (
           map archiver-cfg [
@@ -1266,6 +1267,27 @@ in
               "~/.cache/opencode/"
               "~/.local/share/opencode/"
               "~/.local/state/opencode/"
+            ]
+            ++ dev-caches
+            ++ [ "\$(pwd)" ];
+          }
+        ];
+        famulus-agent = wrap self.famulus-agent [
+          {
+            name = "fa";
+            whole-store = true;
+            etcs = [ "ssl/certs/ca-certificates.crt" ];
+            resolv-conf = true;
+            unsetenvs = [
+              "MAIL"
+              "SHELL"
+            ];
+            unshare-net = false;
+            dbus = [ "talk=org.freedesktop.secrets" ];
+            shared-tmp = true;
+            whitelist = [
+              "~/.config/fa/"
+              "~/.local/share/fa/"
             ]
             ++ dev-caches
             ++ [ "\$(pwd)" ];

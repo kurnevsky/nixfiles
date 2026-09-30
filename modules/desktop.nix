@@ -367,6 +367,7 @@
             COPILOT_TOKEN="$(${pkgs.libsecret}/bin/secret-tool lookup id copilot)" \
             ${callPackage ./famulus.nix { }}/bin/famulus "$@"
         '')
+        famulus-agent
         ## C/C++
         clang
         clang-tools
