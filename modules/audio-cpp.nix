@@ -5,6 +5,7 @@
   config,
   git,
   cmake,
+  openssl,
 
   shaderc,
   vulkan-headers,
@@ -23,7 +24,10 @@ stdenv.mkDerivation {
     git
   ];
 
-  buildInputs = lib.optionals vulkanSupport [
+  buildInputs = [
+    openssl
+  ]
+  ++ lib.optionals vulkanSupport [
     shaderc
     vulkan-headers
     vulkan-loader
@@ -35,6 +39,8 @@ stdenv.mkDerivation {
 
   cmakeFlags = [
     (lib.cmakeBool "ENGINE_ENABLE_VULKAN" vulkanSupport)
+    (lib.cmakeBool "AUDIOCPP_BUILD_NATIVE_MODEL_MANAGER" true)
+    (lib.cmakeBool "AUDIOCPP_USE_SYSTEM_OPENSSL" true)
   ];
 
   meta = {
