@@ -7,6 +7,13 @@
       ref = "nixos-unstable";
     };
 
+    nixpkgs-old = {
+      type = "github";
+      owner = "NixOS";
+      repo = "nixpkgs";
+      ref = "e158d9ed9b51c98974c5e66e1ba1c9e0255fecaa";
+    };
+
     fenix = {
       type = "github";
       owner = "nix-community";
@@ -167,6 +174,27 @@
         { _module.args.inputs = inputs; }
         # Keep flake inputs from being garbage collected
         { system.extraDependencies = collectFlakeInputs inputs.self; }
+        (
+          { pkgs, ... }:
+          let
+            oldPkgs = import inputs.nixpkgs-old {
+              inherit (pkgs.stdenv.targetPlatform) system;
+            };
+          in
+          {
+            nixpkgs.overlays = [
+              (_self: _super: {
+                inherit (oldPkgs)
+                  hedgewars
+                  video2x
+                  mergiraf
+                  feather
+                  cataclysm-dda
+                  ;
+              })
+            ];
+          }
+        )
       ];
       desktopModules = commonModules ++ [
         {
