@@ -114,6 +114,7 @@
         (callPackage ./mcp-atlassian.nix { })
         (callPackage ./kwin-mcp.nix { })
         mcp-proxy
+        mcp-grafana
         (anki.withAddons [
           ankiAddons.anki-connect
         ])

@@ -69,10 +69,10 @@
       llama-cpp = super.llama-cpp.overrideAttrs (old: {
         version = "0";
         src = old.src.overrideAttrs {
-          rev = "43f3dda6237a453a587a8f00230d52decfeaa8e5";
-          hash = "sha256-F1U2jHNMPrx3Yz7FMgADDZkyLKm7q3tSfnLkvapddnA=";
+          rev = "836d57176dc699a726c55418e4f96b8ca628e1bf";
+          hash = "sha256-JhlwSNvYpG/HGzc+YXjy1pEC1t2iL2K2gR0Uhtoa7Do=";
         };
-        npmDepsHash = "sha256-2Q7XhaLAArmviOLdQsNbYTfdyDE5pW9lR26cRHEVl9k=";
+        npmDepsHash = "sha256-a17M+L3nLdRnN6WMB6imPFmwqG2g8uv+gwN0XTAUrf8=";
         cmakeFlags = old.cmakeFlags ++ [
           (super.lib.cmakeFeature "GGML_SCHED_MAX_COPIES" "1")
         ];

@@ -18,13 +18,13 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "transcribe-cpp";
-  version = "0.2.4";
+  version = "0.3.0";
 
   src = fetchFromGitHub {
     owner = "handy-computer";
     repo = "transcribe.cpp";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-iyvk+2rsAPEW/ovIBnQiJQnzuKFZwx9E3zMOrHV0ibA=";
+    hash = "sha256-kxHUPIc1q9m+RzgN5+VecLiM36ANwDO+1CZs8q/1ZmU=";
   };
 
   nativeBuildInputs = [ cmake ];
