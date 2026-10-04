@@ -1008,6 +1008,92 @@
               ];
             };
           };
+          wezterm = {
+            enable = true;
+            colorSchemes.base16 =
+              with config.scheme;
+              let
+                x = c: "#${c}";
+              in
+              {
+                background = x base00;
+                foreground = x base05;
+                cursor_bg = x base05;
+                cursor_fg = x base00;
+                cursor_border = x base05;
+                selection_bg = x base02;
+                selection_fg = x base05;
+                scrollbar_thumb = x base02;
+                ansi = map x [
+                  base01
+                  base08
+                  base0B
+                  base09
+                  base0D
+                  base0E
+                  base0C
+                  base06
+                ];
+                brights = map x [
+                  base02
+                  base12
+                  base14
+                  base13
+                  base16
+                  base17
+                  base15
+                  base07
+                ];
+              };
+            extraConfig = ''
+              local config = wezterm.config_builder()
+
+              config.color_scheme = "base16"
+              config.font = wezterm.font("IosevkaTerm Nerd Font")
+              config.font_size = 12
+              config.freetype_load_target = "HorizontalLcd"
+              config.freetype_render_target = 'HorizontalLcd'
+              config.bold_brightens_ansi_colors = "No"
+              config.default_cursor_style = "SteadyBar"
+              config.scrollback_lines = 100000
+              config.automatically_reload_config = false
+              config.enable_scroll_bar = true
+              config.window_frame = {
+                active_titlebar_bg = "#${config.scheme.base01}",
+                inactive_titlebar_bg = "#${config.scheme.base01}",
+              }
+              config.colors = {
+                tab_bar = {
+                  inactive_tab_edge = "#${config.scheme.base01}",
+                  active_tab = { bg_color = "#${config.scheme.base00}", fg_color = "#${config.scheme.base05}" },
+                  inactive_tab = { bg_color = "#${config.scheme.base01}", fg_color = "#${config.scheme.base04}" },
+                  inactive_tab_hover = { bg_color = "#${config.scheme.base02}", fg_color = "#${config.scheme.base05}" },
+                  new_tab = { bg_color = "#${config.scheme.base01}", fg_color = "#${config.scheme.base04}" },
+                  new_tab_hover = { bg_color = "#${config.scheme.base02}", fg_color = "#${config.scheme.base05}" },
+                },
+              }
+
+              config.mouse_bindings = {
+                {
+                  event = { Up = { streak = 1, button = "Left" } },
+                  mods = "NONE",
+                  action = wezterm.action.CompleteSelection "ClipboardAndPrimarySelection",
+                },
+                {
+                  event = { Up = { streak = 1, button = "Left" } },
+                  mods = "CTRL",
+                  action = wezterm.action.OpenLinkAtMouseCursor,
+                },
+                {
+                  event = { Down = { streak = 1, button = "Left" } },
+                  mods = "CTRL",
+                  action = wezterm.action.Nop,
+                },
+              }
+
+              return config
+            '';
+          };
           git = {
             enable = true;
             signing.format = "openpgp";
