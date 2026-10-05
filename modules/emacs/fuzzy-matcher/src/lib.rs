@@ -28,7 +28,7 @@ lazy_static! {
 
 #[defun]
 fn fuzzy_indices<'a>(env: &'a Env, pattern: Value<'a>, source: Value<'a>) -> Result<Option<Value<'a>>> {
-  // Emacs can pass strings that aren't valid utf-8 (bug#74922); the fork of
+  // Emacs can pass strings that aren't valid utf-8 (bug#74922);
   // emacs-module-rs reports those as an error rather than panicking, so a
   // single such candidate just doesn't match.
   let Ok(pattern) = pattern.into_rust::<String>() else {

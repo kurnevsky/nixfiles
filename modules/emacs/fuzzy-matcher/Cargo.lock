@@ -76,8 +76,9 @@ checksum = "f678cf4a922c215c63e0de95eb1ff08a958a81d47e485cf9da1e27bf6305cfa5"
 
 [[package]]
 name = "emacs"
-version = "0.21.0"
-source = "git+https://github.com/kurnevsky/emacs-module-rs.git?rev=9d88c663fbe487a14af0fff09be74b0afa707054#9d88c663fbe487a14af0fff09be74b0afa707054"
+version = "0.22.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3dca6dce1fbd9ad7013fe5dae7a27ab8721aa0ec3ea4f09b5af6958089ae80c5"
 dependencies = [
  "anyhow",
  "ctor",
@@ -89,8 +90,9 @@ dependencies = [
 
 [[package]]
 name = "emacs-macros"
-version = "0.17.0"
-source = "git+https://github.com/kurnevsky/emacs-module-rs.git?rev=9d88c663fbe487a14af0fff09be74b0afa707054#9d88c663fbe487a14af0fff09be74b0afa707054"
+version = "0.22.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9783a9a9af46b5ed5f0e532b31cf2b76303438048f3d5fb3827651dba76a7adb"
 dependencies = [
  "darling",
  "proc-macro2",
@@ -100,8 +102,9 @@ dependencies = [
 
 [[package]]
 name = "emacs_module"
-version = "0.21.0"
-source = "git+https://github.com/kurnevsky/emacs-module-rs.git?rev=9d88c663fbe487a14af0fff09be74b0afa707054#9d88c663fbe487a14af0fff09be74b0afa707054"
+version = "0.22.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a5862306926c248a6a977eac2786cabfbf3c68070672dfce12714e0814f99411"
 
 [[package]]
 name = "fnv"
@@ -126,15 +129,15 @@ checksum = "b9e0384b61958566e926dc50660321d12159025e767c18e043daf26b70104c39"
 
 [[package]]
 name = "lazy_static"
-version = "1.5.0"
+version = "1.5.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "bbd2bcb4c963f2ddae06a2efc7e9f3591312473c50c6685e1f298068316e66fe"
+checksum = "20870f649af7073d53e38067b2a84312175d56ea15217e1b15bc83506ec50afb"
 
 [[package]]
 name = "libc"
-version = "0.2.189"
+version = "0.2.190"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3eaf3ede3fee6db1a4c2ee091bf8a8b4dccdc6d17f656fb07896ee72867612f2"
+checksum = "ce5d3ddc6d3fa000eb1536d85e147bfe31aacaba692ed6a876f95cb7c855be78"
 
 [[package]]
 name = "memchr"
@@ -189,9 +192,9 @@ dependencies = [
 
 [[package]]
 name = "syn"
-version = "3.0.4"
+version = "3.0.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e6275cddf4610d1775e6d1fe9469b2e77d0f39fd98fb7450901b821e0c53649f"
+checksum = "8593e8e72159ed2257d083c7a454a85cbf854f37a0966d8d483aff8c8a3ebcee"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -200,29 +203,29 @@ dependencies = [
 
 [[package]]
 name = "thiserror"
-version = "2.0.20"
+version = "2.0.21"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ec86235f5fcc2a73650310756d2ac5b138a5780bbbdfae3eeccec992c435ba4f"
+checksum = "09e52cb86a36cede5cb101bf8908837b3e4c6e5e59fe7fd85c23fb56200d189e"
 dependencies = [
  "thiserror-impl",
 ]
 
 [[package]]
 name = "thiserror-impl"
-version = "2.0.20"
+version = "2.0.21"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "bc04cd3e1236dd4a98afca4569f2deb3f120e5422a4023be2cb683f8486292af"
+checksum = "fe5197923287db20a58125f0bc85c062f7f2c892de97b18c356f9efb14b28524"
 dependencies = [
  "proc-macro2",
  "quote",
- "syn 3.0.4",
+ "syn 3.0.6",
 ]
 
 [[package]]
 name = "unicode-ident"
-version = "1.0.24"
+version = "1.0.26"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e6e4313cd5fcd3dad5cafa179702e2b244f760991f45397d14d4ebf38247da75"
+checksum = "d245f478577f809a851594d02313b640fb437e0bb33866753cff937863096954"
 
 [[package]]
 name = "unicode-segmentation"

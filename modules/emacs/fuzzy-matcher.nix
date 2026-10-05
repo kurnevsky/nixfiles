@@ -17,10 +17,5 @@ rustPlatform.buildRustPackage {
     rm -r $out/lib/
   '';
 
-  cargoLock = {
-    lockFile = ./fuzzy-matcher/Cargo.lock;
-    outputHashes = {
-      "emacs-0.21.0" = "sha256-BnhnF5HYyxyAafROJ+KSK2W5KXYW9pirVsteo7EkCQo=";
-    };
-  };
+  cargoLock.lockFile = ./fuzzy-matcher/Cargo.lock;
 }
