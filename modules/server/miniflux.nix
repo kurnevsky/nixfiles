@@ -40,7 +40,7 @@
         "/".proxyPass = "http://localhost:34449";
         "= /metrics".return = 403;
         "/reactflux/" = {
-          alias = "${pkgs.callPackage ./reactflux.nix { baseurl = "/reactflux"; }}/";
+          alias = "${pkgs.callPackage ./reactflux.nix { baseurl = "/reactflux/"; }}/";
           index = "index.html";
           tryFiles = "$uri uri/ /index.html =404";
           extraConfig = "expires 24h;";

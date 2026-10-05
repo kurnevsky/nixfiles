@@ -14,11 +14,11 @@ rustPlatform.buildRustPackage rec {
   src = fetchFromGitHub {
     owner = "kurnevsky";
     repo = "famulus-agent";
-    rev = "6ce3787b8d37261bf810e1908526015ee0e24f93";
-    hash = "sha256-GmiNMkRZLUqPemxE+WUI3hxXSjhcugBHQcCXcGOcGF8=";
+    rev = "af8f4b85da68c2f8425a618c4a4d8e084a0c7b17";
+    hash = "sha256-XuY8x53ZVKzqUXsmTyY/7Oc01tYWe+QqdGf7t/0saJk=";
   };
 
-  cargoHash = "sha256-Co8NUcBvsPdG4PgazvofFk3mIqRXA9Hlhv3bluI2Mdg=";
+  cargoHash = "sha256-3cpYdTU3wLgzHJS0yobuanxh4AnoxPhtnF63jze1bRg=";
 
   meta = with lib; {
     description = "A minimal terminal coding agent in Rust";
