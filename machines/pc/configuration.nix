@@ -54,17 +54,7 @@
         }
       ))
       (import ../../modules/with-native-optimizations.nix config.networking.hostName (
-        pkgs.callPackage ../../modules/s2-cpp.nix {
-          vulkanSupport = true;
-        }
-      ))
-      (import ../../modules/with-native-optimizations.nix config.networking.hostName (
         pkgs.callPackage ../../modules/crispasr.nix {
-          vulkanSupport = true;
-        }
-      ))
-      (import ../../modules/with-native-optimizations.nix config.networking.hostName (
-        pkgs.callPackage ../../modules/qwen3-tts-cpp.nix {
           vulkanSupport = true;
         }
       ))
