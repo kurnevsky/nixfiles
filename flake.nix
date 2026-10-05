@@ -187,8 +187,6 @@
                 inherit (oldPkgs)
                   hedgewars
                   video2x
-                  mergiraf
-                  feather
                   cataclysm-dda
                   ;
               })

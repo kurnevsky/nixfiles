@@ -26,8 +26,8 @@
   },
   "ublock-origin-lite": {
     "id": "ddkjiahejlhfcafbddmgiahcphecmpfh",
-    "sha256": "sha256:1rm185lnp89yd5p53zjclfh447cb6y9p80sg15qvq0zrw47dwyp2",
-    "version": "2026.926.2202"
+    "sha256": "sha256:1yl5m84mcd18qh47a1cjdmwqhxcap89j2c0fv0j4f070hs55c365",
+    "version": "2026.930.1227"
   },
   "find-plus": {
     "id": "fddffkdncgkkdjobemgbpojjeffmmofb",
@@ -41,13 +41,13 @@
   },
   "refined-github": {
     "id": "hlepfoohegkhhmjieoechaddaejaokhf",
-    "sha256": "sha256:0yhifzi5m8ngvvmz65xjadg5p8pr4xkzfjw8dpskzyfyk7b3sxga",
-    "version": "26.9.12"
+    "sha256": "sha256:17s3nzml17b4avjyvagp6z0pkkzc8svw3mz7amxpr4cj52aw7bai",
+    "version": "26.10"
   },
   "keepassxc-browser": {
     "id": "oboonakemofpalcgghocfoadofidjkkk",
-    "sha256": "sha256:1f833ivbvhfwnj3r2z1wdba2py1qv3l0drivy8wys80z12481rsn",
-    "version": "1.10.4"
+    "sha256": "sha256:0kih8qkfqpxif5pf9p1zxw28fvmncp1ylc3dpfp197lvyfdcv9md",
+    "version": "1.10.4.1"
   },
   "geo-spoof": {
     "id": "dgdbdodafgaeifgajaajohkjjgobcgje",
