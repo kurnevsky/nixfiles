@@ -163,7 +163,10 @@
       node = {
         enable = true;
         listenAddress = "127.0.0.1";
-        enabledCollectors = [ "systemd" ];
+        enabledCollectors = [
+          "processes"
+          "systemd"
+        ];
       };
       postgres = {
         enable = true;

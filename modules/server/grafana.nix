@@ -22,6 +22,7 @@
       enable = true;
       declarativePlugins = with pkgs.grafanaPlugins; [
         frser-sqlite-datasource
+        prometheus
       ];
       settings = {
         server = {
