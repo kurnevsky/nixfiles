@@ -14,8 +14,8 @@ rustPlatform.buildRustPackage rec {
   src = fetchFromGitHub {
     owner = "kurnevsky";
     repo = "famulus-agent";
-    rev = "3964817fcc357c62f899a57189ef04a56e3b43a8";
-    hash = "sha256-7VLVMNBbwUHYXEspewkueD5Y6ICajHIBGLU9SA/NCTs=";
+    rev = "8d7abc4d6ec7632cb5b9e900631d0667a64a14d6";
+    hash = "sha256-nNsRUHjeBdwYYqDPiaDahjgV0MyBRCifijj/Loq5Jlg=";
   };
 
   cargoHash = "sha256-qYCJT4abO684uKfITmUxT8jPRWfJfEdqp+1HwaIJLMU=";
