@@ -29,7 +29,13 @@
       whisper-cpp = import ../../modules/with-native-optimizations.nix config.networking.hostName (
         super.whisper-cpp.override {
           rocmSupport = true;
-          rocmGpuTargets = "gfx1100";
+          # whisper-cpp uses ggml from llama-cpp, so GPU targets and native
+          # optimizations have to be applied there.
+          llama-cpp = import ../../modules/with-native-optimizations.nix config.networking.hostName (
+            self.llama-cpp.override {
+              rocmGpuTargets = [ "gfx1100" ];
+            }
+          );
         }
       );
     })

@@ -24,7 +24,13 @@
   };
 
   environment.systemPackages = with pkgs; [
-    (import ../../modules/with-native-optimizations.nix config.networking.hostName whisper-cpp)
+    (import ../../modules/with-native-optimizations.nix config.networking.hostName (
+      whisper-cpp.override {
+        # whisper-cpp uses ggml from llama-cpp, so native optimizations have
+        # to be applied there.
+        llama-cpp = import ../../modules/with-native-optimizations.nix config.networking.hostName llama-cpp;
+      }
+    ))
     (import ../../modules/with-native-optimizations.nix config.networking.hostName (
       sandboxed.llama-cpp.override {
         vulkanSupport = true;

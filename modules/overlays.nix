@@ -69,19 +69,15 @@
       llama-cpp = super.llama-cpp.overrideAttrs (old: {
         version = "0";
         src = old.src.overrideAttrs {
-          rev = "836d57176dc699a726c55418e4f96b8ca628e1bf";
-          hash = "sha256-JhlwSNvYpG/HGzc+YXjy1pEC1t2iL2K2gR0Uhtoa7Do=";
+          rev = "972b5fcc19670e597f8de9bf5cacfb85752a5fff";
+          hash = "sha256-sa7wWvRU22ZKw6ioY1iM8SIYmQlLybikr6p79UPCEoc=";
         };
-        npmDepsHash = "sha256-a17M+L3nLdRnN6WMB6imPFmwqG2g8uv+gwN0XTAUrf8=";
+        npmDepsHash = "sha256-hqYzdp1FwPhYkBP278fQXgY9NCKB6Q3P6Gko7BfP0m0=";
         cmakeFlags = old.cmakeFlags ++ [
           (super.lib.cmakeFeature "GGML_SCHED_MAX_COPIES" "1")
         ];
-        patches = (old.patches or [ ]) ++ [
-          (super.fetchpatch {
-            url = "https://patch-diff.githubusercontent.com/raw/ggml-org/llama.cpp/pull/28313.patch";
-            hash = "sha256-VOeBWrdOrVLBMHDn1sBq3J/J16dQ8VKwjtom7CI/wO8=";
-          })
-        ];
+        # Patches from nixpkgs are already included in this revision.
+        patches = [ ];
       });
     })
     (_self: super: {
