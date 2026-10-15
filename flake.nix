@@ -185,7 +185,6 @@
             nixpkgs.overlays = [
               (_self: _super: {
                 inherit (oldPkgs)
-                  hedgewars
                   video2x
                   cataclysm-dda
                   ;
