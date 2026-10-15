@@ -79,6 +79,17 @@
         # Patches from nixpkgs are already included in this revision.
         patches = [ ];
       });
+      # Keep stock whisper-cpp in ffmpeg-full so it is fetched from cache.
+      ffmpeg-full =
+        let
+          noGpu = {
+            cudaSupport = false;
+            rocmSupport = false;
+          };
+        in
+        super.ffmpeg-full.override {
+          whisper-cpp = super.whisper-cpp.override (noGpu // { llama-cpp = super.llama-cpp.override noGpu; });
+        };
     })
     (_self: super: {
       telegram-desktop = super.telegram-desktop.override {

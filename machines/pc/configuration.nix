@@ -24,27 +24,21 @@
     binfmt.emulatedSystems = [ "aarch64-linux" ];
   };
 
-  nixpkgs.overlays = [
-    (self: super: {
-      whisper-cpp = import ../../modules/with-native-optimizations.nix config.networking.hostName (
-        super.whisper-cpp.override {
+  environment = {
+    systemPackages = with pkgs; [
+      amdgpu_top
+      (import ../../modules/with-native-optimizations.nix config.networking.hostName (
+        whisper-cpp.override {
           rocmSupport = true;
           # whisper-cpp uses ggml from llama-cpp, so GPU targets and native
           # optimizations have to be applied there.
           llama-cpp = import ../../modules/with-native-optimizations.nix config.networking.hostName (
-            self.llama-cpp.override {
+            llama-cpp.override {
               rocmGpuTargets = [ "gfx1100" ];
             }
           );
         }
-      );
-    })
-  ];
-
-  environment = {
-    systemPackages = with pkgs; [
-      amdgpu_top
-      whisper-cpp
+      ))
       (import ../../modules/with-native-optimizations.nix config.networking.hostName (
         pkgs.callPackage ../../modules/stable-diffusion-cpp.nix {
           vulkanSupport = true;
