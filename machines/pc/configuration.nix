@@ -118,6 +118,7 @@
   age.secrets = {
     kurnevsky.file = ../../secrets/kurnevsky-pc.age;
     ww.file = ../../secrets/ww-pc.age;
+    zz.file = ../../secrets/zz-pc.age;
     github.file = ../../secrets/github.age;
     store.file = ../../secrets/store-pc.age;
     hans.file = ../../secrets/hans.age;

@@ -25,12 +25,14 @@ in
 {
   "kurnevsky-evo.age".publicKeys = [ evo ];
   "ww-evo.age".publicKeys = [ evo ];
+  "zz-evo.age".publicKeys = [ evo ];
   "store-evo.age".publicKeys = [ evo ];
   "syncthing-key-evo.age".publicKeys = [ evo ];
   "syncthing-cert-evo.age".publicKeys = [ evo ];
 
   "kurnevsky-pc.age".publicKeys = [ pc ];
   "ww-pc.age".publicKeys = [ pc ];
+  "zz-pc.age".publicKeys = [ pc ];
   "store-pc.age".publicKeys = [ pc ];
   "syncthing-key-pc.age".publicKeys = [ pc ];
   "syncthing-cert-pc.age".publicKeys = [ pc ];
