@@ -91,6 +91,7 @@
       libvdpau-va-gl
       mesa.opencl
     ];
+    amdgpu.overdrive.enable = true;
   };
 
   services = {
