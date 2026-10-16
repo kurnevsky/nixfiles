@@ -1,6 +1,6 @@
 {
   runCommand,
-  xorg,
+  xcursorgen,
   imagemagick,
 }:
 
@@ -70,7 +70,7 @@ in
 runCommand "transparent-cursor-theme"
   {
     nativeBuildInputs = [
-      xorg.xcursorgen
+      xcursorgen
       imagemagick
     ];
   }

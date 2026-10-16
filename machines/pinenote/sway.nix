@@ -116,26 +116,20 @@ in
           command = "${pkgs.systemd}/bin/systemctl suspend || ${pkgs.wtype}/bin/wtype -k Escape";
         }
       ];
-      events = [
-        {
-          event = "before-sleep";
-          command = toString (
-            pkgs.writeShellScript "before-sleep.sh" ''
-              ${pkgs.brightnessctl}/bin/brightnessctl --save --device backlight_cool set 0
-              ${pkgs.brightnessctl}/bin/brightnessctl --save --device backlight_warm set 0
-            ''
-          );
-        }
-        {
-          event = "after-resume";
-          command = toString (
-            pkgs.writeShellScript "after-resume.sh" ''
-              ${pkgs.brightnessctl}/bin/brightnessctl --restore --device backlight_warm
-              ${pkgs.brightnessctl}/bin/brightnessctl --restore --device backlight_cool
-            ''
-          );
-        }
-      ];
+      events = {
+        before-sleep = toString (
+          pkgs.writeShellScript "before-sleep.sh" ''
+            ${pkgs.brightnessctl}/bin/brightnessctl --save --device backlight_cool set 0
+            ${pkgs.brightnessctl}/bin/brightnessctl --save --device backlight_warm set 0
+          ''
+        );
+        after-resume = toString (
+          pkgs.writeShellScript "after-resume.sh" ''
+            ${pkgs.brightnessctl}/bin/brightnessctl --restore --device backlight_warm
+            ${pkgs.brightnessctl}/bin/brightnessctl --restore --device backlight_cool
+          ''
+        );
+      };
     };
     gtk = {
       enable = true;
@@ -152,7 +146,11 @@ in
         package = pkgs.pinenote.transparent-cursor-theme;
       };
       gtk3.extraConfig.gtk-enable-animations = false;
-      gtk4.extraConfig.gtk-enable-animations = false;
+      gtk4 = {
+        # PNEink only ships a gtk-3.0 theme.
+        theme = null;
+        extraConfig.gtk-enable-animations = false;
+      };
     };
     wayland.windowManager.sway = {
       enable = true;
