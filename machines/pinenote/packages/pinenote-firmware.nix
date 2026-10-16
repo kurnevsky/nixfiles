@@ -1,24 +1,27 @@
 { pkgs, ... }:
 
+let
+  rev = "a137a09be163c5e3fc6e96ba3bfb9eb328394c34";
+in
 pkgs.stdenvNoCC.mkDerivation rec {
   pname = "pinenote-firmware";
-  version = "0.2";
+  version = "0.3";
 
   srcs = [
     (pkgs.fetchurl {
-      url = "https://gitlab.com/kernel-firmware/linux-firmware/-/raw/8d82acd29b5c115f0b75b17907ebce712c6f2e22/cypress/cyfmac43455-sdio.bin";
-      sha256 = "sha256-1Aj6qdDVsaL5kS3OpTqwvkghcojjmEBtEX8O2v58Pt0=";
+      url = "https://gitlab.com/kernel-firmware/linux-firmware/-/raw/${rev}/cypress/cyfmac43455-sdio.bin";
+      sha256 = "sha256-6v+NK20lAbtcR3ujQ5AMdIevkViY6sE7yRszsShdrc4=";
     })
     (pkgs.fetchurl {
-      url = "https://github.com/RPi-Distro/firmware-nonfree/raw/3ab8ca8e989a08c4a3cd7f614645311c475b97eb/debian/config/brcm80211/cypress/cyfmac43455-sdio.clm_blob";
-      sha256 = "sha256-mCOELK6fuaXdHl+zH1lVFux97uNBNUvvMLswJu7inME=";
+      url = "https://gitlab.com/kernel-firmware/linux-firmware/-/raw/${rev}/cypress/cyfmac43455-sdio.clm_blob";
+      sha256 = "sha256-j76fwpUuL7qwYqFCweo+JhzXRgR2HhLzBHgbkR30oyg=";
     })
     (pkgs.fetchurl {
-      url = "https://gitlab.com/kernel-firmware/linux-firmware/-/raw/8d82acd29b5c115f0b75b17907ebce712c6f2e22/brcm/brcmfmac43455-sdio.AW-CM256SM.txt";
+      url = "https://gitlab.com/kernel-firmware/linux-firmware/-/raw/${rev}/brcm/brcmfmac43455-sdio.AW-CM256SM.txt";
       sha256 = "sha256-9QNiIHt1NlIcrapZvcKUqa2UaxSfu24zLsKiRcHzT78=";
     })
     (pkgs.fetchurl {
-      url = "https://gitlab.com/kernel-firmware/linux-firmware/-/raw/main/LICENCE.cypress";
+      url = "https://gitlab.com/kernel-firmware/linux-firmware/-/raw/${rev}/LICENSES/LICENCE.cypress";
       sha256 = "sha256-rg22zE2zOUEUjfD2feU+dqd7G1pGsxZe23BAqidQAV8=";
     })
   ];
