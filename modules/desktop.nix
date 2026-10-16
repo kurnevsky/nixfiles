@@ -770,7 +770,7 @@
           runAs = "root";
           users = [ "ww" ];
           commands = [
-            "/run/current-system/sw/bin/ip ^netns exec [[:alnum:]]+ sudo -u ww [^-].*$"
+            "/run/current-system/sw/bin/ip ^netns exec [[:alnum:]]+ /run/wrappers/bin/sudo -u ww [^-].*$"
           ];
         }
       ];
