@@ -11,6 +11,25 @@
 
   boot.tmp.cleanOnBoot = true;
 
+  nixpkgs.overlays = [
+    (_self: super: {
+      # The front camera modes set the ISP source pad without SkipTry. The TRY
+      # is answered with the default 800x600 crop, so libmegapixels skips the
+      # ACTIVE set and STREAMON fails with EPIPE on isp0.
+      libmegapixels = super.libmegapixels.overrideAttrs (old: {
+        postPatch = (old.postPatch or "") + ''
+          substituteInPlace "config/pine64,pinephone-pro.conf" \
+            --replace-fail \
+              '{Type: "Mode", Entity: "rkisp1_isp", Pad: 2, Format: "BGGR8"},' \
+              '{Type: "Mode", Entity: "rkisp1_isp", Pad: 2, Format: "BGGR8", SkipTry: true},' \
+            --replace-fail \
+              '{Type: "Mode", Entity: "rkisp1_isp", Pad: 2, Format: "BGGR8", Width: 1048, Height: 780},' \
+              '{Type: "Mode", Entity: "rkisp1_isp", Pad: 2, Format: "BGGR8", Width: 1048, Height: 780, SkipTry: true},'
+        '';
+      });
+    })
+  ];
+
   environment.systemPackages = with pkgs; [
     gnupg
     firefox-mobile
