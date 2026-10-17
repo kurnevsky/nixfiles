@@ -7,7 +7,7 @@
 }:
 
 {
-  imports = [ ./pinephone-phosh.nix ];
+  imports = [ ./pinephone-plasma-mobile ];
 
   boot.tmp.cleanOnBoot = true;
 
@@ -17,7 +17,8 @@
     telegram-desktop
     wesnoth
     megapixels
-    gnome-console
+    android-tools
+    usbutils
   ];
 
   i18n.supportedLocales = [

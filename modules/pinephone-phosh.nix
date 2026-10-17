@@ -1,6 +1,8 @@
 { pkgs, ... }:
 
 {
+  environment.systemPackages = [ pkgs.gnome-console ];
+
   # The phosh module enables gnome core-os-services which defaults
   # i18n.inputMethod to ibus, and GTK_IM_MODULE=ibus prevents the on-screen
   # keyboard from auto-activating in GTK apps.
