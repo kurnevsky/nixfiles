@@ -54,6 +54,8 @@ in
       documentation = [ "https://gitlab.postmarketos.org/postmarketOS/hkdm" ];
       wantedBy = [ "multi-user.target" ];
       restartTriggers = [ ttyescape ];
+      # hkdm runs commands with `sh -c`.
+      path = [ pkgs.bash ];
       serviceConfig = {
         ExecStart = lib.getExe hkdm;
         Restart = "always";
