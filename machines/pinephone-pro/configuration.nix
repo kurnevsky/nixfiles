@@ -1,6 +1,10 @@
 {
   boot.kernelParams = [ "brcmfmac.feature_disable=0x200000" ];
 
+  # Root is on LUKS (/dev/dm-0), which the growpart script can't handle,
+  # and the installer already sized the partition to fill the disk.
+  boot.growPartition = false;
+
   networking.hostName = "pinephone-pro";
 
   age.secrets = {

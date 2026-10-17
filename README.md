@@ -26,6 +26,22 @@ Specifying `binfmt.emulatedSystems` allows to build packages remotely for a diff
 
 `nix-on-droid switch --flake ~/.config/nixfiles#default --max-jobs 0 --builders 'ssh://nix-ssh@somehost x86_64-linux,aarch64-linux - N - big-parallel'`
 
+### Pinephone boot partition
+
+Pinephones use the mobile-nixos `u-boot` system type: the kernel, device tree and stage-1 initrd live on a separate `boot` partition that `nixos-rebuild switch`
+doesn't update. After a kernel change the boot partition must be rebuilt and flashed manually:
+
+```sh
+# Build the boot partition (use pinephone-cross for the original Pinephone)
+nix build -L '/etc/nixos#nixosConfigurations.pinephone-pro-cross.config.mobile.outputs.u-boot.boot-partition'
+# On the phone: find the partition with the `boot` label (usually the 1st partition on eMMC)
+lsblk -o NAME,PARTLABEL,SIZE,MOUNTPOINTS
+# Flash it over ssh, replacing /dev/mmcblkXpN with the boot partition
+cat result | ssh somehost 'sudo dd of=/dev/mmcblkXpN bs=8M iflag=fullblock oflag=sync,direct status=progress'
+```
+
+After reboot `uname -r` should show the new kernel version.
+
 ## Sandboxing
 
 Some applications are sandboxed using [bubblewrap](https://github.com/containers/bubblewrap). See [sandbox](modules/sandbox.nix) module for details.
