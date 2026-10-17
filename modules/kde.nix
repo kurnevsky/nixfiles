@@ -302,6 +302,47 @@
               builtins.concatStringsSep "\n" lines
             );
 
+            # Let nested compositors (plasma-sandbox) get all shortcuts while
+            # focused. Added to the existing rules rather than replacing them.
+            activation.kwinRules =
+              let
+                kreadconfig = "${pkgs.kdePackages.kconfig}/bin/kreadconfig6";
+                kwriteconfig = "${pkgs.kdePackages.kconfig}/bin/kwriteconfig6";
+                rules = {
+                  nested-kwin = {
+                    Description = "Nested KWin";
+                    title = "KDE Wayland Compositor";
+                    # substring
+                    titlematch = 2;
+                  };
+                };
+                ruleLines =
+                  id: settings:
+                  [
+                    ''
+                      rules="$(${kreadconfig} --file kwinrulesrc --group General --key rules)"
+                      case ",$rules," in
+                        *",${id},"*) ;;
+                        *)
+                          rules="''${rules:+$rules,}${id}"
+                          ${kwriteconfig} --file kwinrulesrc --group General --key rules "$rules"
+                          ${kwriteconfig} --file kwinrulesrc --group General --key count "$(echo "$rules" | tr ',' '\n' | wc -l)"
+                          ;;
+                      esac
+                    ''
+                  ]
+                  ++ lib.mapAttrsToList (
+                    key: value: "${kwriteconfig} --file kwinrulesrc --group ${id} --key ${key} ${toValue value}"
+                  ) (settings // {
+                    disableglobalshortcuts = true;
+                    # force
+                    disableglobalshortcutsrule = 2;
+                  });
+              in
+              lib.hm.dag.entryAfter [ "writeBoundary" ] (
+                builtins.concatStringsSep "\n" (lib.flatten (lib.mapAttrsToList ruleLines rules))
+              );
+
             file.".local/share/konsole/base16.colorscheme".text =
               let
                 s = config.scheme;
