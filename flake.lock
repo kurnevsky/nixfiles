@@ -23,11 +23,11 @@
     "audio-cpp": {
       "flake": false,
       "locked": {
-        "lastModified": 1792252651,
-        "narHash": "sha256-RzqhiiaicFiLj7v9YVqAJ4g6tq72VBuIY6jfwcPPxys=",
+        "lastModified": 1792269120,
+        "narHash": "sha256-A4AiK8HjIz99zGY/gIlkV/kkvk4Si0vrQDtHr1i3Ruo=",
         "ref": "refs/heads/main",
-        "rev": "977dc40adce9b1c652a98508206088df783c52a4",
-        "revCount": 947,
+        "rev": "8bec240101083be6c413e810bc0c8a26075973d5",
+        "revCount": 950,
         "submodules": true,
         "type": "git",
         "url": "https://github.com/0xShug0/audio.cpp.git"
@@ -87,11 +87,11 @@
         "nixpkgs-stable": "nixpkgs-stable"
       },
       "locked": {
-        "lastModified": 1792262485,
-        "narHash": "sha256-FsjOFW5KpG4DIWRcRVMqc5dbDvq5LQVcQHpLW/2fWvU=",
+        "lastModified": 1792267130,
+        "narHash": "sha256-wqHj8TUlJlpUpU05k8Y5Hep4zjJFfLIuJPNGxOAtLek=",
         "owner": "nix-community",
         "repo": "emacs-overlay",
-        "rev": "c7d2c5967ad94780d526aade5ec9580d5af694a1",
+        "rev": "26af09e5b2b10c216da23722bd40a002ab7d7135",
         "type": "github"
       },
       "original": {
@@ -268,11 +268,11 @@
     "mobile-nixos": {
       "flake": false,
       "locked": {
-        "lastModified": 1792236528,
-        "narHash": "sha256-FMHANdMWUL2xy50sJiLV/I3cmslGMpE9wWTiaqpKUi0=",
+        "lastModified": 1792269355,
+        "narHash": "sha256-RMSF/GUDbKFpb9P6A4+PKEOCeldyEKkaY22yW32WtXE=",
         "owner": "kurnevsky",
         "repo": "mobile-nixos",
-        "rev": "d2b9386726074ab05924689fa2fa6dc2df5c58c8",
+        "rev": "d8eedb3f7a74c6c913ca786311f4ca9d21efa380",
         "type": "github"
       },
       "original": {
@@ -461,11 +461,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792265921,
-        "narHash": "sha256-TsiVJc33U7YBNkpLLiq2l+zgtN2fHENxw8iz2wMmf0I=",
+        "lastModified": 1792269298,
+        "narHash": "sha256-oERwsP05DJ5o9fZuNLIoyx9xs4JlrS36aeYx52Hk/RE=",
         "owner": "nix-community",
         "repo": "nur",
-        "rev": "2ac9c0a9e7e27f089cd2d0ae73a9b8748fa38484",
+        "rev": "7f74289b10538b14a8403382c526d4298f9f3bf1",
         "type": "github"
       },
       "original": {
