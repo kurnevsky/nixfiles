@@ -74,13 +74,13 @@
       enable = true;
       user = "kurnevsky";
     };
+    desktopManager.phosh = {
+      enable = true;
+      user = "kurnevsky";
+      group = "users";
+    };
     xserver = {
       enable = true;
-      desktopManager.phosh = {
-        enable = true;
-        user = "kurnevsky";
-        group = "users";
-      };
       displayManager.lightdm = {
         enable = true;
         extraSeatDefaults = ''
