@@ -34,12 +34,10 @@ let
   plasma-mobile-sounds = pkgs.callPackage ./packages/plasma-mobile-sounds.nix {
     inherit (kdePackages) extra-cmake-modules;
   };
-  hkdm = pkgs.callPackage ./packages/hkdm.nix { };
-  ttyescape = pkgs.callPackage ./packages/ttyescape.nix { };
-  vvmd = pkgs.callPackage ./packages/vvmd.nix { };
-  vvmplayer = pkgs.callPackage ./packages/vvmplayer.nix { };
 in
 {
+  imports = [ ../pinephone-ui-common ];
+
   services = {
     desktopManager.plasma6.enable = true;
     # There is no real display manager, but this enables services.graphical-desktop
@@ -50,16 +48,6 @@ in
       enable = true;
       pulse.enable = true;
     };
-
-    # pmOS uses tuned-ppd instead of power-profiles-daemon.
-    power-profiles-daemon.enable = false;
-    tuned = {
-      enable = true;
-      ppdSupport = true;
-    };
-
-    printing.enable = true;
-    flatpak.enable = true;
 
     dbus.packages = [
       pkgs.callaudiod
@@ -73,17 +61,7 @@ in
     '';
   };
 
-  # Required by libquotient for neochat and itinerary.
-  nixpkgs.config.permittedInsecurePackages = [ "olm-3.2.16" ];
-
-  networking.modemmanager.enable = true;
-
-  programs = {
-    feedbackd.enable = true;
-    kdeconnect.enable = true;
-  };
-
-  users.users.kurnevsky.extraGroups = [ "feedbackd" ];
+  programs.kdeconnect.enable = true;
 
   # Desktop applications that pmOS doesn't install.
   environment.plasma6.excludePackages = with kdePackages; [
@@ -121,8 +99,6 @@ in
     plasma-phonebook
     qmlkonsole
     spacebar
-    ttyescape
-    vvmplayer
     angelfish
 
     # postmarketos-ui-plasma-mobile-extras
@@ -146,38 +122,17 @@ in
     kaccounts-providers
   ];
 
-  environment.etc = {
-    "xdg/kscreenlockerrc".text = ''
-      [Daemon]
-      LockOnStart=true
-    '';
-    "hkdm/config.d/ttyescape.toml".source = "${ttyescape}/etc/hkdm/config.d/ttyescape.toml";
-  };
+  environment.etc."xdg/kscreenlockerrc".text = ''
+    [Daemon]
+    LockOnStart=true
+  '';
 
   # Most pure GTK3 apps use wayland by default, but some,
   # like Firefox, need the backend to be explicitly selected.
   environment.sessionVariables.GDK_BACKEND = "wayland";
 
-  # Needed by buffyboard from ttyescape.
-  boot.kernelModules = [ "uinput" ];
-
   systemd = {
-    packages = [ vvmd ];
-    user.services.vvmd.wantedBy = [ "default.target" ];
-
     services = {
-      hkdm = {
-        description = "Hotkey Daemon for Mobile";
-        documentation = [ "https://gitlab.postmarketos.org/postmarketOS/hkdm" ];
-        wantedBy = [ "multi-user.target" ];
-        restartTriggers = [ ttyescape ];
-        serviceConfig = {
-          ExecStart = lib.getExe hkdm;
-          Restart = "always";
-          RestartSec = "5s";
-        };
-      };
-
       # This prevents nixos-rebuild from killing plasma-mobile by activating getty again
       "autovt@tty1".enable = false;
 

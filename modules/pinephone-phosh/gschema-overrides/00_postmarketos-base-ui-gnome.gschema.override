@@ -1,0 +1,15 @@
+[org.gnome.settings-daemon.plugins.power]
+sleep-inactive-ac-type='nothing'
+ambient-enabled=false
+
+[org.gnome.settings-daemon.plugins.wwan]
+unlock-sim=true
+
+[org.gnome.software]
+first-run=false
+download-updates=false
+
+[org.gnome.shell]
+# org.gnome.Epiphany replaced with firefox
+# reference list: https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/data/default-apps/dash.txt
+favorite-apps=['firefox.desktop', 'org.gnome.Calendar.desktop', 'org.gnome.Nautilus.desktop', 'org.gnome.Software.desktop', 'org.gnome.TextEditor.desktop', 'org.gnome.Calculator.desktop']

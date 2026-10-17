@@ -1,0 +1,5 @@
+[org.gnome.desktop.interface]
+accent-color='green'
+
+[org.gnome.desktop.interface:Phosh]
+accent-color='green'
