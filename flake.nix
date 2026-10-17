@@ -77,6 +77,7 @@
       type = "github";
       owner = "SenchoPens";
       repo = "base16.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     tt-schemes = {

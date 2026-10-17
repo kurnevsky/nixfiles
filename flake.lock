@@ -23,11 +23,11 @@
     "audio-cpp": {
       "flake": false,
       "locked": {
-        "lastModified": 1792200904,
-        "narHash": "sha256-0D0l/OoMoQol4egXHE90AFsMWCnT/27YtYptWMaWAyQ=",
+        "lastModified": 1792252651,
+        "narHash": "sha256-RzqhiiaicFiLj7v9YVqAJ4g6tq72VBuIY6jfwcPPxys=",
         "ref": "refs/heads/main",
-        "rev": "d5fbed409c431fde883a53e5ac8063bc6e3c463a",
-        "revCount": 940,
+        "rev": "977dc40adce9b1c652a98508206088df783c52a4",
+        "revCount": 947,
         "submodules": true,
         "type": "git",
         "url": "https://github.com/0xShug0/audio.cpp.git"
@@ -40,14 +40,17 @@
     },
     "base16": {
       "inputs": {
-        "fromYaml": "fromYaml"
+        "fromYaml": "fromYaml",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
       },
       "locked": {
-        "lastModified": 1755819240,
-        "narHash": "sha256-qcMhnL7aGAuFuutH4rq9fvAhCpJWVHLcHVZLtPctPlo=",
+        "lastModified": 1792239470,
+        "narHash": "sha256-qIsgj5RJTE4zb3TEvX2hYAOowtt4K7ZXYz/4dQiNXIw=",
         "owner": "SenchoPens",
         "repo": "base16.nix",
-        "rev": "75ed5e5e3fce37df22e49125181fa37899c3ccd6",
+        "rev": "6f25db30fd031b5e4abc4731d538e76c2e268b4e",
         "type": "github"
       },
       "original": {
@@ -84,11 +87,11 @@
         "nixpkgs-stable": "nixpkgs-stable"
       },
       "locked": {
-        "lastModified": 1792209293,
-        "narHash": "sha256-C1MNVJiAkoTtwAbCFGPd6cr4C10pbei2amKXzSWWKgk=",
+        "lastModified": 1792262485,
+        "narHash": "sha256-FsjOFW5KpG4DIWRcRVMqc5dbDvq5LQVcQHpLW/2fWvU=",
         "owner": "nix-community",
         "repo": "emacs-overlay",
-        "rev": "93a2c6b559b1d4d74e0d4c134e856a28ec7edf81",
+        "rev": "c7d2c5967ad94780d526aade5ec9580d5af694a1",
         "type": "github"
       },
       "original": {
@@ -458,11 +461,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792236469,
-        "narHash": "sha256-5qgLORlJRbjfQKnFWjlHGCSGxd/z566PFrwURrapZX8=",
+        "lastModified": 1792265921,
+        "narHash": "sha256-TsiVJc33U7YBNkpLLiq2l+zgtN2fHENxw8iz2wMmf0I=",
         "owner": "nix-community",
         "repo": "nur",
-        "rev": "5f62db04bc0c4e2a2dc92b5ff3ea642bf9e94f56",
+        "rev": "2ac9c0a9e7e27f089cd2d0ae73a9b8748fa38484",
         "type": "github"
       },
       "original": {

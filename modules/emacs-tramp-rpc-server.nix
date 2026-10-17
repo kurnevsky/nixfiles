@@ -7,18 +7,18 @@
 
 rustPlatform.buildRustPackage rec {
   pname = "tramp-rpc-server";
-  version = "0.14.0";
+  version = "0.15.0";
 
   src = fetchFromGitHub {
     owner = "ArthurHeymans";
     repo = "emacs-tramp-rpc";
     rev = "v${version}";
-    hash = "sha256-+Z7x/SwGrz/GmF74Qwj8i8xfIpEUS7rWYZO1Jlygtfc=";
+    hash = "sha256-ZqDzg1Pynklz6QMnEIpyy754iQoe1qGaSWRlrhxMG5k=";
   };
 
   buildAndTestSubdir = "server";
 
-  cargoHash = "sha256-Boo8T+q06fTGEoZP2uYS19AAURPLNcXPUmuAA/j67qg=";
+  cargoHash = "sha256-zNDwZ8JpqYpbQhz3TXL03UEQNTXDVccSb6ShiQOXBtA=";
 
   doCheck = false;
 

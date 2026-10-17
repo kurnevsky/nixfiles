@@ -14,14 +14,14 @@
 
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "ttyescape";
-  version = "1.0.1";
+  version = "1.0.2";
 
   src = fetchFromGitLab {
     domain = "gitlab.postmarketos.org";
     owner = "postmarketOS";
     repo = "ttyescape";
     tag = finalAttrs.version;
-    hash = "sha256-RvMemYgAAlDGiGcnX00V8xWhxauS0C/omeLEWzJ6UhE=";
+    hash = "sha256-5FQR5OBKal+yu/BZVTt7+p6yg0R+5LaYMT37T1NRpH8=";
   };
 
   nativeBuildInputs = [ makeWrapper ];

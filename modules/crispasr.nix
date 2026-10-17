@@ -19,8 +19,9 @@ stdenv.mkDerivation {
   src = fetchFromGitHub {
     owner = "CrispStrobe";
     repo = "CrispASR";
-    rev = "2dc5f28b0c9ceb986f68465bbe4225c50384c110";
-    hash = "sha256-GeS/ULpysdY+C63l+8bFBGc9T2YejhdXzx+cOUjq38Q=";
+    rev = "dd14099c35d297364092576466b12e622d399b41";
+    fetchSubmodules = true;
+    hash = "sha256-E2U0P5HxjpeZ4GFhFmhYaI+tf16Tzn2YFFM2Y2Kvv+E=";
   };
 
   nativeBuildInputs = [

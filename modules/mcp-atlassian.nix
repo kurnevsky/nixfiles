@@ -7,20 +7,24 @@
 let
   markdown-to-confluence = python3Packages.buildPythonPackage (finalAttrs: {
     pname = "markdown-to-confluence";
-    version = "0.6.3";
+    version = "0.6.4";
     pyproject = true;
 
     src = fetchFromGitHub {
       owner = "hunyadi";
       repo = "md2conf";
       tag = finalAttrs.version;
-      hash = "sha256-ejMJVU+C8KjVqpFnjJo5vIVB5J9wDqK8NVYCytGYd48=";
+      hash = "sha256-+jbCJKOivJWuxfgLT7sUEJWunfG2S0i6qaC04MQojik=";
     };
 
     build-system = with python3Packages; [ setuptools ];
 
-    # nixpkgs has a slightly older version that works fine
-    pythonRelaxDeps = [ "orjson" ];
+    # nixpkgs has slightly older versions that work fine
+    pythonRelaxDeps = [
+      "cattrs"
+      "orjson"
+      "pymdown-extensions"
+    ];
 
     dependencies = with python3Packages; [
       cattrs
