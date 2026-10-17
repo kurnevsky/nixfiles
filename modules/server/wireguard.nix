@@ -53,6 +53,11 @@
           publicKey = "+CKl9jJnxex0fbWoLH2z1QSfdjXdkYz/1Juc3ps3WSE=";
           allowedIPs = [ "192.168.14.8/32" ];
         }
+        # Android
+        {
+          publicKey = "UlL2owzuwYRtdrTQ+jyEyvWVi8V9Q9lX4NZaWu80FR4=";
+          allowedIPs = [ "192.168.14.9/32" ];
+        }
       ];
     };
   };
