@@ -273,24 +273,12 @@
 
   home-manager.users = {
     root.home.stateVersion = "21.11";
-    parents = {
-      home = {
-        stateVersion = "21.11";
-        file.".Xmodmap".text = ''
-          keycode 191 = EuroSign
-          keycode 192 = dollar
-        '';
-      };
-      systemd.user.services.x0vncserver = {
-        Unit.Description = "Remote desktop service (VNC)";
-        Service = {
-          Type = "simple";
-          # wait for Xorg started by ${USER}
-          ExecStartPre = "${pkgs.bash}/bin/sh -c 'while ! ${pkgs.procps}/bin/pgrep -U \"$USER\" plasmashell; do ${pkgs.coreutils}/bin/sleep 2; done'";
-          ExecStart = "${pkgs.tigervnc}/bin/x0vncserver -AcceptSetDesktopSize=0 -rfbauth /home/\${USER}/.vnc/passwd";
-        };
-        Install.WantedBy = [ "default.target" ];
-      };
+    parents.home = {
+      stateVersion = "21.11";
+      file.".Xmodmap".text = ''
+        keycode 191 = EuroSign
+        keycode 192 = dollar
+      '';
     };
     kurnevsky.home.stateVersion = "21.11";
   };
