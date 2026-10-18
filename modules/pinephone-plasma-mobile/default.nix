@@ -72,7 +72,6 @@ in
     konsole
     krdp
     ktexteditor
-    kwin-x11
     okular
   ];
 
