@@ -1101,6 +1101,7 @@
           firefox = {
             enable = true;
             package = pkgs.sandboxed.firefox;
+            configPath = ".config/mozilla/firefox";
             profiles.default = {
               settings = import ./firefox/firefox.nix;
               userChrome = builtins.readFile ./firefox/userChrome.css;

@@ -27,7 +27,7 @@ let
         drv':
         drv'
         // {
-          override = x: wrap (drv.override x) bins;
+          override = lib.mirrorFunctionArgs drv.override (x: wrap (drv.override x) bins);
           overrideAttrs = x: wrap (drv.overrideAttrs x) bins;
           overrideDerivation = x: wrap (drv.overrideDerivation x) bins;
         };
@@ -421,7 +421,7 @@ in
                 }
               ];
               whitelist = [
-                "~/.mozilla/"
+                "~/.config/mozilla/"
                 "~/.cache/mozilla/firefox/"
                 "~/Downloads/"
                 "~/.cache/fontconfig/"
@@ -1384,7 +1384,7 @@ in
           ${lib.concatStringsSep "\n" home-paths}
         '';
         "sandbox/mpv".source = "${home-deps-drv [ ".config/mpv" ]}/store-paths";
-        "sandbox/firefox".source = "${home-deps-drv [ ".mozilla" ]}/store-paths";
+        "sandbox/firefox".source = "${home-deps-drv [ ".config/mozilla" ]}/store-paths";
         "sandbox/chromium".source = "${home-deps-drv [ ".config/chromium" ]}/store-paths";
         "sandbox/toxic".source = "${home-deps-drv [ ".config/tox" ]}/store-paths";
         "sandbox/feh".source = "${home-deps-drv [ ".config/feh" ]}/store-paths";
