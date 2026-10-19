@@ -23,11 +23,11 @@
     "audio-cpp": {
       "flake": false,
       "locked": {
-        "lastModified": 1792436861,
-        "narHash": "sha256-eEskxeuo+qhHWfJZ0wMVYYR8yDczWX9tY1/57Lua87k=",
+        "lastModified": 1792441669,
+        "narHash": "sha256-CSHFcnK4oeh2H8rNL3iilrUReirjBqg7F/D836TMsQY=",
         "ref": "refs/heads/main",
-        "rev": "4faef969850e2dd485e717fe2159875b91cfa3dc",
-        "revCount": 985,
+        "rev": "871b4ae55f552f34ca553f131574be32c836dbad",
+        "revCount": 988,
         "submodules": true,
         "type": "git",
         "url": "https://github.com/0xShug0/audio.cpp.git"
@@ -234,11 +234,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792421589,
-        "narHash": "sha256-kd1uAerzkPNEBTh+Bl5wdfVqP2MPpxTRvcWtfbIP1kI=",
+        "lastModified": 1792438393,
+        "narHash": "sha256-C9hsBAUY/K7W7+CBSRdrT7XaX/ulVm3RuRBJNjmEM/A=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "94c556362d7ef878175d2f0eb3045565d1685b0c",
+        "rev": "b74e23e34d3172802fdd60d4a1a01978f95e1898",
         "type": "github"
       },
       "original": {
@@ -268,11 +268,11 @@
     "mobile-nixos": {
       "flake": false,
       "locked": {
-        "lastModified": 1792436992,
-        "narHash": "sha256-+WM/VIq4g6UoEgVPQwDR310vJHN5i2phgX9lGAtq7fs=",
+        "lastModified": 1792442457,
+        "narHash": "sha256-XCT45wYMfWeIQbOpuMuadZw4TS3V7sL4P7xBWX2yE+Q=",
         "owner": "kurnevsky",
         "repo": "mobile-nixos",
-        "rev": "0ed4b27fdbaed1e37b27c64a54e4a4ce3259dcce",
+        "rev": "57281f61a9cbd58d155a914acbce9e702ad288c4",
         "type": "github"
       },
       "original": {
@@ -461,11 +461,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792436775,
-        "narHash": "sha256-WDZwV8o5iqac7MYtZW6ErftbhS/3Qz7rWltT1X/RUOI=",
+        "lastModified": 1792442123,
+        "narHash": "sha256-uqYQSbGUG4wqrMuURkKCOv3kwpGvrqG808UA3m377qg=",
         "owner": "nix-community",
         "repo": "nur",
-        "rev": "97be98fbfeb535cf1bdd5da99709e83120237735",
+        "rev": "c268cb86cc68ba983d2cc81f44985b99dbf3b0d1",
         "type": "github"
       },
       "original": {
