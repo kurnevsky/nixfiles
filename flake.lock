@@ -7,11 +7,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1790734419,
-        "narHash": "sha256-n7wew722m1OTBT9DOIMxNX/NF4zfsSUABAO5eW3wikE=",
+        "lastModified": 1792369191,
+        "narHash": "sha256-Ptf4Drj8JYQDpNGEo9o+Tc7+hyjYxe+zrYO3J4jrYT4=",
         "owner": "ryantm",
         "repo": "agenix",
-        "rev": "3daa710894355fa2fad8243380af373a2b4046ef",
+        "rev": "847720f0e73a77ce6503b63fba6c357c742c28a7",
         "type": "github"
       },
       "original": {
@@ -23,11 +23,11 @@
     "audio-cpp": {
       "flake": false,
       "locked": {
-        "lastModified": 1792297615,
-        "narHash": "sha256-Rk5gPdxo5e0wILjAeLLc4BX3TZC974CYpsV/zCWhZhU=",
+        "lastModified": 1792371342,
+        "narHash": "sha256-221qNKqXD3+fTjbgPqPfBTW5q6B7uUPDCH9Jhi4m438=",
         "ref": "refs/heads/main",
-        "rev": "5b772fe040d4102ec59a557e045ef29e3ab5480d",
-        "revCount": 964,
+        "rev": "ccdbe76929e8a77428db6ec3bbbaadeb35acae38",
+        "revCount": 978,
         "submodules": true,
         "type": "git",
         "url": "https://github.com/0xShug0/audio.cpp.git"
@@ -87,11 +87,11 @@
         "nixpkgs-stable": "nixpkgs-stable"
       },
       "locked": {
-        "lastModified": 1792334060,
-        "narHash": "sha256-/jVe2WkEdEM1CaH1aHW/fxQkPU/02Cy1uLE+psDhp58=",
+        "lastModified": 1792384286,
+        "narHash": "sha256-7lu1tedWclUYyj6FuQ+CoZPE0nsUVxr1kv1X3OZe1/E=",
         "owner": "nix-community",
         "repo": "emacs-overlay",
-        "rev": "c2bb7b175326c1e7484a251024bf4c1344e981f8",
+        "rev": "320e1e1be7540c147ac737e514f5f94ab794167f",
         "type": "github"
       },
       "original": {
@@ -268,11 +268,11 @@
     "mobile-nixos": {
       "flake": false,
       "locked": {
-        "lastModified": 1792269355,
-        "narHash": "sha256-RMSF/GUDbKFpb9P6A4+PKEOCeldyEKkaY22yW32WtXE=",
+        "lastModified": 1792345890,
+        "narHash": "sha256-+iiOsfCPqbEUtF+rXpMnh036VlLurVVgHSlUsiE5hwU=",
         "owner": "kurnevsky",
         "repo": "mobile-nixos",
-        "rev": "d8eedb3f7a74c6c913ca786311f4ca9d21efa380",
+        "rev": "e5024d66b98afd578c27138fc2ee3e0bbb96876e",
         "type": "github"
       },
       "original": {
@@ -401,11 +401,11 @@
     },
     "nixpkgs-stable": {
       "locked": {
-        "lastModified": 1792030654,
-        "narHash": "sha256-OaQwAtPMTjQiY2sT/2/62UbSPhzP/0aDnWzMm/NCiUw=",
+        "lastModified": 1792295010,
+        "narHash": "sha256-F7meJtbqGttmUoMmYjRRgkVs42sn7bh7vvRvLPlUN98=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "26f4107e47e3ad0ffd0db220469ba83b6f6d96e8",
+        "rev": "8ce73368d1efd4d657e9064d29b144a52046b4e8",
         "type": "github"
       },
       "original": {
@@ -461,11 +461,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792337154,
-        "narHash": "sha256-9CvKErP93Bg3240c/OhsIdgwdvaFUTLaPrf7l5iJYIM=",
+        "lastModified": 1792401383,
+        "narHash": "sha256-08PNZ5p2w9rq+WF0ckoG2FMBmlSyzOa+lhNbRhpLzvM=",
         "owner": "nix-community",
         "repo": "nur",
-        "rev": "df1e67fbb7bb47e65dc66343a584094ce5a9c67b",
+        "rev": "76148a90683ab3aa6a839b712115a12e090f5cf0",
         "type": "github"
       },
       "original": {
