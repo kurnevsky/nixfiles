@@ -9,7 +9,10 @@
 #
 # `--bind PATH` and `--ro-bind PATH` (repeatable) make PATH of the home
 # directory (relative to it, or absolute inside it) available at the same place
-# in the sandbox's home. With --user, it's the other user's home.
+# in the sandbox's home. With --user, it's the other user's home. Absolute
+# paths outside it are available at the same path, except for /nix. They are
+# bound last, so they take precedence over the sandbox's own /etc and /run
+# entries.
 #
 # Only the guest's closure is visible in /nix/store, /etc is the guest's one,
 # and the user is `user` with a separate home directory from
@@ -249,25 +252,38 @@ writeShellApplication {
     for ((i = 0; i < ''${#home_binds[@]}; i += 2))
     do
       path="''${home_binds[i + 1]}"
+      # Completion adds trailing slashes to directories.
+      while [[ "$path" == ?*/ ]]
+      do
+        path="''${path%/}"
+      done
       case "$path" in
-        "$HOME"/*) path="''${path#"$HOME"/}";;
-        /*)
-          echo "''${home_binds[i]} $path: not inside $HOME" >&2
-          exit 2
+        "$HOME"/*|[!/]*)
+          path="''${path#"$HOME"/}"
+          source="$HOME/$path"
+          target="${home}/$path"
+          ;;
+        *)
+          source="$path"
+          target="$path"
           ;;
       esac
-      case "/$path/" in
-        */../*|*/./*|//)
+      case "$source/" in
+        */../*|*/./*|*//*)
           echo "''${home_binds[i]} $path: must be a plain path" >&2
           exit 2
           ;;
+        /nix/*)
+          echo "''${home_binds[i]} $path: /nix is the guest's one" >&2
+          exit 2
+          ;;
       esac
-      if [ ! -e "$HOME/$path" ]
+      if [ ! -e "$source" ]
       then
-        echo "''${home_binds[i]} $path: doesn't exist in $HOME" >&2
+        echo "''${home_binds[i]} $source: doesn't exist" >&2
         exit 2
       fi
-      user_binds+=("''${home_binds[i]}" "$HOME/$path" "${home}/$path")
+      user_binds+=("''${home_binds[i]}" "$source" "$target")
     done
 
     uid="$(id -u)"

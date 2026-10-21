@@ -31,6 +31,18 @@ in
   documentation.nixos.enable = false;
 
   services.desktopManager.plasma6.enable = true;
+  # Plasma enables it by default. Its MariaDB fails to start inside, and the
+  # session hangs at startup while Akonadi retries.
+  programs.kde-pim.enable = false;
+  # Also enabled by Plasma. Nothing of them works inside, and fwupd pulls in
+  # Discover, whose notifier autostarts.
+  services.fwupd.enable = false;
+  services.orca.enable = false;
+  services.geoclue2.enable = false;
+  environment.etc."xdg/baloofilerc".text = ''
+    [Basic Settings]
+    Indexing-Enabled=false
+  '';
   # There is no systemd user instance to start the session with.
   environment.etc."xdg/startkderc".text = ''
     [General]
