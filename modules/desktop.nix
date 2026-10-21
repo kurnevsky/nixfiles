@@ -11,7 +11,30 @@
   ];
 
   boot = {
-    kernelPackages = pkgs.linuxPackages_latest;
+    kernelPackages = pkgs.linuxPackages_latest.extend (
+      _self: super: {
+        # TODO: remove after https://github.com/NixOS/nixpkgs/pull/575861
+        v4l2loopback = super.v4l2loopback.overrideAttrs {
+          preBuild = "";
+          installFlags = [
+            "DEPMOD=true"
+            "INSTALL_MOD_PATH=${placeholder "out"}"
+          ];
+        };
+        # TODO: remove after https://github.com/NixOS/nixpkgs/pull/575394
+        acpi_call = super.acpi_call.overrideAttrs (old: {
+          makeFlags = old.makeFlags ++ [
+            "INSTALL_MOD_PATH=${placeholder "out"}"
+            "INSTALL_MOD_DIR=misc"
+            "DEPMOD=true"
+          ];
+          installPhase = null;
+          postInstall = ''
+            install -D -m755 examples/turn_off_gpu.sh $out/bin/test_discrete_video_off.sh
+          '';
+        });
+      }
+    );
     kernelParams = [ "threadirqs" ];
     kernelModules = [ "ntsync" ];
     kernel.sysctl."kernel.sysrq" = 1;

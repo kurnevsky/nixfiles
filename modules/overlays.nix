@@ -38,6 +38,23 @@
       };
       _7zz = super._7zz.override { enableUnfree = true; };
       p7zip = super.p7zip.override { enableUnfree = true; };
+      # TODO: remove after https://github.com/NixOS/nixpkgs/pull/576662
+      khal = super.khal.overrideAttrs { sphinxBuilders = [ "html man" ]; };
+      # patchelf 0.19 breaks the binary when setting the interpreter before
+      # rpath: https://github.com/NixOS/patchelf/issues/674
+      # TODO: remove after https://github.com/NixOS/patchelf/pull/668
+      purescript = super.purescript.overrideAttrs (old: {
+        installPhase =
+          builtins.replaceStrings
+            [ "patchelf --interpreter ${super.stdenv.cc.bintools.dynamicLinker} --set-rpath ${old.libPath} $PURS" ]
+            [
+              ''
+                patchelf --set-rpath ${old.libPath} $PURS
+                patchelf --set-interpreter ${super.stdenv.cc.bintools.dynamicLinker} $PURS
+              ''
+            ]
+            old.installPhase;
+      });
       isync = super.symlinkJoin {
         name = "isync";
         paths = [
