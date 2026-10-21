@@ -29,6 +29,7 @@ let
     pname = "okular-mobile";
     cmakeFlags = (old.cmakeFlags or [ ]) ++ [ "-DOKULAR_UI=mobile" ];
     buildInputs = (old.buildInputs or [ ]) ++ [ kdePackages.kirigami-addons ];
+    meta.mainProgram = "okularkirigami";
   });
 
   plasma-mobile-sounds = pkgs.callPackage ./packages/plasma-mobile-sounds.nix {
