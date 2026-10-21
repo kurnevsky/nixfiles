@@ -67,6 +67,7 @@
     useNetworkd = true;
     networkmanager = {
       enable = true;
+      wifi.powersave = true;
       # Ensures any rndis config from stage-1 is not clobbered by NetworkManager.
       unmanaged = [
         "rndis0"
