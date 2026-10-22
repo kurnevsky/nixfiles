@@ -286,6 +286,7 @@
         pgpdump
         pizauth
         playerctl
+        poppler-utils
         psmisc
         pulseaudio
         qrencode
