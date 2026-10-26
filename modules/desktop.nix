@@ -1124,6 +1124,7 @@
             enable = true;
             package = pkgs.sandboxed.ungoogled-chromium;
             extensions = builtins.attrValues pkgs.chromium-extensions;
+            nativeMessagingHosts = [ pkgs.keepassxc ];
           };
         };
         services.gpg-agent = {
