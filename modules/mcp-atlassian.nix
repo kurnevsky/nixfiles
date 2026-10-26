@@ -1,10 +1,44 @@
 {
   lib,
-  python3Packages,
+  python3,
   fetchFromGitHub,
 }:
 
 let
+  # mcp-atlassian requires mcp<2 while nixpkgs has mcp 2.x
+  python = python3.override {
+    self = python;
+    packageOverrides = _self: super: {
+      mcp = super.mcp.overridePythonAttrs (_: rec {
+        version = "1.29.1";
+        src = fetchFromGitHub {
+          owner = "modelcontextprotocol";
+          repo = "python-sdk";
+          tag = "v${version}";
+          hash = "sha256-x5cm1QojKp7K1mKc9ejazzJzBhIkFBif6/A+hEryYKo=";
+        };
+        dependencies = with super; [
+          anyio
+          httpx
+          httpx-sse
+          jsonschema
+          pydantic
+          pydantic-settings
+          pyjwt
+          python-multipart
+          sse-starlette
+          starlette
+          typing-extensions
+          typing-inspection
+          uvicorn
+        ]
+        ++ pyjwt.optional-dependencies.crypto;
+        doCheck = false;
+      });
+    };
+  };
+  python3Packages = python.pkgs;
+
   markdown-to-confluence = python3Packages.buildPythonPackage (finalAttrs: {
     pname = "markdown-to-confluence";
     version = "0.6.4";
