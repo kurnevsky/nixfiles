@@ -46,6 +46,7 @@
   bubblewrap,
   coreutils,
   gnused,
+  findutils,
   dbus,
   passt,
   openssl,
@@ -93,8 +94,37 @@ let
       </policy>
     </busconfig>
   '';
+  # Home Manager's activation needs the Nix daemon, so its files are linked
+  # into the home instead, and packages are installed into /etc/profiles.
+  homeFiles = config.home-manager.users.${user}.home-files or null;
+  linkHomeFiles = writeShellScript "plasma-sandbox-link-home-files" ''
+    list="$HOME/.local/state/plasma-sandbox/home-files"
+    mkdir -p "''${list%/*}"
+    touch "$list"
+    # Links of the previous generation dangle: their targets aren't bound.
+    while IFS= read -r f
+    do
+      if [ -L "$HOME/$f" ] && [ ! -e "$HOME/$f" ]
+      then
+        rm "$HOME/$f"
+      fi
+    done < "$list"
+    cd ${homeFiles}
+    ${findutils}/bin/find . ! -type d -printf '%P\n' > "$list"
+    while IFS= read -r f
+    do
+      mkdir -p "$HOME/$(dirname "$f")"
+      if [ -L "$HOME/$f" ] || [ ! -e "$HOME/$f" ]
+      then
+        ln -sfn "${homeFiles}/$f" "$HOME/$f"
+      else
+        echo "plasma-sandbox: $HOME/$f exists, not replacing it" >&2
+      fi
+    done < "$list"
+  '';
   init = writeShellScript "plasma-sandbox-init" ''
     . /etc/set-environment
+    ${lib.optionalString (homeFiles != null) linkHomeFiles}
     # Returns once the bus is listening. It's killed with the PID namespace.
     ${dbus}/bin/dbus-daemon --config-file=${systemBusConfig} --fork --nopidfile --nosyslog
     export XDG_DATA_DIRS="${desktopFiles}/share''${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}"
@@ -118,7 +148,8 @@ let
       drivers
       desktopFiles
       init
-    ];
+    ]
+    ++ lib.optional (homeFiles != null) homeFiles;
   };
 in
 
