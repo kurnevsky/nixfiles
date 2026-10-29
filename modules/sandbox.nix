@@ -93,14 +93,25 @@ let
         (attrs.extra-deps or [ ]) ++ [ package32 ] ++ extraPackages32;
       opengl32 = true;
     };
+  # store paths home-manager links under `dir` (relative to home); the links
+  # themselves go through home-files, which can't be a build time dependency
+  # since it might refer to sandboxed packages, so it comes from
+  # /etc/sandbox-home-manager-paths
   withHomeManager =
-    name: attrs:
+    dir: attrs:
     attrs
     // {
-      runtime-deps = [
-        "/etc/sandbox/common"
-        "/etc/sandbox/${name}"
-      ];
+      extra-deps =
+        (attrs.extra-deps or [ ])
+        ++ lib.concatMap (
+          user:
+          lib.mapAttrsToList (_: file: file.source) (
+            lib.filterAttrs (
+              _: file: file.enable && (file.target == dir || lib.hasPrefix "${dir}/" file.target)
+            ) user.home.file
+          )
+        ) (lib.attrValues config.home-manager.users);
+      runtime-deps = [ "/etc/sandbox-home-manager-paths" ];
     };
   archiver-cfg = name: {
     inherit name;
@@ -299,7 +310,7 @@ in
             [
               withFonts
               withOpengl
-              (withHomeManager "mpv")
+              (withHomeManager ".config/mpv")
             ]
           )
         ];
@@ -432,7 +443,7 @@ in
             [
               withFonts
               withOpengl
-              (withHomeManager "firefox")
+              (withHomeManager ".config/mozilla")
             ]
           )
         ];
@@ -514,7 +525,7 @@ in
             [
               withFonts
               withOpengl
-              (withHomeManager "chromium")
+              (withHomeManager ".config/chromium")
             ]
           )
         ];
@@ -566,7 +577,7 @@ in
           )
         ];
         toxic = wrap self.toxic [
-          (withHomeManager "toxic" {
+          (withHomeManager ".config/tox" {
             name = "toxic";
             extra-deps = with pkgs; [ config.i18n.glibcLocales ];
             devs = [ "dri" ];
@@ -802,7 +813,7 @@ in
             ]
           )
         ];
-        feh = wrap self.feh [ (withHomeManager "feh" (viewer-cfg "feh")) ];
+        feh = wrap self.feh [ (withHomeManager ".config/feh" (viewer-cfg "feh")) ];
         imv = wrap self.imv [
           (withOpengl (
             viewer-cfg "imv-wayland"
@@ -1173,7 +1184,7 @@ in
           }
         ];
         vdirsyncer = wrap self.vdirsyncer [
-          (withHomeManager "vdirsyncer" {
+          (withHomeManager ".config/vdirsyncer" {
             name = "vdirsyncer";
             bin-sh = true;
             extra-deps = with pkgs; [
@@ -1358,38 +1369,12 @@ in
 
   environment = {
     systemPackages = [ flatpakFileAccess ];
-    etc =
-      let
-        home-files = lib.mapAttrsToList (_name: value: value.home-files) config.home-manager.users;
-        home-paths = lib.mapAttrsToList (_name: value: value.home.path) config.home-manager.users;
-        home-deps-drv =
-          paths:
-          let
-            drv = pkgs.runCommand "home-files" { disallowedReferences = home-files; } (
-              lib.concatMapStrings (
-                files:
-                lib.concatMapStrings (path: ''
-                  if [ -d ${files}/${path} ]; then
-                    find ${files}/${path} -type l -print0 | xargs -0 -r readlink -f >> $out
-                  fi
-                '') paths
-              ) home-files
-            );
-          in
-          pkgs.closureInfo { rootPaths = [ drv ]; };
-      in
-      {
-        "sandbox/common".text = ''
-          ${lib.concatStringsSep "\n" home-files}
-          ${lib.concatStringsSep "\n" home-paths}
-        '';
-        "sandbox/mpv".source = "${home-deps-drv [ ".config/mpv" ]}/store-paths";
-        "sandbox/firefox".source = "${home-deps-drv [ ".config/mozilla" ]}/store-paths";
-        "sandbox/chromium".source = "${home-deps-drv [ ".config/chromium" ]}/store-paths";
-        "sandbox/toxic".source = "${home-deps-drv [ ".config/tox" ]}/store-paths";
-        "sandbox/feh".source = "${home-deps-drv [ ".config/feh" ]}/store-paths";
-        "sandbox/vdirsyncer".source = "${home-deps-drv [ ".config/vdirsyncer" ]}/store-paths";
-      };
+    # home-files and home-path refer to sandboxed packages, so they can't be
+    # build time dependencies of the sandboxes
+    etc.sandbox-home-manager-paths.text = lib.concatMapStrings (user: ''
+      ${user.home-files}
+      ${user.home.path}
+    '') (lib.attrValues config.home-manager.users);
   };
 
   # warn if a binary that is supposed to be sandboxed ended up in the system or
