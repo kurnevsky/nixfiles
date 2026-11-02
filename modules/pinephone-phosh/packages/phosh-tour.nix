@@ -15,11 +15,11 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "phosh-tour";
-  version = "0.57.0";
+  version = "0.58.0";
 
   src = fetchurl {
     url = "https://sources.phosh.mobi/releases/phosh-tour/phosh-tour-${finalAttrs.version}.tar.xz";
-    hash = "sha256-2Ihxoq67znGQ7d0GfXetgKodSUUO2mPeozrraA9hbSU=";
+    hash = "sha256-2JmOfAhUV5ycs+GrKDrxvMfjxEDu+70q8aQ2dPxqWyE=";
   };
 
   postPatch = ''

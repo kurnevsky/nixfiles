@@ -103,9 +103,9 @@
 
   environment.etc = {
     "grafana-dashboards/node.json".source = builtins.fetchurl {
-      url = "https://grafana.com/api/dashboards/1860/revisions/45/download";
+      url = "https://grafana.com/api/dashboards/1860/revisions/46/download";
       name = "node.json";
-      sha256 = "sha256:11hrll7fm626ikbva5md4gm0rca537vp4xsxa9sxl1pk15s6nk0q";
+      sha256 = "sha256:18yfc6cji2yfbcc8xsbqdxxsxmg3qf5n9aadz40wkm1mqmfxr3g5";
     };
     "grafana-dashboards/postgres.json".source = builtins.fetchurl {
       url = "https://grafana.com/api/dashboards/9628/revisions/8/download";

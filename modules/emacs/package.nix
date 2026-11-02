@@ -62,12 +62,12 @@ let
         };
         tramp-rpc = super.melpaBuild rec {
           pname = "tramp-rpc";
-          version = "0.15.0";
+          version = "0.16.0";
           src = pkgs.fetchFromGitHub {
             owner = "ArthurHeymans";
             repo = "emacs-tramp-rpc";
             rev = "v${version}";
-            hash = "sha256-ZqDzg1Pynklz6QMnEIpyy754iQoe1qGaSWRlrhxMG5k=";
+            hash = "sha256-kmb0tolO3E/cXqvdzTUQFKPGgDXSO0uN+98RXvmMvBk=";
           };
 
           buildInputs = with super; [

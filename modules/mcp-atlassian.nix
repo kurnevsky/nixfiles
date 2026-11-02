@@ -10,12 +10,12 @@ let
     self = python;
     packageOverrides = _self: super: {
       mcp = super.mcp.overridePythonAttrs (_: rec {
-        version = "1.29.1";
+        version = "1.30.0";
         src = fetchFromGitHub {
           owner = "modelcontextprotocol";
           repo = "python-sdk";
           tag = "v${version}";
-          hash = "sha256-x5cm1QojKp7K1mKc9ejazzJzBhIkFBif6/A+hEryYKo=";
+          hash = "sha256-EkmTqsK+vBJcURuwFkhtNJMFgtzgw/7Cd+Fpav4P/ko=";
         };
         dependencies = with super; [
           anyio
@@ -41,14 +41,14 @@ let
 
   markdown-to-confluence = python3Packages.buildPythonPackage (finalAttrs: {
     pname = "markdown-to-confluence";
-    version = "0.6.4";
+    version = "0.6.5";
     pyproject = true;
 
     src = fetchFromGitHub {
       owner = "hunyadi";
       repo = "md2conf";
       tag = finalAttrs.version;
-      hash = "sha256-+jbCJKOivJWuxfgLT7sUEJWunfG2S0i6qaC04MQojik=";
+      hash = "sha256-uDO72KcjG/O89qD0204t0SVkeF8uZsUa3bu9dLeqLCM=";
     };
 
     build-system = with python3Packages; [ setuptools ];
