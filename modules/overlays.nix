@@ -82,20 +82,8 @@
     })
     (_self: super: {
       llama-cpp = super.llama-cpp.overrideAttrs (old: {
-        version = "0";
-        src = old.src.overrideAttrs {
-          rev = "9d1878a4354e743529fbe09e7350a957f5e39e9a";
-          hash = "sha256-7oHpV1DaBIK+Zenm+Dkkqmn5Qt2xHdZLOsdvaoGthVE=";
-        };
-        npmDepsHash = "sha256-hqYzdp1FwPhYkBP278fQXgY9NCKB6Q3P6Gko7BfP0m0=";
         cmakeFlags = old.cmakeFlags ++ [
           (super.lib.cmakeFeature "GGML_SCHED_MAX_COPIES" "1")
-        ];
-        # Patches from nixpkgs are already included in this revision.
-        patches = [ ];
-        disabledTests = old.disabledTests ++ [
-          # Requires the network-dependent test-download-model fixture.
-          "test-llama-context-model"
         ];
       });
       # Keep stock whisper-cpp in ffmpeg-full so it is fetched from cache.
