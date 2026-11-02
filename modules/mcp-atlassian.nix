@@ -35,6 +35,10 @@ let
         ++ pyjwt.optional-dependencies.crypto;
         doCheck = false;
       });
+      fastmcp = super.fastmcp.overridePythonAttrs (old: {
+        # Asserts the exact client storage layout, which differs with mcp 1.30
+        disabledTests = (old.disabledTests or [ ]) ++ [ "test_storage_data_structure" ];
+      });
     };
   };
   python3Packages = python.pkgs;
