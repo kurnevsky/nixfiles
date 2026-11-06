@@ -111,15 +111,12 @@ let
     done < "$list"
     cd ${homeFiles}
     ${findutils}/bin/find . ! -type d -printf '%P\n' > "$list"
+    # Existing files are replaced, as on the host: programs like mc replace
+    # their links with regular files when they save their settings.
     while IFS= read -r f
     do
       mkdir -p "$HOME/$(dirname "$f")"
-      if [ -L "$HOME/$f" ] || [ ! -e "$HOME/$f" ]
-      then
-        ln -sfn "${homeFiles}/$f" "$HOME/$f"
-      else
-        echo "plasma-sandbox: $HOME/$f exists, not replacing it" >&2
-      fi
+      ln -sfT "${homeFiles}/$f" "$HOME/$f"
     done < "$list"
   '';
   init = writeShellScript "plasma-sandbox-init" ''
