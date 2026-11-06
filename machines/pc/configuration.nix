@@ -6,6 +6,8 @@
 }:
 
 {
+  imports = [ ./fancontrol.nix ];
+
   boot = {
     loader = {
       efi.canTouchEfiVariables = true;
@@ -17,6 +19,7 @@
       v4l2loopback
     ];
     kernelModules = [
+      "nct6775"
       "v4l2loopback"
       "acpi_call"
     ];
@@ -34,7 +37,7 @@
           # optimizations have to be applied there.
           llama-cpp = import ../../modules/with-native-optimizations.nix config.networking.hostName (
             llama-cpp.override {
-              rocmGpuTargets = [ "gfx1100" ];
+              rocmGpuTargets = [ "gfx1100" "gfx1200" ];
             }
           );
         }
@@ -43,7 +46,7 @@
         pkgs.callPackage ../../modules/stable-diffusion-cpp.nix {
           vulkanSupport = true;
           rocmSupport = true;
-          gpuTargets = "gfx1100";
+          gpuTargets = "gfx1100;gfx1200";
           inherit inputs;
         }
       ))
@@ -62,13 +65,13 @@
         pkgs.callPackage ../../modules/transcribe-cpp.nix {
           vulkanSupport = true;
           rocmSupport = true;
-          gpuTargets = "gfx1100";
+          gpuTargets = "gfx1100;gfx1200";
         }
       ))
       (import ../../modules/with-native-optimizations.nix config.networking.hostName (
         sandboxed.llama-cpp.override {
           rocmSupport = true;
-          rocmGpuTargets = [ "gfx1100" ];
+          rocmGpuTargets = [ "gfx1100" "gfx1200" ];
           vulkanSupport = true;
         }
       ))
