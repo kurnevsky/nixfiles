@@ -1,5 +1,31 @@
+diff --git a/Telegram/SourceFiles/api/api_peer_search.cpp b/Telegram/SourceFiles/api/api_peer_search.cpp
+index 636d4bc8f2..ddd33f6b08 100644
+--- a/Telegram/SourceFiles/api/api_peer_search.cpp
++++ b/Telegram/SourceFiles/api/api_peer_search.cpp
+@@ -16,7 +16,6 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+ namespace Api {
+ namespace {
+ 
+-constexpr auto kMinSponsoredQueryLength = 4;
+ constexpr auto kTypedLimit = 50;
+ 
+ } // namespace
+@@ -54,12 +53,7 @@ void PeerSearch::request(
+ 	}
+ 	cache.requested = true;
+ 	cache.result.query = _query;
+-	if (_type != Type::WithSponsored
+-		|| _query.size() < kMinSponsoredQueryLength) {
+-		cache.sponsoredReady = true;
+-	} else {
+-		requestSponsored();
+-	}
++	cache.sponsoredReady = true;
+ 	requestPeers();
+ }
+ 
 diff --git a/Telegram/SourceFiles/data/components/sponsored_messages.cpp b/Telegram/SourceFiles/data/components/sponsored_messages.cpp
-index 04b421ef67..6c7588298d 100644
+index ef9712037b..554d2472f6 100644
 --- a/Telegram/SourceFiles/data/components/sponsored_messages.cpp
 +++ b/Telegram/SourceFiles/data/components/sponsored_messages.cpp
 @@ -302,17 +302,11 @@ HistoryItem *SponsoredMessages::injectItem(
