@@ -81,11 +81,23 @@
       };
     })
     (_self: super: {
-      llama-cpp = super.llama-cpp.overrideAttrs (old: {
-        cmakeFlags = old.cmakeFlags ++ [
-          (super.lib.cmakeFeature "GGML_SCHED_MAX_COPIES" "1")
-        ];
-      });
+      llama-cpp = super.llama-cpp.overrideAttrs (
+        old:
+        let
+          rocm = builtins.elem (super.lib.cmakeBool "GGML_HIP" true) old.cmakeFlags;
+        in
+        {
+          buildInputs = old.buildInputs ++ super.lib.optionals rocm [ super.rocmPackages.rccl ];
+          cmakeFlags =
+            old.cmakeFlags
+            ++ [
+              (super.lib.cmakeFeature "GGML_SCHED_MAX_COPIES" "1")
+            ]
+            ++ super.lib.optionals rocm [
+              (super.lib.cmakeBool "GGML_HIP_RCCL" true)
+            ];
+        }
+      );
       # Keep stock whisper-cpp in ffmpeg-full so it is fetched from cache.
       ffmpeg-full =
         let
