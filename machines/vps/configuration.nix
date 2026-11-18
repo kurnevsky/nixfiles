@@ -4,6 +4,8 @@
     systemd-boot.enable = true;
   };
 
+  zramSwap.enable = true;
+
   networking = {
     hostName = "vps";
     useDHCP = false;
